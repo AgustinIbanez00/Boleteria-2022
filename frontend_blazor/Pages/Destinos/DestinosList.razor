@@ -1,0 +1,50 @@
+﻿@page "/destinos"
+@inject IDestinoService DestinoService
+@inject NotificationService NotificationService
+
+<h3>Destinos</h3>
+
+<RadzenDataGrid AllowFiltering="true" AllowPaging="true" PageSize="5" AllowSorting="true"
+                Data="@Destinos" TItem="DestinoResponse">
+    <Columns>
+        <RadzenDataGridColumn Width="50px" TItem="DestinoResponse" Title="#" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
+            <Template Context="data">
+                @(Destinos.ToList().IndexOf(data) + 1)
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="DestinoResponse" Property="Nombre" Title="Nombre" />
+        <RadzenDataGridColumn Width="160px" TItem="DestinoResponse" Property="Id" Title="Acciones">
+            <Template Context="data">
+                <RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="edit" Click=@(args => OpenDetails(data.Id)) />
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Click=@(args => OpenDelete(data.Id)) />
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+
+    ICollection<DestinoResponse> Destinos { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await DestinoService.GetDestinosAsync();
+
+        if (response.Success)
+            Destinos = response.Result;
+        else
+        {
+            NotificationService.Notify(NotificationSeverity.Error, response.Message, response.Error);
+        }
+    }
+
+    public async Task OpenDetails(int distribucionId)
+    {
+
+    }
+
+    public async Task OpenDelete(int distribucionId)
+    {
+    }
+
+}

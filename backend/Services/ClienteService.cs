@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
+using BoleteriaOnline.Core.Data.Enums;
+using BoleteriaOnline.Core.Extensions.Response;
+using BoleteriaOnline.Core.Services;
+using BoleteriaOnline.Core.Utils;
+using BoleteriaOnline.Core.ViewModels.Requests;
+using BoleteriaOnline.Core.ViewModels.Responses;
 using BoleteriaOnline.Web.Data.Models;
-using BoleteriaOnline.Web.Data.Models.Enums;
-using BoleteriaOnline.Web.Extensions.Response;
-using BoleteriaOnline.Web.Repository.Interface;
-using BoleteriaOnline.Web.Services.Interface;
-using BoleteriaOnline.Web.Utils;
-using BoleteriaOnline.Web.ViewModels.Requests;
-using BoleteriaOnline.Web.ViewModels.Responses;
+using BoleteriaOnline.Web.Repositories;
 using EntityFramework.Exceptions.Common;
 
 namespace BoleteriaOnline.Web.Services;
@@ -26,9 +26,6 @@ public class ClienteService : IClienteService
     {
         try
         {
-            if (await _clienteRepository.ExistsClienteAsync(clienteDto.Dni))
-                return Error<Cliente, ClienteResponse>(ErrorMessage.AlreadyExists);
-
             var cliente = _mapper.Map<Cliente>(clienteDto);
             if (!await _clienteRepository.CreateClienteAsync(cliente))
                 return Error<Cliente, ClienteResponse>(ErrorMessage.CouldNotCreate);
@@ -53,7 +50,7 @@ public class ClienteService : IClienteService
             if (cliente == null)
                 return Error<Cliente, ClienteResponse>(ErrorMessage.NotFound);
 
-            if (cliente.Estado == Estado.BAJA)
+            if (cliente.Estado == Estado.Baja)
                 return Error<Cliente, ClienteResponse>(ErrorMessage.AlreadyDeleted);
 
             if (!await _clienteRepository.DeleteClienteAsync(cliente))
@@ -123,6 +120,10 @@ public class ClienteService : IClienteService
                 return Error<Cliente, ClienteResponse>(ErrorMessage.CouldNotUpdate);
 
             return Ok<Cliente, ClienteResponse>(_mapper.Map<ClienteResponse>(cliente), SuccessMessage.Modified);
+        }
+        catch (UniqueConstraintException)
+        {
+            return Error<Cliente, ClienteResponse>(ErrorMessage.AlreadyExists);
         }
         catch (Exception ex)
         {

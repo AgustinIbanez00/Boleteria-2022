@@ -2,14 +2,14 @@
 using System.Security.Claims;
 using System.Text;
 using AutoMapper;
+using BoleteriaOnline.Core.Extensions.Response;
+using BoleteriaOnline.Core.Services;
+using BoleteriaOnline.Core.Utils;
+using BoleteriaOnline.Core.ViewModels.Requests;
+using BoleteriaOnline.Core.ViewModels.Responses;
 using BoleteriaOnline.Web.Data.Models;
 using BoleteriaOnline.Web.Extensions.Hashing;
-using BoleteriaOnline.Web.Extensions.Response;
-using BoleteriaOnline.Web.Repository.Interface;
-using BoleteriaOnline.Web.Services.Interface;
-using BoleteriaOnline.Web.Utils;
-using BoleteriaOnline.Web.ViewModels.Requests;
-using BoleteriaOnline.Web.ViewModels.Responses;
+using BoleteriaOnline.Web.Repositories;
 using EntityFramework.Exceptions.Common;
 using Microsoft.IdentityModel.Tokens;
 

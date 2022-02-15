@@ -1,4 +1,5 @@
-﻿using BoleteriaOnline.Web.Data.Models;
+﻿using BoleteriaOnline.Core.Data.Enums;
+using BoleteriaOnline.Web.Data.Models;
 
 namespace BoleteriaOnline.Web.Extensions;
 public static class DistribucionExtensions
@@ -17,7 +18,6 @@ public static class DistribucionExtensions
                 Celda celda = new Celda()
                 {
                     Value = 0,
-                    FechaRegistro = DateTime.Now
                 };
                 fila.Cells.Add(celda);
             }
@@ -40,8 +40,7 @@ public static class DistribucionExtensions
                 {
                     Celda cell = new Celda()
                     {
-                        Value = DistribucionEspacio.ESPACIO_NULL,
-                        FechaRegistro = DateTime.Now
+                        Value = DistribucionEspacio.ESPACIO_NULL
                     };
                     row.Cells.Add(cell);
                 }
@@ -50,12 +49,16 @@ public static class DistribucionExtensions
         }
     }
 
+    public static List<Fila> GetPlantaBaja(this Distribucion distribucion) => distribucion.Filas.Where(f => f.Planta == Planta.BAJA).OrderBy(f => f.Id).ToList();
+    public static List<Fila> GetPlantaAlta(this Distribucion distribucion) => distribucion.Filas.Where(f => f.Planta == Planta.ALTA).OrderBy(f => f.Id).ToList();
+
+
     public static IList<Fila> GetFilas(this Distribucion distribucion, Planta planta)
     {
         return planta switch
         {
-            Planta.BAJA => distribucion.PlantaBaja,
-            Planta.ALTA => distribucion.PlantaAlta,
+            Planta.BAJA => distribucion.GetPlantaBaja(),
+            Planta.ALTA => distribucion.GetPlantaAlta(),
             _ => throw new NotSupportedException()
         };
     }

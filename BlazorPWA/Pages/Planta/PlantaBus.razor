@@ -1,0 +1,45 @@
+﻿<div class="container">
+    @foreach (var fila in Filas.Where(f => f.Planta == Planta))
+    {
+        <div class="row">
+            @foreach (var celda in fila.Cells)
+            {
+                <RadzenButton class="col-lg-1" Style="margin-top: 10px; margin-left: 5px" Icon="@GetButtonIcon(celda.Value)"  ButtonStyle="@GetButtonStyle(celda.Value)" />
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public List<FilaResponse> Filas { get; set; }
+
+    [Parameter]
+    public Planta Planta { get; set; }
+
+    ButtonStyle GetButtonStyle(DistribucionEspacio espacio)
+    {
+        return espacio switch
+        {
+            DistribucionEspacio.ESPACIO_BUTACA => ButtonStyle.Success,
+            DistribucionEspacio.ESPACIO_NULL => ButtonStyle.Info,
+            DistribucionEspacio.ESPACIO_PASILLO => ButtonStyle.Light,
+            DistribucionEspacio.ESPACIO_TV => ButtonStyle.Danger,
+            _ => ButtonStyle.Warning
+        };
+    }
+
+    string GetButtonIcon(DistribucionEspacio espacio)
+    {
+        return espacio switch
+        {
+            DistribucionEspacio.ESPACIO_BUTACA => "event_seat",
+            DistribucionEspacio.ESPACIO_NULL => "block",
+            DistribucionEspacio.ESPACIO_PASILLO => "directions_walk",
+            DistribucionEspacio.ESPACIO_TV => "airplay",
+            _ => "block"
+        };
+    }
+
+
+}

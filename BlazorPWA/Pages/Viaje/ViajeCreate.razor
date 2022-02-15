@@ -1,0 +1,173 @@
+﻿@page "/viajes/create"
+@inject IViajeService ViajeService
+@inject IDistribucionService DistribucionService
+@inject NotificationService NotificationService
+@inject DialogService DialogService
+
+@if (Viaje == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <RadzenTemplateForm Data="@Viaje" Submit="@(async (ViajeRequest args) => { await Submit(args); })">
+        <div class="row">
+            <div class="col-md-3 align-items-center d-flex">
+                <RadzenLabel Text="Nombre:" />
+            </div>
+            <div class="col-md-9">
+                <RadzenTextBox @bind-Value="Viaje.Nombre" style="width: 100%; margin-bottom: 10px" Name="Nombre" />
+            </div>
+        </div>
+        @foreach (HorarioRequest horario in Viaje.Horarios)
+    {
+        <div class="row m-2">
+            <RadzenFieldset Text="Horario">
+                <div class="row">
+                    <div class="col-md-4">
+                        <RadzenLabel Text="Distribución" />
+                    </div>
+                    <div class="col-md-8 p-2">
+                        @if (Distribuciones != null)
+                        {
+                            <RadzenDropDown AllowClear="true" AllowFiltering="false" Placeholder="Seleccione una distribución.." TValue=int FilterCaseSensitivity="FilterCaseSensitivity.Default" Data=@Distribuciones @bind-Value=@horario.DistribucionId
+                                    TextProperty="Nota" ValueProperty="Id" Change=@(args => OnDropDownChange(args, "DropDown with bound Value")) Class="w-100" />
+                        }
+                        else
+                        {
+                            <RadzenLabel Text="Cargando distribuciones..." />
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <RadzenLabel Text="Hora" />
+                    </div>
+                    <div class="col-md-8 p-2">
+                        <RadzenDatePicker @bind-Value=horario.Hora TValue="DateTime" ShowTime="true" TimeOnly="true" DateFormat="HH:mm" Change=@(args => OnDateTimePickerChange(args, "Time-only DatePicker")) />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <RadzenLabel Text="Frecuencia" />
+                    </div>
+                    <div class="col-md-8">
+                        <RadzenCheckBoxList @bind-Value=@horario.Dias TValue="DayOfWeek" Orientation="Orientation.Horizontal" Change=@(args => OnChange(args, "CheckBoxList with vertical orientation"))>
+                            <Items>
+                                <RadzenCheckBoxListItem class="col-6" Text="Lunes" Value="DayOfWeek.Monday" />
+                                <RadzenCheckBoxListItem class="col-6" Text="Martes" Value="DayOfWeek.Tuesday" />
+                                <RadzenCheckBoxListItem class="col-6" Text="Miércoles" Value="DayOfWeek.Wednesday" />
+                                <RadzenCheckBoxListItem class="col-6" Text="Jueves" Value="DayOfWeek.Thursday" />
+                                <RadzenCheckBoxListItem class="col-6" Text="Viernes" Value="DayOfWeek.Friday" />
+                                <RadzenCheckBoxListItem class="col-6" Text="Sábado" Value="DayOfWeek.Saturday" />
+                                <RadzenCheckBoxListItem class="col-6" Text="Domingo" Value="DayOfWeek.Sunday" />
+                            </Items>
+                        </RadzenCheckBoxList>
+                    </div>
+                </div>
+            </RadzenFieldset>
+        </div>
+    }
+    <div class="row">
+        <div class="col-1 pt-2">
+            <RadzenButton Text="Agregar horario" Click="AgregarHorario" />
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
+            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Guardar" />
+            <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancel" Click="@Cancel" />
+        </div>
+    </div>
+</RadzenTemplateForm>
+}
+
+@code {
+    ViajeRequest Viaje;
+
+    IEnumerable<DistribucionResponse> Distribuciones { get; set; }
+
+
+    async Task Submit(ViajeRequest arg)
+    {
+        foreach (HorarioRequest horario in Viaje.Horarios)
+        {
+            Console.WriteLine("horario " + horario.DistribucionId);
+        }
+
+        var response = await ViajeService.CreateViajeAsync(Viaje);
+
+        NotificationService.Notify(new Radzen.NotificationMessage() { Severity = response.Success ? NotificationSeverity.Success : NotificationSeverity.Error, Summary = response.Message, Duration = 3000 });
+        Console.WriteLine(response.Message);
+        if (!response.Success)
+        {
+            foreach (var error in response.ErrorMessages)
+            {
+                Console.WriteLine($"key: {error.Key}");
+                foreach (var validation in error.Value)
+                {
+                    NotificationService.Notify(new Radzen.NotificationMessage() { Severity = NotificationSeverity.Error, Summary = validation, Duration = 3000 });
+                    Console.WriteLine($"value: {validation}");
+                }
+            }
+        }
+        else
+        {
+            DialogService.Close();
+        }
+    }
+
+    void AgregarHorario()
+    {
+        Viaje.Horarios.Add(new HorarioRequest() { });
+    }
+
+    async Task LoadDistribuciones()
+    {
+        var response = await DistribucionService.GetDistribucionesAsync();
+        if (response.Success)
+            Distribuciones = response.Result;
+        else Console.WriteLine(response.Message);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        HorarioRequest horario = new HorarioRequest()
+            { Hora = DateTime.Now };
+
+        Viaje = new ViajeRequest() { Nombre = "", Horarios = new List<HorarioRequest>() };
+        Viaje.Horarios.Add(horario);
+
+        await LoadDistribuciones();
+    }
+
+    void Cancel()
+    {
+        DialogService.Close();
+    }
+
+    void OnChange(IEnumerable<DayOfWeek> value, string name)
+    {
+        Console.WriteLine($"{name} value changed to {string.Join(", ", value)}");
+    }
+
+    void OnDateTimePickerChange(DateTime? value, string name)
+    {
+        Console.WriteLine("datetime picker changed");
+
+    }
+
+    void OnChange(DateTime? value, string name, string format)
+    {
+        Console.WriteLine($"{name} value changed to {value?.ToString(format)}");
+    }
+
+    void OnDropDownChange(object value, string name)
+    {
+        var str = value is IEnumerable<object> ? string.Join(", ", (IEnumerable<object>)value) : value;
+
+        Console.WriteLine($"{name} value changed to {str}");
+    }
+
+}

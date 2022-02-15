@@ -1,0 +1,82 @@
+﻿@inject IDistribucionService DistribucionService
+@inject DialogService dialogService
+@inject NotificationService NotificationService
+
+
+<RadzenTemplateForm Data="@distribucion" Submit="@(async (DistribucionRequest args) => { await Crear(args); })">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="row">
+                <div class="col-md-4 align-items-center d-flex">
+                    <RadzenLabel Text="Nombre" />
+                </div>
+                <div class="col-md-8">
+                    <RadzenTextBox @bind-Value="distribucion.Nota" style="width: 100%; margin-bottom: 10px" Name="Nombre" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 align-items-center d-flex">
+                    <RadzenLabel Text="Un piso" />
+                </div>
+                <div class="col-md-1">
+                    <RadzenSwitch @bind-Value="distribucion.UnPiso" style="width: 100%; margin-bottom: 10px" Name="UnPiso" />
+                </div>
+            </div>
+        </div>
+    </div>
+    @if (distribucion.Filas != null)
+    {
+        <div class="row">
+
+            <RadzenTabs TabPosition="TabPosition.Top" RenderMode="TabRenderMode.Client">
+                <Tabs>
+                    <RadzenTabsItem Text="Planta Baja">
+                        <PlantaBusCreate Filas=@distribucion.Filas Planta=@Planta.BAJA />
+                    </RadzenTabsItem>
+                    @if (!distribucion.UnPiso)
+                    {
+                        <RadzenTabsItem Text="Planta Alta">
+                            <PlantaBusCreate Filas=@distribucion.Filas Planta=@Planta.ALTA />
+                        </RadzenTabsItem>
+                    }
+                </Tabs>
+            </RadzenTabs>
+        </div>
+    }
+    <div class="row justify-content-center">
+        <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
+            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Guardar" />
+        </div>
+    </div>
+</RadzenTemplateForm>
+
+
+@code {
+    DistribucionRequest distribucion = new DistribucionRequest() { Filas = new List<FilaRequest>() };
+
+    async Task Crear(DistribucionRequest args)
+    {
+        var response = await DistribucionService.CreateDistribucionAsync(args);
+
+
+        NotificationService.Notify(new Radzen.NotificationMessage() { Severity = response.Success ? NotificationSeverity.Success : NotificationSeverity.Error, Summary = response.Message, Duration = 3000 });
+        Console.WriteLine(response.Message);
+        if (!response.Success)
+        {
+            foreach (var error in response.ErrorMessages)
+            {
+                Console.WriteLine($"key: {error.Key}");
+                foreach (var validation in error.Value)
+                {
+                    NotificationService.Notify(new Radzen.NotificationMessage() { Severity = NotificationSeverity.Error, Summary = validation, Duration = 3000 });
+                    Console.WriteLine($"value: {validation}");
+                }
+            }
+        }
+        else
+        {
+            dialogService.Close();
+        }
+    }
+}

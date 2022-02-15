@@ -1,0 +1,84 @@
+﻿<div class="container">
+    @foreach (var fila in Filas.Where(f => f.Planta == Planta))
+    {
+        <div class="row">
+            @foreach (var celda in fila.Cells)
+            {
+                <RadzenButton class="col-lg-1" Style="margin-top: 10px; margin-left: 5px" Icon="@GetButtonIcon(celda.Value)" Click=@(args => OnClick(celda)) ButtonStyle="@GetButtonStyle(celda.Value)" />
+            }
+        </div>
+    }
+</div>
+<RadzenButton class="mt-3" Text="Agregar fila" Click=@(args => AgregarFilas()) />
+
+@code {
+    [Parameter]
+    public List<FilaRequest> Filas { get; set; }
+
+    [Parameter]
+    public Planta Planta { get; set; }
+
+
+    ButtonStyle GetButtonStyle(DistribucionEspacio espacio)
+    {
+        return espacio switch
+        {
+            DistribucionEspacio.ESPACIO_BUTACA => ButtonStyle.Success,
+            DistribucionEspacio.ESPACIO_NULL => ButtonStyle.Info,
+            DistribucionEspacio.ESPACIO_PASILLO => ButtonStyle.Light,
+            DistribucionEspacio.ESPACIO_TV => ButtonStyle.Danger,
+            _ => ButtonStyle.Warning
+        };
+    }
+
+    string GetButtonIcon(DistribucionEspacio espacio)
+    {
+        return espacio switch
+        {
+            DistribucionEspacio.ESPACIO_BUTACA => "event_seat",
+            DistribucionEspacio.ESPACIO_NULL => "block",
+            DistribucionEspacio.ESPACIO_PASILLO => "directions_walk",
+            DistribucionEspacio.ESPACIO_TV => "airplay",
+            _ => "block"
+        };
+    }
+
+    void AgregarFilas()
+    {
+        int rows = 1;
+        int columns = 5;
+
+        for (int i = 0; i < rows; i++)
+        {
+            FilaRequest fila = new FilaRequest() { Planta = Planta };
+            fila.Cells = new List<CeldaRequest>();
+
+            for (int j = 0; j < columns; j++)
+            {
+                CeldaRequest celda = new CeldaRequest()
+                    {
+                        Value = DistribucionEspacio.ESPACIO_NULL,
+                    };
+                fila.Cells.Add(celda);
+            }
+            Filas.Add(fila);
+        }
+    }
+
+    void OnClick(CeldaRequest celda)
+    {
+        var values = Enum.GetValues<DistribucionEspacio>();
+
+        celda.Value = celda.Value switch
+        {
+            DistribucionEspacio.ESPACIO_NULL => DistribucionEspacio.ESPACIO_PASILLO,
+            DistribucionEspacio.ESPACIO_PASILLO => DistribucionEspacio.ESPACIO_BUTACA,
+            DistribucionEspacio.ESPACIO_BUTACA => DistribucionEspacio.ESPACIO_TV,
+            DistribucionEspacio.ESPACIO_TV => DistribucionEspacio.ESPACIO_NULL,
+            _ => DistribucionEspacio.ESPACIO_NULL
+        };
+    }
+
+
+}
+

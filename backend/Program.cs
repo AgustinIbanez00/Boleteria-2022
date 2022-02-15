@@ -1,15 +1,15 @@
 using System.Globalization;
 using System.Reflection;
 using System.Text;
+using BoleteriaOnline.Core.Services;
+using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Web.Data;
 using BoleteriaOnline.Web.Filters;
 using BoleteriaOnline.Web.Localization;
 using BoleteriaOnline.Web.Middlewares;
+using BoleteriaOnline.Web.Repositories;
 using BoleteriaOnline.Web.Repository;
-using BoleteriaOnline.Web.Repository.Interface;
 using BoleteriaOnline.Web.Services;
-using BoleteriaOnline.Web.Services.Interface;
-using BoleteriaOnline.Web.Utils;
 using EntityFramework.Exceptions.MySQL.Pomelo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -45,11 +45,17 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IDestinoRepository, DestinoRepository>();
+builder.Services.AddScoped<IViajeRepository, ViajeRepository>();
+builder.Services.AddScoped<INodoRepository, NodoRepository>();
+builder.Services.AddScoped<IDistribucionRepository, DistribucionRepository>();
 
 /* INYECCION DE SERVICIOS */
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
 builder.Services.AddScoped<IDestinoService, DestinoService>();
+builder.Services.AddScoped<IViajeService, ViajeService>();
+builder.Services.AddScoped<INodoService, NodoService>();
+builder.Services.AddScoped<IDistribucionService, DistribucionService>();
 
 builder.Services.AddCors();
 
@@ -78,10 +84,13 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseMySql(connectionString, new MariaDbServerVersion(new Version(10, 4, 17)), o =>
+    options.UseSqlServer(connectionString);
+    /*
+    options.UseSqlServer(connectionString, new MariaDbServerVersion(new Version(10, 4, 17)), o =>
     {
         o.EnableRetryOnFailure();
     });
+    */
     options.LogTo(Console.WriteLine, LogLevel.Information);
     options.EnableSensitiveDataLogging();
     options.EnableDetailedErrors();
@@ -158,6 +167,12 @@ app.UseRequestLocalization(localizationOptions);
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
+});
+
+app.UseOpenApi();
+app.UseSwaggerUi3(options =>
+{
+    options.DocumentTitle = "Boletaria Online";
 });
 
 app.Run();

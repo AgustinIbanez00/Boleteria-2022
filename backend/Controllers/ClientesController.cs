@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using BoleteriaOnline.Web.Utils;
 using BoleteriaOnline.Web.Extensions.Response;
-using BoleteriaOnline.Web.Services.Interface;
-using BoleteriaOnline.Web.ViewModels.Responses;
-using BoleteriaOnline.Web.ViewModels.Requests;
+using BoleteriaOnline.Core.Services;
+using BoleteriaOnline.Core.ViewModels.Requests;
+using BoleteriaOnline.Core.ViewModels.Responses;
+using BoleteriaOnline.Core.Utils;
 
 namespace BoleteriaOnline.Web.Controllers;
 

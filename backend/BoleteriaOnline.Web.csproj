@@ -2,15 +2,22 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
 	<PropertyGroup>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>$(NoWarn);1591</NoWarn>
+		<UserSecretsId>ba26f6aa-843d-466b-a996-af7f93fcf1ec</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 	</PropertyGroup>
 
+	<ItemGroup>
+		<Using Include="System" />
+		<Using Include="System.ComponentModel.DataAnnotations" />
+	</ItemGroup>	
+	
 	<ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
@@ -23,6 +30,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="NSwag.AspNetCore" Version="13.15.5" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.0" />
     <PackageReference Include="SmartFormat.NET" Version="2.7.2" />
@@ -31,10 +44,11 @@
     <PackageReference Include="XLocalizer" Version="1.0.3" />
     <PackageReference Include="XLocalizer.TagHelpers" Version="1.1.0" />
     <PackageReference Include="XLocalizer.Translate" Version="1.0.0" />
-  </ItemGroup>
-
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="swagger tofile --output swagger.json $(OutputPath)\$(AssemblyName).dll v1 " />
-	</Target>	
+    <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="6.13.7" />
+  </ItemGroup>	
+	
+	<ItemGroup>
+	  <ProjectReference Include="..\BoleteriaOnline.Core\BoleteriaOnline.Core.csproj" />
+	</ItemGroup>
 	
 </Project>

@@ -1,0 +1,24 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>frontend_blazor</PageTitle>
+
+<RadzenDialog />
+<RadzenNotification />
+<RadzenContextMenu />
+<RadzenTooltip />
+<RadzenHeader>
+    <RadzenMenu class="p-1">
+        <RadzenMenuItem Text="Inicio" Path="/" Icon="home" />
+        <RadzenMenuItem Text="Destinos" Path="destinos" Icon="place" />
+        <RadzenMenuItem Text="Distribuciones" Path="distribuciones" Icon="event_seat" />
+        <RadzenMenuItem Text="Viajes" Path="viajes" Icon="directions_bus" />
+        <RadzenMenuItem Text="Horarios" Path="viajes" Icon="schedule" />
+    </RadzenMenu>
+</RadzenHeader>
+<RadzenBody Expanded=true>
+    @Body
+</RadzenBody>
+<RadzenFooter>
+</RadzenFooter>
+
+

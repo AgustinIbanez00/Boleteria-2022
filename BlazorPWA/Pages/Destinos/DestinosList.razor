@@ -1,0 +1,109 @@
+﻿@page "/destinos"
+@using BlazorPWA.Services
+@inject IDestinoService DestinoService
+@inject NotificationService NotificationService
+@inject DialogService DialogService
+
+<h3>Destinos</h3>
+<div class="m-3">
+    <RadzenButton Click=@(args => OpenCreate())>
+        <ChildContent>
+            <RadzenIcon Icon="add"></RadzenIcon>
+            <RadzenLabel Text="Crear"></RadzenLabel>
+        </ChildContent>
+    </RadzenButton>
+    <RadzenButton Click=@(args => LoadDestinos())>
+        <ChildContent>
+            <RadzenIcon Icon="refresh"></RadzenIcon>
+            <RadzenLabel Text="Actualizar"></RadzenLabel>
+        </ChildContent>
+    </RadzenButton>
+</div>
+
+<RadzenDataGrid AllowFiltering="true" AllowPaging="true" PageSize="5" AllowSorting="true" Data="@Destinos" TItem="DestinoResponse">
+    <Columns>
+        <RadzenDataGridColumn Width="50px" TItem="DestinoResponse" Title="#" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
+            <Template Context="data">
+                @(Destinos.ToList().IndexOf(data) + 1)
+            </Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn TItem="DestinoResponse" Property="Nombre" Title="Nombre" />
+        <RadzenDataGridColumn Width="160px" TItem="DestinoResponse" Property="Id" Title="Acciones">
+            <Template Context="data">
+                <RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="edit" Click=@(args => OpenDetails(data.Id)) />
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Click=@(args => OpenDelete(data.Id)) />
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+
+    ICollection<DestinoResponse> Destinos { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDestinos();
+
+        DialogService.OnClose += CloseDialog;
+    }
+
+    async Task LoadDestinos()
+    {
+        var response = await DestinoService.GetDestinosAsync();
+
+        if (response.Success)
+        {
+            Destinos = response.Result;
+            StateHasChanged();
+        }
+        else
+        {
+            NotificationService.Notify(NotificationSeverity.Error, response.Message, response.Error);
+        }
+    }
+
+    void CloseDialog(dynamic result)
+    {
+        Task.Run(async () => await LoadDestinos());
+        Console.WriteLine("cerro el dialog el pibardo");
+    }
+
+    async Task Close(dynamic result)
+    {
+        await LoadDestinos();
+        Console.WriteLine("se cerro el dialog");
+    }
+
+
+    public async Task OpenCreate()
+    {
+        await DialogService.OpenAsync<Pages.Destinos.DestinoCreate>($"Nuevo destino",
+               new Dictionary<string, object>() { },
+               new DialogOptions() { Width = "500px", Resizable = true, Draggable = true, CloseDialogOnOverlayClick = true });
+    }
+
+    public Task OpenDetails(int id)
+    {
+        return Task.CompletedTask;
+    }
+
+    public async Task OpenDelete(int id)
+    {
+        var resultDialog = await DialogService.Confirm("¿Estás seguro de eliminar el destino?\nEsta acción no se puede deshacer.", "Eliminar destino.", new ConfirmOptions() { OkButtonText = "Sí", CancelButtonText = "No", CloseDialogOnOverlayClick = true });
+        if (resultDialog.HasValue)
+        {
+            if (resultDialog.Value)
+            {
+                var response = await DestinoService.DeleteDestinoAsync(id);
+                ApiUtils<DestinoResponse>.NotifyResponse(NotificationService, response, async () =>
+                {
+                    await LoadDestinos();
+                    StateHasChanged();
+                });
+                DialogService.Close();
+            }
+        }
+    }
+
+}

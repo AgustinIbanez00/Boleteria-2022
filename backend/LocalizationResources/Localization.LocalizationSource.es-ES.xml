@@ -87,4 +87,84 @@
     <value>género</value>
     <comment>Created by XLocalizer</comment>
   </data>
+  <data isActive="false">
+    <key>El campo {0} s�lo permite una longitud m�xima de {1} caracteres.</key>
+    <value>El campo {0} s�lo permite una longitud m�xima de {1} caracteres.</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>identificador</key>
+    <value>identificador</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>origen</key>
+    <value>origen</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>destino</key>
+    <value>destino</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>demora</key>
+    <value>demora</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>precio</key>
+    <value>precio</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>El campo {0} sólo permite una longitud máxima de {1} caracteres.</key>
+    <value>El campo {0} sólo permite una longitud máxima de {1} caracteres.</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>celdas</key>
+    <value>celdas</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>planta</key>
+    <value>planta</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>Filas</key>
+    <value>Filas</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>nota</key>
+    <value>nota</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>un piso</key>
+    <value>un piso</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>id</key>
+    <value>id</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>horario</key>
+    <value>horario</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>hora</key>
+    <value>hora</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>días de la semana</key>
+    <value>días de la semana</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
 </root>

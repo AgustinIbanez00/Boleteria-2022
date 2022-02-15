@@ -1,4 +1,7 @@
-﻿namespace BoleteriaOnline.Web.Extensions.Response;
+﻿using BoleteriaOnline.Core.Extensions.Response;
+using Microsoft.AspNetCore.Http;
+
+namespace BoleteriaOnline.Web.Extensions.Response;
 public static class ResponseHelper
 {
     public static int GetHttpError(ErrorMessage gexError)

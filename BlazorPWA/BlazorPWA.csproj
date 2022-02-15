@@ -1,0 +1,64 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
+    <PackageReference Include="Radzen.Blazor" Version="3.14.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Pages\Index.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Destinos\DestinoCreate.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Destinos\DestinoCreate.razor" />
+    <_ContentIncludedByDefault Remove="Pages\Destinos\DestinosList.razor" />
+    <_ContentIncludedByDefault Remove="Pages\Distribucion\CreateDistribucion.razor" />
+    <_ContentIncludedByDefault Remove="Pages\Distribucion\DistributionDetails.razor" />
+    <_ContentIncludedByDefault Remove="Pages\Planta\PlantaBus.razor" />
+    <_ContentIncludedByDefault Remove="Pages\Planta\PlantaBusCreate.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Destinos\DestinosList.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Distribucion\CreateDistribucion.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Distribucion\DistributionDetails.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Planta\PlantaBus.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Planta\PlantaBusCreate.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BoleteriaOnline.Core\BoleteriaOnline.Core.csproj" />
+  </ItemGroup>
+
+</Project>

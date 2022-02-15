@@ -1,6 +1,6 @@
-﻿using BoleteriaOnline.Web.Extensions;
-using BoleteriaOnline.Web.Extensions.Response;
-using BoleteriaOnline.Web.Utils;
+﻿using BoleteriaOnline.Core.Extensions;
+using BoleteriaOnline.Core.Extensions.Response;
+using BoleteriaOnline.Core.Utils;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoleteriaOnline.Web.Middlewares;
@@ -16,7 +16,7 @@ public static class BadRequestMiddleware
 
                 return new OkObjectResult(new WebResult<object>
                 {
-                    Data = null,
+                    Result = null,
                     ErrorCode = ErrorMessage.GenericValidation,
                     ErrorMessages = actionContext.ModelState
                     .Where(x => x.Value.Errors.Count > 0)

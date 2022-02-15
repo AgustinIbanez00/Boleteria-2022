@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using BoleteriaOnline.Web.Data;
-using BoleteriaOnline.Web.Repository.Interface;
 using BoleteriaOnline.Web.Data.Models;
-using BoleteriaOnline.Web.Data.Models.Enums;
+using BoleteriaOnline.Core.Data.Enums;
+using BoleteriaOnline.Web.Repositories;
 
 namespace BoleteriaOnline.Web.Repository;
 
@@ -26,7 +26,7 @@ public class DestinoRepository : IDestinoRepository
     public async Task<bool> DeleteDestinoAsync(long id)
     {
         Destino destino = await GetDestinoAsync(id);
-        return await DeleteDestinoAsync(destino);
+        return destino == null ? false : await DeleteDestinoAsync(destino);
     }
 
     public async Task<bool> DeleteDestinoAsync(Destino destino)
@@ -34,24 +34,22 @@ public class DestinoRepository : IDestinoRepository
         if (destino == null)
             return false;
 
-        if (destino.Estado == Estado.BAJA)
-            return false;
+        _context.Destinos.Remove(destino);
 
-        destino.Estado = Estado.BAJA;
         return await Save();
     }
 
-    public async Task<bool> ExistsDestinoAsync(long id) => await GetDestinoAsync(id) != null;
+    public async Task<bool> ExistsDestinoAsync(long id) => await _context.Destinos.AnyAsync(e => e.Id == id);
 
-    public async Task<Destino> GetDestinoAsync(long id) => await _context.Destinos.FirstOrDefaultAsync(m => m.Estado == Estado.NORMAL && m.Id == id);
+    public async Task<Destino> GetDestinoAsync(long id) => await _context.Destinos.FirstOrDefaultAsync(m => m.Id == id);
 
-    public async Task<ICollection<Destino>> GetDestinosAsync() => await _context.Destinos.Where(m => m.Estado == Estado.NORMAL).ToListAsync();
+    public async Task<ICollection<Destino>> GetDestinosAsync() => await _context.Destinos.ToListAsync();
 
     public async Task<bool> Save() => await _context.SaveChangesAsync() >= 0;
 
     public async Task<bool> UpdateDestinoAsync(Destino destino)
     {
-        if (destino == null || destino.Estado == Estado.BAJA)
+        if (destino == null)
             return false;
 
         _context.Destinos.Update(destino);

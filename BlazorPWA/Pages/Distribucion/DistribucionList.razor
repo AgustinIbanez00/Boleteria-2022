@@ -1,0 +1,122 @@
+﻿@page "/distribuciones"
+@inject IDistribucionService DistribucionService
+@inject DialogService DialogService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Distribuciones</PageTitle>
+<div class="m-3">
+    <RadzenButton Click=@(args => OpenCreate())>
+        <ChildContent>
+            <RadzenIcon Icon="add"></RadzenIcon>
+            <RadzenLabel Text="Crear"></RadzenLabel>
+        </ChildContent>
+    </RadzenButton>
+
+    <RadzenButton Click=@(args => LoadDistribuciones())>
+        <ChildContent>
+            <RadzenIcon Icon="refresh"></RadzenIcon>
+            <RadzenLabel Text="Actualizar"></RadzenLabel>
+        </ChildContent>
+    </RadzenButton>
+</div>
+
+
+@if (distribuciones == null || distribuciones?.Count() == 0)
+{
+    <p>No hay registros para mostrar</p>
+}
+else
+{
+    <RadzenDataGrid AllowFiltering="true" AllowPaging="true" PageSize="5" AllowSorting="true"
+                Data="@distribuciones" TItem="DistribucionResponse">
+        <Columns>
+            <RadzenDataGridColumn Width="50px" TItem="DistribucionResponse" Title="#" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
+                <Template Context="data">
+                    @(distribuciones.ToList().IndexOf(data) + 1)
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="DistribucionResponse" Property="Nota" Title="Nota" />
+            <RadzenDataGridColumn Width="160px" TItem="DistribucionResponse" Property="Id" Title="Acciones">
+                <Template Context="data">
+                    <RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="edit" Click=@(args => OpenDetails(data.Id)) />
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Click=@(args => OpenDelete(data.Id)) />
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+}
+
+<style>
+    .product-title {
+        min-height: 72px;
+        color: #da0074;
+        background-color: rgba(255, 41, 155, .1);
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 20px;
+        letter-spacing: -0.02em;
+    }
+
+    .price-badge {
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 20px;
+        padding: 8px;
+    }
+</style>
+
+@code {
+
+    IEnumerable<DistribucionResponse> distribuciones;
+
+    async Task LoadDistribuciones()
+    {
+        var response = await DistribucionService.GetDistribucionesAsync();
+        if (response.Success)
+            distribuciones = response.Result;
+        else Console.WriteLine(response.Message);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await DistribucionService.GetDistribucionesAsync();
+        if (response.Success)
+            distribuciones = response.Result;
+        else Console.WriteLine(response.Message);
+
+        DialogService.OnClose += (args) => { Close(args); };
+
+    }
+    async Task Close(dynamic result)
+    {
+        await LoadDistribuciones();
+    }
+
+
+    public async Task OpenDetails(int distribucionId)
+    {
+        await DialogService.OpenAsync<Pages.Distribucion.DistributionDetails>($"Distribución {distribucionId}",
+               new Dictionary<string, object>() { { "Id", distribucionId } },
+               new DialogOptions() { Resizable = true, Draggable = true, CloseDialogOnOverlayClick = true });
+    }
+
+    public async Task OpenDelete(int distribucionId)
+    {
+        var result = await DialogService.Confirm("¿Estás seguro de eliminar la distribución?\nEsta acción no se puede deshacer.", "Eliminar distribución.", new ConfirmOptions() { OkButtonText = "Sí", CancelButtonText = "No", CloseDialogOnOverlayClick = true });
+        if (result.HasValue)
+        {
+            if (result.Value)
+            {
+                await DistribucionService.DeleteDistribucionAsync(distribucionId);
+                DialogService.Close();
+            }
+        }
+    }
+
+    public async Task OpenCreate()
+    {
+        await DialogService.OpenAsync<Pages.Distribucion.CreateDistribucion>($"Nueva distribución",
+               new Dictionary<string, object>() { },
+               new DialogOptions() { Width = "500px", Resizable = true, Draggable = true, CloseDialogOnOverlayClick = true });
+    }
+}

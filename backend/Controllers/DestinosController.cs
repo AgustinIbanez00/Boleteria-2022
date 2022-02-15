@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using BoleteriaOnline.Web.Utils;
 using BoleteriaOnline.Web.Extensions.Response;
-using BoleteriaOnline.Web.Services.Interface;
-using BoleteriaOnline.Web.ViewModels.Responses;
-using BoleteriaOnline.Web.ViewModels.Requests;
+using BoleteriaOnline.Core.Services;
+using BoleteriaOnline.Core.ViewModels.Requests;
+using BoleteriaOnline.Core.Utils;
+using BoleteriaOnline.Core.ViewModels.Responses;
 
 namespace BoleteriaOnline.Web.Controllers;
 
@@ -60,11 +60,11 @@ public class DestinosController : ControllerBase
         return Created(nameof(Get), destino);
     }
 
-    [HttpPatch]
+    [HttpPatch("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<DestinoResponse>))]
-    public async Task<ActionResult<WebResult<DestinoResponse>>> UpdateDestino([FromBody] DestinoRequest destinoDto)
+    public async Task<ActionResult<WebResult<DestinoResponse>>> UpdateDestino([FromBody] DestinoRequest destinoDto, long id)
     {
-        var destino = await _destinoservice.UpdateDestinoAsync(destinoDto);
+        var destino = await _destinoservice.UpdateDestinoAsync(destinoDto, id);
 
         if (!destino.Success)
             return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);
