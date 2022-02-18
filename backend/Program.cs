@@ -114,7 +114,7 @@ builder.Services.AddMvc()
     .AddXLocalizer<LocalizationSource>(ops => builder.Configuration.GetSection("XLocalizerOptions").Bind(ops));
 builder.Services.AddSwaggerDocument(options =>
 {
-    options.Description = "Colleción de API's correspondientes al sistema de Pasajes Online.";
+    options.Description = "ColleciÃ³n de API's correspondientes al sistema de Pasajes Online.";
     options.Title = "Boleteria Online";
 });
 builder.Services.AddSwaggerGen(c =>
@@ -123,8 +123,8 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Boleteria Online",
         Version = "v1",
-        Description = "Colleción de API's correspondientes al sistema de Pasajes Online.",
-        Contact = new OpenApiContact() { Email = "admin@boleteriasystem.com", Name = "Agustin Ibañez" }
+        Description = "ColleciÃ³n de API's correspondientes al sistema de Pasajes Online.",
+        Contact = new OpenApiContact() { Email = "admin@boleteriasystem.com", Name = "Agustin IbaÃ±ez" }
 
     });
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -151,10 +151,10 @@ app.UseCors(builder => builder
     .AllowAnyMethod()
     .AllowAnyHeader()
 );
-
+/*
 app.UseDefaultFiles();
 app.UseStaticFiles();
-
+*/
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
