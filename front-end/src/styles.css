@@ -1,0 +1,69 @@
+html {
+  min-width: 800px;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.guardar {
+  background-color: #c2e48b;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.mat-toolbar {
+  background-color: #c2e48b;
+}
+
+.botonEditar {
+  margin-right: 1rem;
+  background-color: #b345fc;
+  color: white;
+}
+
+.botonEditar:hover {
+  background-color: #9153bb;
+}
+
+.botonEliminar {
+  margin-left: 1rem;
+  background-color: #f4e3fc;
+  color: #b345fc;
+}
+
+.botonEliminar:hover {
+  background-color: #dec8ec;
+}
+
+.botonCrear {
+  background-color: #b345fc;
+  color: #f4e3fc;
+}
+
+.botonCrear:hover {
+  background-color: #9153bb;
+}
+
+.botonVer {
+  background-color: #b345fc;
+  color: #f4e3fc;
+}
+
+.botonVer:hover {
+  background-color: #9153bb;
+}
+
+.botonComprar {
+  background-color: #b345fc;
+  color: #f4e3fc;
+}
+
+.botonComprar:hover {
+  background-color: #9153bb;
+}

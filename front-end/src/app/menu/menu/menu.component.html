@@ -1,0 +1,72 @@
+<mat-toolbar class="mat-elevation-z8">
+  <button mat-button routerLink="">
+    <mat-icon>store_mall_directory</mat-icon>BOLETERIA
+  </button>
+  <!-- se le pasa el rol actual -->
+  <!-- <app-autorizado [rol]="'admin'">
+    <ng-container autorizado>
+      <div>
+        <button mat-button routerLink="categorias">Categoría</button>
+      </div>
+
+      <div>
+        <button mat-button routerLink="usuarios">Usuarios</button>
+      </div>
+    </ng-container>
+  </app-autorizado> -->
+  <!-- <app-autorizado [rol]="'cliente'">
+    <ng-container autorizado>
+       <div>
+          <button
+            mat-button
+            [matMenuTriggerFor]="aboveMenu"
+            (click)="cargarRegistros()"
+          >
+            Categorías
+          </button>
+          <mat-menu #aboveMenu="matMenu">
+            <button
+              *ngFor="let categoria of categorias"
+              mat-menu-item
+              routerLink="categorias/{{ categoria.id }}"
+            >
+              {{ categoria.nombre }}
+            </button>
+          </mat-menu>
+        </div> 
+    </ng-container>
+  </app-autorizado> -->
+  <!-- <app-autorizado [rol]="'cliente'">
+    <ng-container autorizado>
+      <div>
+        <button mat-button routerLink="misCompras">
+          <mat-icon>shopping_cart</mat-icon> Mis Reservas
+        </button>
+      </div>
+    </ng-container>
+  </app-autorizado>
+  <app-autorizado [rol]="'vendedor'">
+    <ng-container autorizado>
+      <div>
+        <button mat-button routerLink="misProductos">Mis productos</button>
+      </div>
+    </ng-container>
+  </app-autorizado> -->
+
+  <div class="espacio"></div>
+
+  <!-- <app-autorizado>
+    <ng-container autorizado>
+      <span style="font-size: medium">
+        Hola, {{ seguridadService.obtenerCapmpoJWT("email") }}
+      </span>
+      <button mat-button (click)="seguridadService.logout()">
+        Cerrar Sesión
+      </button>
+    </ng-container>
+    <ng-container noAutorizado>
+      <button mat-button routerLink="login">Login</button>
+      <button mat-button routerLink="registro">Registro</button>
+    </ng-container>
+  </app-autorizado> -->
+</mat-toolbar>
