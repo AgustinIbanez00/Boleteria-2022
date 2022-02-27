@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { webResult } from 'src/app/utilidades/listado-generico/weResult';
 import { parserarErroresAPI } from 'src/app/utilidades/utilidades';
@@ -8,6 +8,7 @@ import { ParadasService } from '../paradas.service';
 import { paradasDTO } from '../paradasDTO';
 import { PageEvent } from '@angular/material/paginator';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatTable } from '@angular/material/table';
 
 @Component({
   selector: 'app-indice-paradas',
@@ -36,6 +37,11 @@ export class IndiceParadasComponent implements OnInit {
 
   form: FormGroup;
 
+  columnasAMostrar = ['id', 'nombre', 'acciones'];
+
+  //agarrar referencia de la tabla
+  @ViewChild(MatTable) table: MatTable<any>;
+
   randomString(length, chars) {
     var result = '';
     for (var i = length; i > 0; --i)
@@ -44,11 +50,10 @@ export class IndiceParadasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.obtenerParadas(this.paginaActual, this.cantidadRegistrosAMostrar);
-
-    this.form = this.formBuilder.group({
-      nombre: '',
-    });
+    this.obtenerParadas(this.paginaActual, this.cantidadRegistrosAMostrar),
+      (this.form = this.formBuilder.group({
+        nombre: '',
+      }));
     this.form.valueChanges.subscribe((valores) => {
       this.cargarRegistrosFiltrados(
         valores,
@@ -89,8 +94,9 @@ export class IndiceParadasComponent implements OnInit {
       .obtenerParadas(pagina, cantidadRegistrosAMostrar)
       .subscribe(
         (respuesta: HttpResponse<webResult>) => {
-          //console.log('respuesta', Object.values(respuesta.body.result));
           console.log('respuesta', respuesta.body);
+          this.paradas = Object.values(respuesta.body.result);
+          //this.paradas = [];
 
           // console.log('errores', respuesta.body.error_messages);
           // this.error_messages = respuesta.body.error_messages;

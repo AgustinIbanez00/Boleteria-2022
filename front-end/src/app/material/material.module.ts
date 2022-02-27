@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 @NgModule({
   declarations: [],
   exports: [
@@ -23,7 +24,8 @@ import { MatCardModule } from '@angular/material/card';
     MatTooltipModule,
     MatCardModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTableModule,
   ],
   imports: [CommonModule],
 })
