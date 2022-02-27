@@ -5,6 +5,14 @@ html {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-image: url("assets/imagenes/fondo.jpg");
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: cover;
+}
+
+.imagenBackground {
+  position: absolute;
 }
 
 .mat-toolbar button {
@@ -12,6 +20,10 @@ body {
 }
 
 .botonLogin {
+  background-color: rgb(200, 230, 241);
+}
+
+.mat-toolbar {
   background-color: rgb(200, 230, 241);
 }
 

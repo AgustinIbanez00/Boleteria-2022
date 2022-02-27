@@ -1,0 +1,21 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span class="col-6">Paradas </span>
+    <div class="col-6" style="float: right">
+      <button
+        class="botonCrear"
+        style="float: right; margin-top: 20px"
+        mat-flat-button
+        (click)="openDialog(null)"
+        title="Crear"
+      >
+        <mat-icon>control_point</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+<app-listado-generico [listado]="paradas">
+  <ng-container contenido>
+    <div class="categorias-contenedor"></div>
+  </ng-container>
+</app-listado-generico>
