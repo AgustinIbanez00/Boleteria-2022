@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BoleteriaOnline.Web.Data.Models;
 [Index(nameof(Nombre), IsUnique = true)]
-[HumanDescription("destino", GrammaticalGender.Masculine)]
+[HumanDescription("parada", GrammaticalGender.Feminine)]
 public class Parada : AuditoryDates
 {
     public int Id { get; set; }
