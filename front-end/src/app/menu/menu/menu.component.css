@@ -5,7 +5,6 @@ mat-toolbar {
   top: 0;
   z-index: 1000;
   justify-content: unsafe;
-  height: 70px;
 }
 
 app-autorizado {
