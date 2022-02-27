@@ -3,8 +3,8 @@ public class Boleto
 {
     public int Id { get; set; }
     public Viaje Recorrido { get; set; }
-    public Destino Origen { get; set; }
-    public Destino Destino { get; set; }
+    public Parada Origen { get; set; }
+    public Parada Destino { get; set; }
     public Cliente Pasajero { get; set; }
     public Pago Pago { get; set; }
     public int Asiento { get; set; }

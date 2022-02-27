@@ -10,7 +10,7 @@ public class ApplicationDbContext : IdentityDbContext
     public virtual DbSet<Celda> Celdas { get; set; }
     public virtual DbSet<Cliente> Clientes { get; set; }
     public virtual DbSet<Usuario> Usuarios { get; set; }
-    public virtual DbSet<Destino> Destinos { get; set; }
+    public virtual DbSet<Parada> Destinos { get; set; }
     public virtual DbSet<Distribucion> Distribuciones { get; set; }
     public virtual DbSet<Fila> Filas { get; set; }
     public virtual DbSet<Horario> Horarios { get; set; }

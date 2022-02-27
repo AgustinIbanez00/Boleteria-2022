@@ -1,21 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using BoleteriaOnline.Web.Data;
 using BoleteriaOnline.Web.Data.Models;
-using BoleteriaOnline.Core.Data.Enums;
 using BoleteriaOnline.Web.Repositories;
 
 namespace BoleteriaOnline.Web.Repository;
 
-public class DestinoRepository : IDestinoRepository
+public class ParadaRepository : IParadaRepository
 {
     private readonly ApplicationDbContext _context;
 
-    public DestinoRepository(ApplicationDbContext context)
+    public ParadaRepository(ApplicationDbContext context)
     {
         _context = context;
     }
 
-    public async Task<bool> CreateDestinoAsync(Destino destino)
+    public async Task<bool> CreateAsync(Parada destino)
     {
         destino.CreatedAt = DateTime.Now;
         destino.Id = 0;
@@ -23,13 +22,13 @@ public class DestinoRepository : IDestinoRepository
         return await Save();
     }
 
-    public async Task<bool> DeleteDestinoAsync(long id)
+    public async Task<bool> DeleteAsync(long id)
     {
-        Destino destino = await GetDestinoAsync(id);
-        return destino == null ? false : await DeleteDestinoAsync(destino);
+        Parada destino = await GetAsync(id);
+        return destino == null ? false : await DeleteAsync(destino);
     }
 
-    public async Task<bool> DeleteDestinoAsync(Destino destino)
+    public async Task<bool> DeleteAsync(Parada destino)
     {
         if (destino == null)
             return false;
@@ -39,15 +38,15 @@ public class DestinoRepository : IDestinoRepository
         return await Save();
     }
 
-    public async Task<bool> ExistsDestinoAsync(long id) => await _context.Destinos.AnyAsync(e => e.Id == id);
+    public async Task<bool> ExistsAsync(long id) => await _context.Destinos.AnyAsync(e => e.Id == id);
 
-    public async Task<Destino> GetDestinoAsync(long id) => await _context.Destinos.FirstOrDefaultAsync(m => m.Id == id);
+    public async Task<Parada> GetAsync(long id) => await _context.Destinos.FirstOrDefaultAsync(m => m.Id == id);
 
-    public async Task<ICollection<Destino>> GetDestinosAsync() => await _context.Destinos.ToListAsync();
+    public async Task<ICollection<Parada>> GetAllAsync() => await _context.Destinos.ToListAsync();
 
     public async Task<bool> Save() => await _context.SaveChangesAsync() >= 0;
 
-    public async Task<bool> UpdateDestinoAsync(Destino destino)
+    public async Task<bool> UpdateAsync(Parada destino)
     {
         if (destino == null)
             return false;

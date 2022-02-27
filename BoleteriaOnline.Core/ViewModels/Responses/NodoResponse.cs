@@ -2,8 +2,8 @@
 public class NodoResponse
 {
     public int Id { get; set; }
-    public DestinoResponse Origen { get; set; }
-    public DestinoResponse Destino { get; set; }
+    public ParadaResponse Origen { get; set; }
+    public ParadaResponse Destino { get; set; }
 
     public string Demora { get; set; }
     public float Precio { get; set; }

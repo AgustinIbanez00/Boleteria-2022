@@ -44,7 +44,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
-builder.Services.AddScoped<IDestinoRepository, DestinoRepository>();
+builder.Services.AddScoped<IParadaRepository, ParadaRepository>();
 builder.Services.AddScoped<IViajeRepository, ViajeRepository>();
 builder.Services.AddScoped<INodoRepository, NodoRepository>();
 builder.Services.AddScoped<IDistribucionRepository, DistribucionRepository>();
@@ -52,7 +52,7 @@ builder.Services.AddScoped<IDistribucionRepository, DistribucionRepository>();
 /* INYECCION DE SERVICIOS */
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
-builder.Services.AddScoped<IDestinoService, DestinoService>();
+builder.Services.AddScoped<IParadaService, ParadaService>();
 builder.Services.AddScoped<IViajeService, ViajeService>();
 builder.Services.AddScoped<INodoService, NodoService>();
 builder.Services.AddScoped<IDistribucionService, DistribucionService>();

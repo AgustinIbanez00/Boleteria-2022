@@ -21,9 +21,9 @@ public class AutoMapperProfiles : Profile
         CreateMap<Cliente, ClienteResponse>()
             .ForMember(o => o.Dni, b => b.MapFrom(z => z.Id))
             .ReverseMap();
-        CreateMap<Destino, DestinoRequest>()
+        CreateMap<Parada, ParadaRequest>()
             .ReverseMap();
-        CreateMap<Destino, DestinoResponse>()
+        CreateMap<Parada, ParadaResponse>()
             .ReverseMap();
         CreateMap<Nodo, NodoRequest>()
             .ReverseMap();

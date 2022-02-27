@@ -10,21 +10,21 @@ namespace BoleteriaOnline.Web.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class DestinosController : ControllerBase
+public class ParadasController : ControllerBase
 {
-    private readonly IDestinoService _destinoservice;
+    private readonly IParadaService _paradaService;
 
-    public DestinosController(IDestinoService service)
+    public ParadasController(IParadaService service)
     {
-        _destinoservice = service;
+        _paradaService = service;
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ICollection<DestinoResponse>>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ICollection<ParadaResponse>>))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResult<ICollection<DestinoResponse>>>> GetAll()
+    public async Task<ActionResult<WebResult<ICollection<ParadaResponse>>>> GetAll()
     {
-        var destinos = await _destinoservice.GetDestinosAsync();
+        var destinos = await _paradaService.GetParadasAsync();
 
         if (!destinos.Success)
             return StatusCode(ResponseHelper.GetHttpError(destinos.ErrorCode), destinos);
@@ -33,12 +33,12 @@ public class DestinosController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<DestinoResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ParadaResponse>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResult<DestinoResponse>>> Get(long id)
+    public async Task<ActionResult<WebResult<ParadaResponse>>> Get(long id)
     {
-        var destino = await _destinoservice.GetDestinoAsync(id);
+        var destino = await _paradaService.GetParadaAsync(id);
 
         if (!destino.Success)
             return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);
@@ -47,13 +47,13 @@ public class DestinosController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<DestinoResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ParadaResponse>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<ActionResult<WebResult<DestinoResponse>>> CreateDestino([FromBody] DestinoRequest destinoDto)
+    public async Task<ActionResult<WebResult<ParadaResponse>>> CreateDestino([FromBody] ParadaRequest destinoDto)
     {
-        var destino = await _destinoservice.CreateDestinoAsync(destinoDto);
+        var destino = await _paradaService.CreateParadaAsync(destinoDto);
 
         if (!destino.Success)
             return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);
@@ -61,10 +61,10 @@ public class DestinosController : ControllerBase
     }
 
     [HttpPatch("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<DestinoResponse>))]
-    public async Task<ActionResult<WebResult<DestinoResponse>>> UpdateDestino([FromBody] DestinoRequest destinoDto, long id)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ParadaResponse>))]
+    public async Task<ActionResult<WebResult<ParadaResponse>>> UpdateDestino([FromBody] ParadaRequest destinoDto, long id)
     {
-        var destino = await _destinoservice.UpdateDestinoAsync(destinoDto, id);
+        var destino = await _paradaService.UpdateParadaAsync(destinoDto, id);
 
         if (!destino.Success)
             return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);
@@ -72,10 +72,10 @@ public class DestinosController : ControllerBase
     }
 
     [HttpDelete]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<DestinoResponse>))]
-    public async Task<ActionResult<WebResult<DestinoResponse>>> DeleteDestino(long id)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ParadaResponse>))]
+    public async Task<ActionResult<WebResult<ParadaResponse>>> DeleteDestino(long id)
     {
-        var destino = await _destinoservice.DeleteDestinoAsync(id);
+        var destino = await _paradaService.DeleteParadaAsync(id);
 
         if (!destino.Success)
             return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);

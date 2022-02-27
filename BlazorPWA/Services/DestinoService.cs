@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
@@ -6,7 +7,7 @@ using BoleteriaOnline.Core.ViewModels.Requests;
 using BoleteriaOnline.Core.ViewModels.Responses;
 
 namespace BlazorPWA.Services;
-public class DestinoService : IDestinoService
+public class DestinoService : IParadaService
 {
     private readonly HttpClient _client;
     private readonly JsonSerializerOptions _options;
@@ -19,7 +20,7 @@ public class DestinoService : IDestinoService
         _options = new JsonSerializerOptions { PropertyNamingPolicy = new SnakeCaseNamingPolicy() };
     }
 
-    public async Task<WebResult<DestinoResponse>> CreateDestinoAsync(DestinoRequest destinoDto)
+    public async Task<WebResult<ParadaResponse>> CreateParadaAsync(ParadaRequest destinoDto)
     {
         var response = await _client.PostAsJsonAsync(_url, destinoDto);
         var content = await response.Content.ReadAsStringAsync();
@@ -27,10 +28,10 @@ public class DestinoService : IDestinoService
         {
             throw new ApplicationException(content);
         }
-        return JsonSerializer.Deserialize<WebResult<DestinoResponse>>(content, _options);
+        return JsonSerializer.Deserialize<WebResult<ParadaResponse>>(content, _options);
     }
 
-    public async Task<WebResult<DestinoResponse>> DeleteDestinoAsync(long id)
+    public async Task<WebResult<ParadaResponse>> DeleteParadaAsync(long id)
     {
         var response = await _client.DeleteAsync($"{_url}?id={id}");
         var content = await response.Content.ReadAsStringAsync();
@@ -38,18 +39,21 @@ public class DestinoService : IDestinoService
         {
             throw new ApplicationException(content);
         }
-        Console.WriteLine("Delete destino " + id);
-        Console.WriteLine(content);
-
-        return JsonSerializer.Deserialize<WebResult<DestinoResponse>>(content, _options);
+        return JsonSerializer.Deserialize<WebResult<ParadaResponse>>(content, _options);
     }
 
-    public Task<WebResult<DestinoResponse>> GetDestinoAsync(long id)
+    public async Task<WebResult<ParadaResponse>> GetParadaAsync(long id)
     {
-        throw new NotImplementedException();
+        var response = await _client.GetAsync($"{_url}/{id}");
+        var content = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ApplicationException(content);
+        }
+        return JsonSerializer.Deserialize<WebResult<ParadaResponse>>(content, _options);
     }
 
-    public async Task<WebResult<ICollection<DestinoResponse>>> GetDestinosAsync()
+    public async Task<WebResult<ICollection<ParadaResponse>>> GetParadasAsync()
     {
         try
         {
@@ -59,16 +63,23 @@ public class DestinoService : IDestinoService
             {
                 throw new ApplicationException(content);
             }
-            return JsonSerializer.Deserialize<WebResult<ICollection<DestinoResponse>>>(content, _options);
+            return JsonSerializer.Deserialize<WebResult<ICollection<ParadaResponse>>>(content, _options);
         }
         catch (Exception ex)
         {
-            return WebResponse.Error<ICollection<DestinoResponse>>(ex.Message);
+            return WebResponse.Error<ICollection<ParadaResponse>>(ex.Message);
         }
     }
 
-    public Task<WebResult<DestinoResponse>> UpdateDestinoAsync(DestinoRequest destinoDto, long id)
+    public async Task<WebResult<ParadaResponse>> UpdateParadaAsync(ParadaRequest request, long id)
     {
-        throw new NotImplementedException();
+        HttpContent httpContent = new StringContent(JsonSerializer.Serialize(request, _options), Encoding.UTF8, "application/json-patch+json");
+        var response = await _client.PatchAsync($"{_url}/{id}", httpContent);
+        var content = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ApplicationException(content);
+        }
+        return JsonSerializer.Deserialize<WebResult<ParadaResponse>>(content, _options);
     }
 }

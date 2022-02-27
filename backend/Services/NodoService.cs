@@ -14,9 +14,9 @@ public class NodoService : INodoService
 {
     private readonly IMapper _mapper;
     private readonly INodoRepository _nodoRepository;
-    private readonly IDestinoRepository _destinoRepository;
+    private readonly IParadaRepository _destinoRepository;
 
-    public NodoService(IMapper mapper, INodoRepository nodoRepository, IDestinoRepository destinoRepository)
+    public NodoService(IMapper mapper, INodoRepository nodoRepository, IParadaRepository destinoRepository)
     {
         _mapper = mapper;
         _nodoRepository = nodoRepository;
@@ -29,19 +29,19 @@ public class NodoService : INodoService
         {
             var nodo = _mapper.Map<Nodo>(nodoDto);
 
-            Destino nodoDtoOrigen = await _destinoRepository.GetDestinoAsync(nodoDto.OrigenId);
+            Parada nodoDtoOrigen = await _destinoRepository.GetAsync(nodoDto.OrigenId);
 
             if (nodoDtoOrigen != null)
                 nodo.Origen = nodoDtoOrigen;
             else
-                return KeyError<Destino, NodoResponse>(nameof(nodoDto.OrigenId), ErrorMessage.NotFound);
+                return KeyError<Parada, NodoResponse>(nameof(nodoDto.OrigenId), ErrorMessage.NotFound);
             
-            Destino nodoDtoDestino = await _destinoRepository.GetDestinoAsync(nodoDto.DestinoId);
+            Parada nodoDtoDestino = await _destinoRepository.GetAsync(nodoDto.DestinoId);
 
             if (nodoDtoDestino != null)
                 nodo.Destino = nodoDtoDestino;
             else
-                return KeyError<Destino, NodoResponse>(nameof(nodoDto.DestinoId), ErrorMessage.NotFound);
+                return KeyError<Parada, NodoResponse>(nameof(nodoDto.DestinoId), ErrorMessage.NotFound);
 
             if (nodo.Origen == nodo.Destino)
                 return Error<NodoResponse>("El nodo origen no puede ser igual al nodo destino.");
@@ -129,9 +129,9 @@ public class NodoService : INodoService
 
             if(nodo.Origen?.Id != nodoDto.OrigenId)
             {
-                Destino nodoDtoOrigen = await _destinoRepository.GetDestinoAsync(nodoDto.OrigenId);
+                Parada nodoDtoOrigen = await _destinoRepository.GetAsync(nodoDto.OrigenId);
 
-                if (await _destinoRepository.ExistsDestinoAsync(nodoDto.OrigenId))
+                if (await _destinoRepository.ExistsAsync(nodoDto.OrigenId))
                     nodo.Origen = nodoDtoOrigen;
                 else
                     return KeyError<Nodo, NodoResponse>(nameof(nodoDto.OrigenId), ErrorMessage.InvalidId);
@@ -139,9 +139,9 @@ public class NodoService : INodoService
 
             if (nodo.Destino?.Id != nodoDto.DestinoId)
             {
-                Destino nodoDtoDestino = await _destinoRepository.GetDestinoAsync(nodoDto.DestinoId);
+                Parada nodoDtoDestino = await _destinoRepository.GetAsync(nodoDto.DestinoId);
 
-                if (await _destinoRepository.ExistsDestinoAsync(nodoDto.DestinoId))
+                if (await _destinoRepository.ExistsAsync(nodoDto.DestinoId))
                     nodo.Destino = nodoDtoDestino;
             }
 

@@ -21,9 +21,17 @@
 </div>
 
 
-@if (distribuciones == null || distribuciones?.Count() == 0)
+@if (distribuciones == null && !Fetched)
 {
-    <p>No hay registros para mostrar</p>
+    <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" />
+}
+else if(distribuciones == null && Fetched)
+{
+    <RadzenLabel Text="El servicio no se encuentra disponible."></RadzenLabel>
+}
+else if(distribuciones?.Count() == 0)
+{
+    <RadzenLabel Text="No se encontraron registros."></RadzenLabel>   
 }
 else
 {
@@ -69,20 +77,19 @@ else
 
     IEnumerable<DistribucionResponse> distribuciones;
 
+    bool Fetched = false;
+
     async Task LoadDistribuciones()
     {
         var response = await DistribucionService.GetDistribucionesAsync();
         if (response.Success)
             distribuciones = response.Result;
-        else Console.WriteLine(response.Message);
+        Fetched = true;
     }
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await DistribucionService.GetDistribucionesAsync();
-        if (response.Success)
-            distribuciones = response.Result;
-        else Console.WriteLine(response.Message);
+        await LoadDistribuciones();
 
         DialogService.OnClose += (args) => { Close(args); };
 
