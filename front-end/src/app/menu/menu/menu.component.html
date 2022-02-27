@@ -1,19 +1,53 @@
 <mat-toolbar class="mat-elevation-z8">
-  <button mat-button routerLink="">
-    <mat-icon>store_mall_directory</mat-icon>BOLETERIA
-  </button>
-  <!-- se le pasa el rol actual -->
-  <!-- <app-autorizado [rol]="'admin'">
+  <img
+    [src]="'assets/imagenes/icono.jpg'"
+    alt="Foto"
+    class="d-block"
+    style="border-radius: 50%; width: 2.5em"
+    routerLink=""
+  />
+  <button mat-button routerLink="" style="font-size: 23px">BOLETERIA</button>
+
+  <app-autorizado [rol]="'admin'">
     <ng-container autorizado>
       <div>
-        <button mat-button routerLink="categorias">Categoría</button>
+        <button mat-button routerLink="paradas">
+          <mat-icon><span class="material-icons"> pin_drop </span></mat-icon>
+          Paradas
+        </button>
       </div>
-
       <div>
-        <button mat-button routerLink="usuarios">Usuarios</button>
+        <button mat-button routerLink="distribucion">
+          <mat-icon><span class="material-icons"> event_seat </span></mat-icon>
+          Distribución
+        </button>
+      </div>
+      <div>
+        <button mat-button routerLink="viajes">
+          <mat-icon
+            ><span class="material-icons"> directions_bus </span></mat-icon
+          >
+          Viajes
+        </button>
+      </div>
+      <div>
+        <button mat-button routerLink="horarios">
+          <mat-icon
+            ><span class="material-icons"> departure_board </span></mat-icon
+          >
+          Horarios
+        </button>
+      </div>
+      <div>
+        <button mat-button routerLink="usuarios">
+          <mat-icon
+            ><span class="material-icons"> supervisor_account </span></mat-icon
+          >
+          Usuarios
+        </button>
       </div>
     </ng-container>
-  </app-autorizado> -->
+  </app-autorizado>
   <!-- <app-autorizado [rol]="'cliente'">
     <ng-container autorizado>
        <div>
@@ -55,7 +89,7 @@
 
   <div class="espacio"></div>
 
-  <!-- <app-autorizado>
+  <app-autorizado>
     <ng-container autorizado>
       <span style="font-size: medium">
         Hola, {{ seguridadService.obtenerCapmpoJWT("email") }}
@@ -65,8 +99,8 @@
       </button>
     </ng-container>
     <ng-container noAutorizado>
-      <button mat-button routerLink="login">Login</button>
+      <button mat-button class="botonLogin" routerLink="login">Login</button>
       <button mat-button routerLink="registro">Registro</button>
     </ng-container>
-  </app-autorizado> -->
+  </app-autorizado>
 </mat-toolbar>

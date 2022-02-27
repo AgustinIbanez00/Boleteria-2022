@@ -7,6 +7,16 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.mat-toolbar button {
+  font-size: medium;
+}
+
+.botonLogin {
+  background-color: rgb(200, 230, 241);
+}
+
+/* ------------------------------ */
+/* 
 .guardar {
   background-color: #c2e48b;
 }
@@ -66,4 +76,4 @@ body {
 
 .botonComprar:hover {
   background-color: #9153bb;
-}
+} */
