@@ -14,8 +14,57 @@
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
+
 <app-listado-generico [listado]="paradas">
   <ng-container contenido>
-    <div class="categorias-contenedor"></div>
+    <div class="misproductos-contenedor">
+      <div class="productos-contenedor">
+        <mat-card
+          class="misProducto-card mat-elevation-z5"
+          *ngFor="let producto of paradasCole; let index = index"
+        >
+          <div>{{ producto.nombre }}</div>
+
+          <mat-card-actions style="text-align: center">
+            <button
+              class="botonEditar"
+              mat-flat-button
+              (click)="openDialog(index)"
+              title="Editar"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              class="botonVer"
+              mat-flat-button
+              routerLink="/productos/visualizar/{{ producto.id }}"
+              title="Ver"
+            >
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button
+              title="Eliminar"
+              mat-flat-button
+              class="botonEliminar"
+              [swal]="{
+                title: 'Confirmación',
+                text: '¿Está seguro que desea borrar el registro?',
+                showCancelButton: true
+              }"
+              (click)="eliminarProducto(producto, producto.id)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20, 50]"
+      showFirstLastButtons
+      [length]="cantidadTotalRegistros"
+      [pageSize]="cantidadRegistrosAMostrar"
+      (page)="actualizarPaginacion($event)"
+    ></mat-paginator>
   </ng-container>
 </app-listado-generico>

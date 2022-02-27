@@ -14,17 +14,32 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CrearParadasComponent } from './paradas/crear-paradas/crear-paradas.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { IndiceParadasComponent } from './paradas/indice-paradas/indice-paradas.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent, AutorizadoComponent, ListadoParadasComponent, ListadoGenericoComponent, CrearParadasComponent, LandingPageComponent, IndiceParadasComponent],
+  declarations: [
+    AppComponent,
+    MenuComponent,
+    AutorizadoComponent,
+    ListadoParadasComponent,
+    ListadoGenericoComponent,
+    CrearParadasComponent,
+    LandingPageComponent,
+    IndiceParadasComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
     HttpClientModule,
+    MatPaginatorModule,
+    ReactiveFormsModule,
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

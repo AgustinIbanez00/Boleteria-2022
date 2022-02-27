@@ -6,6 +6,8 @@ import { parserarErroresAPI } from 'src/app/utilidades/utilidades';
 import { CrearParadasComponent } from '../crear-paradas/crear-paradas.component';
 import { ParadasService } from '../paradas.service';
 import { paradasDTO } from '../paradasDTO';
+import { PageEvent } from '@angular/material/paginator';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-indice-paradas',
@@ -15,8 +17,9 @@ import { paradasDTO } from '../paradasDTO';
 export class IndiceParadasComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
-    public paradaraService: ParadasService
-  ) { }
+    public paradaraService: ParadasService,
+    private formBuilder: FormBuilder
+  ) {}
 
   @Input()
   paradas;
@@ -31,7 +34,29 @@ export class IndiceParadasComponent implements OnInit {
 
   paradasCole: paradasDTO[] = [];
 
-  ngOnInit(): void { }
+  form: FormGroup;
+
+  randomString(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i)
+      result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+  }
+
+  ngOnInit(): void {
+    this.obtenerParadas(this.paginaActual, this.cantidadRegistrosAMostrar);
+
+    this.form = this.formBuilder.group({
+      nombre: '',
+    });
+    this.form.valueChanges.subscribe((valores) => {
+      this.cargarRegistrosFiltrados(
+        valores,
+        this.paginaActual,
+        this.cantidadRegistrosAMostrar
+      );
+    });
+  }
 
   openDialog(id: number) {
     var dialogRef;
@@ -54,26 +79,74 @@ export class IndiceParadasComponent implements OnInit {
     }
 
     dialogRef.beforeClosed().subscribe((result) => {
-      this.obtenerMisProductos(
-        this.paginaActual,
-        this.cantidadRegistrosAMostrar
-      );
+      this.obtenerParadas(this.paginaActual, this.cantidadRegistrosAMostrar);
     });
   }
-  obtenerMisProductos(pagina: number, cantidadRegistrosAMostrar: number) {
-    // this.paradaraService
-    //   .obtenerParadas(pagina, cantidadRegistrosAMostrar)
-    //   .subscribe(
-    //     (respuesta: HttpResponse<webResult>) => {
-    //       this.paradas = Object.values(respuesta.body.data);
 
+  // listado
+  obtenerParadas(pagina: number, cantidadRegistrosAMostrar: number) {
+    this.paradaraService
+      .obtenerParadas(pagina, cantidadRegistrosAMostrar)
+      .subscribe(
+        (respuesta: HttpResponse<webResult>) => {
+          //console.log('respuesta', Object.values(respuesta.body.result));
+          console.log('respuesta', respuesta.body);
+
+          // console.log('errores', respuesta.body.error_messages);
+          // this.error_messages = respuesta.body.error_messages;
+
+          // console.log(this.error_messages);
+          //this.paradas = Object.values(respuesta.body.result);
+          this.cantidadTotalRegistros = respuesta.headers.get(
+            'cantidadTotalRegistros'
+          );
+        },
+        (error) => {
+          this.errores = parserarErroresAPI(error);
+        }
+      );
+  }
+
+  // paginacion
+  actualizarPaginacion(datos: PageEvent) {
+    this.paginaActual = datos.pageIndex + 1;
+    this.cantidadRegistrosAMostrar = datos.pageSize;
+    // this.cargarRegistrosFiltrados(
+    //   this.form.value,
+    //   this.paginaActual,
+    //   this.cantidadRegistrosAMostrar
+    // );
+  }
+
+  // filtro
+  cargarRegistrosFiltrados(
+    valores: any,
+    pagina: number,
+    cantidadRegistrosAMostrar: number
+  ) {
+    // valores.pagina = pagina;
+    // valores.recordsPorPagina = cantidadRegistrosAMostrar;
+    // this.productoService.filtrarMisProductos(valores).subscribe(
+    //   (respuesta: HttpResponse<webResult>) => {
+    //     if (respuesta.body.success) {
+    //       this.misProductos = Object.values(respuesta.body.data);
     //       this.cantidadTotalRegistros = respuesta.headers.get(
     //         'cantidadTotalRegistros'
     //       );
-    //     },
-    //     (error) => {
-    //       this.errores = parserarErroresAPI(error);
+    //     } else {
+    //       if (
+    //         respuesta.body.errorList &&
+    //         respuesta.body.errorList.length != 0
+    //       ) {
+    //         this.errores.push(...respuesta.body.errorList);
+    //       } else {
+    //         this.errores.push(respuesta.body.error);
+    //       }
     //     }
-    //   );
+    //   },
+    //   (error) => {
+    //     this.errores = parserarErroresAPI(error);
+    //   }
+    //);
   }
 }
