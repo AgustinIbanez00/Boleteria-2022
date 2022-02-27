@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using BoleteriaOnline.Web.Extensions.Response;
 using BoleteriaOnline.Core.Services;
-using BoleteriaOnline.Core.ViewModels.Requests;
 using BoleteriaOnline.Core.Utils;
-using BoleteriaOnline.Core.ViewModels.Responses;
+using BoleteriaOnline.Core.ViewModels;
 
 namespace BoleteriaOnline.Web.Controllers;
 
@@ -20,9 +18,9 @@ public class ParadasController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ICollection<ParadaResponse>>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ICollection<ParadaDTO>>))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResult<ICollection<ParadaResponse>>>> GetAll()
+    public async Task<ActionResult<WebResult<ICollection<ParadaDTO>>>> GetAll()
     {
         var destinos = await _paradaService.GetParadasAsync();
 
@@ -33,10 +31,10 @@ public class ParadasController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ParadaResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ParadaDTO>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResult<ParadaResponse>>> Get(long id)
+    public async Task<ActionResult<WebResult<ParadaDTO>>> Get(long id)
     {
         var destino = await _paradaService.GetParadaAsync(id);
 
@@ -47,11 +45,11 @@ public class ParadasController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ParadaResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ParadaDTO>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<ActionResult<WebResult<ParadaResponse>>> CreateDestino([FromBody] ParadaRequest destinoDto)
+    public async Task<ActionResult<WebResult<ParadaDTO>>> CreateDestino([FromBody] ParadaDTO destinoDto)
     {
         var destino = await _paradaService.CreateParadaAsync(destinoDto);
 
@@ -61,8 +59,8 @@ public class ParadasController : ControllerBase
     }
 
     [HttpPatch("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ParadaResponse>))]
-    public async Task<ActionResult<WebResult<ParadaResponse>>> UpdateDestino([FromBody] ParadaRequest destinoDto, long id)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ParadaDTO>))]
+    public async Task<ActionResult<WebResult<ParadaDTO>>> UpdateDestino([FromBody] ParadaDTO destinoDto, long id)
     {
         var destino = await _paradaService.UpdateParadaAsync(destinoDto, id);
 
@@ -72,8 +70,8 @@ public class ParadasController : ControllerBase
     }
 
     [HttpDelete]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ParadaResponse>))]
-    public async Task<ActionResult<WebResult<ParadaResponse>>> DeleteDestino(long id)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ParadaDTO>))]
+    public async Task<ActionResult<WebResult<ParadaDTO>>> DeleteDestino(long id)
     {
         var destino = await _paradaService.DeleteParadaAsync(id);
 

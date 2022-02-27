@@ -1,59 +1,40 @@
 {
-  "openapi": "3.0.1",
+  "x-generator": "NSwag v13.15.5.0 (NJsonSchema v10.6.6.0 (Newtonsoft.Json v13.0.0.0))",
+  "swagger": "2.0",
   "info": {
     "title": "Boleteria Online",
     "description": "Colleción de API's correspondientes al sistema de Pasajes Online.",
-    "contact": {
-      "name": "Agustin Ibañez",
-      "email": "admin@boleteriasystem.com"
-    },
-    "version": "v1"
+    "version": "1.0.0"
   },
+  "host": "localhost:7203",
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "text/plain",
+    "application/json",
+    "text/json"
+  ],
   "paths": {
     "/api/clientes": {
       "get": {
         "tags": [
           "Clientes"
         ],
+        "operationId": "Clientes_GetAll",
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseICollectionWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseICollectionWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseICollectionWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfICollectionOfClienteResponse"
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           }
         }
@@ -62,104 +43,50 @@
         "tags": [
           "Clientes"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ClienteRequest"
-              }
+        "operationId": "Clientes_CreateCliente",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "clienteDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ClienteRequest"
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ClienteRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ClienteRequest"
-              }
-            }
+            "x-nullable": false
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfClienteResponse"
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "201": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfClienteResponse"
             }
           }
         }
@@ -168,44 +95,29 @@
         "tags": [
           "Clientes"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ClienteRequest"
-              }
+        "operationId": "Clientes_UpdateCliente",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "clienteDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ClienteRequest"
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ClienteRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ClienteRequest"
-              }
-            }
+            "x-nullable": false
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfClienteResponse"
             }
           }
         }
@@ -214,35 +126,22 @@
         "tags": [
           "Clientes"
         ],
+        "operationId": "Clientes_DeleteCliente",
         "parameters": [
           {
+            "type": "integer",
             "name": "id",
             "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "format": "int64",
+            "x-nullable": false
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfClienteResponse"
             }
           }
         }
@@ -253,405 +152,37 @@
         "tags": [
           "Clientes"
         ],
+        "operationId": "Clientes_Get",
         "parameters": [
           {
+            "type": "integer",
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "format": "int64",
+            "x-nullable": false
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ClienteResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfClienteResponse"
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/destinos": {
-      "get": {
-        "tags": [
-          "Destinos"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseICollectionWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseICollectionWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseICollectionWebResult"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Destinos"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DestinoRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DestinoRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DestinoRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseWebResult"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "201": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseWebResult"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Destinos"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
+            "x-nullable": false,
+            "description": "",
             "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseWebResult"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/destinos/{id}": {
-      "get": {
-        "tags": [
-          "Destinos"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseWebResult"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Destinos"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
+            "x-nullable": false,
+            "description": "",
             "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DestinoRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DestinoRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DestinoRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DestinoResponseWebResult"
-                }
-              }
+              "$ref": "#/definitions/ProblemDetails"
             }
           }
         }
@@ -662,45 +193,20 @@
         "tags": [
           "Distribuciones"
         ],
+        "operationId": "Distribuciones_GetAll",
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseICollectionWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseICollectionWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseICollectionWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfICollectionOfDistribucionResponse"
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           }
         }
@@ -709,104 +215,50 @@
         "tags": [
           "Distribuciones"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DistribucionRequest"
-              }
+        "operationId": "Distribuciones_CreateDistribucion",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "distribucionDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DistribucionRequest"
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DistribucionRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DistribucionRequest"
-              }
-            }
+            "x-nullable": false
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfDistribucionResponse"
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "201": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfDistribucionResponse"
             }
           }
         }
@@ -815,35 +267,22 @@
         "tags": [
           "Distribuciones"
         ],
+        "operationId": "Distribuciones_DeleteDistribucion",
         "parameters": [
           {
+            "type": "integer",
             "name": "id",
             "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "format": "int64",
+            "x-nullable": false
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfDistribucionResponse"
             }
           }
         }
@@ -854,76 +293,37 @@
         "tags": [
           "Distribuciones"
         ],
+        "operationId": "Distribuciones_Get",
         "parameters": [
           {
+            "type": "integer",
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "format": "int64",
+            "x-nullable": false
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfDistribucionResponse"
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           }
         }
@@ -932,54 +332,36 @@
         "tags": [
           "Distribuciones"
         ],
+        "operationId": "Distribuciones_UpdateDistribucion",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
         "parameters": [
           {
+            "name": "distribucionDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DistribucionUpdateRequest"
+            },
+            "x-nullable": false
+          },
+          {
+            "type": "string",
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "x-nullable": false
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DistribucionUpdateRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DistribucionUpdateRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/DistribucionUpdateRequest"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfDistribucionResponse"
             }
           }
         }
@@ -990,55 +372,37 @@
         "tags": [
           "Distribuciones"
         ],
+        "operationId": "Distribuciones_CreateFilas",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
         "parameters": [
           {
+            "type": "integer",
             "name": "id",
             "in": "path",
             "required": true,
+            "format": "int64",
+            "x-nullable": false
+          },
+          {
+            "name": "planta",
+            "in": "body",
+            "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+              "$ref": "#/definitions/Planta"
+            },
+            "x-nullable": false
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Planta"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Planta"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/Planta"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DistribucionResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfDistribucionResponse"
             }
           }
         }
@@ -1049,45 +413,20 @@
         "tags": [
           "Nodos"
         ],
+        "operationId": "Nodos_GetAll",
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseICollectionWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseICollectionWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseICollectionWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfICollectionOfNodoResponse"
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           }
         }
@@ -1096,104 +435,50 @@
         "tags": [
           "Nodos"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NodoRequest"
-              }
+        "operationId": "Nodos_CreateNodo",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "nodoDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NodoRequest"
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NodoRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/NodoRequest"
-              }
-            }
+            "x-nullable": false
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfNodoResponse"
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "201": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfNodoResponse"
             }
           }
         }
@@ -1202,44 +487,29 @@
         "tags": [
           "Nodos"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NodoRequest"
-              }
+        "operationId": "Nodos_UpdateNodo",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "nodoDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NodoRequest"
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NodoRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/NodoRequest"
-              }
-            }
+            "x-nullable": false
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfNodoResponse"
             }
           }
         }
@@ -1248,35 +518,22 @@
         "tags": [
           "Nodos"
         ],
+        "operationId": "Nodos_DeleteNodo",
         "parameters": [
           {
+            "type": "integer",
             "name": "id",
             "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "format": "int64",
+            "x-nullable": false
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfNodoResponse"
             }
           }
         }
@@ -1287,76 +544,217 @@
         "tags": [
           "Nodos"
         ],
+        "operationId": "Nodos_Get",
         "parameters": [
           {
+            "type": "integer",
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "format": "int64",
+            "x-nullable": false
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NodoResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfNodoResponse"
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/api/paradas": {
+      "get": {
+        "tags": [
+          "Paradas"
+        ],
+        "operationId": "Paradas_GetAll",
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfICollectionOfParadaDTO"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Paradas"
+        ],
+        "operationId": "Paradas_CreateDestino",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "destinoDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ParadaDTO"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfParadaDTO"
+            }
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "201": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfParadaDTO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Paradas"
+        ],
+        "operationId": "Paradas_DeleteDestino",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "query",
+            "format": "int64",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfParadaDTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/paradas/{id}": {
+      "get": {
+        "tags": [
+          "Paradas"
+        ],
+        "operationId": "Paradas_Get",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int64",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfParadaDTO"
+            }
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Paradas"
+        ],
+        "operationId": "Paradas_UpdateDestino",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "destinoDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ParadaDTO"
+            },
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int64",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfParadaDTO"
             }
           }
         }
@@ -1367,76 +765,37 @@
         "tags": [
           "Usuario"
         ],
+        "operationId": "Usuario_Get",
         "parameters": [
           {
+            "type": "integer",
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
+            "format": "int32",
+            "x-nullable": false
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfUsuarioResponse"
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           }
         }
@@ -1447,104 +806,50 @@
         "tags": [
           "Usuario"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegistroRequest"
-              }
+        "operationId": "Usuario_RegisterUsuario",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "usuarioDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegistroRequest"
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegistroRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegistroRequest"
-              }
-            }
+            "x-nullable": false
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfUsuarioResponse"
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "201": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfUsuarioResponse"
             }
           }
         }
@@ -1555,104 +860,50 @@
         "tags": [
           "Usuario"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
-              }
+        "operationId": "Usuario_LoginUsuario",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "usuarioDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginRequest"
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
-              }
-            }
+            "x-nullable": false
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfUsuarioResponse"
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "201": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoginResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoginResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoginResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfLoginResponse"
             }
           }
         }
@@ -1663,35 +914,22 @@
         "tags": [
           "Usuario"
         ],
+        "operationId": "Usuario_LockUsuario",
         "parameters": [
           {
+            "type": "integer",
             "name": "id",
             "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
+            "format": "int32",
+            "x-nullable": false
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfUsuarioResponse"
             }
           }
         }
@@ -1702,25 +940,13 @@
         "tags": [
           "Usuario"
         ],
+        "operationId": "Usuario_GetMe",
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfUsuarioResponse"
             }
           }
         }
@@ -1731,45 +957,20 @@
         "tags": [
           "Viajes"
         ],
+        "operationId": "Viajes_GetAll",
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseICollectionWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseICollectionWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseICollectionWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfICollectionOfViajeResponse"
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           }
         }
@@ -1778,104 +979,50 @@
         "tags": [
           "Viajes"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ViajeRequest"
-              }
+        "operationId": "Viajes_CreateViaje",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ViajeRequest"
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ViajeRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ViajeRequest"
-              }
-            }
+            "x-nullable": false
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfViajeResponse"
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "201": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfViajeResponse"
             }
           }
         }
@@ -1884,44 +1031,29 @@
         "tags": [
           "Viajes"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ViajeUpdateRequest"
-              }
+        "operationId": "Viajes_UpdateViaje",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "request",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ViajeUpdateRequest"
             },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ViajeUpdateRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ViajeUpdateRequest"
-              }
-            }
+            "x-nullable": false
           }
-        },
+        ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfViajeResponse"
             }
           }
         }
@@ -1930,35 +1062,22 @@
         "tags": [
           "Viajes"
         ],
+        "operationId": "Viajes_DeleteViaje",
         "parameters": [
           {
+            "type": "integer",
             "name": "id",
             "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "format": "int64",
+            "x-nullable": false
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfViajeResponse"
             }
           }
         }
@@ -1969,1139 +1088,1146 @@
         "tags": [
           "Viajes"
         ],
+        "operationId": "Viajes_Get",
         "parameters": [
           {
+            "type": "integer",
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
+            "format": "int64",
+            "x-nullable": false
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseWebResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseWebResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ViajeResponseWebResult"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfViajeResponse"
             }
           },
           "400": {
-            "description": "Bad Request",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           }
         }
       }
     }
   },
-  "components": {
-    "schemas": {
-      "CeldaRequest": {
-        "type": "object",
-        "properties": {
-          "value": {
-            "$ref": "#/components/schemas/DistribucionEspacio"
+  "definitions": {
+    "WebResultOfICollectionOfClienteResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ClienteResponse"
           }
         },
-        "additionalProperties": false
-      },
-      "CeldaResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "value": {
-            "$ref": "#/components/schemas/DistribucionEspacio"
-          }
+        "success": {
+          "type": "boolean"
         },
-        "additionalProperties": false
-      },
-      "CeldaUpdateRequest": {
-        "type": "object",
-        "properties": {
-          "value": {
-            "$ref": "#/components/schemas/DistribucionEspacio"
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          }
+        "message": {
+          "type": "string"
         },
-        "additionalProperties": false
-      },
-      "ClienteRequest": {
-        "required": [
-          "dni",
-          "fecha_nacimiento",
-          "genero",
-          "nacionalidad",
-          "nombre"
-        ],
-        "type": "object",
-        "properties": {
-          "dni": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "nombre": {
-            "type": "string"
-          },
-          "fecha_nacimiento": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "nacionalidad": {
-            "type": "string"
-          },
-          "genero": {
-            "$ref": "#/components/schemas/Gender"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ClienteResponse": {
-        "required": [
-          "dni",
-          "fecha_nacimiento",
-          "genero",
-          "nacionalidad",
-          "nombre"
-        ],
-        "type": "object",
-        "properties": {
-          "dni": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "nombre": {
-            "type": "string"
-          },
-          "fecha_nacimiento": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "nacionalidad": {
-            "type": "string"
-          },
-          "genero": {
-            "$ref": "#/components/schemas/Gender"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ClienteResponseICollectionWebResult": {
-        "type": "object",
-        "properties": {
-          "result": {
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ClienteResponse"
-            },
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "error_messages": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "nullable": true
-          },
-          "error_code": {
-            "$ref": "#/components/schemas/ErrorMessage"
-          },
-          "error": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ClienteResponseWebResult": {
-        "type": "object",
-        "properties": {
-          "result": {
-            "$ref": "#/components/schemas/ClienteResponse"
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "error_messages": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "nullable": true
-          },
-          "error_code": {
-            "$ref": "#/components/schemas/ErrorMessage"
-          },
-          "error": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "DayOfWeek": {
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "DestinoRequest": {
-        "required": [
-          "nombre"
-        ],
-        "type": "object",
-        "properties": {
-          "nombre": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DestinoResponse": {
-        "required": [
-          "nombre"
-        ],
-        "type": "object",
-        "properties": {
-          "nombre": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string"
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DestinoResponseICollectionWebResult": {
-        "type": "object",
-        "properties": {
-          "result": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DestinoResponse"
-            },
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "error_messages": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "nullable": true
-          },
-          "error_code": {
-            "$ref": "#/components/schemas/ErrorMessage"
-          },
-          "error": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "DestinoResponseWebResult": {
-        "type": "object",
-        "properties": {
-          "result": {
-            "$ref": "#/components/schemas/DestinoResponse"
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "error_messages": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "nullable": true
-          },
-          "error_code": {
-            "$ref": "#/components/schemas/ErrorMessage"
-          },
-          "error": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "DistribucionEspacio": {
-        "enum": [
-          1,
-          2,
-          3,
-          -1
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "DistribucionRequest": {
-        "required": [
-          "filas",
-          "nota",
-          "un_piso"
-        ],
-        "type": "object",
-        "properties": {
-          "filas": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FilaRequest"
-            }
-          },
-          "nota": {
-            "maxLength": 128,
-            "type": "string"
-          },
-          "un_piso": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DistribucionResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "filas": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FilaResponse"
-            },
-            "nullable": true
-          },
-          "nota": {
-            "type": "string",
-            "nullable": true
-          },
-          "un_piso": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DistribucionResponseICollectionWebResult": {
-        "type": "object",
-        "properties": {
-          "result": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DistribucionResponse"
-            },
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "error_messages": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "nullable": true
-          },
-          "error_code": {
-            "$ref": "#/components/schemas/ErrorMessage"
-          },
-          "error": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "DistribucionResponseWebResult": {
-        "type": "object",
-        "properties": {
-          "result": {
-            "$ref": "#/components/schemas/DistribucionResponse"
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "error_messages": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "nullable": true
-          },
-          "error_code": {
-            "$ref": "#/components/schemas/ErrorMessage"
-          },
-          "error": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "DistribucionUpdateRequest": {
-        "required": [
-          "filas",
-          "nota",
-          "un_piso"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "filas": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FilaUpdateRequest"
-            }
-          },
-          "nota": {
-            "maxLength": 128,
-            "type": "string"
-          },
-          "un_piso": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ErrorMessage": {
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "FilaRequest": {
-        "required": [
-          "cells",
-          "planta"
-        ],
-        "type": "object",
-        "properties": {
-          "cells": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CeldaRequest"
-            }
-          },
-          "planta": {
-            "$ref": "#/components/schemas/Planta"
-          }
-        },
-        "additionalProperties": false
-      },
-      "FilaResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "cells": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CeldaResponse"
-            },
-            "nullable": true
-          },
-          "planta": {
-            "$ref": "#/components/schemas/Planta"
-          }
-        },
-        "additionalProperties": false
-      },
-      "FilaUpdateRequest": {
-        "required": [
-          "cells",
-          "id",
-          "planta"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "cells": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CeldaUpdateRequest"
-            }
-          },
-          "planta": {
-            "$ref": "#/components/schemas/Planta"
-          }
-        },
-        "additionalProperties": false
-      },
-      "Gender": {
-        "enum": [
-          0,
-          1,
-          2,
-          3
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "HorarioRequest": {
-        "required": [
-          "dias",
-          "distribucion_id",
-          "hora"
-        ],
-        "type": "object",
-        "properties": {
-          "hora": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "dias": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DayOfWeek"
-            }
-          },
-          "distribucion_id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "HorarioResponse": {
-        "required": [
-          "dias",
-          "distribucion_id",
-          "hora"
-        ],
-        "type": "object",
-        "properties": {
-          "hora": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "dias": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DayOfWeek"
-            }
-          },
-          "distribucion_id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "LoginRequest": {
-        "required": [
-          "email",
-          "password"
-        ],
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "format": "email"
-          },
-          "password": {
-            "maxLength": 255,
-            "minLength": 6,
-            "type": "string",
-            "format": "password"
-          }
-        },
-        "additionalProperties": false
-      },
-      "LoginResponse": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "LoginResponseWebResult": {
-        "type": "object",
-        "properties": {
-          "result": {
-            "$ref": "#/components/schemas/LoginResponse"
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "error_messages": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "nullable": true
-          },
-          "error_code": {
-            "$ref": "#/components/schemas/ErrorMessage"
-          },
-          "error": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "NodoRequest": {
-        "required": [
-          "demora",
-          "destino_id",
-          "origen_id",
-          "precio"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "origen_id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "destino_id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "demora": {
-            "type": "string",
-            "format": "time"
-          },
-          "precio": {
-            "type": "number",
-            "format": "float"
-          }
-        },
-        "additionalProperties": false
-      },
-      "NodoResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "origen": {
-            "$ref": "#/components/schemas/DestinoResponse"
-          },
-          "destino": {
-            "$ref": "#/components/schemas/DestinoResponse"
-          },
-          "demora": {
-            "type": "string",
-            "nullable": true
-          },
-          "precio": {
-            "type": "number",
-            "format": "float"
-          }
-        },
-        "additionalProperties": false
-      },
-      "NodoResponseICollectionWebResult": {
-        "type": "object",
-        "properties": {
-          "result": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/NodoResponse"
-            },
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "error_messages": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "nullable": true
-          },
-          "error_code": {
-            "$ref": "#/components/schemas/ErrorMessage"
-          },
-          "error": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "NodoResponseWebResult": {
-        "type": "object",
-        "properties": {
-          "result": {
-            "$ref": "#/components/schemas/NodoResponse"
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "error_messages": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "nullable": true
-          },
-          "error_code": {
-            "$ref": "#/components/schemas/ErrorMessage"
-          },
-          "error": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Planta": {
-        "enum": [
-          0,
-          1
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "ProblemDetails": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "nullable": true
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "status": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "detail": {
-            "type": "string",
-            "nullable": true
-          },
-          "instance": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": { }
-      },
-      "RegistroRequest": {
-        "required": [
-          "confirm_password",
-          "dni",
-          "email",
-          "fecha_nacimiento",
-          "first_name",
-          "last_name",
-          "password"
-        ],
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "format": "email"
-          },
-          "password": {
-            "maxLength": 255,
-            "minLength": 6,
-            "type": "string",
-            "format": "password"
-          },
-          "confirm_password": {
-            "maxLength": 255,
-            "minLength": 6,
-            "type": "string",
-            "format": "password"
-          },
-          "first_name": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string"
-          },
-          "last_name": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string"
-          },
-          "dni": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "fecha_nacimiento": {
-            "type": "string",
-            "format": "date"
-          }
-        },
-        "additionalProperties": false
-      },
-      "UsuarioResponse": {
-        "type": "object",
-        "properties": {
-          "dni": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "nullable": true
-          },
-          "tipo": {
-            "$ref": "#/components/schemas/UsuarioTipo"
-          },
-          "nombre": {
-            "type": "string",
-            "nullable": true
-          },
-          "apellido": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UsuarioResponseWebResult": {
-        "type": "object",
-        "properties": {
-          "result": {
-            "$ref": "#/components/schemas/UsuarioResponse"
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "error_messages": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "nullable": true
-          },
-          "error_code": {
-            "$ref": "#/components/schemas/ErrorMessage"
-          },
-          "error": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UsuarioTipo": {
-        "enum": [
-          0,
-          1,
-          2
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
-      "ViajeRequest": {
-        "required": [
-          "horarios",
-          "nombre"
-        ],
-        "type": "object",
-        "properties": {
-          "nombre": {
-            "type": "string"
-          },
-          "horarios": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/HorarioRequest"
+              "type": "string"
             }
           }
         },
-        "additionalProperties": false
-      },
-      "ViajeResponse": {
-        "required": [
-          "horarios",
-          "nombre"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "nombre": {
-            "type": "string"
-          },
-          "horarios": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/HorarioResponse"
-            }
-          }
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
         },
-        "additionalProperties": false
-      },
-      "ViajeResponseICollectionWebResult": {
-        "type": "object",
-        "properties": {
-          "result": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ViajeResponse"
-            },
-            "nullable": true
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "error_messages": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "nullable": true
-          },
-          "error_code": {
-            "$ref": "#/components/schemas/ErrorMessage"
-          },
-          "error": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ViajeResponseWebResult": {
-        "type": "object",
-        "properties": {
-          "result": {
-            "$ref": "#/components/schemas/ViajeResponse"
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "message": {
-            "type": "string",
-            "nullable": true
-          },
-          "error_messages": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "nullable": true
-          },
-          "error_code": {
-            "$ref": "#/components/schemas/ErrorMessage"
-          },
-          "error": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ViajeUpdateRequest": {
-        "required": [
-          "horarios",
-          "id",
-          "nombre"
-        ],
-        "type": "object",
-        "properties": {
-          "nombre": {
-            "type": "string"
-          },
-          "horarios": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/HorarioRequest"
-            }
-          },
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
+        "error": {
+          "type": "string"
+        }
       }
+    },
+    "ClienteResponse": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ClienteRequest"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "ClienteRequest": {
+      "type": "object",
+      "required": [
+        "dni",
+        "nombre",
+        "fecha_nacimiento",
+        "nacionalidad",
+        "genero"
+      ],
+      "properties": {
+        "dni": {
+          "title": "número de documento",
+          "type": "integer",
+          "format": "int64"
+        },
+        "nombre": {
+          "title": "nombre",
+          "type": "string",
+          "minLength": 1
+        },
+        "fecha_nacimiento": {
+          "title": "fecha de nacimiento",
+          "type": "string",
+          "format": "date-time",
+          "minLength": 1
+        },
+        "nacionalidad": {
+          "title": "nacionalidad",
+          "type": "string",
+          "minLength": 1
+        },
+        "genero": {
+          "title": "género",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Gender"
+            }
+          ]
+        }
+      }
+    },
+    "Gender": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "NOTDEFINED",
+        "MALE",
+        "FEMALE",
+        "NOT_BINARY"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "ErrorMessage": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Generic",
+        "InvalidEmail",
+        "InvalidPassword",
+        "InvalidId",
+        "DuplicatedEntity",
+        "NotFound",
+        "AlreadyExists",
+        "AlreadyDeleted",
+        "CouldNotCreate",
+        "CouldNotDelete",
+        "CouldNotUpdate",
+        "EmptyList",
+        "GenericValidation"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    "ProblemDetails": {
+      "type": "object",
+      "additionalProperties": {},
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "instance": {
+          "type": "string"
+        }
+      }
+    },
+    "WebResultOfClienteResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ClienteResponse"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "WebResultOfICollectionOfDistribucionResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DistribucionResponse"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "DistribucionResponse": {
+      "type": "object",
+      "required": [
+        "id",
+        "un_piso"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "filas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FilaResponse"
+          }
+        },
+        "nota": {
+          "type": "string"
+        },
+        "un_piso": {
+          "type": "boolean"
+        }
+      }
+    },
+    "FilaResponse": {
+      "type": "object",
+      "required": [
+        "id",
+        "planta"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "cells": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CeldaResponse"
+          }
+        },
+        "planta": {
+          "$ref": "#/definitions/Planta"
+        }
+      }
+    },
+    "CeldaResponse": {
+      "type": "object",
+      "required": [
+        "id",
+        "value"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "value": {
+          "$ref": "#/definitions/DistribucionEspacio"
+        }
+      }
+    },
+    "DistribucionEspacio": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "ESPACIO_PASILLO",
+        "ESPACIO_BUTACA",
+        "ESPACIO_TV",
+        "ESPACIO_NULL"
+      ],
+      "enum": [
+        1,
+        2,
+        3,
+        -1
+      ]
+    },
+    "Planta": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "BAJA",
+        "ALTA"
+      ],
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "WebResultOfDistribucionResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/DistribucionResponse"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "DistribucionRequest": {
+      "type": "object",
+      "required": [
+        "filas",
+        "nota",
+        "un_piso"
+      ],
+      "properties": {
+        "filas": {
+          "title": "Filas",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FilaRequest"
+          }
+        },
+        "nota": {
+          "title": "nota",
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 1
+        },
+        "un_piso": {
+          "title": "un piso",
+          "type": "boolean"
+        }
+      }
+    },
+    "FilaRequest": {
+      "type": "object",
+      "required": [
+        "cells",
+        "planta"
+      ],
+      "properties": {
+        "cells": {
+          "title": "celdas",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CeldaRequest"
+          }
+        },
+        "planta": {
+          "title": "planta",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Planta"
+            }
+          ]
+        }
+      }
+    },
+    "CeldaRequest": {
+      "type": "object",
+      "required": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "$ref": "#/definitions/DistribucionEspacio"
+        }
+      }
+    },
+    "DistribucionUpdateRequest": {
+      "type": "object",
+      "required": [
+        "id",
+        "filas",
+        "nota",
+        "un_piso"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "filas": {
+          "title": "Filas",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FilaUpdateRequest"
+          }
+        },
+        "nota": {
+          "title": "nota",
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 1
+        },
+        "un_piso": {
+          "title": "un piso",
+          "type": "boolean"
+        }
+      }
+    },
+    "FilaUpdateRequest": {
+      "type": "object",
+      "required": [
+        "id",
+        "cells",
+        "planta"
+      ],
+      "properties": {
+        "id": {
+          "title": "id",
+          "type": "integer",
+          "format": "int32"
+        },
+        "cells": {
+          "title": "celdas",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CeldaUpdateRequest"
+          }
+        },
+        "planta": {
+          "title": "planta",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Planta"
+            }
+          ]
+        }
+      }
+    },
+    "CeldaUpdateRequest": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CeldaRequest"
+        },
+        {
+          "type": "object",
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      ]
+    },
+    "WebResultOfICollectionOfNodoResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NodoResponse"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "NodoResponse": {
+      "type": "object",
+      "required": [
+        "id",
+        "precio"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "origen": {
+          "$ref": "#/definitions/ParadaDTO"
+        },
+        "destino": {
+          "$ref": "#/definitions/ParadaDTO"
+        },
+        "demora": {
+          "type": "string"
+        },
+        "precio": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "ParadaDTO": {
+      "type": "object",
+      "required": [
+        "id",
+        "nombre"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "nombre": {
+          "title": "nombre",
+          "type": "string",
+          "maxLength": 100,
+          "minLength": 0
+        }
+      }
+    },
+    "WebResultOfNodoResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/NodoResponse"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "NodoRequest": {
+      "type": "object",
+      "required": [
+        "id",
+        "origen_id",
+        "destino_id",
+        "demora",
+        "precio"
+      ],
+      "properties": {
+        "id": {
+          "title": "identificador",
+          "type": "integer",
+          "format": "int32"
+        },
+        "origen_id": {
+          "title": "origen",
+          "type": "integer",
+          "format": "int32"
+        },
+        "destino_id": {
+          "title": "destino",
+          "type": "integer",
+          "format": "int32"
+        },
+        "demora": {
+          "title": "demora",
+          "type": "string",
+          "format": "time",
+          "minLength": 1
+        },
+        "precio": {
+          "title": "precio",
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "WebResultOfICollectionOfParadaDTO": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ParadaDTO"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "WebResultOfParadaDTO": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ParadaDTO"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "WebResultOfUsuarioResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/UsuarioResponse"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "UsuarioResponse": {
+      "type": "object",
+      "required": [
+        "dni",
+        "tipo"
+      ],
+      "properties": {
+        "dni": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "tipo": {
+          "$ref": "#/definitions/UsuarioTipo"
+        },
+        "nombre": {
+          "type": "string"
+        },
+        "apellido": {
+          "type": "string"
+        }
+      }
+    },
+    "UsuarioTipo": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "NORMAL_USER",
+        "SELLER",
+        "ADMIN"
+      ],
+      "enum": [
+        0,
+        1,
+        2
+      ]
+    },
+    "RegistroRequest": {
+      "type": "object",
+      "required": [
+        "email",
+        "password",
+        "confirm_password",
+        "first_name",
+        "last_name",
+        "dni",
+        "fecha_nacimiento"
+      ],
+      "properties": {
+        "email": {
+          "title": "correo electrónico",
+          "type": "string",
+          "format": "email",
+          "minLength": 1
+        },
+        "password": {
+          "title": "contraseña",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 6
+        },
+        "confirm_password": {
+          "title": "confirmar contraseña",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 6
+        },
+        "first_name": {
+          "title": "nombre",
+          "type": "string",
+          "maxLength": 100,
+          "minLength": 0
+        },
+        "last_name": {
+          "title": "apellido",
+          "type": "string",
+          "maxLength": 100,
+          "minLength": 0
+        },
+        "dni": {
+          "title": "dni",
+          "type": "integer",
+          "format": "int64"
+        },
+        "fecha_nacimiento": {
+          "title": "fecha de nacimiento",
+          "type": "string",
+          "format": "date",
+          "minLength": 1
+        }
+      }
+    },
+    "WebResultOfLoginResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/LoginResponse"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "LoginResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      }
+    },
+    "LoginRequest": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "title": "correo electrónico",
+          "type": "string",
+          "description": "Dirección de correo eletrónico válida. Por ejemplo: user@example.com",
+          "format": "email",
+          "minLength": 1
+        },
+        "password": {
+          "title": "contraseña",
+          "type": "string",
+          "description": "Contraseña",
+          "maxLength": 255,
+          "minLength": 6
+        }
+      }
+    },
+    "WebResultOfICollectionOfViajeResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ViajeResponse"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "ViajeResponse": {
+      "type": "object",
+      "required": [
+        "id",
+        "nombre",
+        "horarios"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "nombre": {
+          "title": "nombre",
+          "type": "string",
+          "minLength": 1
+        },
+        "horarios": {
+          "title": "horario",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HorarioResponse"
+          }
+        }
+      }
+    },
+    "HorarioResponse": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/HorarioRequest"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "HorarioRequest": {
+      "type": "object",
+      "required": [
+        "hora",
+        "dias",
+        "distribucion_id"
+      ],
+      "properties": {
+        "hora": {
+          "title": "hora",
+          "type": "string",
+          "format": "date-time",
+          "minLength": 1
+        },
+        "dias": {
+          "title": "días de la semana",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DayOfWeek"
+          }
+        },
+        "distribucion_id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "DayOfWeek": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "WebResultOfViajeResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ViajeResponse"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "ViajeRequest": {
+      "type": "object",
+      "required": [
+        "nombre",
+        "horarios"
+      ],
+      "properties": {
+        "nombre": {
+          "title": "nombre",
+          "type": "string",
+          "minLength": 1
+        },
+        "horarios": {
+          "title": "horario",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HorarioRequest"
+          }
+        }
+      }
+    },
+    "ViajeUpdateRequest": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ViajeRequest"
+        },
+        {
+          "type": "object",
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "title": "id",
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      ]
     }
   }
 }

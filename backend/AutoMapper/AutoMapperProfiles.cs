@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Core.ViewModels.Requests;
 using BoleteriaOnline.Core.ViewModels.Responses;
 using BoleteriaOnline.Web.Data.Models;
-using System.Linq;
 
 namespace BoleteriaOnline.Web.AutoMapper;
 public class AutoMapperProfiles : Profile
@@ -21,9 +21,7 @@ public class AutoMapperProfiles : Profile
         CreateMap<Cliente, ClienteResponse>()
             .ForMember(o => o.Dni, b => b.MapFrom(z => z.Id))
             .ReverseMap();
-        CreateMap<Parada, ParadaRequest>()
-            .ReverseMap();
-        CreateMap<Parada, ParadaResponse>()
+        CreateMap<Parada, ParadaDTO>()
             .ReverseMap();
         CreateMap<Nodo, NodoRequest>()
             .ReverseMap();

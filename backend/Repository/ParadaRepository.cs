@@ -18,7 +18,7 @@ public class ParadaRepository : IParadaRepository
     {
         destino.CreatedAt = DateTime.Now;
         destino.Id = 0;
-        await _context.Destinos.AddAsync(destino);
+        await _context.Paradas.AddAsync(destino);
         return await Save();
     }
 
@@ -33,16 +33,16 @@ public class ParadaRepository : IParadaRepository
         if (destino == null)
             return false;
 
-        _context.Destinos.Remove(destino);
+        _context.Paradas.Remove(destino);
 
         return await Save();
     }
 
-    public async Task<bool> ExistsAsync(long id) => await _context.Destinos.AnyAsync(e => e.Id == id);
+    public async Task<bool> ExistsAsync(long id) => await _context.Paradas.AnyAsync(e => e.Id == id);
 
-    public async Task<Parada> GetAsync(long id) => await _context.Destinos.FirstOrDefaultAsync(m => m.Id == id);
+    public async Task<Parada> GetAsync(long id) => await _context.Paradas.FirstOrDefaultAsync(m => m.Id == id);
 
-    public async Task<ICollection<Parada>> GetAllAsync() => await _context.Destinos.ToListAsync();
+    public async Task<ICollection<Parada>> GetAllAsync() => await _context.Paradas.ToListAsync();
 
     public async Task<bool> Save() => await _context.SaveChangesAsync() >= 0;
 
@@ -51,7 +51,7 @@ public class ParadaRepository : IParadaRepository
         if (destino == null)
             return false;
 
-        _context.Destinos.Update(destino);
+        _context.Paradas.Update(destino);
         destino.UpdatedAt = DateTime.Now;
         return await Save();
     }
