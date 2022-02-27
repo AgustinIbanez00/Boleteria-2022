@@ -26,15 +26,15 @@
 }
 else
 {
-<RadzenDataGrid AllowFiltering="true" AllowPaging="true" PageSize="5" AllowSorting="true" Data="@Destinos" TItem="ParadaResponse">
+<RadzenDataGrid AllowFiltering="true" AllowPaging="true" PageSize="5" AllowSorting="true" Data="@Destinos" TItem="ParadaDTO">
     <Columns>
-        <RadzenDataGridColumn Width="50px" TItem="ParadaResponse" Title="#" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
+        <RadzenDataGridColumn Width="50px" TItem="ParadaDTO" Title="#" Filterable="false" Sortable="false" TextAlign="TextAlign.Center">
             <Template Context="data">
                 @(Destinos.ToList().IndexOf(data) + 1)
             </Template>
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn TItem="ParadaResponse" Property="Nombre" Title="Nombre" />
-        <RadzenDataGridColumn Width="160px" TItem="ParadaResponse" Property="Id" Title="Acciones">
+        <RadzenDataGridColumn TItem="ParadaDTO" Property="Nombre" Title="Nombre" />
+        <RadzenDataGridColumn Width="160px" TItem="ParadaDTO" Property="Id" Title="Acciones">
             <Template Context="data">
                 <RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="edit" Click=@(args => OpenDetails(data.Id)) />
                 <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Click=@(args => OpenDelete(data.Id, data.Nombre)) />
@@ -46,7 +46,7 @@ else
 
 @code {
 
-    ICollection<ParadaResponse> Destinos { get; set; }
+    ICollection<ParadaDTO> Destinos { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -103,7 +103,7 @@ else
             if (resultDialog.Value)
             {
                 var response = await DestinoService.DeleteParadaAsync(id);
-                ApiService<ParadaResponse>.NotifyResponse(NotificationService, response, async () =>
+                ApiService<ParadaDTO>.NotifyResponse(NotificationService, response, async () =>
                 {
                     await LoadDestinos();
                     StateHasChanged();

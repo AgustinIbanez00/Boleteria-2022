@@ -11,7 +11,7 @@
 }
 else
 {
-    <RadzenTemplateForm Data="@destino" Submit="@(async (ParadaRequest args) => { await Submit(args); })" InvalidSubmit=@OnInvalidSubmit>
+    <RadzenTemplateForm Data="@destino" Submit="@(async (ParadaDTO args) => { await Submit(args); })" InvalidSubmit=@OnInvalidSubmit>
         <div class="row">
             <div class="col-md-6">
                 <div class="row">
@@ -37,22 +37,20 @@ else
 }
 
 @code {
-    ParadaRequest destino { get; set; }
+    ParadaDTO destino { get; set; }
 
     [Parameter]
     public long? Id { get; set; }
 
 
-    async Task Submit(ParadaRequest arg)
+    async Task Submit(ParadaDTO arg)
     {
-        BoleteriaOnline.Core.Utils.WebResult<ParadaResponse> response;
+        BoleteriaOnline.Core.Utils.WebResult<ParadaDTO> response;
 
         if (Id.HasValue)
             response = await DestinoService.UpdateParadaAsync(destino, Id.Value);
         else
             response = await DestinoService.CreateParadaAsync(arg);
-
-        
 
         NotificationService.Notify(new Radzen.NotificationMessage() { Severity = response.Success ? NotificationSeverity.Success : NotificationSeverity.Error, Summary = response.Message, Duration = 3000 });
         Console.WriteLine(response.Message);
@@ -81,17 +79,17 @@ else
 
     protected async override Task OnInitializedAsync()
     {
-        BoleteriaOnline.Core.Utils.WebResult<ParadaResponse> response;
+        BoleteriaOnline.Core.Utils.WebResult<ParadaDTO> response;
 
         if (Id.HasValue)
         {
-            destino = new ParadaRequest();
+            destino = new ParadaDTO();
 
             response = await DestinoService.GetParadaAsync(Id.Value);
 
             if(!response.Success)
             {
-                ApiService<ParadaResponse>.ShowErrors(NotificationService, response);
+                ApiService<ParadaDTO>.ShowErrors(NotificationService, response);
             }
             else
             {
@@ -100,7 +98,7 @@ else
                 StateHasChanged();                
             }
         }
-        destino = new ParadaRequest() { Nombre = "" };
+        destino = new ParadaDTO() { Nombre = "" };
     }
 
 

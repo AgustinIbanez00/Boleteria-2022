@@ -2,8 +2,7 @@
 using BoleteriaOnline.Core.Extensions.Response;
 using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
-using BoleteriaOnline.Core.ViewModels.Requests;
-using BoleteriaOnline.Core.ViewModels.Responses;
+using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Web.Data.Models;
 using BoleteriaOnline.Web.Repositories;
 using EntityFramework.Exceptions.Common;
@@ -21,106 +20,106 @@ public class ParadaService : IParadaService
         _paradaRepository = paradaRepository;
     }
 
-    public async Task<WebResult<ParadaResponse>> CreateParadaAsync(ParadaRequest request)
+    public async Task<WebResult<ParadaDTO>> CreateParadaAsync(ParadaDTO request)
     {
         try
         {
             var parada = _mapper.Map<Parada>(request);
             if (!await _paradaRepository.CreateAsync(parada))
-                return Error<Parada, ParadaResponse>(ErrorMessage.CouldNotCreate);
+                return Error<Parada, ParadaDTO>(ErrorMessage.CouldNotCreate);
 
-            var dto = _mapper.Map<ParadaResponse>(parada);
-            return Ok<Parada, ParadaResponse>(dto, SuccessMessage.Created);
+            var dto = _mapper.Map<ParadaDTO>(parada);
+            return Ok<Parada, ParadaDTO>(dto, SuccessMessage.Created);
         }
         catch (UniqueConstraintException)
         {
-            return Error<Parada, ParadaResponse>(ErrorMessage.AlreadyExists);
+            return Error<Parada, ParadaDTO>(ErrorMessage.AlreadyExists);
         }
         catch (Exception ex)
         {
-            return Error<Parada, ParadaResponse>(ErrorMessage.Generic, ex.Message);
+            return Error<Parada, ParadaDTO>(ErrorMessage.Generic, ex.Message);
         }
     }
-    public async Task<WebResult<ParadaResponse>> DeleteParadaAsync(long id)
+    public async Task<WebResult<ParadaDTO>> DeleteParadaAsync(long id)
     {
         try
         {
             var parada = await _paradaRepository.GetAsync(id);
             if (parada == null)
-                return Error<Parada, ParadaResponse>(ErrorMessage.NotFound);
+                return Error<Parada, ParadaDTO>(ErrorMessage.NotFound);
 
             if (!await _paradaRepository.DeleteAsync(parada))
-                return Error<Parada, ParadaResponse>(ErrorMessage.CouldNotDelete);
+                return Error<Parada, ParadaDTO>(ErrorMessage.CouldNotDelete);
 
-            return Ok<Parada, ParadaResponse>(_mapper.Map<ParadaResponse>(parada), SuccessMessage.Deleted);
+            return Ok<Parada, ParadaDTO>(_mapper.Map<ParadaDTO>(parada), SuccessMessage.Deleted);
         }
         catch (Exception ex)
         {
-            return Error<Parada, ParadaResponse>(ErrorMessage.Generic, ex.Message);
+            return Error<Parada, ParadaDTO>(ErrorMessage.Generic, ex.Message);
         }
     }
-    public async Task<WebResult<ParadaResponse>> GetParadaAsync(long id)
+    public async Task<WebResult<ParadaDTO>> GetParadaAsync(long id)
     {
         try
         {
             var parada = await _paradaRepository.GetAsync(id);
 
             if (parada == null)
-                return Error<Parada, ParadaResponse>(ErrorMessage.NotFound);
+                return Error<Parada, ParadaDTO>(ErrorMessage.NotFound);
 
-            return Ok(_mapper.Map<ParadaResponse>(parada));
+            return Ok(_mapper.Map<ParadaDTO>(parada));
         }
         catch (Exception ex)
         {
-            return Error<Parada, ParadaResponse>(ErrorMessage.Generic, ex.Message);
+            return Error<Parada, ParadaDTO>(ErrorMessage.Generic, ex.Message);
         }
     }
-    public async Task<WebResult<ICollection<ParadaResponse>>> GetParadasAsync()
+    public async Task<WebResult<ICollection<ParadaDTO>>> GetParadasAsync()
     {
         try
         {
             var paradas = await _paradaRepository.GetAllAsync();
 
-            var paradasDTO = new List<ParadaResponse>();
+            var paradasDTO = new List<ParadaDTO>();
 
             foreach (var parada in paradas)
             {
-                paradasDTO.Add(_mapper.Map<ParadaResponse>(parada));
+                paradasDTO.Add(_mapper.Map<ParadaDTO>(parada));
             }
-            return Ok<ICollection<ParadaResponse>>(paradasDTO);
+            return Ok<ICollection<ParadaDTO>>(paradasDTO);
         }
         catch (Exception ex)
         {
-            return Error<Parada, ICollection<ParadaResponse>>(ErrorMessage.Generic, ex.Message);
+            return Error<Parada, ICollection<ParadaDTO>>(ErrorMessage.Generic, ex.Message);
         }
     }
 
-    public async Task<WebResult<ParadaResponse>> UpdateParadaAsync(ParadaRequest destinoDto, long id)
+    public async Task<WebResult<ParadaDTO>> UpdateParadaAsync(ParadaDTO destinoDto, long id)
     {
         try
         {
             if (id == 0)
-                return Error<Parada, ParadaResponse>(ErrorMessage.InvalidId);
+                return Error<Parada, ParadaDTO>(ErrorMessage.InvalidId);
 
             var destino = await _paradaRepository.GetAsync(id);
 
             if (destino == null)
-                return Error<Parada, ParadaResponse>(ErrorMessage.NotFound);
+                return Error<Parada, ParadaDTO>(ErrorMessage.NotFound);
 
             destino.Nombre = destinoDto.Nombre;
 
             if (!await _paradaRepository.UpdateAsync(destino))
-                return Error<Parada, ParadaResponse>(ErrorMessage.CouldNotUpdate);
+                return Error<Parada, ParadaDTO>(ErrorMessage.CouldNotUpdate);
 
-            return Ok<Parada, ParadaResponse>(_mapper.Map<ParadaResponse>(destino), SuccessMessage.Modified);
+            return Ok<Parada, ParadaDTO>(_mapper.Map<ParadaDTO>(destino), SuccessMessage.Modified);
         }
         catch (UniqueConstraintException)
         {
-            return Error<Parada, ParadaResponse>(ErrorMessage.AlreadyExists);
+            return Error<Parada, ParadaDTO>(ErrorMessage.AlreadyExists);
         }
         catch (Exception ex)
         {
-            return Error<Parada, ParadaResponse>(ErrorMessage.Generic, ex.Message);
+            return Error<Parada, ParadaDTO>(ErrorMessage.Generic, ex.Message);
         }
     }
 }
