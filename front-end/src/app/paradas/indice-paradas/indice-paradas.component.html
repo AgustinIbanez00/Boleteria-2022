@@ -17,48 +17,53 @@
 
 <app-listado-generico [listado]="paradas">
   <ng-container contenido>
-    <div class="misproductos-contenedor">
-      <div class="productos-contenedor">
-        <mat-card
-          class="misProducto-card mat-elevation-z5"
-          *ngFor="let producto of paradasCole; let index = index"
-        >
-          <div>{{ producto.nombre }}</div>
+    <table
+      #table
+      mat-table
+      [dataSource]="paradas"
+      class="mat-elevation-z8 tabla-indice"
+    >
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Número Destino</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
 
-          <mat-card-actions style="text-align: center">
-            <button
-              class="botonEditar"
-              mat-flat-button
-              (click)="openDialog(index)"
-              title="Editar"
-            >
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button
-              class="botonVer"
-              mat-flat-button
-              routerLink="/productos/visualizar/{{ producto.id }}"
-              title="Ver"
-            >
-              <mat-icon>visibility</mat-icon>
-            </button>
-            <button
-              title="Eliminar"
-              mat-flat-button
-              class="botonEliminar"
-              [swal]="{
-                title: 'Confirmación',
-                text: '¿Está seguro que desea borrar el registro?',
-                showCancelButton: true
-              }"
-              (click)="eliminarProducto(producto, producto.id)"
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
-          </mat-card-actions>
-        </mat-card>
-      </div>
-    </div>
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+      </ng-container>
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef style="text-align: center">
+          Acciones
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            class="botonEditar"
+            mat-flat-button
+            (click)="openDialog(element.id)"
+            title="Editar Categoría"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            *ngIf="element.estado == 1 ? 'disabled' : ''"
+            mat-flat-button
+            title="Eliminar Categoría"
+            class="botonEliminar"
+            [swal]="{
+              title: 'Confirmación',
+              text: '¿Está seguro que desea borrar el registro?',
+              showCancelButton: true
+            }"
+            (confirm)="borrar(element.id, element)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnasAMostrar"></tr>
+    </table>
     <mat-paginator
       [pageSizeOptions]="[5, 10, 20, 50]"
       showFirstLastButtons

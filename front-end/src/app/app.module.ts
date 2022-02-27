@@ -17,6 +17,7 @@ import { IndiceParadasComponent } from './paradas/indice-paradas/indice-paradas.
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { MatInputModule } from '@angular/material/input';
     MatPaginatorModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

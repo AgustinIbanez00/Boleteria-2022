@@ -13,7 +13,11 @@
 <div class="contenedor" *ngIf="!listado">
   <div class="hijo">
     <div>
-      <mat-spinner class="very-pink"></mat-spinner>
+      <img
+        [src]="'assets/imagenes/loading.gif'"
+        alt=""
+        style="border-radius: 100%; width: 400px"
+      />
     </div>
     <div>
       <label class="mensaje" for="">{{ mensajeLoading }}</label>
