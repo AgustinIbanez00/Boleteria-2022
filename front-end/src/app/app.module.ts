@@ -17,19 +17,12 @@ import { IndiceParadasComponent } from './paradas/indice-paradas/indice-paradas.
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { RegistroComponent } from './seguridad/registro/registro.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+
 @NgModule({
-  declarations: [
-    AppComponent,
-    MenuComponent,
-    AutorizadoComponent,
-    ListadoParadasComponent,
-    ListadoGenericoComponent,
-    CrearParadasComponent,
-    LandingPageComponent,
-    IndiceParadasComponent,
-  ],
+  declarations: [AppComponent, MenuComponent, AutorizadoComponent, ListadoParadasComponent, ListadoGenericoComponent, CrearParadasComponent, LandingPageComponent, IndiceParadasComponent, RegistroComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -44,4 +37,4 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
