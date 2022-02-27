@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class SeguridadService {
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   private apiURL = environment.apiURL + 'cuentas';
   private readonly llaveToken = 'token';

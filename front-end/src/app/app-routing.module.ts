@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: 'paradas',
     component: IndiceParadasComponent,
-    canActivate: [EsAdminGuard],
+    // canActivate: [EsAdminGuard],
   },
 ];
 
@@ -20,4 +20,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

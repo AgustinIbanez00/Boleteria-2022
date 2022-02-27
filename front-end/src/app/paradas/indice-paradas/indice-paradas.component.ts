@@ -16,7 +16,7 @@ export class IndiceParadasComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public paradaraService: ParadasService
-  ) {}
+  ) { }
 
   @Input()
   paradas;
@@ -31,7 +31,7 @@ export class IndiceParadasComponent implements OnInit {
 
   paradasCole: paradasDTO[] = [];
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   openDialog(id: number) {
     var dialogRef;
@@ -61,19 +61,19 @@ export class IndiceParadasComponent implements OnInit {
     });
   }
   obtenerMisProductos(pagina: number, cantidadRegistrosAMostrar: number) {
-    this.paradaraService
-      .obtenerParadas(pagina, cantidadRegistrosAMostrar)
-      .subscribe(
-        (respuesta: HttpResponse<webResult>) => {
-          this.paradas = Object.values(respuesta.body.data);
+    // this.paradaraService
+    //   .obtenerParadas(pagina, cantidadRegistrosAMostrar)
+    //   .subscribe(
+    //     (respuesta: HttpResponse<webResult>) => {
+    //       this.paradas = Object.values(respuesta.body.data);
 
-          this.cantidadTotalRegistros = respuesta.headers.get(
-            'cantidadTotalRegistros'
-          );
-        },
-        (error) => {
-          this.errores = parserarErroresAPI(error);
-        }
-      );
+    //       this.cantidadTotalRegistros = respuesta.headers.get(
+    //         'cantidadTotalRegistros'
+    //       );
+    //     },
+    //     (error) => {
+    //       this.errores = parserarErroresAPI(error);
+    //     }
+    //   );
   }
 }
