@@ -17,7 +17,7 @@ public class DestinoService : IParadaService
     public DestinoService(HttpClient client)
     {
         _client = client;
-        _url = "api/destinos";
+        _url = "api/paradas";
         _options = new JsonSerializerOptions { PropertyNamingPolicy = new SnakeCaseNamingPolicy() };
     }
 
