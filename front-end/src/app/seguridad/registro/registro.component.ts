@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { registroDTO } from './registro';
 
 @Component({
   selector: 'app-registro',
@@ -9,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class RegistroComponent implements OnInit {
 
   form: FormGroup;
-
+  errores: string[] = []
   constructor(
     private formBuilder: FormBuilder
   ) { }
@@ -31,6 +32,17 @@ export class RegistroComponent implements OnInit {
     if (campo.hasError('required')) {
       return 'Campo requerido';
     }
+    else if (campo.hasError('email')) {
+      return 'Formato email incorrecto';
+    }
   }
-
+  submit(registro: registroDTO) {
+    this.errores = []
+    if (registro.password !== registro.confirm_password) {
+      this.errores.push("Las contraseñas no coinciden")
+    }
+    else {
+      console.log(registro)
+    }
+  }
 }

@@ -1,6 +1,6 @@
 <div class="containerRegistro">
   <mat-card class="cardRegistro">
-    <form [formGroup]="form" class="formRegistro">
+    <form [formGroup]="form" class="formRegistro" (submit)="submit(form.value)">
       <mat-form-field appearance="outline">
         <mat-label>Nombre*</mat-label>
         <input formControlName="first_name" matInput />
@@ -17,7 +17,7 @@
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>DNI*</mat-label>
-        <input formControlName="dni" matInput />
+        <input type="number" formControlName="dni" matInput />
         <mat-error *ngIf="form.invalid">{{
           validacionesProducto("dni")
         }}</mat-error>
@@ -57,5 +57,7 @@
         Guardar
       </button>
     </form>
+
+    <app-mostrar-errores [errores]="errores"></app-mostrar-errores>
   </mat-card>
 </div>
