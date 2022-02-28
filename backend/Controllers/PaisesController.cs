@@ -6,7 +6,7 @@ using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Core.ViewModels.Pagging;
 
 namespace BoleteriaOnline.Web.Controllers;
-
+/*
 [Route("api/[controller]")]
 [ApiController]
 public class PaisesController : ControllerBase
@@ -83,3 +83,4 @@ public class PaisesController : ControllerBase
 
 
 }
+*/
