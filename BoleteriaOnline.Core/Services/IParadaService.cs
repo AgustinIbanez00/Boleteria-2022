@@ -1,7 +1,4 @@
-﻿using BoleteriaOnline.Core.Utils;
-using BoleteriaOnline.Core.ViewModels;
-using BoleteriaOnline.Core.ViewModels.Pagging;
-
+﻿using BoleteriaOnline.Core.ViewModels;
 namespace BoleteriaOnline.Core.Services;
 public interface IParadaService : IGenericService<ParadaDTO>
 {

@@ -9,20 +9,20 @@ using BoleteriaOnline.Core.ViewModels.Requests;
 using BoleteriaOnline.Core.ViewModels.Responses;
 
 namespace BlazorPWA.Services;
-public class DestinoService : IParadaService
+public class ParadaService : IParadaService
 {
     private readonly HttpClient _client;
     private readonly JsonSerializerOptions _options;
     private readonly string _url;
 
-    public DestinoService(HttpClient client)
+    public ParadaService(HttpClient client)
     {
         _client = client;
         _url = "api/paradas";
         _options = new JsonSerializerOptions { PropertyNamingPolicy = new SnakeCaseNamingPolicy() };
     }
 
-    public async Task<WebResult<ParadaDTO>> CreateParadaAsync(ParadaDTO destinoDto)
+    public async Task<WebResult<ParadaDTO>> CreateAsync(ParadaDTO destinoDto)
     {
         var response = await _client.PostAsJsonAsync(_url, destinoDto);
         var content = await response.Content.ReadAsStringAsync();
@@ -33,7 +33,7 @@ public class DestinoService : IParadaService
         return JsonSerializer.Deserialize<WebResult<ParadaDTO>>(content, _options);
     }
 
-    public async Task<WebResult<ParadaDTO>> DeleteParadaAsync(long id)
+    public async Task<WebResult<ParadaDTO>> DeleteAsync(long id)
     {
         var response = await _client.DeleteAsync($"{_url}?id={id}");
         var content = await response.Content.ReadAsStringAsync();
@@ -44,7 +44,7 @@ public class DestinoService : IParadaService
         return JsonSerializer.Deserialize<WebResult<ParadaDTO>>(content, _options);
     }
 
-    public async Task<WebResult<ParadaDTO>> GetParadaAsync(long id)
+    public async Task<WebResult<ParadaDTO>> GetAsync(long id)
     {
         var response = await _client.GetAsync($"{_url}/{id}");
         var content = await response.Content.ReadAsStringAsync();
@@ -55,7 +55,7 @@ public class DestinoService : IParadaService
         return JsonSerializer.Deserialize<WebResult<ParadaDTO>>(content, _options);
     }
 
-    public async Task<WebResult<PaginatedList<ParadaDTO>>> GetParadasAsync(Pagination parameters)
+    public async Task<WebResult<PaginatedList<ParadaDTO>>> AllAsync(Pagination parameters)
     {
         try
         {
@@ -73,7 +73,7 @@ public class DestinoService : IParadaService
         }
     }
 
-    public async Task<WebResult<ParadaDTO>> UpdateParadaAsync(ParadaDTO request, long id)
+    public async Task<WebResult<ParadaDTO>> UpdateAsync(ParadaDTO request, long id)
     {
         HttpContent httpContent = new StringContent(JsonSerializer.Serialize(request, _options), Encoding.UTF8, "application/json-patch+json");
         var response = await _client.PatchAsync($"{_url}/{id}", httpContent);
