@@ -65,11 +65,11 @@ public class DestinoService : IParadaService
             {
                 throw new ApplicationException(content);
             }
-            return JsonSerializer.Deserialize<WebResult<ICollection<ParadaDTO>>>(content, _options);
+            return JsonSerializer.Deserialize<WebResult<PaginatedList<ParadaDTO>>>(content, _options);
         }
         catch (Exception ex)
         {
-            return WebResponse.Error<ICollection<ParadaDTO>>(ex.Message);
+            return WebResponse.Error<PaginatedList<ParadaDTO>>(ex.Message);
         }
     }
 
