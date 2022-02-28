@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NotificacionesService } from 'src/app/utilidades/notificaciones.service';
 import { parserarErroresAPI } from 'src/app/utilidades/utilidades';
-import { registroDTO } from './registro';
-import { RegistroService } from './registro.service';
+import { registroDTO } from '../usuario';
+import { UsuarioService } from '../usuario.service';
 
 @Component({
   selector: 'app-registro',
@@ -18,8 +19,9 @@ export class RegistroComponent implements OnInit {
   isLoading: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
-    private registroService: RegistroService,
-    private router: Router
+    private registroService: UsuarioService,
+    private router: Router,
+    private notificacionesService: NotificacionesService
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +36,7 @@ export class RegistroComponent implements OnInit {
     })
   }
 
-  validacionesProducto(nombre: string) {
+  validacionesRegistro(nombre: string) {
     var campo = this.form.get(nombre);
     if (campo.hasError('required')) {
       return 'Campo requerido';
@@ -57,6 +59,7 @@ export class RegistroComponent implements OnInit {
           this.error_messages = result.error_messages
         }
         else {
+          this.notificacionesService.showNotifacion(result.message, 'x', 'success');
           this.router.navigate(['/login']);
         }
         this.isLoading = false;

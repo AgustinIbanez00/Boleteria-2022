@@ -25,6 +25,7 @@ import { FormControlComponent } from './utilidades/form-control/form-control.com
 import { LoginComponent } from './seguridad/login/login.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificacionesComponent } from './utilidades/notificaciones/notificaciones.component';
+import { SeguridadInterceptorService } from './seguridad/interceptor.service';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,13 @@ import { NotificacionesComponent } from './utilidades/notificaciones/notificacio
     MatProgressSpinnerModule,
     MatSnackBarModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SeguridadInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -92,7 +92,7 @@
   <app-autorizado>
     <ng-container autorizado>
       <span style="font-size: medium">
-        Hola, {{ seguridadService.obtenerCapmpoJWT("email") }}
+        Hola, {{ seguridadService.obtenerCapmpoJWT("nameid") }}
       </span>
       <button mat-button (click)="seguridadService.logout()">
         Cerrar Sesión

@@ -26,7 +26,11 @@
     </ng-container>
   </mat-form-field>
   <!-- Date -->
-  <mat-form-field *ngIf="type === 'date'" appearance="{{ apareance }}">
+  <mat-form-field
+    class="{{ clase }}"
+    *ngIf="type === 'date'"
+    appearance="{{ apareance }}"
+  >
     <mat-label>{{ textoLabel }}</mat-label>
     <input
       formControlName="{{ propiedad }}"
