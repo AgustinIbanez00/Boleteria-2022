@@ -96,16 +96,11 @@ export class IndiceParadasComponent implements OnInit {
         (respuesta: HttpResponse<webResult>) => {
           console.log('respuesta', respuesta.body);
           this.paradas = Object.values(respuesta.body.result);
-          //this.paradas = [];
-
-          // console.log('errores', respuesta.body.error_messages);
-          // this.error_messages = respuesta.body.error_messages;
-
-          // console.log(this.error_messages);
-          //this.paradas = Object.values(respuesta.body.result);
+          console.log(Object.values(respuesta.headers));
           this.cantidadTotalRegistros = respuesta.headers.get(
             'cantidadTotalRegistros'
           );
+          console.log(this.cantidadTotalRegistros);
         },
         (error) => {
           this.errores = parserarErroresAPI(error);
@@ -154,5 +149,9 @@ export class IndiceParadasComponent implements OnInit {
     //     this.errores = parserarErroresAPI(error);
     //   }
     //);
+  }
+
+  hablitarDeshabilitar(event) {
+    // this.form.estado = event.checked;
   }
 }

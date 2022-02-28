@@ -25,6 +25,7 @@ import { FormControlComponent } from './utilidades/form-control/form-control.com
 import { LoginComponent } from './seguridad/login/login.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificacionesComponent } from './utilidades/notificaciones/notificaciones.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import { NotificacionesComponent } from './utilidades/notificaciones/notificacio
     NotificacionesComponent,
     LoginComponent,
     LoadingComponent,
-    FormControlComponent
+    FormControlComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,8 +55,9 @@ import { NotificacionesComponent } from './utilidades/notificaciones/notificacio
     MatInputModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
+    MatSlideToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

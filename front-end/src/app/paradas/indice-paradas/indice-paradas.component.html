@@ -52,14 +52,14 @@
             class="botonEditar"
             mat-flat-button
             (click)="openDialog(element.id)"
-            title="Editar Categoría"
+            title="Editar Parada"
           >
             <mat-icon>edit</mat-icon>
           </button>
+          <!-- *ngIf="element.estado == 1 ? 'disabled' : ''" -->
           <button
-            *ngIf="element.estado == 1 ? 'disabled' : ''"
             mat-flat-button
-            title="Eliminar Categoría"
+            title="Eliminar Parada"
             class="botonEliminar"
             [swal]="{
               title: 'Confirmación',
@@ -70,6 +70,10 @@
           >
             <mat-icon>delete</mat-icon>
           </button>
+          <!-- [(ngModel)]="data.estado"  formControlName="estado"
+            -->
+          <mat-slide-toggle (change)="hablitarDeshabilitar($event)">
+          </mat-slide-toggle>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="columnasAMostrar"></tr>
