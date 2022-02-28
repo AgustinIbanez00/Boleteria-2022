@@ -55,7 +55,7 @@ public class DestinoService : IParadaService
         return JsonSerializer.Deserialize<WebResult<ParadaDTO>>(content, _options);
     }
 
-    public async Task<WebResult<ICollection<ParadaDTO>>> GetParadasAsync(PaginationSettings parameters)
+    public async Task<WebResult<PaginatedList<ParadaDTO>>> GetParadasAsync(Pagination parameters)
     {
         try
         {
