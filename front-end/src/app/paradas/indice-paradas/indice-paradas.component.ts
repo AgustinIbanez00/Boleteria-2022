@@ -25,8 +25,7 @@ export class IndiceParadasComponent implements OnInit {
     public paradaraService: ParadasService,
     private formBuilder: FormBuilder,
     private notificacionesService: NotificacionesService
-  ) {}
-
+  ) { }
   @Input()
   paradas;
 
@@ -109,7 +108,8 @@ export class IndiceParadasComponent implements OnInit {
       .subscribe(
         (respuesta: HttpResponse<webResult>) => {
           this.paradas = Object.values(respuesta.body.result);
-
+          console.log('respuesta', Object.values(respuesta.headers));
+          this.paradas = Object.values(respuesta.body.result);
           this.cantidadTotalRegistros = respuesta.headers.get(
             'cantidadTotalRegistros'
           );

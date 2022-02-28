@@ -1,0 +1,52 @@
+.containerCrearDistribucion {
+  width: 100%;
+  height: 100%;
+}
+.contenedor-distribucion {
+  width: 40%;
+  max-height: 30%;
+  height: 500px;
+  background-color: antiquewhite;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-top: 3%;
+}
+.distribucion {
+  width: 70%;
+  height: 100%;
+  border: 1px solid black;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.fila {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+}
+.celda {
+  border: 1px solid darkgray;
+  border-radius: 2px;
+  width: 19%;
+  height: 50px;
+}
+
+.button-icon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  justify-content: center;
+}
+.button-icon:hover {
+  border: 3px solid blue;
+}
+
+.iconoCelda {
+  width: 100%;
+  /* background-color: red; */
+}
