@@ -45,15 +45,64 @@ export class CrearParadasComponent implements OnInit {
 
   // crear
   guardarParadas(paradasDTO: paradasDTO) {
-    this.paradaraService.crear(paradasDTO).subscribe((result) => {
-      if (result.success) {
-        this.notificacionesService.showNotifacion(result.message, 'x', 'error');
-        this.dialogRef.close('algo');
+    console.log(paradasDTO);
+    if (this.data.id != undefined) {
+      console.log('editar');
+      this.editar(paradasDTO);
+    } else {
+      console.log('crear');
+      this.crear(paradasDTO);
+    }
+  }
+
+  editar(paradasDTO: paradasDTO) {
+    this.paradaraService.editar(paradasDTO).subscribe(
+      (result) => {
+        if (result.body.success) {
+          this.notificacionesService.showNotifacion(
+            result.body.message,
+            'x',
+            'success'
+          );
+          this.dialogRef.close('algo');
+        } else {
+        }
+      },
+      (errorResult) => {
+        console.log('estocode', errorResult);
+
+        this.notificacionesService.showNotifacion(
+          errorResult.error.message,
+          'x',
+          'error'
+        );
       }
-      console.log('respuest', result);
-      this.error_messages = result.error_messages;
-      console.log('respuest', this.error_messages);
-    });
+    );
+  }
+
+  crear(paradasDTO: paradasDTO) {
+    this.paradaraService.crear(paradasDTO).subscribe(
+      (result) => {
+        if (result.body.success) {
+          this.notificacionesService.showNotifacion(
+            result.body.message,
+            'x',
+            'success'
+          );
+          this.dialogRef.close('algo');
+        } else {
+        }
+      },
+      (errorResult) => {
+        console.log('estocode', errorResult);
+
+        this.notificacionesService.showNotifacion(
+          errorResult.error.message,
+          'x',
+          'error'
+        );
+      }
+    );
   }
 
   validacionesParadas(nombre: string) {

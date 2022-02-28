@@ -21,7 +21,7 @@ export class IndiceParadasComponent implements OnInit {
     public dialog: MatDialog,
     public paradaraService: ParadasService,
     private formBuilder: FormBuilder
-  ) { }
+  ) {}
 
   @Input()
   paradas;
@@ -70,11 +70,11 @@ export class IndiceParadasComponent implements OnInit {
         },
       });
     } else {
-      var producto = this.paradas[id];
-
+      var parada = this.paradas.find((it) => it.id === id);
+      console.log('parada', parada);
       dialogRef = this.dialog.open(CrearParadasComponent, {
         width: '800px',
-        data: producto,
+        data: parada,
       });
     }
 

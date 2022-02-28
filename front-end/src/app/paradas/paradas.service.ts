@@ -8,14 +8,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { webResult } from '../utilidades/webResult';
-// import { SeguridadService } from '../seguridad/seguridad.service';
+// import { SeguridadService } from '../seguridad/seguridad.service';';
 import { paradasDTO } from './paradasDTO';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ParadasService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   private apiURL = environment.apiURL + 'paradas';
 
@@ -42,11 +42,25 @@ export class ParadasService {
     });
   }
 
-  public crear(paradaDTO: paradasDTO): Observable<webResult> {
-    return this.http.post<webResult>(
-      this.apiURL,
+  public crear(paradaDTO: paradasDTO): Observable<HttpResponse<webResult>> {
+    return this.http.post<webResult>(this.apiURL, JSON.stringify(paradaDTO), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      observe: 'response',
+    });
+  }
+
+  public editar(paradaDTO: paradasDTO) {
+    return this.http.patch<webResult>(
+      `${this.apiURL}/${paradaDTO.id}`,
       JSON.stringify(paradaDTO),
-      this.httpOptions
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        }),
+        observe: 'response',
+      }
     );
   }
 }
