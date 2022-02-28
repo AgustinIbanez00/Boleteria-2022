@@ -29,7 +29,7 @@ public class ParadasController : ControllerBase
         if (!paradas.Success)
             return StatusCode(ResponseHelper.GetHttpError(paradas.ErrorCode), paradas);
         else
-            Request.Headers.Add("cantidadTotalRegistros", paradas.Result.Count.ToString());
+            Response.Headers.Add("cantidadTotalRegistros", paradas.Result.Count.ToString());
 
         return Ok(paradas);
     }
