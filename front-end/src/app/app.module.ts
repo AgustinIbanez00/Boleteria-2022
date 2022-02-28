@@ -20,10 +20,13 @@ import { MatInputModule } from '@angular/material/input';
 import { RegistroComponent } from './seguridad/registro/registro.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MostrarErroresComponent } from './utilidades/mostrar-errores/mostrar-errores.component';
+import { LoadingComponent } from './utilidades/loading/loading.component';
+import { FormControlComponent } from './utilidades/form-control/form-control.component';
+import { LoginComponent } from './seguridad/login/login.component';
 
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent, AutorizadoComponent, ListadoParadasComponent, ListadoGenericoComponent, CrearParadasComponent, LandingPageComponent, IndiceParadasComponent, RegistroComponent, MostrarErroresComponent],
+  declarations: [AppComponent, MenuComponent, AutorizadoComponent, ListadoParadasComponent, ListadoGenericoComponent, CrearParadasComponent, LandingPageComponent, IndiceParadasComponent, RegistroComponent, MostrarErroresComponent, LoadingComponent, FormControlComponent, LoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -7,15 +7,15 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { webResult } from '../utilidades/webResult';
 // import { SeguridadService } from '../seguridad/seguridad.service';
-import { webResult } from '../utilidades/listado-generico/weResult';
 import { paradasDTO } from './paradasDTO';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ParadasService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private apiURL = environment.apiURL + 'paradas';
 

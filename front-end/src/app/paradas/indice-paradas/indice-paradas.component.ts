@@ -1,7 +1,7 @@
 import { HttpResponse } from '@angular/common/http';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { webResult } from 'src/app/utilidades/listado-generico/weResult';
+
 import { parserarErroresAPI } from 'src/app/utilidades/utilidades';
 import { CrearParadasComponent } from '../crear-paradas/crear-paradas.component';
 import { ParadasService } from '../paradas.service';
@@ -9,6 +9,7 @@ import { paradasDTO } from '../paradasDTO';
 import { PageEvent } from '@angular/material/paginator';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
+import { webResult } from 'src/app/utilidades/webResult';
 
 @Component({
   selector: 'app-indice-paradas',
@@ -20,7 +21,7 @@ export class IndiceParadasComponent implements OnInit {
     public dialog: MatDialog,
     public paradaraService: ParadasService,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   @Input()
   paradas;
