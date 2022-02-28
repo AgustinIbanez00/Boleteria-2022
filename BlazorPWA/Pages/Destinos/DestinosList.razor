@@ -57,7 +57,7 @@ else
 
     async Task LoadDestinos()
     {
-        var response = await DestinoService.GetParadasAsync(new BoleteriaOnline.Core.ViewModels.Pagging.Pagination() { Pagina = 1, RecordsPorPagina = 100 });
+        var response = await DestinoService.AllAsync(new BoleteriaOnline.Core.ViewModels.Pagging.Pagination() { Pagina = 1, RecordsPorPagina = 100 });
 
         if (response.Success)
         {
@@ -102,7 +102,7 @@ else
         {
             if (resultDialog.Value)
             {
-                var response = await DestinoService.DeleteParadaAsync(id);
+                var response = await DestinoService.DeleteAsync(id);
                 ApiService<ParadaDTO>.NotifyResponse(NotificationService, response, async () =>
                 {
                     await LoadDestinos();

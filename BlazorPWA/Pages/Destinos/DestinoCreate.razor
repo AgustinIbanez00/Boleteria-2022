@@ -48,9 +48,9 @@ else
         BoleteriaOnline.Core.Utils.WebResult<ParadaDTO> response;
 
         if (Id.HasValue)
-            response = await DestinoService.UpdateParadaAsync(destino, Id.Value);
+            response = await DestinoService.UpdateAsync(destino, Id.Value);
         else
-            response = await DestinoService.CreateParadaAsync(arg);
+            response = await DestinoService.CreateAsync(arg);
 
         NotificationService.Notify(new Radzen.NotificationMessage() { Severity = response.Success ? NotificationSeverity.Success : NotificationSeverity.Error, Summary = response.Message, Duration = 3000 });
         Console.WriteLine(response.Message);
@@ -85,7 +85,7 @@ else
         {
             destino = new ParadaDTO();
 
-            response = await DestinoService.GetParadaAsync(Id.Value);
+            response = await DestinoService.GetAsync(Id.Value);
 
             if(!response.Success)
             {
