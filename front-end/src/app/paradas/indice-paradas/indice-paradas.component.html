@@ -3,13 +3,24 @@
     <span class="col-6">Paradas </span>
     <div class="col-6" style="float: right">
       <button
+        [disabled]="!paradas"
         class="botonCrear"
-        style="float: right; margin-top: 20px"
+        style="float: right"
+        mat-flat-button
+        (click)="refreshParadas(paginaActual, cantidadRegistrosAMostrar)"
+        title="Crear"
+      >
+        <mat-icon>refresh</mat-icon> Actualizar
+      </button>
+
+      <button
+        class="botonCrear"
+        style="float: right; margin-right: 2em"
         mat-flat-button
         (click)="openDialog(null)"
         title="Crear"
       >
-        <mat-icon>control_point</mat-icon>
+        <mat-icon>add_location_alt</mat-icon> Crear
       </button>
     </div>
   </mat-toolbar-row>

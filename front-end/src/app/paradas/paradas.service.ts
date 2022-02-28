@@ -7,15 +7,15 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { webResult } from '../utilidades/webResult';
 // import { SeguridadService } from '../seguridad/seguridad.service';
-import { webResult } from '../utilidades/listado-generico/weResult';
 import { paradasDTO } from './paradasDTO';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ParadasService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private apiURL = environment.apiURL + 'paradas';
 
@@ -42,10 +42,10 @@ export class ParadasService {
     });
   }
 
-  public crear(productoCreacionDTO: paradasDTO): Observable<webResult> {
+  public crear(paradaDTO: paradasDTO): Observable<webResult> {
     return this.http.post<webResult>(
       this.apiURL,
-      JSON.stringify(productoCreacionDTO),
+      JSON.stringify(paradaDTO),
       this.httpOptions
     );
   }

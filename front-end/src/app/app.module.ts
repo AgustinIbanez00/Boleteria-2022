@@ -19,10 +19,30 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { RegistroComponent } from './seguridad/registro/registro.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { MostrarErroresComponent } from './utilidades/mostrar-errores/mostrar-errores.component';
+import { LoadingComponent } from './utilidades/loading/loading.component';
+import { FormControlComponent } from './utilidades/form-control/form-control.component';
+import { LoginComponent } from './seguridad/login/login.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NotificacionesComponent } from './utilidades/notificaciones/notificaciones.component';
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent, AutorizadoComponent, ListadoParadasComponent, ListadoGenericoComponent, CrearParadasComponent, LandingPageComponent, IndiceParadasComponent, RegistroComponent],
+  declarations: [
+    AppComponent,
+    MenuComponent,
+    AutorizadoComponent,
+    ListadoParadasComponent,
+    ListadoGenericoComponent,
+    CrearParadasComponent,
+    LandingPageComponent,
+    IndiceParadasComponent,
+    RegistroComponent,
+    MostrarErroresComponent,
+    NotificacionesComponent,
+    LoginComponent,
+    LoadingComponent,
+    FormControlComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -33,6 +53,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ReactiveFormsModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

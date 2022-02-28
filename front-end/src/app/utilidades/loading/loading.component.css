@@ -1,0 +1,42 @@
+.contenedor-loading {
+  position: absolute;
+  z-index: 1000;
+  width: 100%;
+  height: 130%;
+  top: 0;
+  background-color: rgb(114, 110, 110, 0.5);
+  display: flex;
+  align-items: center;
+}
+.div-modal-contenido {
+  width: 30%;
+  height: 30%;
+  border-radius: 3%;
+  background-color: rgb(247, 247, 247);
+  margin: 0 auto;
+  background-image: url("../../../assets/imagenes/loading.gif");
+  background-repeat: round;
+}
+
+.div-contenido {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 20px;
+  bottom: 0;
+}
+.mensaje {
+  margin: 12em auto;
+}
+.div-loading {
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.imgLoading {
+  width: 250px;
+}

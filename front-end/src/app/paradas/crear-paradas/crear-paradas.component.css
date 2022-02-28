@@ -1,0 +1,19 @@
+form {
+  max-width: 800px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.contenedorGuardar {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.color-mio {
+  background-color: blueviolet;
+}

@@ -1,61 +1,68 @@
 <div class="containerRegistro">
   <mat-card class="cardRegistro">
-    <form [formGroup]="form" class="formRegistro">
-      <mat-form-field appearance="outline">
-        <mat-label>Nombre*</mat-label>
-        <input formControlName="first_name" matInput />
-        <mat-error *ngIf="form.invalid">{{
-          validacionesProducto("first_name")
-        }}</mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Apellido*</mat-label>
-        <input formControlName="last_name" matInput />
-        <mat-error *ngIf="form.invalid">{{
-          validacionesProducto("last_name")
-        }}</mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>DNI*</mat-label>
-        <input formControlName="dni" matInput />
-        <mat-error *ngIf="form.invalid">{{
-          validacionesProducto("dni")
-        }}</mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Fecha de nacimiento</mat-label>
-        <input
-          formControlName="fecha_nacimiento"
-          matInput
-          [matDatepicker]="picker"
-        />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Email*</mat-label>
-        <input formControlName="email" matInput />
-        <mat-error *ngIf="form.invalid">{{
-          validacionesProducto("email")
-        }}</mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Contraseña*</mat-label>
-        <input formControlName="password" matInput />
-        <mat-error *ngIf="form.invalid">{{
-          validacionesProducto("password")
-        }}</mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Confirmar Contraseña*</mat-label>
-        <input formControlName="confirm_password" matInput />
-        <mat-error *ngIf="form.invalid">{{
-          validacionesProducto("confirm_password")
-        }}</mat-error>
-      </mat-form-field>
-      <button mat-flat-button class="guardarRegistro" [disabled]="form.invalid">
-        Guardar
-      </button>
+    <form [formGroup]="form" class="formRegistro" (submit)="submit(form.value)">
+      <app-form-control
+        [form]="form"
+        [propiedad]="'first_name'"
+        [textoLabel]="'Nombre'"
+        [type]="'text'"
+        [error_messages]="error_messages"
+        [validaciones]="validacionesProducto"
+      ></app-form-control>
+      <app-form-control
+        [form]="form"
+        [propiedad]="'last_name'"
+        [textoLabel]="'Apellido*'"
+        [type]="'text'"
+        [error_messages]="error_messages"
+        [validaciones]="validacionesProducto"
+      ></app-form-control>
+      <app-form-control
+        [form]="form"
+        [propiedad]="'dni'"
+        [textoLabel]="'DNI*'"
+        [type]="'number'"
+        [error_messages]="error_messages"
+        [validaciones]="validacionesProducto"
+      ></app-form-control>
+      <app-form-control
+        [form]="form"
+        [propiedad]="'fecha_nacimiento'"
+        [textoLabel]="'Fecha de Nacimiento*'"
+        [type]="'date'"
+        [error_messages]="error_messages"
+        [validaciones]="validacionesProducto"
+      ></app-form-control>
+      <app-form-control
+        [form]="form"
+        [propiedad]="'email'"
+        [textoLabel]="'Email*'"
+        [type]="'email'"
+        [error_messages]="error_messages"
+        [validaciones]="validacionesProducto"
+      ></app-form-control>
+      <app-form-control
+        [form]="form"
+        [propiedad]="'password'"
+        [textoLabel]="'Contraseña*'"
+        [type]="'password'"
+        [error_messages]="error_messages"
+        [validaciones]="validacionesProducto"
+      ></app-form-control>
+      <app-form-control
+        [form]="form"
+        [propiedad]="'confirm_password'"
+        [textoLabel]="'Confirmar contraseña*'"
+        [type]="'password'"
+        [error_messages]="error_messages"
+        [validaciones]="validacionesProducto"
+      ></app-form-control>
+      <button mat-flat-button class="guardarRegistro">Guardar</button>
     </form>
+    <app-mostrar-errores [errores]="errores"></app-mostrar-errores>
   </mat-card>
 </div>
+<app-loading
+  [isLoading]="isLoading"
+  [mensaje]="'Registrando usuario'"
+></app-loading>

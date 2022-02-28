@@ -3,6 +3,7 @@
   height: 100%;
   padding: 20%;
   padding-top: 5%;
+  padding-bottom: 5%;
 }
 
 .cardRegistro {
@@ -15,6 +16,7 @@
 .guardarRegistro {
   margin: 0 auto;
   width: 50%;
+  background-color: aquamarine;
 }
 mat-form-field {
   margin-top: 1%;
