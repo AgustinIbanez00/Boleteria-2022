@@ -2,6 +2,9 @@
 using BoleteriaOnline.Web.Data;
 using BoleteriaOnline.Web.Data.Models;
 using BoleteriaOnline.Web.Repositories;
+using BoleteriaOnline.Core.ViewModels.Pagging;
+using BoleteriaOnline.Core.Extensions;
+using BoleteriaOnline.Web.Extensions;
 
 namespace BoleteriaOnline.Web.Repository;
 
@@ -42,7 +45,7 @@ public class ParadaRepository : IParadaRepository
 
     public async Task<Parada> GetAsync(long id) => await _context.Paradas.FirstOrDefaultAsync(m => m.Id == id);
 
-    public async Task<ICollection<Parada>> GetAllAsync() => await _context.Paradas.ToListAsync();
+    public async Task<PaginatedList<Parada>> GetAllAsync(Pagination pagination) => await PaggingExtensions.CreateAsync(_context.Paradas, pagination.Pagina, pagination.RecordsPorPagina);
 
     public async Task<bool> Save() => await _context.SaveChangesAsync() >= 0;
 

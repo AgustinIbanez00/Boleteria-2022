@@ -4,6 +4,7 @@ using System.Text.Json;
 using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
+using BoleteriaOnline.Core.ViewModels.Pagging;
 using BoleteriaOnline.Core.ViewModels.Requests;
 using BoleteriaOnline.Core.ViewModels.Responses;
 
@@ -54,7 +55,7 @@ public class DestinoService : IParadaService
         return JsonSerializer.Deserialize<WebResult<ParadaDTO>>(content, _options);
     }
 
-    public async Task<WebResult<ICollection<ParadaDTO>>> GetParadasAsync()
+    public async Task<WebResult<ICollection<ParadaDTO>>> GetParadasAsync(PaginationSettings parameters)
     {
         try
         {

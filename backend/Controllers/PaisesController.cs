@@ -9,11 +9,11 @@ namespace BoleteriaOnline.Web.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ParadasController : ControllerBase
+public class PaisesController : ControllerBase
 {
     private readonly IParadaService _paradaService;
 
-    public ParadasController(IParadaService service)
+    public PaisesController(IParadaService service)
     {
         _paradaService = service;
     }
@@ -21,14 +21,14 @@ public class ParadasController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ICollection<ParadaDTO>>))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResult<PaginatedList<ParadaDTO>>>> GetAll([FromQuery] Pagination parameters)
+    public async Task<ActionResult<WebResult<ICollection<ParadaDTO>>>> GetAll(Pagination pagination)
     {
-        WebResult<PaginatedList<ParadaDTO>> paradas = await _paradaService.GetParadasAsync(parameters);
+        var destinos = await _paradaService.GetParadasAsync(pagination);
 
-        if (!paradas.Success)
-            return StatusCode(ResponseHelper.GetHttpError(paradas.ErrorCode), paradas);
+        if (!destinos.Success)
+            return StatusCode(ResponseHelper.GetHttpError(destinos.ErrorCode), destinos);
 
-        return Ok(paradas);
+        return Ok(destinos);
     }
 
     [HttpGet("{id:int}")]

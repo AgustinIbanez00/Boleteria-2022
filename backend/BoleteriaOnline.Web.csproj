@@ -49,6 +49,10 @@
 	
 	<ItemGroup>
 	  <ProjectReference Include="..\BoleteriaOnline.Core\BoleteriaOnline.Core.csproj" />
+	</ItemGroup>	
+	
+	<ItemGroup>
+	  <Folder Include="Pagging\" />
 	</ItemGroup>
 	
 </Project>

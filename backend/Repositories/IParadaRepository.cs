@@ -1,9 +1,10 @@
-﻿using BoleteriaOnline.Web.Data.Models;
+﻿using BoleteriaOnline.Core.ViewModels.Pagging;
+using BoleteriaOnline.Web.Data.Models;
 
 namespace BoleteriaOnline.Web.Repositories;
 public interface IParadaRepository
 {
-    Task<ICollection<Parada>> GetAllAsync();
+    Task<PaginatedList<Parada>> GetAllAsync(Pagination pagination);
     Task<Parada> GetAsync(long id);
     Task<bool> ExistsAsync(long id);
     Task<bool> CreateAsync(Parada destino);

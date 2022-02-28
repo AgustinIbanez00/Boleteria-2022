@@ -14,7 +14,7 @@ public class GreaterThanZeroAttribute : ValidationAttribute
 
     public override string FormatErrorMessage(string name)
     {
-        return string.Format("El valor de {0} debe ser mayor a cero.", name);
+        return string.Format("El campo {0} debe ser mayor a cero.", name);
     }
 
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)

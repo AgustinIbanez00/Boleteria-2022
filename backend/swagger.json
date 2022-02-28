@@ -580,12 +580,224 @@
         }
       }
     },
+    "/api/paises": {
+      "get": {
+        "tags": [
+          "Paises"
+        ],
+        "operationId": "Paises_GetAll",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "pagination",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Pagination"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfICollectionOfParadaDTO"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Paises"
+        ],
+        "operationId": "Paises_CreateDestino",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "destinoDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ParadaDTO"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfParadaDTO"
+            }
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "201": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfParadaDTO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Paises"
+        ],
+        "operationId": "Paises_DeleteDestino",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "query",
+            "format": "int64",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfParadaDTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/paises/{id}": {
+      "get": {
+        "tags": [
+          "Paises"
+        ],
+        "operationId": "Paises_Get",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int64",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfParadaDTO"
+            }
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Paises"
+        ],
+        "operationId": "Paises_UpdateDestino",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "destinoDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ParadaDTO"
+            },
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int64",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfParadaDTO"
+            }
+          }
+        }
+      }
+    },
     "/api/paradas": {
       "get": {
         "tags": [
           "Paradas"
         ],
         "operationId": "Paradas_GetAll",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "Pagina",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "RecordsPorPagina",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
         "responses": {
           "200": {
             "x-nullable": false,
@@ -1806,6 +2018,23 @@
         },
         "error": {
           "type": "string"
+        }
+      }
+    },
+    "Pagination": {
+      "type": "object",
+      "required": [
+        "pagina",
+        "records_por_pagina"
+      ],
+      "properties": {
+        "pagina": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "records_por_pagina": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },

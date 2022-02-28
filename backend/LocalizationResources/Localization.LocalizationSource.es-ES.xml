@@ -167,4 +167,14 @@
     <value>días de la semana</value>
     <comment>Created by XLocalizer</comment>
   </data>
+  <data isActive="false">
+    <key>página</key>
+    <value>página</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>elementos por página</key>
+    <value>elementos por página</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
 </root>
