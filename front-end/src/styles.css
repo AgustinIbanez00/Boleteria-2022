@@ -27,6 +27,16 @@ body {
   background-color: rgb(200, 230, 241);
 }
 
+.success.mat-snack-bar-container {
+  background: rgb(150, 245, 186);
+  color: black;
+}
+
+.error.mat-snack-bar-container {
+  background: tomato;
+  color: black;
+}
+
 /* ------------------------------ */
 /* 
 .guardar {

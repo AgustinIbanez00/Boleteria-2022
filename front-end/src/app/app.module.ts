@@ -20,10 +20,23 @@ import { MatInputModule } from '@angular/material/input';
 import { RegistroComponent } from './seguridad/registro/registro.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MostrarErroresComponent } from './utilidades/mostrar-errores/mostrar-errores.component';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NotificacionesComponent } from './utilidades/notificaciones/notificaciones.component';
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent, AutorizadoComponent, ListadoParadasComponent, ListadoGenericoComponent, CrearParadasComponent, LandingPageComponent, IndiceParadasComponent, RegistroComponent, MostrarErroresComponent],
+  declarations: [
+    AppComponent,
+    MenuComponent,
+    AutorizadoComponent,
+    ListadoParadasComponent,
+    ListadoGenericoComponent,
+    CrearParadasComponent,
+    LandingPageComponent,
+    IndiceParadasComponent,
+    RegistroComponent,
+    MostrarErroresComponent,
+    NotificacionesComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -34,8 +47,9 @@ import { MostrarErroresComponent } from './utilidades/mostrar-errores/mostrar-er
     ReactiveFormsModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
