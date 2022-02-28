@@ -7,7 +7,7 @@ import { CrearParadasComponent } from '../crear-paradas/crear-paradas.component'
 import { ParadasService } from '../paradas.service';
 import { paradasDTO } from '../paradasDTO';
 import { PageEvent } from '@angular/material/paginator';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
 import { webResult } from 'src/app/utilidades/webResult';
 
@@ -27,7 +27,6 @@ export class IndiceParadasComponent implements OnInit {
   paradas;
 
   id: number;
-  estado: number;
   nombre: string;
   cantidadTotalRegistros;
   paginaActual = 1;
@@ -43,17 +42,13 @@ export class IndiceParadasComponent implements OnInit {
   //agarrar referencia de la tabla
   @ViewChild(MatTable) table: MatTable<any>;
 
-  randomString(length, chars) {
-    var result = '';
-    for (var i = length; i > 0; --i)
-      result += chars[Math.floor(Math.random() * chars.length)];
-    return result;
-  }
-
   ngOnInit(): void {
     this.obtenerParadas(this.paginaActual, this.cantidadRegistrosAMostrar),
       (this.form = this.formBuilder.group({
-        nombre: '',
+        nombre: [
+          '',
+          { validators: [Validators.required, Validators.maxLength(100)] },
+        ],
       }));
     this.form.valueChanges.subscribe((valores) => {
       this.cargarRegistrosFiltrados(
@@ -72,7 +67,6 @@ export class IndiceParadasComponent implements OnInit {
         data: {
           id: this.id,
           nombre: this.nombre,
-          estado: this.estado,
         },
       });
     } else {
@@ -87,6 +81,11 @@ export class IndiceParadasComponent implements OnInit {
     dialogRef.beforeClosed().subscribe((result) => {
       this.obtenerParadas(this.paginaActual, this.cantidadRegistrosAMostrar);
     });
+  }
+
+  refreshParadas(pagina: number, cantidadRegistrosAMostrar: number) {
+    this.paradas = null;
+    this.obtenerParadas(this.paginaActual, this.cantidadRegistrosAMostrar);
   }
 
   // listado

@@ -42,10 +42,10 @@ export class ParadasService {
     });
   }
 
-  public crear(productoCreacionDTO: paradasDTO): Observable<webResult> {
+  public crear(paradaDTO: paradasDTO): Observable<webResult> {
     return this.http.post<webResult>(
       this.apiURL,
-      JSON.stringify(productoCreacionDTO),
+      JSON.stringify(paradaDTO),
       this.httpOptions
     );
   }
