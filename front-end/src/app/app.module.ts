@@ -45,10 +45,7 @@ import { IndiceDistribucionComponent } from './distribucion/indice-distribucion/
     LoginComponent,
     LoadingComponent,
     FormControlComponent,
-<<<<<<< Updated upstream
-=======
     IndiceDistribucionComponent
->>>>>>> Stashed changes
   ],
   imports: [
     BrowserModule,
@@ -72,4 +69,4 @@ import { IndiceDistribucionComponent } from './distribucion/indice-distribucion/
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

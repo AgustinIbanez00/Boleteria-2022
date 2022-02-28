@@ -18,7 +18,7 @@ export class CrearParadasComponent implements OnInit {
     private formBuilder: FormBuilder,
 
     private notificacionesService: NotificacionesService
-  ) {}
+  ) { }
 
   error_messages: Map<string, string[]> = new Map<string, string[]>();
   form: FormGroup;
@@ -55,7 +55,7 @@ export class CrearParadasComponent implements OnInit {
     this.paradaraService.editar(paradasDTO).subscribe(
       (result) => {
         if (result.body.success) {
-          this.notificacionesService.showNotifacion(
+          this.notificacionesService.showNotificacion(
             result.body.message,
             'x',
             'success'
@@ -67,7 +67,7 @@ export class CrearParadasComponent implements OnInit {
       (errorResult) => {
         console.log('estocode', errorResult);
 
-        this.notificacionesService.showNotifacion(
+        this.notificacionesService.showNotificacion(
           errorResult.error.message,
           'x',
           'error'
@@ -80,7 +80,7 @@ export class CrearParadasComponent implements OnInit {
     this.paradaraService.crear(paradasDTO).subscribe(
       (result) => {
         if (result.body.success) {
-          this.notificacionesService.showNotifacion(
+          this.notificacionesService.showNotificacion(
             result.body.message,
             'x',
             'success'
@@ -92,7 +92,7 @@ export class CrearParadasComponent implements OnInit {
       (errorResult) => {
         console.log('estocode', errorResult);
 
-        this.notificacionesService.showNotifacion(
+        this.notificacionesService.showNotificacion(
           errorResult.error.message,
           'x',
           'error'

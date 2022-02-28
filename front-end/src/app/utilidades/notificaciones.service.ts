@@ -8,7 +8,7 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
 export class NotificacionesService {
   constructor(private snackBar: MatSnackBar) { }
 
-  showNotifacion(
+  showNotificacion(
     result_message: string,
     buttonText: string,
     messageType: 'error' | 'success'
