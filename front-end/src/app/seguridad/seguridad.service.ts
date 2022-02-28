@@ -10,7 +10,8 @@ export class SeguridadService {
 
   private apiURL = environment.apiURL + 'cuentas';
   private readonly llaveToken = 'token';
-  private readonly llaveExpiracion = 'token-expiracion';
+  private readonly llaveNombre = 'nombre';
+  // private readonly llaveExpiracion = 'token-expiracion';
   private readonly campoRol = 'role';
 
   estaLogueado(): boolean {
@@ -19,19 +20,25 @@ export class SeguridadService {
       return false;
     }
 
-    const expiracion = localStorage.getItem(this.llaveExpiracion);
-    const expiracionFecha = new Date(expiracion);
+    // const expiracion = localStorage.getItem(this.llaveExpiracion);
+    // const expiracionFecha = new Date(expiracion);
 
-    if (expiracionFecha <= new Date()) {
-      this.logout();
-      return false;
-    }
+    // if (expiracionFecha <= new Date()) {
+    //   this.logout();
+    //   return false;
+    // }
     return true;
   }
-
+  obtenerToken() {
+    return localStorage.getItem(this.llaveToken);
+  }
+  guardarToken(token: string) {
+    localStorage.setItem(this.llaveToken, token);
+    this.router.navigate(['/']);
+  }
   logout() {
     localStorage.removeItem(this.llaveToken);
-    localStorage.removeItem(this.llaveExpiracion);
+    // localStorage.removeItem(this.llaveExpiracion);
     this.router.navigate(['/']);
   }
 

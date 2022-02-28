@@ -1,1 +1,31 @@
-<p>login works!</p>
+<app-loading
+  [isLoading]="isLoading"
+  [mensaje]="'Inciando sesión'"
+></app-loading>
+
+<div class="contenedorLogin">
+  <mat-card class="cardLogin">
+    <form [formGroup]="form" class="form-login" (submit)="submit(form.value)">
+      <app-form-control
+        [propiedad]="'email'"
+        [type]="'email'"
+        [form]="form"
+        [validaciones]="validacionesLogin"
+        [textoLabel]="'Email*'"
+        [error_messages]="error_messages"
+      ></app-form-control>
+      <app-form-control
+        [propiedad]="'password'"
+        [type]="'password'"
+        [form]="form"
+        [validaciones]="validacionesLogin"
+        [textoLabel]="'Contraseña*'"
+        [error_messages]="error_messages"
+      ></app-form-control>
+      <button mat-flat-button class="botonLogin" [disabled]="form.invalid">
+        Guardar
+      </button>
+    </form>
+    <app-mostrar-errores [errores]="errores"></app-mostrar-errores>
+  </mat-card>
+</div>
