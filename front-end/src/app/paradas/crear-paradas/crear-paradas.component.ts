@@ -55,7 +55,7 @@ export class CrearParadasComponent implements OnInit {
     this.paradaraService.editar(paradasDTO).subscribe(
       (result) => {
         if (result.body.success) {
-          this.notificacionesService.showNotifacacion(
+          this.notificacionesService.showNotifacion(
             result.body.message,
             'x',
             'success'
@@ -67,7 +67,7 @@ export class CrearParadasComponent implements OnInit {
       (errorResult) => {
         console.log('estocode', errorResult);
 
-        this.notificacionesService.showNotifacacion(
+        this.notificacionesService.showNotifacion(
           errorResult.error.message,
           'x',
           'error'
@@ -80,7 +80,7 @@ export class CrearParadasComponent implements OnInit {
     this.paradaraService.crear(paradasDTO).subscribe(
       (result) => {
         if (result.body.success) {
-          this.notificacionesService.showNotifacacion(
+          this.notificacionesService.showNotifacion(
             result.body.message,
             'x',
             'success'
@@ -92,7 +92,7 @@ export class CrearParadasComponent implements OnInit {
       (errorResult) => {
         console.log('estocode', errorResult);
 
-        this.notificacionesService.showNotifacacion(
+        this.notificacionesService.showNotifacion(
           errorResult.error.message,
           'x',
           'error'
