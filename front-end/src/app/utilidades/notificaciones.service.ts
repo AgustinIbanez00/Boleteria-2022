@@ -6,9 +6,9 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
   providedIn: 'root',
 })
 export class NotificacionesService {
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar) { }
 
-  showNotifacion(
+  showNotificacion(
     result_message: string,
     buttonText: string,
     messageType: 'error' | 'success'

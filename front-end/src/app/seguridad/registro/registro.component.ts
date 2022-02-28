@@ -59,7 +59,7 @@ export class RegistroComponent implements OnInit {
           this.error_messages = result.error_messages
         }
         else {
-          this.notificacionesService.showNotifacion(result.message, 'x', 'success');
+          this.notificacionesService.showNotificacion(result.message, 'x', 'success');
           this.router.navigate(['/login']);
         }
         this.isLoading = false;
