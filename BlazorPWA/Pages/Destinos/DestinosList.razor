@@ -57,7 +57,7 @@ else
 
     async Task LoadDestinos()
     {
-        var response = await DestinoService.GetParadasAsync();
+        var response = await DestinoService.GetParadasAsync(new BoleteriaOnline.Core.ViewModels.Pagging.Pagination() { Pagina = 1, RecordsPorPagina = 100 });
 
         if (response.Success)
         {
