@@ -24,9 +24,12 @@ public class ParadasController : ControllerBase
     public async Task<ActionResult<WebResult<PaginatedList<ParadaDTO>>>> GetAll([FromQuery] Pagination parameters)
     {
         WebResult<PaginatedList<ParadaDTO>> paradas = await _paradaService.GetParadasAsync(parameters);
+        
 
         if (!paradas.Success)
             return StatusCode(ResponseHelper.GetHttpError(paradas.ErrorCode), paradas);
+        else
+            Request.Headers.Add("cantidadTotalRegistros", paradas.Result.Count.ToString());
 
         return Ok(paradas);
     }
