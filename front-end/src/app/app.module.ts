@@ -45,7 +45,7 @@ import { IndiceDistribucionComponent } from './distribucion/indice-distribucion/
     LoginComponent,
     LoadingComponent,
     FormControlComponent,
-    IndiceDistribucionComponent
+    IndiceDistribucionComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,4 +69,4 @@ import { IndiceDistribucionComponent } from './distribucion/indice-distribucion/
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
