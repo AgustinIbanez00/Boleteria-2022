@@ -8,7 +8,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { webResult } from '../utilidades/webResult';
-// import { SeguridadService } from '../seguridad/seguridad.service';';
 import { paradasDTO } from './paradasDTO';
 
 @Injectable({
@@ -18,12 +17,6 @@ export class ParadasService {
   constructor(private http: HttpClient) {}
 
   private apiURL = environment.apiURL + 'paradas';
-
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-    }),
-  };
 
   public obtenerParadas(
     pagina: number,

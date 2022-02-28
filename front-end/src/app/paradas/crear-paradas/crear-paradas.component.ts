@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { paradasDTO } from '../paradasDTO';
 import { ParadasService } from '../paradas.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotificacionesService } from 'src/app/utilidades/notificaciones.service';
 
 @Component({
@@ -17,7 +16,7 @@ export class CrearParadasComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: paradasDTO,
     public paradaraService: ParadasService,
     private formBuilder: FormBuilder,
-    private _snackBar: MatSnackBar,
+
     private notificacionesService: NotificacionesService
   ) {}
 
@@ -28,9 +27,6 @@ export class CrearParadasComponent implements OnInit {
   durationInSeconds = 3;
 
   ngOnInit(): void {
-    // this.dto = { nombre: '', id: 0 };
-    // this.guardarParadas(this.dto);
-
     this.form = this.formBuilder.group({
       nombre: [
         '',
@@ -59,7 +55,7 @@ export class CrearParadasComponent implements OnInit {
     this.paradaraService.editar(paradasDTO).subscribe(
       (result) => {
         if (result.body.success) {
-          this.notificacionesService.showNotifacion(
+          this.notificacionesService.showNotifacacion(
             result.body.message,
             'x',
             'success'
@@ -71,7 +67,7 @@ export class CrearParadasComponent implements OnInit {
       (errorResult) => {
         console.log('estocode', errorResult);
 
-        this.notificacionesService.showNotifacion(
+        this.notificacionesService.showNotifacacion(
           errorResult.error.message,
           'x',
           'error'
@@ -84,7 +80,7 @@ export class CrearParadasComponent implements OnInit {
     this.paradaraService.crear(paradasDTO).subscribe(
       (result) => {
         if (result.body.success) {
-          this.notificacionesService.showNotifacion(
+          this.notificacionesService.showNotifacacion(
             result.body.message,
             'x',
             'success'
@@ -96,7 +92,7 @@ export class CrearParadasComponent implements OnInit {
       (errorResult) => {
         console.log('estocode', errorResult);
 
-        this.notificacionesService.showNotifacion(
+        this.notificacionesService.showNotifacacion(
           errorResult.error.message,
           'x',
           'error'
