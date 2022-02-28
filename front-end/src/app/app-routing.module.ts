@@ -5,6 +5,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { IndiceParadasComponent } from './paradas/indice-paradas/indice-paradas.component';
 import { LoginComponent } from './seguridad/login/login.component';
 import { RegistroComponent } from './seguridad/registro/registro.component';
+import { IndiceDistribucionComponent } from './distribucion/indice-distribucion/indice-distribucion.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,11 @@ const routes: Routes = [
     component: IndiceParadasComponent,
     canActivate: [EsAdminGuard],
   },
+  //distribucion
+  {
+    path: 'distribucion',
+    component: IndiceDistribucionComponent
+  }
 ];
 
 @NgModule({

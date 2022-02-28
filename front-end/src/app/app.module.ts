@@ -27,6 +27,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificacionesComponent } from './utilidades/notificaciones/notificaciones.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SeguridadInterceptorService } from './seguridad/interceptor.service';
+import { IndiceDistribucionComponent } from './distribucion/indice-distribucion/indice-distribucion.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,10 @@ import { SeguridadInterceptorService } from './seguridad/interceptor.service';
     LoginComponent,
     LoadingComponent,
     FormControlComponent,
+<<<<<<< Updated upstream
+=======
+    IndiceDistribucionComponent
+>>>>>>> Stashed changes
   ],
   imports: [
     BrowserModule,
