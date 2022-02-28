@@ -8,9 +8,9 @@ using BoleteriaOnline.Web.Data.Models;
 using BoleteriaOnline.Web.Extensions;
 using BoleteriaOnline.Web.Repositories;
 using EntityFramework.Exceptions.Common;
+using static BoleteriaOnline.Core.Utils.WebResponse;
 
 namespace BoleteriaOnline.Web.Services;
-using static WebResponse;
 public class ParadaService : IParadaService
 {
     private readonly IMapper _mapper;
@@ -22,7 +22,20 @@ public class ParadaService : IParadaService
         _paradaRepository = paradaRepository;
     }
 
-    public async Task<WebResult<ParadaDTO>> CreateParadaAsync(ParadaDTO request)
+    public async Task<WebResult<PaginatedList<ParadaDTO>>> AllAsync(Pagination parameters)
+    {
+        try
+        {
+            PaginatedList<Parada> paradas = await _paradaRepository.GetAllAsync(parameters);
+            return Ok(_mapper.MapPaginatedList<Parada, ParadaDTO>(paradas.AsQueryable(), parameters));
+        }
+        catch (Exception ex)
+        {
+            return Error<Parada, PaginatedList<ParadaDTO>>(ErrorMessage.Generic, ex.Message);
+        }
+    }
+
+    public async Task<WebResult<ParadaDTO>> CreateAsync(ParadaDTO request)
     {
         try
         {
@@ -42,7 +55,8 @@ public class ParadaService : IParadaService
             return Error<Parada, ParadaDTO>(ErrorMessage.Generic, ex.Message);
         }
     }
-    public async Task<WebResult<ParadaDTO>> DeleteParadaAsync(long id)
+
+    public async Task<WebResult<ParadaDTO>> DeleteAsync(long id)
     {
         try
         {
@@ -60,7 +74,8 @@ public class ParadaService : IParadaService
             return Error<Parada, ParadaDTO>(ErrorMessage.Generic, ex.Message);
         }
     }
-    public async Task<WebResult<ParadaDTO>> GetParadaAsync(long id)
+
+    public async Task<WebResult<ParadaDTO>> GetAsync(long id)
     {
         try
         {
@@ -76,20 +91,8 @@ public class ParadaService : IParadaService
             return Error<Parada, ParadaDTO>(ErrorMessage.Generic, ex.Message);
         }
     }
-    public async Task<WebResult<PaginatedList<ParadaDTO>>> GetParadasAsync(Pagination pagination)
-    {
-        try
-        {
-            PaginatedList<Parada> paradas = await _paradaRepository.GetAllAsync(pagination);
-            return Ok(_mapper.MapPaginatedList<Parada, ParadaDTO>(paradas.AsQueryable(), pagination));
-        }
-        catch (Exception ex)
-        {
-            return Error<Parada, PaginatedList<ParadaDTO>>(ErrorMessage.Generic, ex.Message);
-        }
-    }
 
-    public async Task<WebResult<ParadaDTO>> UpdateParadaAsync(ParadaDTO destinoDto, long id)
+    public async Task<WebResult<ParadaDTO>> UpdateAsync(ParadaDTO request, long id)
     {
         try
         {
@@ -101,7 +104,8 @@ public class ParadaService : IParadaService
             if (destino == null)
                 return Error<Parada, ParadaDTO>(ErrorMessage.NotFound);
 
-            destino.Nombre = destinoDto.Nombre;
+            destino.Nombre = request.Nombre;
+            destino.Estado = request.Estado;
 
             if (!await _paradaRepository.UpdateAsync(destino))
                 return Error<Parada, ParadaDTO>(ErrorMessage.CouldNotUpdate);
