@@ -96,7 +96,7 @@ export class IndiceParadasComponent implements OnInit {
         (respuesta: HttpResponse<webResult>) => {
           console.log('respuesta', respuesta.body);
           this.paradas = Object.values(respuesta.body.result);
-          console.log(Object.values(respuesta.headers));
+          console.log(respuesta.headers);
           this.cantidadTotalRegistros = respuesta.headers.get(
             'cantidadTotalRegistros'
           );
