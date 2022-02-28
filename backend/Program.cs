@@ -150,6 +150,7 @@ app.UseCors(builder => builder
     .AllowAnyOrigin()
     .AllowAnyMethod()
     .AllowAnyHeader()
+    .WithExposedHeaders(new string[] { "cantidadTotalRegistros" })
 );
 /*
 app.UseDefaultFiles();
