@@ -48,6 +48,8 @@ builder.Services.AddScoped<IParadaRepository, ParadaRepository>();
 builder.Services.AddScoped<IViajeRepository, ViajeRepository>();
 builder.Services.AddScoped<INodoRepository, NodoRepository>();
 builder.Services.AddScoped<IDistribucionRepository, DistribucionRepository>();
+builder.Services.AddScoped<IPaisRepository, PaisRepository>();
+builder.Services.AddScoped<IProvinciaRepository, ProvinciaRepository>();
 
 /* INYECCION DE SERVICIOS */
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
@@ -56,6 +58,8 @@ builder.Services.AddScoped<IParadaService, ParadaService>();
 builder.Services.AddScoped<IViajeService, ViajeService>();
 builder.Services.AddScoped<INodoService, NodoService>();
 builder.Services.AddScoped<IDistribucionService, DistribucionService>();
+builder.Services.AddScoped<IPaisService, PaisService>();
+builder.Services.AddScoped<IProvinciaService, ProvinciaService>();
 
 builder.Services.AddCors();
 

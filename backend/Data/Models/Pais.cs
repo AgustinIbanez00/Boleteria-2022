@@ -1,5 +1,5 @@
 ﻿namespace BoleteriaOnline.Web.Data.Models;
-public class Pais : Auditory
+public class Pais
 {
     public int Id { get; set; }
     [StringLength(150)]

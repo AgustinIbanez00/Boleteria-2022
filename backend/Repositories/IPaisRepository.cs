@@ -7,6 +7,4 @@ public interface IPaisRepository
 {
     Task<PaginatedList<Pais>> GetAllAsync(PaisFilter parameters);
 
-    Task<PaginatedList<Pais>> GetAsync(int id);
-
 }

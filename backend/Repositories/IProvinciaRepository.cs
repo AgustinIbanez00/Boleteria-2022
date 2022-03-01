@@ -7,6 +7,4 @@ public interface IProvinciaRepository
 {
     Task<PaginatedList<Provincia>> GetAllAsync(ProvinciaFilter parameters);
 
-    Task<PaginatedList<Provincia>> GetAsync(int id);
-
 }

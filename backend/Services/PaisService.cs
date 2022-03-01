@@ -41,21 +41,4 @@ public class PaisService : IPaisService
             return ErrorList<Parada, PaisDTO>(ErrorMessage.Generic, ex.Message);
         }
     }
-
-    public async Task<WebResult<PaisDTO>> GetAsync(int id)
-    {
-        try
-        {
-            var pais = await _paisRepository.GetAsync(id);
-
-            if (pais == null)
-                return Error<PaisDTO>(ErrorMessage.NotFound);
-
-            return Ok(_mapper.Map<PaisDTO>(pais));
-        }
-        catch (Exception ex)
-        {
-            return Error<PaisDTO>(ErrorMessage.Generic, ex.Message);
-        }
-    }
 }

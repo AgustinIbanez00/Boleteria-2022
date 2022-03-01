@@ -46,5 +46,9 @@ public class AutoMapperProfiles : Profile
             .ReverseMap();
         CreateMap<Horario, HorarioResponse>()
             .ReverseMap();
+        CreateMap<Pais, PaisDTO>()
+            .ReverseMap();
+        CreateMap<Provincia, ProvinciaDTO>()
+            .ReverseMap();
     }
 }

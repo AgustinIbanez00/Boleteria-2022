@@ -6,9 +6,9 @@
     "description": "Colleción de API's correspondientes al sistema de Pasajes Online.",
     "version": "1.0.0"
   },
-  "host": "localhost:7203",
+  "host": "boleteria.azurewebsites.net",
   "schemes": [
-    "https"
+    "http"
   ],
   "produces": [
     "text/plain",
@@ -55,7 +55,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ClienteRequest"
+              "$ref": "#/definitions/ClienteDTO"
             },
             "x-nullable": false
           }
@@ -107,7 +107,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ClienteRequest"
+              "$ref": "#/definitions/ClienteDTO"
             },
             "x-nullable": false
           }
@@ -586,102 +586,36 @@
           "Paises"
         ],
         "operationId": "Paises_GetAll",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "parameters": [
-          {
-            "name": "pagination",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Pagination"
-            },
-            "x-nullable": false
-          }
-        ],
-        "responses": {
-          "200": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/WebResultOfICollectionOfParadaDTO"
-            }
-          },
-          "404": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Paises"
-        ],
-        "operationId": "Paises_CreateDestino",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "parameters": [
-          {
-            "name": "destinoDto",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ParadaDTO"
-            },
-            "x-nullable": false
-          }
-        ],
-        "responses": {
-          "200": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/WebResultOfParadaDTO"
-            }
-          },
-          "400": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          },
-          "404": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          },
-          "201": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/WebResultOfParadaDTO"
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Paises"
-        ],
-        "operationId": "Paises_DeleteDestino",
         "parameters": [
           {
             "type": "integer",
-            "name": "id",
+            "name": "Id",
             "in": "query",
-            "format": "int64",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Nombre",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "title": "página",
+            "type": "integer",
+            "name": "Pagina",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "title": "elementos por página",
+            "type": "integer",
+            "name": "RecordsPorPagina",
+            "in": "query",
+            "format": "int32",
+            "maximum": 100.0,
+            "minimum": 1.0,
             "x-nullable": false
           }
         ],
@@ -690,25 +624,32 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfParadaDTO"
+              "$ref": "#/definitions/WebResultOfICollectionOfPaisDTO"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           }
         }
       }
     },
-    "/api/paises/{id}": {
+    "/api/paises/{id}/provincias": {
       "get": {
         "tags": [
           "Paises"
         ],
-        "operationId": "Paises_Get",
+        "operationId": "Paises_GetProvincias",
         "parameters": [
           {
             "type": "integer",
             "name": "id",
             "in": "path",
             "required": true,
-            "format": "int64",
+            "format": "int32",
             "x-nullable": false
           }
         ],
@@ -717,14 +658,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfParadaDTO"
-            }
-          },
-          "400": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
+              "$ref": "#/definitions/WebResultOfICollectionOfPaisDTO"
             }
           },
           "404": {
@@ -732,45 +666,6 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/ProblemDetails"
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Paises"
-        ],
-        "operationId": "Paises_UpdateDestino",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "parameters": [
-          {
-            "name": "destinoDto",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ParadaDTO"
-            },
-            "x-nullable": false
-          },
-          {
-            "type": "integer",
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "format": "int64",
-            "x-nullable": false
-          }
-        ],
-        "responses": {
-          "200": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/WebResultOfParadaDTO"
             }
           }
         }
@@ -781,9 +676,38 @@
         "tags": [
           "Paradas"
         ],
+        "summary": "Devuelve todas las paradas que cumplan la condición del filtro.",
         "operationId": "Paradas_GetAll",
         "parameters": [
           {
+            "type": "integer",
+            "name": "Id",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Nombre",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "Estado",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/Estado"
+            },
+            "x-nullable": true,
+            "enum": [
+              0,
+              1,
+              -1
+            ]
+          },
+          {
+            "title": "página",
             "type": "integer",
             "name": "Pagina",
             "in": "query",
@@ -791,10 +715,13 @@
             "x-nullable": false
           },
           {
+            "title": "elementos por página",
             "type": "integer",
             "name": "RecordsPorPagina",
             "in": "query",
             "format": "int32",
+            "maximum": 100.0,
+            "minimum": 1.0,
             "x-nullable": false
           }
         ],
@@ -803,7 +730,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfICollectionOfParadaDTO"
+              "$ref": "#/definitions/WebResultListOfParadaDTO"
             }
           },
           "404": {
@@ -1094,7 +1021,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfUsuarioResponse"
+              "$ref": "#/definitions/WebResultOfLoginResponse"
             }
           },
           "400": {
@@ -1375,16 +1302,6 @@
       }
     },
     "ClienteDTO": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/ClienteRequest"
-        },
-        {
-          "type": "object"
-        }
-      ]
-    },
-    "ClienteRequest": {
       "type": "object",
       "required": [
         "dni",
@@ -1636,12 +1553,20 @@
         "ESPACIO_PASILLO",
         "ESPACIO_BUTACA",
         "ESPACIO_TV",
+        "ESPACIO_BUTACA_NO_DISPONIBLE",
+        "ESPACIO_BUTACA_SEMICAMA",
+        "ESPACIO_BUTACA_CAMA",
+        "ESPACIO_ESCALERA",
         "ESPACIO_NULL"
       ],
       "enum": [
         1,
         2,
         3,
+        5,
+        6,
+        7,
+        8,
         -1
       ]
     },
@@ -1899,7 +1824,8 @@
       "type": "object",
       "required": [
         "id",
-        "nombre"
+        "nombre",
+        "estado"
       ],
       "properties": {
         "id": {
@@ -1910,9 +1836,26 @@
           "title": "nombre",
           "type": "string",
           "maxLength": 100,
-          "minLength": 0
+          "minLength": 3
+        },
+        "estado": {
+          "$ref": "#/definitions/Estado"
         }
       }
+    },
+    "Estado": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Baja",
+        "Activo",
+        "Suspendido"
+      ],
+      "enum": [
+        0,
+        1,
+        -1
+      ]
     },
     "WebResultOfNodoResponse": {
       "type": "object",
@@ -1985,7 +1928,103 @@
         }
       }
     },
-    "WebResultOfICollectionOfParadaDTO": {
+    "WebResultOfICollectionOfPaisDTO": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PaisDTO"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "PaisDTO": {
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "nombre": {
+          "type": "string"
+        }
+      }
+    },
+    "WebResultListOfParadaDTO": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/WebResultOfListOfParadaDTO"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "pagination": {
+              "$ref": "#/definitions/Pagination"
+            }
+          }
+        }
+      ]
+    },
+    "Pagination": {
+      "type": "object",
+      "required": [
+        "page_index",
+        "total_pages",
+        "total_items",
+        "has_previous_page",
+        "has_next_page"
+      ],
+      "properties": {
+        "page_index": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total_pages": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "total_items": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "has_previous_page": {
+          "type": "boolean"
+        },
+        "has_next_page": {
+          "type": "boolean"
+        }
+      }
+    },
+    "WebResultOfListOfParadaDTO": {
       "type": "object",
       "required": [
         "success",
@@ -2018,23 +2057,6 @@
         },
         "error": {
           "type": "string"
-        }
-      }
-    },
-    "Pagination": {
-      "type": "object",
-      "required": [
-        "pagina",
-        "records_por_pagina"
-      ],
-      "properties": {
-        "pagina": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "records_por_pagina": {
-          "type": "integer",
-          "format": "int32"
         }
       }
     },

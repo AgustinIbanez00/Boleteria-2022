@@ -58,19 +58,19 @@ public class ParadaRepository : IParadaRepository
         return await Save();
     }
 
-    public async Task<PaginatedList<Parada>> GetAllAsync(ParadaFilter parameteres)
+    public async Task<PaginatedList<Parada>> GetAllAsync(ParadaFilter parameters)
     {
         IQueryable<Parada> dbSet = null;
 
         dbSet = _context.Paradas;
 
-        if (parameteres.Id.HasValue)
-            dbSet = dbSet.Where(p => p.Id == parameteres.Id.Value);
-        if (!string.IsNullOrEmpty(parameteres.Nombre))
-            dbSet = dbSet.Where(p => p.Nombre.Contains(parameteres.Nombre));
-        if (parameteres.Estado.HasValue)
-            dbSet = dbSet.Where(p => p.Estado == parameteres.Estado);
+        if (parameters.Id.HasValue)
+            dbSet = dbSet.Where(p => p.Id == parameters.Id.Value);
+        if (!string.IsNullOrEmpty(parameters.Nombre))
+            dbSet = dbSet.Where(p => p.Nombre.Contains(parameters.Nombre));
+        if (parameters.Estado.HasValue)
+            dbSet = dbSet.Where(p => p.Estado == parameters.Estado);
 
-        return await PaggingExtensions.CreateAsync(dbSet, parameteres.Pagina, parameteres.RecordsPorPagina);
+        return await PaggingExtensions.CreateAsync(dbSet, parameters.Pagina, parameters.RecordsPorPagina);
     }
 }

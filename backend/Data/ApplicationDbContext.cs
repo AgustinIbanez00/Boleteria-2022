@@ -1,4 +1,5 @@
 ﻿using BoleteriaOnline.Web.Data.Models;
+using BoleteriaOnline.Web.Data.Seeders;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +22,9 @@ public class ApplicationDbContext : IdentityDbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.Entity<Pais>().HasData(PaisSeeder.Paises);
+        builder.Entity<Provincia>().HasData(ProvinciaSeeder.Provincias);
+
         base.OnModelCreating(builder);
     }
 

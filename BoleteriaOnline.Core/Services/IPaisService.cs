@@ -6,6 +6,4 @@ namespace BoleteriaOnline.Core.Services;
 public interface IPaisService
 {
     Task<WebResultList<PaisDTO>> AllAsync(PaisFilter parameters);
-
-    Task<WebResult<PaisDTO>> GetAsync(int id);
 }
