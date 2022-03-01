@@ -37,6 +37,7 @@ import { ListadoClienteComponent } from './cliente/listado-cliente/listado-clien
 import { MatSelectModule } from '@angular/material/select';
 
 import { FiltroParadasComponent } from './paradas/filtro-paradas/filtro-paradas.component';
+import { DistribucionComponent } from './distribucion/distribucion/distribucion.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +62,7 @@ import { FiltroParadasComponent } from './paradas/filtro-paradas/filtro-paradas.
     ListadoClienteComponent,
 
     FiltroParadasComponent,
+      DistribucionComponent,
   ],
   imports: [
     BrowserModule,

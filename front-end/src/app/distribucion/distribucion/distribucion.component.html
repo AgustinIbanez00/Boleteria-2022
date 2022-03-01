@@ -1,0 +1,159 @@
+<div class="contenedor-distribucion">
+  <mat-tab-group
+    (selectedIndexChange)="cambiarPiso($event)"
+    class="tabs"
+    mat-align-tabs="start"
+  >
+    <mat-tab label="Piso 0">
+      <div class="distribucion">
+        <div class="fila" *ngFor="let fila of piso0; index as indexFila">
+          <div
+            class="celda"
+            *ngFor="let celda of fila.cells; index as indexCelda"
+          >
+            <button
+              [style]="
+                (celda.isSelected ? ' border: 3px solid red;' : '') +
+                estiloEliminarFila +
+                '; background-repeat: no-repeat; background-size: contain;background-position:center'
+              "
+              [style.background-image]="
+                'url(' + devolverIconoCelda(celda.value, true) + ')'
+              "
+              class="button-icon"
+              [matTooltip]="devolverTextiToolTips(celda.value)"
+              (click)="seleccionarCelda(indexCelda, indexFila)"
+            ></button>
+          </div>
+        </div></div
+    ></mat-tab>
+    <mat-tab *ngIf="!distribucion.un_piso" label="Piso 1">
+      <div class="distribucion">
+        <div class="fila" *ngFor="let fila of piso1; index as indexFila">
+          <div
+            class="celda"
+            *ngFor="let celda of fila.cells; index as indexCelda"
+          >
+            <button
+              [style]="
+                (celda.isSelected ? ' border: 3px solid red;' : '') +
+                estiloEliminarFila +
+                '; background-repeat: no-repeat; background-size: contain;background-position:center'
+              "
+              [style.background-image]="
+                'url(' + devolverIconoCelda(celda.value, true) + ')'
+              "
+              class="button-icon"
+              [matTooltip]="devolverTextiToolTips(celda.value)"
+              (click)="seleccionarCelda(indexCelda, indexFila)"
+            ></button>
+          </div>
+        </div></div
+    ></mat-tab>
+  </mat-tab-group>
+  <div
+    [formGroup]="form"
+    class="divAcciones"
+    [style]="!readOnly ? 'display:none' : ''"
+  >
+    <mat-form-field>
+      <mat-label>Nota</mat-label>
+      <input matInput [value]="distribucion.nota" formControlName="nota" />
+      <mat-error>{{ validacionesFormulario("nota") }}</mat-error>
+    </mat-form-field>
+    <mat-slide-toggle
+      class="slide-toggle-distribucion"
+      (change)="distribucion.un_piso = !distribucion.un_piso"
+      [checked]="distribucion.un_piso"
+    >
+      {{ distribucion.un_piso ? "Un piso" : "Dos Pisos" }}
+    </mat-slide-toggle>
+    <button
+      [style]="
+        'background-repeat: no-repeat; background-size: 20%;background-position:left;background-position-x:6px'
+      "
+      [style.background-image]="'url(' + devolverIconoCelda(6, true) + ')'"
+      class="botonAccion"
+      (focus)="eliminarFila(false)"
+      mat-button
+      (click)="crearFila(6)"
+      [matTooltip]="devolverTextiToolTips(6)"
+    >
+      Agregar fila
+    </button>
+    <button
+      [style]="
+        'background-repeat: no-repeat; background-size: 15%;background-position:left; background-position-x:10px'
+      "
+      [style.background-image]="'url(' + devolverIconoCelda(2, true) + ')'"
+      class="botonAccion"
+      (focus)="eliminarFila(false)"
+      mat-button
+      (click)="crearFila(2)"
+      [matTooltip]="devolverTextiToolTips(2)"
+    >
+      Agregar fila
+    </button>
+    <button
+      class="botonAccion"
+      mat-button
+      id="quitarFila"
+      [style]="quitarFila ? 'border: 3px solid red;' : ''"
+      (click)="eliminarFila(!quitarFila)"
+    >
+      Quitar fila
+    </button>
+    <button
+      (focus)="eliminarFila(false)"
+      class="botonAccion"
+      mat-button
+      (click)="seleccionarDeseleccionarTodo(true)"
+    >
+      Seleccionar todo
+    </button>
+    <button
+      (focus)="eliminarFila(false)"
+      class="botonAccion"
+      mat-button
+      (click)="seleccionarDeseleccionarTodo(false)"
+    >
+      Deseleccionar todo
+    </button>
+    <button
+      (focus)="eliminarFila(false)"
+      class="botonAccion"
+      mat-button
+      [matMenuTriggerFor]="menu"
+    >
+      Opciones celdas
+    </button>
+    <mat-menu #menu="matMenu">
+      <button
+        class="botonMatMenu"
+        *ngFor="let item of valoresEstados"
+        mat-menu-item
+        (click)="cambiarEstado(1, item)"
+      >
+        <div class="contenedorIconoMatMenu">
+          <img
+            class="iconoBotonMatMenu"
+            [src]="devolverIconoCelda(item)"
+            alt=""
+          />
+        </div>
+        <span class="spanMatMenu">{{
+          devolverTextiToolTips(item, false)
+        }}</span>
+      </button>
+    </mat-menu>
+    <button
+      (click)="guardar()"
+      [disabled]="form.invalid"
+      (focus)="eliminarFila(false)"
+      class="guardarDistribucion"
+      mat-button
+    >
+      Guardar
+    </button>
+  </div>
+</div>
