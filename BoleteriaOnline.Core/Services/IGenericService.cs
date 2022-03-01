@@ -1,13 +1,10 @@
 ﻿using BoleteriaOnline.Core.Utils;
-using BoleteriaOnline.Core.ViewModels.Pagging;
-
 namespace BoleteriaOnline.Core.Services;
-
-public interface IGenericService<T> where T : class
+public interface IGenericService<TResponse, TFilter> where TResponse : class
 {
-    Task<WebResult<PaginatedList<T>>> AllAsync(Pagination parameters);
-    Task<WebResult<T>> GetAsync(long id);
-    Task<WebResult<T>> CreateAsync(T request);
-    Task<WebResult<T>> UpdateAsync(T request, long id);
-    Task<WebResult<T>> DeleteAsync(long id);
+    Task<WebResultList<TResponse>> AllAsync(TFilter parameters);
+    Task<WebResult<TResponse>> GetAsync(long id);
+    Task<WebResult<TResponse>> CreateAsync(TResponse request);
+    Task<WebResult<TResponse>> UpdateAsync(TResponse request, long id);
+    Task<WebResult<TResponse>> DeleteAsync(long id);
 }

@@ -2,6 +2,7 @@
 using BoleteriaOnline.Core.Attributes;
 using BoleteriaOnline.Core.Extensions;
 using BoleteriaOnline.Core.Extensions.Response;
+using BoleteriaOnline.Core.ViewModels.Pagging;
 using Humanizer;
 using SmartFormat;
 
@@ -71,6 +72,19 @@ public static class WebResponse
         };
     }
 
+    public static WebResultList<TResult> ErrorList<TEntity, TResult>(ErrorMessage error, [Optional] string message) where TResult : class
+    {
+        return new WebResultList<TResult>
+        {
+            ErrorCode = error,
+            Error = ResolveErrorCode(error),
+            Result = default,
+            Success = false,
+            Message = Smart.Format(error.GetDescription(), Options<TEntity>()),
+            ErrorMessages = string.IsNullOrEmpty(message) ? new Dictionary<string, string[]>() : new Dictionary<string, string[]>() { { "error", new string[] { message } } }
+        };
+    }
+
 
     /// <summary>
     /// Devuelve un objeto personalizado del sistema del tipo TResult con el mensaje de error computado de TEntity.
@@ -120,6 +134,17 @@ public static class WebResponse
             options.Gender = GrammaticalGender.Masculine;
         }
         return options;
+    }
+
+    public static WebResultList<TResult> List<TResult>(List<TResult> list, Pagination pagination) where TResult : class
+    {
+        return new WebResultList<TResult>
+        {
+            Result = list,
+            Pagging = pagination,
+            Message = "Correcto.",
+            ErrorMessages = new Dictionary<string, string[]>()
+        };
     }
 
     public static WebResult<TResult> Ok<TResult>(TResult data) where TResult : class

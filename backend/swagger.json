@@ -27,7 +27,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfICollectionOfClienteResponse"
+              "$ref": "#/definitions/WebResultOfICollectionOfClienteDTO"
             }
           },
           "404": {
@@ -65,7 +65,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfClienteResponse"
+              "$ref": "#/definitions/WebResultOfClienteDTO"
             }
           },
           "400": {
@@ -86,7 +86,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfClienteResponse"
+              "$ref": "#/definitions/WebResultOfClienteDTO"
             }
           }
         }
@@ -117,7 +117,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfClienteResponse"
+              "$ref": "#/definitions/WebResultOfClienteDTO"
             }
           }
         }
@@ -141,7 +141,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfClienteResponse"
+              "$ref": "#/definitions/WebResultOfClienteDTO"
             }
           }
         }
@@ -168,7 +168,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfClienteResponse"
+              "$ref": "#/definitions/WebResultOfClienteDTO"
             }
           },
           "400": {
@@ -1338,7 +1338,7 @@
     }
   },
   "definitions": {
-    "WebResultOfICollectionOfClienteResponse": {
+    "WebResultOfICollectionOfClienteDTO": {
       "type": "object",
       "required": [
         "success",
@@ -1348,7 +1348,7 @@
         "result": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ClienteResponse"
+            "$ref": "#/definitions/ClienteDTO"
           }
         },
         "success": {
@@ -1374,7 +1374,7 @@
         }
       }
     },
-    "ClienteResponse": {
+    "ClienteDTO": {
       "allOf": [
         {
           "$ref": "#/definitions/ClienteRequest"
@@ -1497,7 +1497,7 @@
         }
       }
     },
-    "WebResultOfClienteResponse": {
+    "WebResultOfClienteDTO": {
       "type": "object",
       "required": [
         "success",
@@ -1505,7 +1505,7 @@
       ],
       "properties": {
         "result": {
-          "$ref": "#/definitions/ClienteResponse"
+          "$ref": "#/definitions/ClienteDTO"
         },
         "success": {
           "type": "boolean"

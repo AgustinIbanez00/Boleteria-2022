@@ -1,25 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations;
-using BoleteriaOnline.Core.Attributes;
-
-namespace BoleteriaOnline.Core.ViewModels.Pagging;
+﻿namespace BoleteriaOnline.Core.ViewModels.Pagging;
 public class Pagination
 {
-    [GreaterThanZero, Display(Name = "página")]
-    public int Pagina { get; set; } = 1;
+    public int PageIndex { get; set; }
+    public int TotalPages { get; private set; }
 
-    private int recordsPorPagina = 10;
-    private readonly int cantidadMaximaRecordsPorPagina = 50;
+    public int TotalItems { get; private set; }
 
-    [GreaterThanZero, Display(Name = "elementos por página"), Range(1, 100)]
-    public int RecordsPorPagina
+    public bool HasPreviousPage => PageIndex > 1;
+
+    public bool HasNextPage => PageIndex < TotalPages;
+
+    public static Pagination Page(int count, int pageIndex, int pageSize)
     {
-        get
+        return new Pagination()
         {
-            return recordsPorPagina;
-        }
-        set
-        {
-            recordsPorPagina = (value > cantidadMaximaRecordsPorPagina) ? cantidadMaximaRecordsPorPagina : value;
-        }
+            PageIndex = pageIndex,
+            TotalPages = (int)Math.Ceiling(count / (double)pageSize),
+            TotalItems = count
+        };
     }
+
 }

@@ -4,6 +4,7 @@ using System.Text.Json;
 using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
+using BoleteriaOnline.Core.ViewModels.Filters;
 using BoleteriaOnline.Core.ViewModels.Pagging;
 using BoleteriaOnline.Core.ViewModels.Requests;
 using BoleteriaOnline.Core.ViewModels.Responses;
@@ -55,7 +56,7 @@ public class ParadaService : IParadaService
         return JsonSerializer.Deserialize<WebResult<ParadaDTO>>(content, _options);
     }
 
-    public async Task<WebResult<PaginatedList<ParadaDTO>>> AllAsync(Pagination parameters)
+    public async Task<WebResult<PaginatedList<ParadaDTO>>> AllAsync(PaginationParameters parameters)
     {
         try
         {
@@ -83,5 +84,10 @@ public class ParadaService : IParadaService
             throw new ApplicationException(content);
         }
         return JsonSerializer.Deserialize<WebResult<ParadaDTO>>(content, _options);
+    }
+
+    public Task<WebResultList<ParadaDTO>> AllAsync(ParadaDTOFilter parameters)
+    {
+        throw new NotImplementedException();
     }
 }

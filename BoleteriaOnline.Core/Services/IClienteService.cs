@@ -1,13 +1,13 @@
 ﻿using BoleteriaOnline.Core.Utils;
-using BoleteriaOnline.Core.ViewModels.Requests;
+using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Core.ViewModels.Responses;
 
 namespace BoleteriaOnline.Core.Services;
 public interface IClienteService
 {
-    Task<WebResult<ICollection<ClienteResponse>>> GetClientesAsync();
-    Task<WebResult<ClienteResponse>> GetClienteAsync(long id);
-    Task<WebResult<ClienteResponse>> CreateClienteAsync(ClienteRequest clienteDto);
-    Task<WebResult<ClienteResponse>> UpdateClienteAsync(ClienteRequest clienteDto);
-    Task<WebResult<ClienteResponse>> DeleteClienteAsync(long id);
+    Task<WebResult<ICollection<ClienteDTO>>> GetClientesAsync();
+    Task<WebResult<ClienteDTO>> GetClienteAsync(long id);
+    Task<WebResult<ClienteDTO>> CreateClienteAsync(ClienteDTO clienteDto);
+    Task<WebResult<ClienteDTO>> UpdateClienteAsync(ClienteDTO clienteDto);
+    Task<WebResult<ClienteDTO>> DeleteClienteAsync(long id);
 }

@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using BoleteriaOnline.Core.Data.Enums;
 
-namespace BoleteriaOnline.Core.ViewModels.Requests;
-
-public class ClienteRequest
+namespace BoleteriaOnline.Core.ViewModels;
+public class ClienteDTO
 {
     [Required, Display(Name = "número de documento")]
     public long Dni { get; set; }

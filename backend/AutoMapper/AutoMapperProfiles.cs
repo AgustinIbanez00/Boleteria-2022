@@ -15,10 +15,7 @@ public class AutoMapperProfiles : Profile
         CreateMap<Usuario, UsuarioResponse>()
             .ForMember(o => o.Dni, b => b.MapFrom(z => z.Id))
             .ReverseMap();
-        CreateMap<Cliente, ClienteRequest>()
-            .ForMember(o => o.Dni, b => b.MapFrom(z => z.Id))
-            .ReverseMap();
-        CreateMap<Cliente, ClienteResponse>()
+        CreateMap<Cliente, ClienteDTO>()
             .ForMember(o => o.Dni, b => b.MapFrom(z => z.Id))
             .ReverseMap();
         CreateMap<Parada, ParadaDTO>()

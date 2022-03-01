@@ -3,9 +3,9 @@ using BoleteriaOnline.Core.Extensions.Response;
 using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
+using BoleteriaOnline.Core.ViewModels.Filters;
 using BoleteriaOnline.Core.ViewModels.Pagging;
 using BoleteriaOnline.Web.Data.Models;
-using BoleteriaOnline.Web.Extensions;
 using BoleteriaOnline.Web.Repositories;
 using EntityFramework.Exceptions.Common;
 using static BoleteriaOnline.Core.Utils.WebResponse;
@@ -22,16 +22,23 @@ public class ParadaService : IParadaService
         _paradaRepository = paradaRepository;
     }
 
-    public async Task<WebResult<PaginatedList<ParadaDTO>>> AllAsync(Pagination parameters)
+    public async Task<WebResultList<ParadaDTO>> AllAsync(ParadaDTOFilter parameters)
     {
         try
         {
             PaginatedList<Parada> paradas = await _paradaRepository.GetAllAsync(parameters);
-            return Ok(_mapper.MapPaginatedList<Parada, ParadaDTO>(paradas.AsQueryable(), parameters));
+
+            var paradasDto = new List<ParadaDTO>();
+
+            foreach (var parada in paradas)
+            {
+                paradasDto.Add(_mapper.Map<ParadaDTO>(parada));
+            }
+            return List(paradasDto, Pagination.Page(paradas.TotalItems, parameters.Pagina, parameters.RecordsPorPagina));
         }
         catch (Exception ex)
         {
-            return Error<Parada, PaginatedList<ParadaDTO>>(ErrorMessage.Generic, ex.Message);
+            return ErrorList<Parada, ParadaDTO>(ErrorMessage.Generic, ex.Message);
         }
     }
 

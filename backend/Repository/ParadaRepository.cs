@@ -5,6 +5,7 @@ using BoleteriaOnline.Web.Repositories;
 using BoleteriaOnline.Core.ViewModels.Pagging;
 using BoleteriaOnline.Core.Extensions;
 using BoleteriaOnline.Web.Extensions;
+using BoleteriaOnline.Core.ViewModels.Filters;
 
 namespace BoleteriaOnline.Web.Repository;
 
@@ -45,8 +46,6 @@ public class ParadaRepository : IParadaRepository
 
     public async Task<Parada> GetAsync(long id) => await _context.Paradas.FirstOrDefaultAsync(m => m.Id == id);
 
-    public async Task<PaginatedList<Parada>> GetAllAsync(Pagination pagination) => await PaggingExtensions.CreateAsync(_context.Paradas, pagination.Pagina, pagination.RecordsPorPagina);
-
     public async Task<bool> Save() => await _context.SaveChangesAsync() >= 0;
 
     public async Task<bool> UpdateAsync(Parada destino)
@@ -57,5 +56,21 @@ public class ParadaRepository : IParadaRepository
         _context.Paradas.Update(destino);
         destino.UpdatedAt = DateTime.Now;
         return await Save();
+    }
+
+    public async Task<PaginatedList<Parada>> GetAllAsync(ParadaDTOFilter parameteres)
+    {
+        IQueryable<Parada> dbSet = null;
+
+        dbSet = _context.Paradas;
+
+        if (parameteres.Id.HasValue)
+            dbSet = dbSet.Where(p => p.Id == parameteres.Id.Value);
+        if (!string.IsNullOrEmpty(parameteres.Nombre))
+            dbSet = dbSet.Where(p => p.Nombre == parameteres.Nombre);
+        if (parameteres.Estado.HasValue)
+            dbSet = dbSet.Where(p => p.Estado == parameteres.Estado);
+
+        return await PaggingExtensions.CreateAsync(dbSet, parameteres.Pagina, parameteres.RecordsPorPagina);
     }
 }

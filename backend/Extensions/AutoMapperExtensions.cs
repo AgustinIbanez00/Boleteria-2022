@@ -9,7 +9,7 @@ public static class AutoMapperExtensions
         return mapper.Map<List<TDestination>>(source);
     }
 
-    public static PaginatedList<TDestination> MapPaginatedList<TSource, TDestination>(this IMapper mapper, IQueryable<TSource> source, Pagination pagination)
+    public static PaginatedList<TDestination> MapPaginatedList<TSource, TDestination>(this IMapper mapper, IQueryable<TSource> source, PaginationParameters pagination)
     {
         List<TDestination> result = new List<TDestination>();
         foreach (var item in source)
@@ -17,4 +17,7 @@ public static class AutoMapperExtensions
         
         return PaggingExtensions.Create(result.AsQueryable(), pagination.Pagina, pagination.RecordsPorPagina);
     }
+
+
+
 }

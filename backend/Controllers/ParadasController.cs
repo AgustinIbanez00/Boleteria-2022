@@ -4,6 +4,7 @@ using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Core.ViewModels.Pagging;
+using BoleteriaOnline.Core.ViewModels.Filters;
 
 namespace BoleteriaOnline.Web.Controllers;
 
@@ -19,12 +20,11 @@ public class ParadasController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ICollection<ParadaDTO>>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResult<PaginatedList<ParadaDTO>>>> GetAll([FromQuery] Pagination parameters)
+    public async Task<ActionResult<WebResultList<ParadaDTO>>> GetAll([FromQuery] ParadaDTOFilter filter)
     {
-        WebResult<PaginatedList<ParadaDTO>> paradas = await _paradaService.AllAsync(parameters);
-        
+        var paradas = await _paradaService.AllAsync(filter);
 
         if (!paradas.Success)
             return StatusCode(ResponseHelper.GetHttpError(paradas.ErrorCode), paradas);
