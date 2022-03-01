@@ -6,6 +6,7 @@ import { IndiceParadasComponent } from './paradas/indice-paradas/indice-paradas.
 import { LoginComponent } from './seguridad/login/login.component';
 import { RegistroComponent } from './seguridad/registro/registro.component';
 import { IndiceDistribucionComponent } from './distribucion/indice-distribucion/indice-distribucion.component';
+import { CrearDistribucionComponent } from './distribucion/crear-distribucion/crear-distribucion.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'distribucion',
     component: IndiceDistribucionComponent
+  },
+  {
+    path: 'crear-distribucion',
+    component: CrearDistribucionComponent
   }
 ];
 

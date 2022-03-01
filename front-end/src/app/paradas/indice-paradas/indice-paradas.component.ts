@@ -10,6 +10,9 @@ import { PageEvent } from '@angular/material/paginator';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
 import { webResult } from 'src/app/utilidades/webResult';
+import { EstadosParadas } from 'src/app/utilidades/estados';
+import { NotificacionesService } from 'src/app/utilidades/notificaciones.service';
+import { ConfirmComponent } from 'src/app/utilidades/confirm/confirm.component';
 
 @Component({
   selector: 'app-indice-paradas',
@@ -20,9 +23,9 @@ export class IndiceParadasComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public paradaraService: ParadasService,
-    private formBuilder: FormBuilder
-  ) {}
-
+    private formBuilder: FormBuilder,
+    private notificacionesService: NotificacionesService
+  ) { }
   @Input()
   paradas;
 
@@ -32,12 +35,20 @@ export class IndiceParadasComponent implements OnInit {
   paginaActual = 1;
   cantidadRegistrosAMostrar = 10;
   errores: string[] = [];
-
+  estadosParadas = Object.entries(new EstadosParadas());
+  isChecked = true;
   paradasCole: paradasDTO[] = [];
 
   form: FormGroup;
 
-  columnasAMostrar = ['id', 'nombre', 'acciones'];
+  columnasAMostrar = [
+    'id',
+    'estado',
+    'nombre',
+    'editar',
+    'eliminar',
+    'habilitar',
+  ];
 
   //agarrar referencia de la tabla
   @ViewChild(MatTable) table: MatTable<any>;
@@ -49,7 +60,9 @@ export class IndiceParadasComponent implements OnInit {
           '',
           { validators: [Validators.required, Validators.maxLength(100)] },
         ],
+        estado: 0,
       }));
+
     this.form.valueChanges.subscribe((valores) => {
       this.cargarRegistrosFiltrados(
         valores,
@@ -94,13 +107,12 @@ export class IndiceParadasComponent implements OnInit {
       .obtenerParadas(pagina, cantidadRegistrosAMostrar)
       .subscribe(
         (respuesta: HttpResponse<webResult>) => {
-          console.log('respuesta', respuesta.body);
           this.paradas = Object.values(respuesta.body.result);
-          console.log(respuesta.headers);
+          console.log('respuesta', Object.values(respuesta.headers));
+          this.paradas = Object.values(respuesta.body.result);
           this.cantidadTotalRegistros = respuesta.headers.get(
             'cantidadTotalRegistros'
           );
-          console.log(this.cantidadTotalRegistros);
         },
         (error) => {
           this.errores = parserarErroresAPI(error);
@@ -151,7 +163,80 @@ export class IndiceParadasComponent implements OnInit {
     //);
   }
 
-  hablitarDeshabilitar(event) {
-    // this.form.estado = event.checked;
+  hablitarDeshabilitar(event, parada: paradasDTO) {
+    parada.estado = event.checked ? 1 : 0;
+    this.editar(parada);
+  }
+
+  //editar
+  editar(paradasDTO: paradasDTO) {
+    this.paradaraService.editar(paradasDTO).subscribe(
+      (result) => {
+        if (result.body.success) {
+          this.notificacionesService.showNotificacion(
+            result.body.message,
+            'x',
+            'success'
+          );
+        } else {
+        }
+      },
+      (errorResult) => {
+        console.log('estocode', errorResult);
+
+        this.notificacionesService.showNotificacion(
+          errorResult.error.message,
+          'x',
+          'error'
+        );
+      }
+    );
+  }
+
+  devolverEstado(estado: number) {
+    return this.estadosParadas.filter((items) => {
+      return items[1] == estado;
+    })[0][0];
+  }
+
+  //eliminar
+  eliminar(paradasDTO: paradasDTO) {
+    this.paradaraService.eliminar(paradasDTO).subscribe(
+      (result) => {
+        console.log(result);
+        if (result.body.success) {
+          this.notificacionesService.showNotificacion(
+            result.body.message,
+            'x',
+            'success'
+          );
+          this.obtenerParadas(
+            this.paginaActual,
+            this.cantidadRegistrosAMostrar
+          );
+        }
+      },
+      (errorResult) => {
+        console.log('estocode', errorResult);
+
+        this.notificacionesService.showNotificacion(
+          errorResult.error.message,
+          'x',
+          'error'
+        );
+      }
+    );
+  }
+  openDialogEliminar(paradasDTO: paradasDTO) {
+    var dialogRef = this.dialog.open(ConfirmComponent, {
+      width: '300px',
+      data: {
+        mensaje: '¿Desea eliminar permanentemente este registro?',
+      },
+    });
+
+    dialogRef.beforeClosed().subscribe((result) => {
+      result ? this.eliminar(paradasDTO) : null;
+    });
   }
 }

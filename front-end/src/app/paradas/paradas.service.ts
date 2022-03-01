@@ -56,4 +56,14 @@ export class ParadasService {
       }
     );
   }
+
+  public eliminar(paradaDTO: paradasDTO) {
+    console.log(paradaDTO);
+    return this.http.delete<webResult>(`${this.apiURL}?id=${paradaDTO.id}`, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      observe: 'response',
+    });
+  }
 }

@@ -28,7 +28,9 @@ import { NotificacionesComponent } from './utilidades/notificaciones/notificacio
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { SeguridadInterceptorService } from './seguridad/interceptor.service';
 import { IndiceDistribucionComponent } from './distribucion/indice-distribucion/indice-distribucion.component';
-
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { ConfirmComponent } from './utilidades/confirm/confirm.component';
+import { CrearDistribucionComponent } from './distribucion/crear-distribucion/crear-distribucion.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +48,8 @@ import { IndiceDistribucionComponent } from './distribucion/indice-distribucion/
     LoadingComponent,
     FormControlComponent,
     IndiceDistribucionComponent,
+    ConfirmComponent,
+    CrearDistribucionComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +63,7 @@ import { IndiceDistribucionComponent } from './distribucion/indice-distribucion/
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatSlideToggleModule,
+    SweetAlert2Module.forRoot(),
   ],
   providers: [
     {
@@ -69,4 +74,4 @@ import { IndiceDistribucionComponent } from './distribucion/indice-distribucion/
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

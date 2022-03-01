@@ -1,3 +1,7 @@
+export interface DialogData {
+  mensaje: string;
+}
+
 export function parserarErroresAPI(response: any): string[] {
   const resultado: string[] = [];
 

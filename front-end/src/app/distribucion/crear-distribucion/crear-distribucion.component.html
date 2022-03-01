@@ -1,0 +1,15 @@
+<div class="containerCrearDistribucion">
+  <div class="contenedor-distribucion">
+    <div class="distribucion">
+      <div class="fila" *ngFor="let fila of piso1">
+        <div class="celda" *ngFor="let celda of fila.cells">
+          <button class="button-icon">
+            <!-- <mat-icon class="iconoCelda">bedroom_child</mat-icon> -->
+            <img class="iconoCelda" src="../../../assets/butaca.jpeg" alt="" />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="acciones"></div>
+  </div>
+</div>
