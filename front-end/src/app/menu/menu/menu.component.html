@@ -46,46 +46,18 @@
           Usuarios
         </button>
       </div>
-    </ng-container>
-  </app-autorizado>
-  <!-- <app-autorizado [rol]="'cliente'">
-    <ng-container autorizado>
-       <div>
-          <button
-            mat-button
-            [matMenuTriggerFor]="aboveMenu"
-            (click)="cargarRegistros()"
-          >
-            Categorías
-          </button>
-          <mat-menu #aboveMenu="matMenu">
-            <button
-              *ngFor="let categoria of categorias"
-              mat-menu-item
-              routerLink="categorias/{{ categoria.id }}"
-            >
-              {{ categoria.nombre }}
-            </button>
-          </mat-menu>
-        </div> 
-    </ng-container>
-  </app-autorizado> -->
-  <!-- <app-autorizado [rol]="'cliente'">
-    <ng-container autorizado>
       <div>
-        <button mat-button routerLink="misCompras">
-          <mat-icon>shopping_cart</mat-icon> Mis Reservas
+        <button mat-button routerLink="cliente">
+          <mat-icon
+            ><span class="material-icons">
+              settings_accessibility
+            </span></mat-icon
+          >
+          Clientes
         </button>
       </div>
     </ng-container>
   </app-autorizado>
-  <app-autorizado [rol]="'vendedor'">
-    <ng-container autorizado>
-      <div>
-        <button mat-button routerLink="misProductos">Mis productos</button>
-      </div>
-    </ng-container>
-  </app-autorizado> -->
 
   <div class="espacio"></div>
 

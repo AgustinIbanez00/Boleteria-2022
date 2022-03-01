@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EsAdminGuard } from './es-admin.guard';
 import { LandingPageComponent } from './landing-page/landing-page.component';
@@ -7,6 +7,7 @@ import { LoginComponent } from './seguridad/login/login.component';
 import { RegistroComponent } from './seguridad/registro/registro.component';
 import { IndiceDistribucionComponent } from './distribucion/indice-distribucion/indice-distribucion.component';
 import { CrearDistribucionComponent } from './distribucion/crear-distribucion/crear-distribucion.component';
+import { IndiceClienteComponent } from './cliente/indice-cliente/indice-cliente.component';
 
 const routes: Routes = [
   {
@@ -20,10 +21,10 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: "registro",
-    component: RegistroComponent
+    path: 'registro',
+    component: RegistroComponent,
   },
-  //destinos
+  //paradas
   {
     path: 'paradas',
     component: IndiceParadasComponent,
@@ -32,16 +33,21 @@ const routes: Routes = [
   //distribucion
   {
     path: 'distribucion',
-    component: IndiceDistribucionComponent
+    component: IndiceDistribucionComponent,
   },
   {
     path: 'crear-distribucion',
-    component: CrearDistribucionComponent
-  }
+    component: CrearDistribucionComponent,
+  },
+  //clientes
+  {
+    path: 'cliente',
+    component: IndiceClienteComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

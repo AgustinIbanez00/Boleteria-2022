@@ -31,6 +31,12 @@ import { IndiceDistribucionComponent } from './distribucion/indice-distribucion/
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ConfirmComponent } from './utilidades/confirm/confirm.component';
 import { CrearDistribucionComponent } from './distribucion/crear-distribucion/crear-distribucion.component';
+import { IndiceClienteComponent } from './cliente/indice-cliente/indice-cliente.component';
+import { CrearClienteComponent } from './cliente/crear-cliente/crear-cliente.component';
+import { ListadoClienteComponent } from './cliente/listado-cliente/listado-cliente.component';
+import { MatSelectModule } from '@angular/material/select';
+
+import { FiltroParadasComponent } from './paradas/filtro-paradas/filtro-paradas.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +56,11 @@ import { CrearDistribucionComponent } from './distribucion/crear-distribucion/cr
     IndiceDistribucionComponent,
     ConfirmComponent,
     CrearDistribucionComponent,
+    IndiceClienteComponent,
+    CrearClienteComponent,
+    ListadoClienteComponent,
+
+    FiltroParadasComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +75,7 @@ import { CrearDistribucionComponent } from './distribucion/crear-distribucion/cr
     MatSnackBarModule,
     MatSlideToggleModule,
     SweetAlert2Module.forRoot(),
+    MatSelectModule,
   ],
   providers: [
     {
@@ -74,4 +86,4 @@ import { CrearDistribucionComponent } from './distribucion/crear-distribucion/cr
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
