@@ -9,7 +9,7 @@ import { distribucionDTO } from '../distribucionDTO';
   styleUrls: ['./indice-distribucion.component.css'],
 })
 export class IndiceDistribucionComponent implements OnInit {
-  constructor() {}
+  constructor() { }
 
   @Input()
   distribucion;
@@ -21,7 +21,7 @@ export class IndiceDistribucionComponent implements OnInit {
 
   distribucionCole: distribucionDTO[] = [];
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   columnasAMostrar = ['id', 'nombre', 'acciones'];
 

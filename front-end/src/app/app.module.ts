@@ -30,6 +30,7 @@ import { SeguridadInterceptorService } from './seguridad/interceptor.service';
 import { IndiceDistribucionComponent } from './distribucion/indice-distribucion/indice-distribucion.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ConfirmComponent } from './utilidades/confirm/confirm.component';
+import { CrearDistribucionComponent } from './distribucion/crear-distribucion/crear-distribucion.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +49,7 @@ import { ConfirmComponent } from './utilidades/confirm/confirm.component';
     FormControlComponent,
     IndiceDistribucionComponent,
     ConfirmComponent,
+    CrearDistribucionComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,4 +74,4 @@ import { ConfirmComponent } from './utilidades/confirm/confirm.component';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
