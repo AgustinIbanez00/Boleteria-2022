@@ -3,23 +3,30 @@
   height: 100%;
 }
 .contenedor-distribucion {
-  width: 40%;
-  max-height: 30%;
-  height: 500px;
-  background-color: antiquewhite;
+  width: 50%;
+  min-height: 500px;
+  background-color: white;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-around;
   margin: 0 auto;
   margin-top: 3%;
 }
 .distribucion {
-  width: 70%;
+  min-height: 500px;
+  width: 95%;
   height: 100%;
   border: 1px solid black;
   background-color: white;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
+  border-radius: 5px;
+}
+
+.tabs {
+  width: 100%;
+  height: 100%;
 }
 .fila {
   margin-top: 5px;
@@ -30,7 +37,7 @@
 }
 .celda {
   border: 1px solid darkgray;
-  border-radius: 2px;
+  border-radius: 3px;
   width: 19%;
   height: 50px;
 }
@@ -39,14 +46,52 @@
   width: 100%;
   height: 100%;
   display: flex;
-
   justify-content: center;
 }
 .button-icon:hover {
   border: 3px solid blue;
 }
-
 .iconoCelda {
   width: 100%;
-  /* background-color: red; */
+}
+.divAcciones {
+  margin-top: 50px;
+  width: 29%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.slide-toggle-distribucion {
+  font-weight: 800;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+.botonAccion {
+  margin-top: 7px;
+  background-color: rgb(177, 212, 201);
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.botonAccion:focus {
+  border: 3px solid red;
+}
+
+.botonMatMenu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.contenedorIconoMatMenu {
+  width: 30px;
+  left: 0;
+}
+.iconoBotonMatMenu {
+  width: 100%;
+}
+.spanMatMenu {
+  margin-left: 5px;
+  width: 100%;
 }
