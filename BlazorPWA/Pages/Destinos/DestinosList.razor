@@ -57,7 +57,7 @@ else
 
     async Task LoadDestinos()
     {
-        var response = await DestinoService.AllAsync(new BoleteriaOnline.Core.ViewModels.Filters.ParadaDTOFilter() { Pagina = 1, RecordsPorPagina = 100 });
+        var response = await DestinoService.AllAsync(new BoleteriaOnline.Core.ViewModels.Filters.ParadaFilter() { Pagina = 1, RecordsPorPagina = 100 });
 
         if (response.Success)
         {

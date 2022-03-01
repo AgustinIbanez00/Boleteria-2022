@@ -2,7 +2,7 @@
 using BoleteriaOnline.Core.Attributes;
 
 namespace BoleteriaOnline.Core.ViewModels.Pagging;
-public class PaginationParameters
+public class PaginationFilter
 {
     [GreaterThanZero, Display(Name = "página")]
     public int Pagina { get; set; } = 1;

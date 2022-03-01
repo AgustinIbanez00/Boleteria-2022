@@ -56,7 +56,7 @@ public class ParadaService : IParadaService
         return JsonSerializer.Deserialize<WebResult<ParadaDTO>>(content, _options);
     }
 
-    public async Task<WebResult<PaginatedList<ParadaDTO>>> AllAsync(PaginationParameters parameters)
+    public async Task<WebResult<PaginatedList<ParadaDTO>>> AllAsync(PaginationFilter parameters)
     {
         try
         {
@@ -86,7 +86,7 @@ public class ParadaService : IParadaService
         return JsonSerializer.Deserialize<WebResult<ParadaDTO>>(content, _options);
     }
 
-    public Task<WebResultList<ParadaDTO>> AllAsync(ParadaDTOFilter parameters)
+    public Task<WebResultList<ParadaDTO>> AllAsync(ParadaFilter parameters)
     {
         throw new NotImplementedException();
     }

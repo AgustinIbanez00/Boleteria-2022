@@ -2,7 +2,7 @@
 using BoleteriaOnline.Core.ViewModels.Pagging;
 
 namespace BoleteriaOnline.Core.ViewModels.Filters;
-public class ParadaDTOFilter : PaginationParameters
+public class ParadaFilter : PaginationFilter
 {
     public int? Id { get; set; }
 

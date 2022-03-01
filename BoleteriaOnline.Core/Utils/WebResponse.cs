@@ -85,6 +85,19 @@ public static class WebResponse
         };
     }
 
+    public static WebResultList<TResult> ErrorList<TResult>(ErrorMessage error, [Optional] string message) where TResult : class
+    {
+        return new WebResultList<TResult>
+        {
+            ErrorCode = error,
+            Error = ResolveErrorCode(error),
+            Result = default,
+            Success = false,
+            Message = Smart.Format(error.GetDescription(), Options<TResult>()),
+            ErrorMessages = string.IsNullOrEmpty(message) ? new Dictionary<string, string[]>() : new Dictionary<string, string[]>() { { "error", new string[] { message } } }
+        };
+    }
+
 
     /// <summary>
     /// Devuelve un objeto personalizado del sistema del tipo TResult con el mensaje de error computado de TEntity.
@@ -103,6 +116,19 @@ public static class WebResponse
             Result = default,
             Success = false,
             Message = Smart.Format(error.GetDescription(), Options<TEntity>()),
+            ErrorMessages = string.IsNullOrEmpty(message) ? new Dictionary<string, string[]>() : new Dictionary<string, string[]>() { { "error", new string[] { message } } }
+        };
+    }
+
+    public static WebResult<TResult> Error<TResult>(ErrorMessage error, [Optional] string message) where TResult : class
+    {
+        return new WebResult<TResult>
+        {
+            ErrorCode = error,
+            Error = ResolveErrorCode(error),
+            Result = default,
+            Success = false,
+            Message = Smart.Format(error.GetDescription(), Options<TResult>()),
             ErrorMessages = string.IsNullOrEmpty(message) ? new Dictionary<string, string[]>() : new Dictionary<string, string[]>() { { "error", new string[] { message } } }
         };
     }
@@ -187,6 +213,17 @@ public static class WebResponse
             Result = data,
             Success = true,
             Message = Smart.Format(message.GetDescription(), Options<TEntity>()),
+            ErrorMessages = new Dictionary<string, string[]>()
+        };
+    }
+
+    public static WebResult<TResult> Ok<TResult>(TResult data, SuccessMessage message) where TResult : class
+    {
+        return new WebResult<TResult>
+        {
+            Result = data,
+            Success = true,
+            Message = Smart.Format(message.GetDescription(), Options<TResult>()),
             ErrorMessages = new Dictionary<string, string[]>()
         };
     }
