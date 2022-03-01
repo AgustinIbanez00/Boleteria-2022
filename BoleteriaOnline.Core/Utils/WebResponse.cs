@@ -141,7 +141,7 @@ public static class WebResponse
         return new WebResultList<TResult>
         {
             Result = list,
-            Pagging = pagination,
+            Pagination = pagination,
             Message = "Correcto.",
             ErrorMessages = new Dictionary<string, string[]>()
         };

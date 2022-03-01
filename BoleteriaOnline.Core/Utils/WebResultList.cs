@@ -4,5 +4,5 @@ namespace BoleteriaOnline.Core.Utils;
 
 public class WebResultList<T> : WebResult<List<T>> where T : class
 {
-    public Pagination Pagging { get; set; }
+    public Pagination Pagination { get; set; }
 }
