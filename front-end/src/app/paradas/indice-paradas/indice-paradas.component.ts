@@ -5,11 +5,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { parserarErroresAPI } from 'src/app/utilidades/utilidades';
 import { CrearParadasComponent } from '../crear-paradas/crear-paradas.component';
 import { ParadasService } from '../paradas.service';
-import { paradasDTO } from '../paradasDTO';
+import { paradasDTO, paradasFiltroDTO } from '../paradasDTO';
 import { PageEvent } from '@angular/material/paginator';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
-import { webResult } from 'src/app/utilidades/webResult';
+import { webResult, webResultList } from 'src/app/utilidades/webResult';
 import { EstadosParadas } from 'src/app/utilidades/estados';
 import { NotificacionesService } from 'src/app/utilidades/notificaciones.service';
 import { ConfirmComponent } from 'src/app/utilidades/confirm/confirm.component';
@@ -25,7 +25,7 @@ export class IndiceParadasComponent implements OnInit {
     public paradaraService: ParadasService,
     private formBuilder: FormBuilder,
     private notificacionesService: NotificacionesService
-  ) { }
+  ) {}
   @Input()
   paradas;
 
@@ -50,26 +50,19 @@ export class IndiceParadasComponent implements OnInit {
     'habilitar',
   ];
 
+  paradasFiltroDTO: paradasFiltroDTO = { estado: null, nombre: null, id: null };
+
   //agarrar referencia de la tabla
   @ViewChild(MatTable) table: MatTable<any>;
 
   ngOnInit(): void {
-    this.obtenerParadas(this.paginaActual, this.cantidadRegistrosAMostrar),
-      (this.form = this.formBuilder.group({
-        nombre: [
-          '',
-          { validators: [Validators.required, Validators.maxLength(100)] },
-        ],
-        estado: 0,
-      }));
-
-    this.form.valueChanges.subscribe((valores) => {
-      this.cargarRegistrosFiltrados(
-        valores,
-        this.paginaActual,
-        this.cantidadRegistrosAMostrar
-      );
-    });
+    this.paginaActual = 1;
+    // this.obtenerParadas(this.paginaActual, this.cantidadRegistrosAMostrar),
+    this.cargarRegistrosFiltrados(
+      this.paradasFiltroDTO,
+      this.paginaActual,
+      this.cantidadRegistrosAMostrar
+    );
   }
 
   openDialog(id: number) {
@@ -84,7 +77,7 @@ export class IndiceParadasComponent implements OnInit {
       });
     } else {
       var parada = this.paradas.find((it) => it.id === id);
-      console.log('parada', parada);
+
       dialogRef = this.dialog.open(CrearParadasComponent, {
         width: '800px',
         data: parada,
@@ -106,13 +99,11 @@ export class IndiceParadasComponent implements OnInit {
     this.paradaraService
       .obtenerParadas(pagina, cantidadRegistrosAMostrar)
       .subscribe(
-        (respuesta: HttpResponse<webResult>) => {
+        (respuesta: HttpResponse<webResultList>) => {
           this.paradas = Object.values(respuesta.body.result);
-          console.log('respuesta', Object.values(respuesta.headers));
-          this.paradas = Object.values(respuesta.body.result);
-          this.cantidadTotalRegistros = respuesta.headers.get(
-            'cantidadTotalRegistros'
-          );
+          console.log('respuesta', respuesta.body.pagination);
+
+          this.cantidadTotalRegistros = respuesta.body.pagination.total_items;
         },
         (error) => {
           this.errores = parserarErroresAPI(error);
@@ -122,45 +113,46 @@ export class IndiceParadasComponent implements OnInit {
 
   // paginacion
   actualizarPaginacion(datos: PageEvent) {
+    console.log('actualizarPaginacion', datos);
     this.paginaActual = datos.pageIndex + 1;
     this.cantidadRegistrosAMostrar = datos.pageSize;
-    // this.cargarRegistrosFiltrados(
-    //   this.form.value,
-    //   this.paginaActual,
-    //   this.cantidadRegistrosAMostrar
-    // );
+
+    this.cargarRegistrosFiltrados(
+      this.paradasFiltroDTO,
+      this.paginaActual,
+      this.cantidadRegistrosAMostrar
+    );
+  }
+
+  filtrar(paradasFiltroDTO: paradasFiltroDTO) {
+    console.log('llego primero');
+    this.paginaActual = 1;
+    this.cargarRegistrosFiltrados(
+      paradasFiltroDTO,
+      this.paginaActual,
+      this.cantidadRegistrosAMostrar
+    );
   }
 
   // filtro
   cargarRegistrosFiltrados(
-    valores: any,
+    paradasFiltroDTO: paradasFiltroDTO,
     pagina: number,
     cantidadRegistrosAMostrar: number
   ) {
-    // valores.pagina = pagina;
-    // valores.recordsPorPagina = cantidadRegistrosAMostrar;
-    // this.productoService.filtrarMisProductos(valores).subscribe(
-    //   (respuesta: HttpResponse<webResult>) => {
-    //     if (respuesta.body.success) {
-    //       this.misProductos = Object.values(respuesta.body.data);
-    //       this.cantidadTotalRegistros = respuesta.headers.get(
-    //         'cantidadTotalRegistros'
-    //       );
-    //     } else {
-    //       if (
-    //         respuesta.body.errorList &&
-    //         respuesta.body.errorList.length != 0
-    //       ) {
-    //         this.errores.push(...respuesta.body.errorList);
-    //       } else {
-    //         this.errores.push(respuesta.body.error);
-    //       }
-    //     }
-    //   },
-    //   (error) => {
-    //     this.errores = parserarErroresAPI(error);
-    //   }
-    //);
+    this.paradaraService
+      .filtrarParadas(paradasFiltroDTO, pagina, cantidadRegistrosAMostrar)
+      .subscribe(
+        (respuesta: HttpResponse<webResultList>) => {
+          this.paradas = Object.values(respuesta.body.result);
+          console.log('respuesta', respuesta.body.pagination);
+          console.log('53', respuesta.body.pagination.total_items);
+          this.cantidadTotalRegistros = respuesta.body.pagination.total_items;
+        },
+        (error) => {
+          this.errores = parserarErroresAPI(error);
+        }
+      );
   }
 
   hablitarDeshabilitar(event, parada: paradasDTO) {
@@ -203,7 +195,6 @@ export class IndiceParadasComponent implements OnInit {
   eliminar(paradasDTO: paradasDTO) {
     this.paradaraService.eliminar(paradasDTO).subscribe(
       (result) => {
-        console.log(result);
         if (result.body.success) {
           this.notificacionesService.showNotificacion(
             result.body.message,
@@ -217,8 +208,6 @@ export class IndiceParadasComponent implements OnInit {
         }
       },
       (errorResult) => {
-        console.log('estocode', errorResult);
-
         this.notificacionesService.showNotificacion(
           errorResult.error.message,
           'x',

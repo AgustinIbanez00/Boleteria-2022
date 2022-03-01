@@ -5,16 +5,17 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { webResult } from '../utilidades/webResult';
-import { paradasDTO } from './paradasDTO';
+import { paradasDTO, paradasFiltroDTO } from './paradasDTO';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ParadasService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   private apiURL = environment.apiURL + 'paradas';
 
@@ -58,11 +59,30 @@ export class ParadasService {
   }
 
   public eliminar(paradaDTO: paradasDTO) {
-    console.log(paradaDTO);
     return this.http.delete<webResult>(`${this.apiURL}?id=${paradaDTO.id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
+      observe: 'response',
+    });
+  }
+
+  public filtrarParadas(
+    paradasFiltroDTO: paradasFiltroDTO,
+    pagina: number,
+    cantidadRegistrosAMostrar: number
+  ): Observable<HttpResponse<webResult>> {
+    paradasFiltroDTO.estado =
+      paradasFiltroDTO.estado == -1 ? null : paradasFiltroDTO.estado;
+    // paradasFiltroDTO.id =
+    //   paradasFiltroDTO.id == -1 ? null : paradasFiltroDTO.id;
+
+    const tree = this.router.createUrlTree([], {
+      queryParams: { ...paradasFiltroDTO, pagina, cantidadRegistrosAMostrar },
+    });
+    console.log('arbolito', tree.toString());
+
+    return this.http.get<webResult>(`${environment.apiURL}${tree.toString()}`, {
       observe: 'response',
     });
   }

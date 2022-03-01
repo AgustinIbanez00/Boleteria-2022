@@ -1,0 +1,56 @@
+<div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 mat-dialog-title>
+        {{ data.dni ? "Editar Cliente" : "Crear Cliente" }}
+      </h2>
+    </div>
+    <div mat-dialog-close class="col-md-6" style="text-align: right">
+      <mat-icon>close</mat-icon>
+    </div>
+  </div>
+</div>
+
+<form [formGroup]="form" (submit)="guardarCliente(data)">
+  <mat-dialog-content>
+    <div>
+      <app-form-control
+        [form]="form"
+        [propiedad]="'nombre'"
+        [textoLabel]="'Nombre cliente*'"
+        [type]="'text'"
+        [error_messages]="error_messages"
+        [validaciones]="validacionesRegistro"
+      ></app-form-control>
+    </div>
+    <!-- <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Categoría* </mat-label>
+          <mat-select
+            multiple
+            formControlName="categoriasIds"
+            [compareWith]="compareObjects"
+          >
+            <mat-option
+              *ngFor="let categoria of categorias"
+              [value]="categoria"
+              (click)="guardarCategoria(categoria.id)"
+            >
+              {{ categoria.nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-error>El campo categoría es obligatorio</mat-error>
+        </mat-form-field>
+        <mat-label>Imagen*</mat-label>
+      </div> -->
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button type="button" (click)="onClickNo()">
+      Cancelar
+    </button>
+    <button mat-flat-button class="guardar" [disabled]="form.invalid">
+      Guardar
+    </button>
+  </mat-dialog-actions>
+</form>
+<!-- <app-mostrar-errores [errores]="errores"></app-mostrar-errores> -->
