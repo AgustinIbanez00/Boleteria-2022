@@ -15,7 +15,14 @@ public class ApplicationDbContext : IdentityDbContext
     public virtual DbSet<Fila> Filas { get; set; }
     public virtual DbSet<Horario> Horarios { get; set; }
     public virtual DbSet<Pago> Pagos { get; set; }
+    public virtual DbSet<Pais> Paises { get; set; }
+    public virtual DbSet<Provincia> Provincias { get; set; }
     public virtual DbSet<Viaje> Viajes { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+    }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)

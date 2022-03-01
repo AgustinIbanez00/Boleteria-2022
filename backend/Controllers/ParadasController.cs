@@ -18,11 +18,15 @@ public class ParadasController : ControllerBase
     {
         _paradaService = service;
     }
-
+    /// <summary>
+    /// Devuelve todas las paradas que cumplan la condición del filtro.
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResultList<ParadaDTO>>> GetAll([FromQuery] ParadaDTOFilter filter)
+    public async Task<ActionResult<WebResultList<ParadaDTO>>> GetAll([FromQuery] ParadaFilter filter)
     {
         var paradas = await _paradaService.AllAsync(filter);
 

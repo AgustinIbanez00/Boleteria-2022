@@ -58,7 +58,7 @@ public class ParadaRepository : IParadaRepository
         return await Save();
     }
 
-    public async Task<PaginatedList<Parada>> GetAllAsync(ParadaDTOFilter parameteres)
+    public async Task<PaginatedList<Parada>> GetAllAsync(ParadaFilter parameteres)
     {
         IQueryable<Parada> dbSet = null;
 
@@ -67,7 +67,7 @@ public class ParadaRepository : IParadaRepository
         if (parameteres.Id.HasValue)
             dbSet = dbSet.Where(p => p.Id == parameteres.Id.Value);
         if (!string.IsNullOrEmpty(parameteres.Nombre))
-            dbSet = dbSet.Where(p => p.Nombre == parameteres.Nombre);
+            dbSet = dbSet.Where(p => p.Nombre.Contains(parameteres.Nombre));
         if (parameteres.Estado.HasValue)
             dbSet = dbSet.Where(p => p.Estado == parameteres.Estado);
 

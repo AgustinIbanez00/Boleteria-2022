@@ -4,11 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BoleteriaOnline.Web.Data.Models;
 [Index(nameof(Nombre), IsUnique = true)]
-[HumanDescription("parada", GrammaticalGender.Feminine)]
 public class Parada : Auditory
 {
     public int Id { get; set; }
-    [StringLength(100)]
+    [MaxLength(100)]
     public string Nombre { get; set; }
 
     public string Provincia { get; set; }

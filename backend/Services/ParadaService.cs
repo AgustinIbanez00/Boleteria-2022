@@ -22,7 +22,7 @@ public class ParadaService : IParadaService
         _paradaRepository = paradaRepository;
     }
 
-    public async Task<WebResultList<ParadaDTO>> AllAsync(ParadaDTOFilter parameters)
+    public async Task<WebResultList<ParadaDTO>> AllAsync(ParadaFilter parameters)
     {
         try
         {
@@ -38,7 +38,7 @@ public class ParadaService : IParadaService
         }
         catch (Exception ex)
         {
-            return ErrorList<Parada, ParadaDTO>(ErrorMessage.Generic, ex.Message);
+            return ErrorList<ParadaDTO>(ErrorMessage.Generic, ex.Message);
         }
     }
 
@@ -51,15 +51,15 @@ public class ParadaService : IParadaService
                 return Error<Parada, ParadaDTO>(ErrorMessage.CouldNotCreate);
 
             var dto = _mapper.Map<ParadaDTO>(parada);
-            return Ok<Parada, ParadaDTO>(dto, SuccessMessage.Created);
+            return Ok(dto, SuccessMessage.Created);
         }
         catch (UniqueConstraintException)
         {
-            return Error<Parada, ParadaDTO>(ErrorMessage.AlreadyExists);
+            return Error<ParadaDTO>(ErrorMessage.AlreadyExists);
         }
         catch (Exception ex)
         {
-            return Error<Parada, ParadaDTO>(ErrorMessage.Generic, ex.Message);
+            return Error<ParadaDTO>(ErrorMessage.Generic, ex.Message);
         }
     }
 
@@ -69,16 +69,16 @@ public class ParadaService : IParadaService
         {
             var parada = await _paradaRepository.GetAsync(id);
             if (parada == null)
-                return Error<Parada, ParadaDTO>(ErrorMessage.NotFound);
+                return Error<ParadaDTO>(ErrorMessage.NotFound);
 
             if (!await _paradaRepository.DeleteAsync(parada))
-                return Error<Parada, ParadaDTO>(ErrorMessage.CouldNotDelete);
+                return Error<ParadaDTO>(ErrorMessage.CouldNotDelete);
 
-            return Ok<Parada, ParadaDTO>(_mapper.Map<ParadaDTO>(parada), SuccessMessage.Deleted);
+            return Ok(_mapper.Map<ParadaDTO>(parada), SuccessMessage.Deleted);
         }
         catch (Exception ex)
         {
-            return Error<Parada, ParadaDTO>(ErrorMessage.Generic, ex.Message);
+            return Error<ParadaDTO>(ErrorMessage.Generic, ex.Message);
         }
     }
 
@@ -89,13 +89,13 @@ public class ParadaService : IParadaService
             var parada = await _paradaRepository.GetAsync(id);
 
             if (parada == null)
-                return Error<Parada, ParadaDTO>(ErrorMessage.NotFound);
+                return Error<ParadaDTO>(ErrorMessage.NotFound);
 
             return Ok(_mapper.Map<ParadaDTO>(parada));
         }
         catch (Exception ex)
         {
-            return Error<Parada, ParadaDTO>(ErrorMessage.Generic, ex.Message);
+            return Error<ParadaDTO>(ErrorMessage.Generic, ex.Message);
         }
     }
 
@@ -104,28 +104,28 @@ public class ParadaService : IParadaService
         try
         {
             if (id == 0)
-                return Error<Parada, ParadaDTO>(ErrorMessage.InvalidId);
+                return Error<ParadaDTO>(ErrorMessage.InvalidId);
 
             var destino = await _paradaRepository.GetAsync(id);
 
             if (destino == null)
-                return Error<Parada, ParadaDTO>(ErrorMessage.NotFound);
+                return Error<ParadaDTO>(ErrorMessage.NotFound);
 
             destino.Nombre = request.Nombre;
             destino.Estado = request.Estado;
 
             if (!await _paradaRepository.UpdateAsync(destino))
-                return Error<Parada, ParadaDTO>(ErrorMessage.CouldNotUpdate);
+                return Error<ParadaDTO>(ErrorMessage.CouldNotUpdate);
 
-            return Ok<Parada, ParadaDTO>(_mapper.Map<ParadaDTO>(destino), SuccessMessage.Modified);
+            return Ok(_mapper.Map<ParadaDTO>(destino), SuccessMessage.Modified);
         }
         catch (UniqueConstraintException)
         {
-            return Error<Parada, ParadaDTO>(ErrorMessage.AlreadyExists);
+            return Error<ParadaDTO>(ErrorMessage.AlreadyExists);
         }
         catch (Exception ex)
         {
-            return Error<Parada, ParadaDTO>(ErrorMessage.Generic, ex.Message);
+            return Error<ParadaDTO>(ErrorMessage.Generic, ex.Message);
         }
     }
 }

@@ -3,84 +3,48 @@ using BoleteriaOnline.Web.Extensions.Response;
 using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
-using BoleteriaOnline.Core.ViewModels.Pagging;
+using BoleteriaOnline.Core.ViewModels.Filters;
 
 namespace BoleteriaOnline.Web.Controllers;
-/*
+
 [Route("api/[controller]")]
 [ApiController]
 public class PaisesController : ControllerBase
 {
-    private readonly IParadaService _paradaService;
+    private readonly IPaisService _paisService;
+    private readonly IProvinciaService _provinciaService;
 
-    public PaisesController(IParadaService service)
+    public PaisesController(IPaisService paisService, IProvinciaService provinciaService)
     {
-        _paradaService = service;
+        _paisService = paisService;
+        _provinciaService = provinciaService;
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ICollection<ParadaDTO>>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResult<ICollection<ParadaDTO>>>> GetAll(Pagination pagination)
+    public async Task<ActionResult<WebResult<ICollection<PaisDTO>>>> GetAll([FromQuery] PaisFilter parameters)
     {
-        var destinos = await _paradaService.GetParadasAsync(pagination);
+        var paises = await _paisService.AllAsync(parameters);
 
-        if (!destinos.Success)
-            return StatusCode(ResponseHelper.GetHttpError(destinos.ErrorCode), destinos);
+        if (!paises.Success)
+            return StatusCode(ResponseHelper.GetHttpError(paises.ErrorCode), paises);
 
-        return Ok(destinos);
+        return Ok(paises);
     }
 
-    [HttpGet("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ParadaDTO>))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpGet("{id:int}/provincias")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResult<ParadaDTO>>> Get(long id)
+    public async Task<ActionResult<WebResult<ICollection<PaisDTO>>>> GetProvincias(int id)
     {
-        var destino = await _paradaService.GetParadaAsync(id);
+        var provincias = await _provinciaService.AllAsync(new ProvinciaFilter() { PaisId = id });
 
-        if (!destino.Success)
-            return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);
+        if (!provincias.Success)
+            return StatusCode(ResponseHelper.GetHttpError(provincias.ErrorCode), provincias);
 
-        return Ok(destino);
-    }
-
-    [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ParadaDTO>))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<ActionResult<WebResult<ParadaDTO>>> CreateDestino([FromBody] ParadaDTO destinoDto)
-    {
-        var destino = await _paradaService.CreateParadaAsync(destinoDto);
-
-        if (!destino.Success)
-            return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);
-        return Created(nameof(Get), destino);
-    }
-
-    [HttpPatch("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ParadaDTO>))]
-    public async Task<ActionResult<WebResult<ParadaDTO>>> UpdateDestino([FromBody] ParadaDTO destinoDto, long id)
-    {
-        var destino = await _paradaService.UpdateParadaAsync(destinoDto, id);
-
-        if (!destino.Success)
-            return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);
-        return Ok(destino);
-    }
-
-    [HttpDelete]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ParadaDTO>))]
-    public async Task<ActionResult<WebResult<ParadaDTO>>> DeleteDestino(long id)
-    {
-        var destino = await _paradaService.DeleteParadaAsync(id);
-
-        if (!destino.Success)
-            return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);
-        return Ok(destino);
+        return Ok(provincias);
     }
 
 
 }
-*/

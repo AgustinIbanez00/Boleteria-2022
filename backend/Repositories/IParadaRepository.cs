@@ -5,7 +5,7 @@ using BoleteriaOnline.Web.Data.Models;
 namespace BoleteriaOnline.Web.Repositories;
 public interface IParadaRepository
 {
-    Task<PaginatedList<Parada>> GetAllAsync(ParadaDTOFilter parameters);
+    Task<PaginatedList<Parada>> GetAllAsync(ParadaFilter parameters);
     Task<Parada> GetAsync(long id);
     Task<bool> ExistsAsync(long id);
     Task<bool> CreateAsync(Parada destino);

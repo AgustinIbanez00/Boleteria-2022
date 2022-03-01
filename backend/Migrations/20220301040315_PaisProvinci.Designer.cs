@@ -4,6 +4,7 @@ using BoleteriaOnline.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BoleteriaOnline.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220301040315_PaisProvinci")]
+    partial class PaisProvinci
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -451,9 +453,9 @@ namespace BoleteriaOnline.Web.Migrations
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id")
-                        .HasName("pk_paises");
+                        .HasName("pk_pais");
 
-                    b.ToTable("paises", (string)null);
+                    b.ToTable("pais", (string)null);
                 });
 
             modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Parada", b =>
@@ -526,12 +528,12 @@ namespace BoleteriaOnline.Web.Migrations
                         .HasColumnName("sigla");
 
                     b.HasKey("Id")
-                        .HasName("pk_provincias");
+                        .HasName("pk_provincia");
 
                     b.HasIndex("PaisId")
-                        .HasDatabaseName("ix_provincias_pais_id");
+                        .HasDatabaseName("ix_provincia_pais_id");
 
-                    b.ToTable("provincias", (string)null);
+                    b.ToTable("provincia", (string)null);
                 });
 
             modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Usuario", b =>
@@ -1014,7 +1016,7 @@ namespace BoleteriaOnline.Web.Migrations
                     b.HasOne("BoleteriaOnline.Web.Data.Models.Pais", "Pais")
                         .WithMany()
                         .HasForeignKey("PaisId")
-                        .HasConstraintName("fk_paradas_paises_pais_id");
+                        .HasConstraintName("fk_paradas_pais_pais_id");
 
                     b.Navigation("Pais");
                 });
@@ -1024,7 +1026,7 @@ namespace BoleteriaOnline.Web.Migrations
                     b.HasOne("BoleteriaOnline.Web.Data.Models.Pais", null)
                         .WithMany("Provincias")
                         .HasForeignKey("PaisId")
-                        .HasConstraintName("fk_provincias_paises_pais_id");
+                        .HasConstraintName("fk_provincia_pais_pais_id");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
