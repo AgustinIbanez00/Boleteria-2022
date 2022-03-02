@@ -40,17 +40,23 @@ export class ClienteService {
   }
 
   public crear(clienteDTO: clienteDTO): Observable<HttpResponse<webResult>> {
-    return this.http.post<webResult>(this.apiURL, JSON.stringify(clienteDTO), {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-      observe: 'response',
-    });
+    return this.http.post<webResult>(
+      this.apiURL + '/clientes',
+
+      JSON.stringify(clienteDTO),
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        }),
+        observe: 'response',
+      }
+    );
   }
 
   public editar(clienteDTO: clienteDTO) {
+    console.log('editar', clienteDTO);
     return this.http.patch<webResult>(
-      `${this.apiURL}/${clienteDTO.dni}`,
+      `${this.apiURL}/clientes/${clienteDTO.dni}`,
       JSON.stringify(clienteDTO),
       {
         headers: new HttpHeaders({
@@ -62,12 +68,15 @@ export class ClienteService {
   }
 
   public eliminar(clienteDTO: clienteDTO) {
-    return this.http.delete<webResult>(`${this.apiURL}?id=${clienteDTO.dni}`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-      observe: 'response',
-    });
+    return this.http.delete<webResult>(
+      `${this.apiURL}/clientes/?id=${clienteDTO.dni}`,
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        }),
+        observe: 'response',
+      }
+    );
   }
 
   public filtrarClientes(
@@ -75,11 +84,13 @@ export class ClienteService {
     pagina: number,
     cantidadRegistrosAMostrar: number
   ): Observable<HttpResponse<webResult>> {
-    console.log(clienteFiltroDTO);
+    clienteFiltroDTO.estado =
+      clienteFiltroDTO.estado == -1 ? null : clienteFiltroDTO.estado;
+
     const tree = this.router.createUrlTree([], {
       queryParams: { ...clienteFiltroDTO, pagina, cantidadRegistrosAMostrar },
     });
-    console.log(`${environment.apiURL}${tree.toString()}`);
+
     return this.http.get<webResult>(`${environment.apiURL}${tree.toString()}`, {
       observe: 'response',
     });

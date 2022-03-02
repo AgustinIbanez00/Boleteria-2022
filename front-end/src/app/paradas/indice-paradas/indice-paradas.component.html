@@ -61,6 +61,7 @@
             mat-flat-button
             (click)="openDialog(element.id)"
             title="Editar Parada"
+            [disabled]="element.estado == 0"
           >
             <mat-icon>edit</mat-icon>
           </button>

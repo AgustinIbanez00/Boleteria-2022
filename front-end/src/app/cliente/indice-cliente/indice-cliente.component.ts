@@ -47,9 +47,10 @@ export class IndiceClienteComponent implements OnInit {
   form: FormGroup;
 
   columnasAMostrar = [
-    'estado',
     'dni',
     'nombre',
+    'estado',
+
     'editar',
     'eliminar',
     'habilitar',
@@ -174,7 +175,7 @@ export class IndiceClienteComponent implements OnInit {
       .subscribe(
         (respuesta: HttpResponse<webResultList>) => {
           this.clientes = Object.values(respuesta.body.result);
-          //console.log(respuesta.body.pagination);
+
           this.cantidadTotalRegistros = respuesta.body.pagination.total_items;
         },
         (error) => {
@@ -184,7 +185,7 @@ export class IndiceClienteComponent implements OnInit {
   }
 
   hablitarDeshabilitar(event, cliente: clienteDTO) {
-    //  cliente.estado = event.checked ? 1 : 0;
+    cliente.estado = event.checked ? 1 : 0;
     this.editar(cliente);
   }
 
@@ -199,6 +200,11 @@ export class IndiceClienteComponent implements OnInit {
             'success'
           );
         } else {
+          this.notificacionesService.showNotificacion(
+            result.body.message,
+            'x',
+            'error'
+          );
         }
       },
       (errorResult) => {
