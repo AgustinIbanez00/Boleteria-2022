@@ -32,7 +32,7 @@ public class NodosController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<NodoResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<NodoResponse>>> Get(long id)
@@ -46,7 +46,7 @@ public class NodosController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<NodoResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -60,7 +60,7 @@ public class NodosController : ControllerBase
     }
 
     [HttpPatch]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<NodoResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<NodoResponse>>> UpdateNodo([FromBody] NodoRequest nodoDto)
     {
         var nodo = await _nodoservice.UpdateNodoAsync(nodoDto);
@@ -71,7 +71,7 @@ public class NodosController : ControllerBase
     }
 
     [HttpDelete]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<NodoResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<NodoResponse>>> DeleteNodo(long id)
     {
         var nodo = await _nodoservice.DeleteNodoAsync(id);

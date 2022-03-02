@@ -2,8 +2,9 @@
 using BoleteriaOnline.Core.Extensions.Response;
 using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
-using BoleteriaOnline.Core.ViewModels.Requests;
-using BoleteriaOnline.Core.ViewModels.Responses;
+using BoleteriaOnline.Core.ViewModels;
+using BoleteriaOnline.Core.ViewModels.Filters;
+using BoleteriaOnline.Core.ViewModels.Pagging;
 using BoleteriaOnline.Web.Data.Models;
 using BoleteriaOnline.Web.Repositories;
 using EntityFramework.Exceptions.Common;
@@ -24,129 +25,127 @@ public class ViajeService : IViajeService
         _distribucionRepository = distribucionRepository;
     }
 
-    public async Task<WebResult<ViajeResponse>> CreateViajeAsync(ViajeRequest viajeDto)
+    public async Task<WebResultList<ViajeDTO>> AllAsync(ViajeFilter filter)
     {
         try
         {
-            if (viajeDto.Horarios.Count == 0)
-                return Error<Horario, ViajeResponse>(ErrorMessage.EmptyList);
+            var viajes = await _viajeRepository.GetAllPaginatedAsync(filter);
 
-            foreach (var horario in viajeDto.Horarios)
-            {
-                if (!await _distribucionRepository.ExistsDistribucionAsync(horario.DistribucionId))
-                    return Error<Distribucion, ViajeResponse>(ErrorMessage.NotFound);
-            }
-
-            Viaje viaje = _mapper.Map<Viaje>(viajeDto);
-
-            foreach (var horario in viaje.Horarios)
-            {
-                horario.Lunes = viajeDto.Horarios[viaje.Horarios.IndexOf(horario)].Dias.Contains(DayOfWeek.Monday);
-                horario.Martes = viajeDto.Horarios[viaje.Horarios.IndexOf(horario)].Dias.Contains(DayOfWeek.Tuesday);
-                horario.Miercoles = viajeDto.Horarios[viaje.Horarios.IndexOf(horario)].Dias.Contains(DayOfWeek.Wednesday);
-                horario.Jueves = viajeDto.Horarios[viaje.Horarios.IndexOf(horario)].Dias.Contains(DayOfWeek.Thursday);
-                horario.Viernes = viajeDto.Horarios[viaje.Horarios.IndexOf(horario)].Dias.Contains(DayOfWeek.Friday);
-                horario.Sabado = viajeDto.Horarios[viaje.Horarios.IndexOf(horario)].Dias.Contains(DayOfWeek.Saturday);
-                horario.Domingo = viajeDto.Horarios[viaje.Horarios.IndexOf(horario)].Dias.Contains(DayOfWeek.Sunday);
-            }
-
-            if (!await _viajeRepository.CreateViajeAsync(viaje))
-                return Error<Viaje, ViajeResponse>(ErrorMessage.CouldNotCreate);
-
-            var dto = _mapper.Map<ViajeResponse>(viaje);
-            return Ok<Viaje, ViajeResponse>(dto, SuccessMessage.Created);
-        }
-        catch (UniqueConstraintException)
-        {
-            return Error<Viaje, ViajeResponse>(ErrorMessage.AlreadyExists);
-        }
-        catch (Exception ex)
-        {
-            return Error<Viaje, ViajeResponse>(ErrorMessage.Generic, ex.Message);
-        }
-    }
-    public async Task<WebResult<ViajeResponse>> DeleteViajeAsync(long id)
-    {
-        try
-        {
-            var viaje = await _viajeRepository.GetViajeAsync(id);
-            if (viaje == null)
-                return Error<Viaje, ViajeResponse>(ErrorMessage.NotFound);
-
-            if (!await _viajeRepository.DeleteViajeAsync(viaje))
-                return Error<Viaje, ViajeResponse>(ErrorMessage.CouldNotDelete);
-
-            return Ok<Viaje, ViajeResponse>(_mapper.Map<ViajeResponse>(viaje), SuccessMessage.Deleted);
-        }
-        catch (Exception ex)
-        {
-            return Error<Viaje, ViajeResponse>(ErrorMessage.Generic, ex.Message);
-        }
-    }
-    public async Task<WebResult<ViajeResponse>> GetViajeAsync(long id)
-    {
-        try
-        {
-            var viaje = await _viajeRepository.GetViajeAsync(id);
-
-            if (viaje == null)
-                return Error<Viaje, ViajeResponse>(ErrorMessage.NotFound);
-
-            return Ok(_mapper.Map<ViajeResponse>(viaje));
-        }
-        catch (Exception ex)
-        {
-            return Error<Viaje, ViajeResponse>(ErrorMessage.Generic, ex.Message);
-        }
-    }
-    public async Task<WebResult<ICollection<ViajeResponse>>> GetViajesAsync()
-    {
-        try
-        {
-            var viajes = await _viajeRepository.GetViajesAsync();
-
-            var viajesDto = new List<ViajeResponse>();
+            var viajesDto = new List<ViajeDTO>();
 
             foreach (var Viaje in viajes)
             {
-                viajesDto.Add(_mapper.Map<ViajeResponse>(Viaje));
+                viajesDto.Add(_mapper.Map<ViajeDTO>(Viaje));
             }
-            return Ok<ICollection<ViajeResponse>>(viajesDto);
+            return List(viajesDto, Pagination.Page(viajes.TotalItems, filter.Pagina, filter.RecordsPorPagina));
         }
         catch (Exception ex)
         {
-            return Error<Viaje, ICollection<ViajeResponse>>(ErrorMessage.Generic, ex.Message);
+            return ErrorList<ViajeDTO>(ErrorMessage.Generic, ex.Message);
         }
     }
 
-    public async Task<WebResult<ViajeResponse>> UpdateViajeAsync(ViajeUpdateRequest viajeDto)
+    public async Task<WebResult<ViajeDTO>> CreateAsync(ViajeDTO request)
     {
         try
         {
-            if (viajeDto.Id == 0)
-                return Error<Viaje, ViajeResponse>(ErrorMessage.InvalidId);
+            if (request.Horarios.Count == 0)
+                return Error<Horario, ViajeDTO>(ErrorMessage.EmptyList);
 
-            var viaje = await _viajeRepository.GetViajeAsync(viajeDto.Id);
+            foreach (var horario in request.Horarios)
+            {
+                horario.Id = 0;
+                if (!await _distribucionRepository.ExistsDistribucionAsync(horario.DistribucionId))
+                    return Error<Distribucion, ViajeDTO>(ErrorMessage.NotFound);
+            }
 
-            if (viaje == null)
-                return Error<Viaje, ViajeResponse>(ErrorMessage.NotFound);
+            Viaje viaje = _mapper.Map<Viaje>(request);
 
-            viaje.Nombre = viajeDto.Nombre;
-            //viaje.Horarios = viajeDto.Horarios;
-            //viaje.Nodos = viajeDto.Nodos;
+            if (!await _viajeRepository.CreateAsync(viaje))
+                return Error<Viaje, ViajeDTO>(ErrorMessage.CouldNotCreate);
 
-            if (!await _viajeRepository.UpdateViajeAsync(viaje))
-                return Error<Viaje, ViajeResponse>(ErrorMessage.CouldNotUpdate);
-
-            return Ok<Viaje, ViajeResponse>(_mapper.Map<ViajeResponse>(viaje), SuccessMessage.Modified);
+            var dto = _mapper.Map<ViajeDTO>(viaje);
+            return Ok<Viaje, ViajeDTO>(dto, SuccessMessage.Created);
         }
         catch (UniqueConstraintException)
         {
-            return Error<Viaje, ViajeResponse>(ErrorMessage.AlreadyExists);
+            return Error<Viaje, ViajeDTO>(ErrorMessage.AlreadyExists);
         }
         catch (Exception ex)
         {
-            return Error<Viaje, ViajeResponse>(ErrorMessage.Generic, ex.Message);
+            return Error<Viaje, ViajeDTO>(ErrorMessage.Generic, ex.Message);
         }
+    }
+
+    public async Task<WebResult<ViajeDTO>> DeleteAsync(ViajeFilter filter)
+    {
+        try
+        {
+            var viaje = await _viajeRepository.GetAsync(filter);
+            if (viaje == null)
+                return Error<Viaje, ViajeDTO>(ErrorMessage.NotFound);
+
+            if (!await _viajeRepository.DeleteAsync(viaje))
+                return Error<Viaje, ViajeDTO>(ErrorMessage.CouldNotDelete);
+
+            return Ok<Viaje, ViajeDTO>(_mapper.Map<ViajeDTO>(viaje), SuccessMessage.Deleted);
+        }
+        catch (Exception ex)
+        {
+            return Error<Viaje, ViajeDTO>(ErrorMessage.Generic, ex.Message);
+        }
+    }
+
+    public async Task<WebResult<ViajeDTO>> GetAsync(ViajeFilter filter)
+    {
+        try
+        {
+            var viaje = await _viajeRepository.GetAsync(filter);
+
+            if (viaje == null)
+                return Error<ViajeDTO>(ErrorMessage.NotFound);
+
+            return Ok(_mapper.Map<ViajeDTO>(viaje));
+        }
+        catch (Exception ex)
+        {
+            return Error<ViajeDTO>(ErrorMessage.Generic, ex.Message);
+        }
+    }
+
+    public async Task<WebResult<ViajeDTO>> UpdateAsync(ViajeDTO request, int id)
+    {
+        try
+        {
+            if (id <= 0)
+                return Error<Viaje, ViajeDTO>(ErrorMessage.InvalidId);
+
+            var viaje = await _viajeRepository.GetAsync(new ViajeFilter() { Id = id});
+
+            if (viaje == null)
+                return Error<Viaje, ViajeDTO>(ErrorMessage.NotFound);
+
+            viaje.Nombre = request.Nombre;
+            //viaje.Horarios = viajeDto.Horarios;
+            //viaje.Nodos = viajeDto.Nodos;
+
+            if (!await _viajeRepository.UpdateAsync(viaje))
+                return Error<Viaje, ViajeDTO>(ErrorMessage.CouldNotUpdate);
+
+            return Ok<Viaje, ViajeDTO>(_mapper.Map<ViajeDTO>(viaje), SuccessMessage.Modified);
+        }
+        catch (UniqueConstraintException)
+        {
+            return Error<Viaje, ViajeDTO>(ErrorMessage.AlreadyExists);
+        }
+        catch (Exception ex)
+        {
+            return Error<Viaje, ViajeDTO>(ErrorMessage.Generic, ex.Message);
+        }
+    }
+
+    public Task<WebResult<ViajeDTO>> ValidateAsync(ViajeDTO request)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -67,7 +67,7 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPost("ban")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<UsuarioResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<UsuarioResponse>>> LockUsuario(int id)
     {
         var usuario = await _usuarioService.LockUsuarioAsync(id);
@@ -78,7 +78,7 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpGet("me")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<UsuarioResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<UsuarioResponse>>> GetMe()
     {
         var currentClaim = ((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.NameIdentifier);

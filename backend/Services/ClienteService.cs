@@ -23,11 +23,11 @@ public class ClienteService : IClienteService
         _clienteRepository = clienteRepository;
     }
 
-    public async Task<WebResultList<ClienteDTO>> AllAsync(ClienteFilter parameters)
+    public async Task<WebResultList<ClienteDTO>> AllAsync(ClienteFilter filter)
     {
         try
         {
-            PaginatedList<Cliente> clientes = await _clienteRepository.GetAllPaginatedAsync(parameters);
+            PaginatedList<Cliente> clientes = await _clienteRepository.GetAllPaginatedAsync(filter);
 
             var clientesDto = new List<ClienteDTO>();
 
@@ -35,7 +35,7 @@ public class ClienteService : IClienteService
             {
                 clientesDto.Add(_mapper.Map<ClienteDTO>(cliente));
             }
-            return List(clientesDto, Pagination.Page(clientes.TotalItems, parameters.Pagina, parameters.RecordsPorPagina));
+            return List(clientesDto, Pagination.Page(clientes.TotalItems, filter.Pagina, filter.RecordsPorPagina));
         }
         catch (Exception ex)
         {

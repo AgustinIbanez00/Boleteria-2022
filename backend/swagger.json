@@ -22,6 +22,75 @@
           "Clientes"
         ],
         "operationId": "Clientes_GetAll",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "Dni",
+            "in": "query",
+            "format": "int64",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Nombre",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "FechaNacimiento",
+            "in": "query",
+            "format": "date-time",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "Genero",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/Gender"
+            },
+            "x-nullable": true,
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "type": "integer",
+            "name": "Estado",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/Estado"
+            },
+            "x-nullable": true,
+            "enum": [
+              0,
+              1,
+              -1
+            ]
+          },
+          {
+            "title": "página",
+            "type": "integer",
+            "name": "Pagina",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "title": "elementos por página",
+            "type": "integer",
+            "name": "RecordsPorPagina",
+            "in": "query",
+            "format": "int32",
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "x-nullable": false
+          }
+        ],
         "responses": {
           "200": {
             "x-nullable": false,
@@ -128,7 +197,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "format": "int32",
+            "format": "int64",
             "x-nullable": false
           }
         ],
@@ -691,7 +760,7 @@
             "type": "integer",
             "name": "Id",
             "in": "query",
-            "format": "int64",
+            "format": "int32",
             "x-nullable": true
           },
           {
@@ -812,7 +881,7 @@
             "type": "integer",
             "name": "id",
             "in": "query",
-            "format": "int64",
+            "format": "int32",
             "x-nullable": false
           }
         ],
@@ -839,7 +908,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "format": "int64",
+            "format": "int32",
             "x-nullable": false
           }
         ],
@@ -892,7 +961,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "format": "int64",
+            "format": "int32",
             "x-nullable": false
           }
         ],
@@ -1105,12 +1174,59 @@
           "Viajes"
         ],
         "operationId": "Viajes_GetAll",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "Id",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Nombre",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "Estado",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/Estado"
+            },
+            "x-nullable": true,
+            "enum": [
+              0,
+              1,
+              -1
+            ]
+          },
+          {
+            "title": "página",
+            "type": "integer",
+            "name": "Pagina",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "title": "elementos por página",
+            "type": "integer",
+            "name": "RecordsPorPagina",
+            "in": "query",
+            "format": "int32",
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "x-nullable": false
+          }
+        ],
         "responses": {
           "200": {
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfICollectionOfViajeResponse"
+              "$ref": "#/definitions/WebResultOfICollectionOfViajeDTO"
             }
           },
           "404": {
@@ -1138,7 +1254,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ViajeRequest"
+              "$ref": "#/definitions/ViajeDTO"
             },
             "x-nullable": false
           }
@@ -1148,7 +1264,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfViajeResponse"
+              "$ref": "#/definitions/WebResultOfViajeDTO"
             }
           },
           "400": {
@@ -1169,7 +1285,72 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfViajeResponse"
+              "$ref": "#/definitions/WebResultOfViajeDTO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Viajes"
+        ],
+        "operationId": "Viajes_DeleteViaje",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfViajeDTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/viajes/{id}": {
+      "get": {
+        "tags": [
+          "Viajes"
+        ],
+        "operationId": "Viajes_Get",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfViajeDTO"
+            }
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           }
         }
@@ -1190,59 +1371,16 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ViajeUpdateRequest"
+              "$ref": "#/definitions/ViajeDTO"
             },
             "x-nullable": false
-          }
-        ],
-        "responses": {
-          "200": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/WebResultOfViajeResponse"
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Viajes"
-        ],
-        "operationId": "Viajes_DeleteViaje",
-        "parameters": [
-          {
-            "type": "integer",
-            "name": "id",
-            "in": "query",
-            "format": "int64",
-            "x-nullable": false
-          }
-        ],
-        "responses": {
-          "200": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/WebResultOfViajeResponse"
-            }
-          }
-        }
-      }
-    },
-    "/api/viajes/{id}": {
-      "get": {
-        "tags": [
-          "Viajes"
-        ],
-        "operationId": "Viajes_Get",
-        "parameters": [
+          },
           {
             "type": "integer",
             "name": "id",
             "in": "path",
             "required": true,
-            "format": "int64",
+            "format": "int32",
             "x-nullable": false
           }
         ],
@@ -1251,21 +1389,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfViajeResponse"
-            }
-          },
-          "400": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
-            }
-          },
-          "404": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/ProblemDetails"
+              "$ref": "#/definitions/WebResultOfViajeDTO"
             }
           }
         }
@@ -1315,7 +1439,6 @@
         "dni",
         "nombre",
         "fecha_nacimiento",
-        "nacionalidad_id",
         "genero",
         "estado"
       ],
@@ -1335,11 +1458,6 @@
           "type": "string",
           "format": "date-time",
           "minLength": 1
-        },
-        "nacionalidad_id": {
-          "title": "nacionalidad",
-          "type": "integer",
-          "format": "int32"
         },
         "genero": {
           "title": "género",
@@ -2319,7 +2437,7 @@
         }
       }
     },
-    "WebResultOfICollectionOfViajeResponse": {
+    "WebResultOfICollectionOfViajeDTO": {
       "type": "object",
       "required": [
         "success",
@@ -2329,7 +2447,7 @@
         "result": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ViajeResponse"
+            "$ref": "#/definitions/ViajeDTO"
           }
         },
         "success": {
@@ -2355,12 +2473,13 @@
         }
       }
     },
-    "ViajeResponse": {
+    "ViajeDTO": {
       "type": "object",
       "required": [
         "id",
         "nombre",
-        "horarios"
+        "horarios",
+        "estado"
       ],
       "properties": {
         "id": {
@@ -2376,33 +2495,35 @@
           "title": "horario",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/HorarioResponse"
+            "$ref": "#/definitions/HorarioDTO"
           }
+        },
+        "estado": {
+          "title": "estado",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Estado"
+            }
+          ]
         }
       }
     },
-    "HorarioResponse": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/HorarioRequest"
-        },
-        {
-          "type": "object"
-        }
-      ]
-    },
-    "HorarioRequest": {
+    "HorarioDTO": {
       "type": "object",
       "required": [
+        "id",
         "hora",
         "dias",
         "distribucion_id"
       ],
       "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
         "hora": {
           "title": "hora",
           "type": "string",
-          "format": "date-time",
           "minLength": 1
         },
         "dias": {
@@ -2440,7 +2561,7 @@
         6
       ]
     },
-    "WebResultOfViajeResponse": {
+    "WebResultOfViajeDTO": {
       "type": "object",
       "required": [
         "success",
@@ -2448,7 +2569,7 @@
       ],
       "properties": {
         "result": {
-          "$ref": "#/definitions/ViajeResponse"
+          "$ref": "#/definitions/ViajeDTO"
         },
         "success": {
           "type": "boolean"
@@ -2472,47 +2593,6 @@
           "type": "string"
         }
       }
-    },
-    "ViajeRequest": {
-      "type": "object",
-      "required": [
-        "nombre",
-        "horarios"
-      ],
-      "properties": {
-        "nombre": {
-          "title": "nombre",
-          "type": "string",
-          "minLength": 1
-        },
-        "horarios": {
-          "title": "horario",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/HorarioRequest"
-          }
-        }
-      }
-    },
-    "ViajeUpdateRequest": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/ViajeRequest"
-        },
-        {
-          "type": "object",
-          "required": [
-            "id"
-          ],
-          "properties": {
-            "id": {
-              "title": "id",
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        }
-      ]
     }
   }
 }

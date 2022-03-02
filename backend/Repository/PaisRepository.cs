@@ -21,11 +21,11 @@ public class PaisRepository : IPaisRepository
         return _context.Paises.AnyAsync(GetExpression(parameters));
     }
 
-    public Expression<Func<Pais, bool>> GetExpression(PaisFilter parameters)
+    public Expression<Func<Pais, bool>> GetExpression(PaisFilter filters)
     {
         return PredicateBuilder.New<Pais>()
-            .And(p => !parameters.Id.HasValue || parameters.Id.HasValue && p.Id == parameters.Id.Value)
-            .And(p => string.IsNullOrEmpty(parameters.Nombre) || !string.IsNullOrEmpty(parameters.Nombre) && p.Nombre.Contains(parameters.Nombre));
+            .And(p => !filters.Id.HasValue || filters.Id.HasValue && p.Id == filters.Id.Value)
+            .And(p => string.IsNullOrEmpty(filters.Nombre) || !string.IsNullOrEmpty(filters.Nombre) && p.Nombre.Contains(filters.Nombre));
     }
 
     public async Task<ICollection<Pais>> GetAllAsync(PaisFilter parameters)
