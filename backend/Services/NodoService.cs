@@ -2,6 +2,7 @@
 using BoleteriaOnline.Core.Extensions.Response;
 using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
+using BoleteriaOnline.Core.ViewModels.Filters;
 using BoleteriaOnline.Core.ViewModels.Requests;
 using BoleteriaOnline.Core.ViewModels.Responses;
 using BoleteriaOnline.Web.Data.Models;
@@ -29,14 +30,14 @@ public class NodoService : INodoService
         {
             var nodo = _mapper.Map<Nodo>(nodoDto);
 
-            Parada nodoDtoOrigen = await _destinoRepository.GetAsync(nodoDto.OrigenId);
+            Parada nodoDtoOrigen = await _destinoRepository.GetAsync(new ParadaFilter() { Id = nodoDto.OrigenId});
 
             if (nodoDtoOrigen != null)
                 nodo.Origen = nodoDtoOrigen;
             else
                 return KeyError<Parada, NodoResponse>(nameof(nodoDto.OrigenId), ErrorMessage.NotFound);
             
-            Parada nodoDtoDestino = await _destinoRepository.GetAsync(nodoDto.DestinoId);
+            Parada nodoDtoDestino = await _destinoRepository.GetAsync(new ParadaFilter() { Id = nodoDto.DestinoId });
 
             if (nodoDtoDestino != null)
                 nodo.Destino = nodoDtoDestino;
@@ -129,9 +130,9 @@ public class NodoService : INodoService
 
             if(nodo.Origen?.Id != nodoDto.OrigenId)
             {
-                Parada nodoDtoOrigen = await _destinoRepository.GetAsync(nodoDto.OrigenId);
+                Parada nodoDtoOrigen = await _destinoRepository.GetAsync(new ParadaFilter() { Id = nodoDto.OrigenId });
 
-                if (await _destinoRepository.ExistsAsync(nodoDto.OrigenId))
+                if (await _destinoRepository.ExistsAsync(new ParadaFilter() { Id = nodoDto.OrigenId }))
                     nodo.Origen = nodoDtoOrigen;
                 else
                     return KeyError<Nodo, NodoResponse>(nameof(nodoDto.OrigenId), ErrorMessage.InvalidId);
@@ -139,9 +140,9 @@ public class NodoService : INodoService
 
             if (nodo.Destino?.Id != nodoDto.DestinoId)
             {
-                Parada nodoDtoDestino = await _destinoRepository.GetAsync(nodoDto.DestinoId);
+                Parada nodoDtoDestino = await _destinoRepository.GetAsync(new ParadaFilter() { Id = nodoDto.DestinoId});
 
-                if (await _destinoRepository.ExistsAsync(nodoDto.DestinoId))
+                if (await _destinoRepository.ExistsAsync(new ParadaFilter() { Id = nodoDto.DestinoId }))
                     nodo.Destino = nodoDtoDestino;
             }
 

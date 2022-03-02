@@ -41,7 +41,7 @@ const routes: Routes = [
   },
   //clientes
   {
-    path: 'cliente',
+    path: 'clientes',
     component: IndiceClienteComponent,
   },
 ];

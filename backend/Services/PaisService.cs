@@ -4,8 +4,6 @@ using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Core.ViewModels.Filters;
-using BoleteriaOnline.Core.ViewModels.Pagging;
-using BoleteriaOnline.Web.Data.Models;
 using BoleteriaOnline.Web.Repositories;
 
 namespace BoleteriaOnline.Web.Services;
@@ -22,11 +20,11 @@ public class PaisService : IPaisService
         _paisRepository = paisRepository;
     }
 
-    public async Task<WebResultList<PaisDTO>> AllAsync(PaisFilter parameters)
+    public async Task<WebResult<List<PaisDTO>>> AllAsync(PaisFilter parameters)
     {
         try
         {
-            PaginatedList<Pais> paises = await _paisRepository.GetAllAsync(parameters);
+            var paises = await _paisRepository.GetAllAsync(parameters);
 
             var paisesDTO = new List<PaisDTO>();
 
@@ -34,11 +32,11 @@ public class PaisService : IPaisService
             {
                 paisesDTO.Add(_mapper.Map<PaisDTO>(pais));
             }
-            return List(paisesDTO, Pagination.Page(paises.TotalItems, parameters.Pagina, parameters.RecordsPorPagina));
+            return Ok(paisesDTO);
         }
         catch (Exception ex)
         {
-            return ErrorList<Parada, PaisDTO>(ErrorMessage.Generic, ex.Message);
+            return Error<List<PaisDTO>>(ErrorMessage.Generic, ex.Message);
         }
     }
 }

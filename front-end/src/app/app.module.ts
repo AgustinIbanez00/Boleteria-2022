@@ -37,6 +37,9 @@ import { ListadoClienteComponent } from './cliente/listado-cliente/listado-clien
 import { MatSelectModule } from '@angular/material/select';
 
 import { FiltroParadasComponent } from './paradas/filtro-paradas/filtro-paradas.component';
+import { FiltroClienteComponent } from './cliente/filtro-cliente/filtro-cliente.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { SelectComponent } from './utilidades/paises/select/select.component';
 import { DistribucionComponent } from './distribucion/distribucion/distribucion.component';
 @NgModule({
   declarations: [
@@ -60,9 +63,10 @@ import { DistribucionComponent } from './distribucion/distribucion/distribucion.
     IndiceClienteComponent,
     CrearClienteComponent,
     ListadoClienteComponent,
-
     FiltroParadasComponent,
-      DistribucionComponent,
+    FiltroClienteComponent,
+    SelectComponent,
+    DistribucionComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,6 +82,7 @@ import { DistribucionComponent } from './distribucion/distribucion/distribucion.
     MatSlideToggleModule,
     SweetAlert2Module.forRoot(),
     MatSelectModule,
+    MatAutocompleteModule,
   ],
   providers: [
     {

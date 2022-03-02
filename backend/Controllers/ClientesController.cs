@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using BoleteriaOnline.Web.Extensions.Response;
 using BoleteriaOnline.Core.Services;
-using BoleteriaOnline.Core.ViewModels.Responses;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
+using BoleteriaOnline.Web.Data.Filters;
 
 namespace BoleteriaOnline.Web.Controllers;
 
@@ -20,11 +19,11 @@ public class ClientesController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ICollection<ClienteDTO>>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<ICollection<ClienteDTO>>>> GetAll()
     {
-        var clientes = await _clienteservice.GetClientesAsync();
+        var clientes = await _clienteservice.AllAsync(new ClienteFilter() { });
 
         if (!clientes.Success)
             return StatusCode(ResponseHelper.GetHttpError(clientes.ErrorCode), clientes);
@@ -33,12 +32,12 @@ public class ClientesController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ClienteDTO>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResult<ClienteDTO>>> Get(long id)
+    public async Task<ActionResult<WebResult<ClienteDTO>>> Get(int id)
     {
-        var cliente = await _clienteservice.GetClienteAsync(id);
+        var cliente = await _clienteservice.GetAsync(new ClienteFilter() { Dni = id });
 
         if (!cliente.Success)
             return StatusCode(ResponseHelper.GetHttpError(cliente.ErrorCode), cliente);
@@ -47,24 +46,24 @@ public class ClientesController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ClienteDTO>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<WebResult<ClienteDTO>>> CreateCliente([FromBody] ClienteDTO clienteDto)
     {
-        var cliente = await _clienteservice.CreateClienteAsync(clienteDto);
+        var cliente = await _clienteservice.CreateAsync(clienteDto);
 
         if (!cliente.Success)
             return StatusCode(ResponseHelper.GetHttpError(cliente.ErrorCode), cliente);
         return Created(nameof(Get), cliente);
     }
 
-    [HttpPatch]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ClienteDTO>))]
-    public async Task<ActionResult<WebResult<ClienteDTO>>> UpdateCliente([FromBody] ClienteDTO clienteDto)
+    [HttpPatch("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<WebResult<ClienteDTO>>> UpdateCliente([FromBody] ClienteDTO clienteDto, long id)
     {
-        var cliente = await _clienteservice.UpdateClienteAsync(clienteDto);
+        var cliente = await _clienteservice.UpdateAsync(clienteDto, new ClienteFilter() { Dni = id});
 
         if (!cliente.Success)
             return StatusCode(ResponseHelper.GetHttpError(cliente.ErrorCode), cliente);
@@ -72,10 +71,10 @@ public class ClientesController : ControllerBase
     }
 
     [HttpDelete]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ClienteDTO>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ClienteDTO>>> DeleteCliente(long id)
     {
-        var cliente = await _clienteservice.DeleteClienteAsync(id);
+        var cliente = await _clienteservice.DeleteAsync(new ClienteFilter() { Dni = id });
 
         if (!cliente.Success)
             return StatusCode(ResponseHelper.GetHttpError(cliente.ErrorCode), cliente);

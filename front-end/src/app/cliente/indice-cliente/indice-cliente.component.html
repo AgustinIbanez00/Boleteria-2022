@@ -26,6 +26,11 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
+<app-filtro-cliente
+  [clientes]="clientes"
+  (OnSubmit)="filtrar($event)"
+></app-filtro-cliente>
+
 <app-listado-generico [listado]="clientes">
   <ng-container contenido>
     <table
