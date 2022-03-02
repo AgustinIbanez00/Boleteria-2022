@@ -79,7 +79,7 @@ public class ParadaRepository : IParadaRepository
 
     public async Task<PaginatedList<Parada>> GetAllPaginatedAsync(ParadaFilter filter)
     {
-        return await PaggingExtensions.CreateAsync(_context.Paradas.Where(GetExpression(filter)), filter.Pagina, filter.RecordsPorPagina);
+        return await PaggingExtensions.CreateAsync(_context.Paradas.Include(p => p.Pais).Include(p => p.Provincia).Where(GetExpression(filter)), filter.Pagina, filter.RecordsPorPagina);
     }
 
     public async Task<Parada> FindAsync(int id)

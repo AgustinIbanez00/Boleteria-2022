@@ -16,4 +16,5 @@ public class ParadaDTO
     public int ProvinciaId { get; set; }
     [Required, Display(Name = "estado")]
     public Estado Estado { get; set; }
+    public string Descripcion { get; set; }
 }
