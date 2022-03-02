@@ -4,9 +4,6 @@ import { paradasDTO } from '../paradasDTO';
 import { ParadasService } from '../paradas.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificacionesService } from 'src/app/utilidades/notificaciones.service';
-import { HttpResponse } from '@angular/common/http';
-import { webResultList } from 'src/app/utilidades/webResult';
-import { parserarErroresAPI } from 'src/app/utilidades/utilidades';
 import { PaisesService } from 'src/app/utilidades/paises/paises.service';
 import { paisDTO } from 'src/app/utilidades/paises/paisesDTO';
 
@@ -40,8 +37,8 @@ export class CrearParadasComponent implements OnInit {
         '',
         { validators: [Validators.required, Validators.maxLength(100)] },
       ],
-      pais: ['', { validators: [Validators.required] }],
-      provincia: ['', { validators: [Validators.required] }],
+      pais_id: ['', { validators: [Validators.required] }],
+      provincia_id: ['', { validators: [Validators.required] }],
     });
 
     if (this.data.id !== undefined) {
@@ -51,6 +48,7 @@ export class CrearParadasComponent implements OnInit {
 
   // crear
   guardarParadas(paradasDTO: paradasDTO) {
+    console.log(paradasDTO);
     if (this.data.id != undefined) {
       this.editar(paradasDTO);
     } else {
@@ -69,6 +67,11 @@ export class CrearParadasComponent implements OnInit {
           );
           this.dialogRef.close('algo');
         } else {
+          this.notificacionesService.showNotificacion(
+            result.body.message,
+            'x',
+            'error'
+          );
         }
       },
       (errorResult) => {
@@ -84,6 +87,7 @@ export class CrearParadasComponent implements OnInit {
   crear(paradasDTO: paradasDTO) {
     this.paradaraService.crear(paradasDTO).subscribe(
       (result) => {
+        console.log(result);
         if (result.body.success) {
           this.notificacionesService.showNotificacion(
             result.body.message,
@@ -92,9 +96,15 @@ export class CrearParadasComponent implements OnInit {
           );
           this.dialogRef.close('algo');
         } else {
+          this.notificacionesService.showNotificacion(
+            result.body.message,
+            'x',
+            'error'
+          );
         }
       },
       (errorResult) => {
+        console.log(errorResult);
         this.notificacionesService.showNotificacion(
           errorResult.error.message,
           'x',

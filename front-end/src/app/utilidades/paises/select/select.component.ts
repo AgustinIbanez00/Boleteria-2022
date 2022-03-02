@@ -24,8 +24,6 @@ export class SelectComponent implements OnInit {
   provincia: string;
   @Input()
   validaciones;
-  @Input()
-  nacionalidad;
 
   paises: paisDTO[] = [];
   provincias: provinciaDTO[] = [];
@@ -33,6 +31,9 @@ export class SelectComponent implements OnInit {
 
   ngOnInit() {
     this.obtenerPaises('');
+    console.log(this.form.value);
+    this.form.value[this.provincia] != '' &&
+      this.buscarProvinciaPorPais(this.form.value[this.pais]);
   }
 
   // listado paises
@@ -40,7 +41,6 @@ export class SelectComponent implements OnInit {
     this.paisesService.obtenerPaises(nomprePais).subscribe(
       (respuesta: HttpResponse<webResultList>) => {
         this.paises = Object.values(respuesta.body.result);
-        console.log('respuesta', respuesta.body.result);
       },
       (error) => {
         this.errores = parserarErroresAPI(error);
@@ -54,8 +54,6 @@ export class SelectComponent implements OnInit {
     this.paisesService.obtenerProvincias(idPais).subscribe(
       (respuesta: HttpResponse<webResultList>) => {
         this.provincias = Object.values(respuesta.body.result);
-        console.log('respuesta', respuesta.body.result);
-        console.log(this.provincias);
       },
       (error) => {
         this.errores = parserarErroresAPI(error);

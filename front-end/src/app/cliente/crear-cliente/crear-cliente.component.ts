@@ -44,9 +44,8 @@ export class CrearClienteComponent implements OnInit {
         },
       ],
       fechaNacimiento: ['', { validators: [Validators.required] }],
-      nacionalidad: ['', { validators: [Validators.required] }],
+
       genero: ['', { validators: [Validators.required] }],
-      // estado: 0,
     });
 
     if (this.data.dni !== undefined) {
@@ -74,6 +73,11 @@ export class CrearClienteComponent implements OnInit {
           );
           this.dialogRef.close('algo');
         } else {
+          this.notificacionesService.showNotificacion(
+            result.body.message,
+            'x',
+            'error'
+          );
         }
       },
       (errorResult) => {
@@ -97,6 +101,11 @@ export class CrearClienteComponent implements OnInit {
           );
           this.dialogRef.close('algo');
         } else {
+          this.notificacionesService.showNotificacion(
+            result.body.message,
+            'x',
+            'error'
+          );
         }
       },
       (errorResult) => {

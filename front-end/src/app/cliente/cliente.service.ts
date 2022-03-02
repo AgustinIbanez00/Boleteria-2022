@@ -35,6 +35,7 @@ export class ClienteService {
 
     return this.http.get<webResult>(`${this.apiURL}${tree.toString()}`, {
       observe: 'response',
+      params,
     });
   }
 
@@ -74,10 +75,11 @@ export class ClienteService {
     pagina: number,
     cantidadRegistrosAMostrar: number
   ): Observable<HttpResponse<webResult>> {
+    console.log(clienteFiltroDTO);
     const tree = this.router.createUrlTree([], {
       queryParams: { ...clienteFiltroDTO, pagina, cantidadRegistrosAMostrar },
     });
-
+    console.log(`${environment.apiURL}${tree.toString()}`);
     return this.http.get<webResult>(`${environment.apiURL}${tree.toString()}`, {
       observe: 'response',
     });
