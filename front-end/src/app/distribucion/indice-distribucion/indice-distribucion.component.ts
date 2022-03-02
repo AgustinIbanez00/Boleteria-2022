@@ -1,17 +1,21 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTable } from '@angular/material/table';
 import { parserarErroresAPI } from 'src/app/utilidades/utilidades';
 import { DistribucionService } from '../distribucion.service';
 import { DistribucionDTO } from '../distribucionDTO';
-
+import { DistribucionComponent } from '../distribucion/distribucion.component';
+import { DetalleDistribucionComponent } from '../detalle-distribucion/detalle-distribucion.component';
 @Component({
   selector: 'app-indice-distribucion',
   templateUrl: './indice-distribucion.component.html',
   styleUrls: ['./indice-distribucion.component.css'],
 })
 export class IndiceDistribucionComponent implements OnInit {
-  constructor(private distribucionService: DistribucionService) { }
+  constructor(private distribucionService: DistribucionService,
+    public dialog: MatDialog,
+  ) { }
 
 
 
@@ -55,5 +59,11 @@ export class IndiceDistribucionComponent implements OnInit {
 
   borrarRegistro(id: number) {
 
+  }
+  openDialogDetalle(id: number) {
+    var dialogRef = this.dialog.open(DetalleDistribucionComponent, {
+      width: '600px',
+      data: id,
+    });
   }
 }

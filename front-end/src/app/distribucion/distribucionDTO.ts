@@ -41,14 +41,19 @@ export class DistribucionDTO {
     }
   }
 }
-// export class distribucionDTO {
-//   id: number = -1;
-//   filas: fila[];
-//   nota: string = '';
-//   un_piso: boolean = false;
-// }
+export class distribucionDTO {
+  id: number = -1;
+  filas: filaDTO[] = []
+  nota: string = '';
+  un_piso: boolean = true;
+}
 
 export interface fila {
+  cells: cell[];
+  planta: number;
+}
+export interface filaDTO {
+  id: number;
   cells: cell[];
   planta: number;
 }

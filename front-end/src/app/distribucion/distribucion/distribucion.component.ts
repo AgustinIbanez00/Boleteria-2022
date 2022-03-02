@@ -1,8 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { NotificacionesService } from 'src/app/utilidades/notificaciones.service';
-import { DistribucionService } from '../distribucion.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { cell, DistribucionDTO, EstadosCeldas, fila } from '../distribucionDTO';
 
 @Component({
@@ -28,9 +27,7 @@ export class DistribucionComponent implements OnInit {
   estiloEliminarFila: string = 'cursor:pointer'
   valoresEstados = Object.values(this.estadosCeldas).filter((item) => item != -1)
   constructor(private formBuilder: FormBuilder,
-    private distribucionService: DistribucionService,
-    private notificacionesService: NotificacionesService,
-    private router: Router,) { }
+  ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({

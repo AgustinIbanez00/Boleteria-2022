@@ -1,0 +1,88 @@
+.containerCrearDistribucion {
+  width: 100%;
+  height: 100%;
+}
+.contenedor-detalle-distribucion {
+  width: 100%;
+  min-height: 500px;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  /* flex-wrap: nowrap; */
+  /* justify-content: space-around; */
+  margin: 0 auto;
+  margin-top: 3%;
+}
+.distribucion {
+  min-height: 500px;
+  width: 95%;
+  height: 100%;
+  border: 1px solid black;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  border-radius: 5px;
+}
+
+.tabs {
+  width: 69%;
+  height: 100%;
+}
+.fila {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+}
+.celda {
+  border: 1px solid darkgray;
+  border-radius: 3px;
+  width: 19%;
+  height: 50px;
+}
+
+.button-icon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+.button-icon:hover {
+  border: 3px solid blue;
+}
+.iconoCelda {
+  width: 100%;
+}
+.divAcciones {
+  margin-top: 50px;
+  width: 29%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.slide-toggle-distribucion {
+  font-weight: 800;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.contenedor {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.mensaje {
+  font-weight: 800;
+  font-size: 30px;
+}
+.hijo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 80%;
+}

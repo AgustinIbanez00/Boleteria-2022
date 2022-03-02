@@ -51,11 +51,7 @@
         </div></div
     ></mat-tab>
   </mat-tab-group>
-  <div
-    [formGroup]="form"
-    class="divAcciones"
-    [style]="!readOnly ? 'display:none' : ''"
-  >
+  <div [formGroup]="form" class="divAcciones">
     <mat-form-field>
       <mat-label>Nota</mat-label>
       <input matInput [value]="distribucion.nota" formControlName="nota" />
