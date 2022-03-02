@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using BoleteriaOnline.Web.Data;
+﻿using BoleteriaOnline.Web.Data;
 using BoleteriaOnline.Web.Data.Models;
 using BoleteriaOnline.Web.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace BoleteriaOnline.Web.Repository;
 

@@ -4,6 +4,7 @@ using BoleteriaOnline.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BoleteriaOnline.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220302025926_ChangeLongToInt32Paradas")]
+    partial class ChangeLongToInt32Paradas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,8 +150,11 @@ namespace BoleteriaOnline.Web.Migrations
             modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Cliente", b =>
                 {
                     b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
@@ -167,6 +172,10 @@ namespace BoleteriaOnline.Web.Migrations
                         .HasColumnType("int")
                         .HasColumnName("genero");
 
+                    b.Property<int>("NacionalidadId")
+                        .HasColumnType("int")
+                        .HasColumnName("nacionalidad_id");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -178,6 +187,9 @@ namespace BoleteriaOnline.Web.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_clientes");
+
+                    b.HasIndex("NacionalidadId")
+                        .HasDatabaseName("ix_clientes_nacionalidad_id");
 
                     b.ToTable("clientes", (string)null);
                 });
@@ -194,10 +206,6 @@ namespace BoleteriaOnline.Web.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
-
-                    b.Property<int>("Estado")
-                        .HasColumnType("int")
-                        .HasColumnName("estado");
 
                     b.Property<string>("Nota")
                         .HasMaxLength(128)
@@ -2566,6 +2574,18 @@ namespace BoleteriaOnline.Web.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_celdas_filas_fila_id");
+                });
+
+            modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Cliente", b =>
+                {
+                    b.HasOne("BoleteriaOnline.Web.Data.Models.Pais", "Nacionalidad")
+                        .WithMany()
+                        .HasForeignKey("NacionalidadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_clientes_paises_nacionalidad_id");
+
+                    b.Navigation("Nacionalidad");
                 });
 
             modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Fila", b =>

@@ -4,6 +4,7 @@ using BoleteriaOnline.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BoleteriaOnline.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220302042623_IgnoreCliente")]
+    partial class IgnoreCliente
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,10 +73,6 @@ namespace BoleteriaOnline.Web.Migrations
                         .HasColumnType("int")
                         .HasColumnName("pago_id");
 
-                    b.Property<long?>("PasajeroId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("pasajero_id");
-
                     b.Property<string>("Precio")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("precio");
@@ -98,9 +96,6 @@ namespace BoleteriaOnline.Web.Migrations
 
                     b.HasIndex("PagoId")
                         .HasDatabaseName("ix_boletos_pago_id");
-
-                    b.HasIndex("PasajeroId")
-                        .HasDatabaseName("ix_boletos_pasajero_id");
 
                     b.HasIndex("RecorridoId")
                         .HasDatabaseName("ix_boletos_recorrido_id");
@@ -143,43 +138,6 @@ namespace BoleteriaOnline.Web.Migrations
                         .HasDatabaseName("ix_celdas_fila_id");
 
                     b.ToTable("celdas", (string)null);
-                });
-
-            modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Cliente", b =>
-                {
-                    b.Property<long>("Id")
-                        .HasColumnType("bigint")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("created_at");
-
-                    b.Property<int>("Estado")
-                        .HasColumnType("int")
-                        .HasColumnName("estado");
-
-                    b.Property<DateTime>("FechaNac")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("fecha_nac");
-
-                    b.Property<int>("Genero")
-                        .HasColumnType("int")
-                        .HasColumnName("genero");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("nombre");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("Id")
-                        .HasName("pk_clientes");
-
-                    b.ToTable("clientes", (string)null);
                 });
 
             modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Distribucion", b =>
@@ -2530,11 +2488,6 @@ namespace BoleteriaOnline.Web.Migrations
                         .HasForeignKey("PagoId")
                         .HasConstraintName("fk_boletos_pagos_pago_id");
 
-                    b.HasOne("BoleteriaOnline.Web.Data.Models.Cliente", "Pasajero")
-                        .WithMany()
-                        .HasForeignKey("PasajeroId")
-                        .HasConstraintName("fk_boletos_clientes_pasajero_id");
-
                     b.HasOne("BoleteriaOnline.Web.Data.Models.Viaje", "Recorrido")
                         .WithMany()
                         .HasForeignKey("RecorridoId")
@@ -2550,8 +2503,6 @@ namespace BoleteriaOnline.Web.Migrations
                     b.Navigation("Origen");
 
                     b.Navigation("Pago");
-
-                    b.Navigation("Pasajero");
 
                     b.Navigation("Recorrido");
 

@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BoleteriaOnline.Core.Attributes;
 using BoleteriaOnline.Core.Data.Enums;
+using Humanizer;
 
 namespace BoleteriaOnline.Core.ViewModels;
+[HumanDescription("cliente", GrammaticalGender.Masculine)]
 public class ClienteDTO
 {
     [Required, Display(Name = "número de documento")]
@@ -12,9 +15,6 @@ public class ClienteDTO
 
     [Required, Display(Name = "fecha de nacimiento")]
     public DateTime FechaNacimiento { get; set; }
-
-    [Required, Display(Name = "nacionalidad")]
-    public int NacionalidadId { get; set; }
 
     [Required, Display(Name = "género")]
     public Gender Genero { get; set; }

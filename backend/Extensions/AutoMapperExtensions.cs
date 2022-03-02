@@ -14,7 +14,7 @@ public static class AutoMapperExtensions
         List<TDestination> result = new List<TDestination>();
         foreach (var item in source)
             result.Add(mapper.Map<TDestination>(item));
-        
+
         return PaggingExtensions.Create(result.AsQueryable(), pagination.Pagina, pagination.RecordsPorPagina);
     }
 

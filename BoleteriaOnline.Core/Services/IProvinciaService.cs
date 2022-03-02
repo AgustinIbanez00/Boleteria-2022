@@ -6,5 +6,5 @@ namespace BoleteriaOnline.Core.Services;
 
 public interface IProvinciaService
 {
-    public Task<WebResultList<ProvinciaDTO>> AllAsync(ProvinciaFilter parameters);
+    Task<WebResult<List<ProvinciaDTO>>> AllAsync(ProvinciaFilter parameters);
 }

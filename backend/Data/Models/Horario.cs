@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace BoleteriaOnline.Web.Data.Models;
+﻿namespace BoleteriaOnline.Web.Data.Models;
 public class Horario
 {
     public int Id { get; set; }

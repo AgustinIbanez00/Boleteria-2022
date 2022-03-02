@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BoleteriaOnline.Core.Data.Enums;
 using BoleteriaOnline.Web.Data;
 using BoleteriaOnline.Web.Data.Models;
 using BoleteriaOnline.Web.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace BoleteriaOnline.Web.Repository;
 
@@ -18,6 +19,7 @@ public class DistribucionRepository : IDistribucionRepository
     {
         distribucion.CreatedAt = DateTime.Now;
         distribucion.Id = 0;
+        distribucion.Estado = Estado.Activo;
         await _context.Distribuciones.AddAsync(distribucion);
         return await Save();
     }

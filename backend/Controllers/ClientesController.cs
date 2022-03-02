@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BoleteriaOnline.Web.Extensions.Response;
-using BoleteriaOnline.Core.Services;
+﻿using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Web.Data.Filters;
+using BoleteriaOnline.Web.Extensions.Response;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BoleteriaOnline.Web.Controllers;
 
@@ -63,7 +63,7 @@ public class ClientesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ClienteDTO>>> UpdateCliente([FromBody] ClienteDTO clienteDto, long id)
     {
-        var cliente = await _clienteservice.UpdateAsync(clienteDto, new ClienteFilter() { Dni = id});
+        var cliente = await _clienteservice.UpdateAsync(clienteDto, new ClienteFilter() { Dni = id });
 
         if (!cliente.Success)
             return StatusCode(ResponseHelper.GetHttpError(cliente.ErrorCode), cliente);

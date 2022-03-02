@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BoleteriaOnline.Web.Data.Models
+﻿namespace BoleteriaOnline.Web.Data.Models
 {
     public class UserToken
     {
