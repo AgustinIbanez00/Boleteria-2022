@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificacionesService } from 'src/app/utilidades/notificaciones.service';
 import { DistribucionService } from '../distribucion.service';
-import { cell, Distribucion, EstadosCeldas, fila } from '../distribucionDTO';
+import { cell, DistribucionDTO, EstadosCeldas, fila } from '../distribucionDTO';
 
 @Component({
   selector: 'app-distribucion',
@@ -12,11 +12,11 @@ import { cell, Distribucion, EstadosCeldas, fila } from '../distribucionDTO';
 })
 export class DistribucionComponent implements OnInit {
   @Input()
-  distribucion: Distribucion = new Distribucion();
+  distribucion: DistribucionDTO = new DistribucionDTO();
   @Input()
   readOnly: boolean = true;
   @Output()
-  OnSubmit: EventEmitter<Distribucion> = new EventEmitter<Distribucion>();
+  OnSubmit: EventEmitter<DistribucionDTO> = new EventEmitter<DistribucionDTO>();
 
   estadosCeldas: EstadosCeldas = new EstadosCeldas();
   errores: string[] = []

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { NotificacionesService } from 'src/app/utilidades/notificaciones.service';
 import { parserarErroresAPI } from 'src/app/utilidades/utilidades';
 import { DistribucionService } from '../distribucion.service';
-import { Distribucion, fila, cell, EstadosCeldas } from '../distribucionDTO';
+import { DistribucionDTO, fila, cell, EstadosCeldas } from '../distribucionDTO';
 
 
 @Component({
@@ -35,19 +35,19 @@ export class CrearDistribucionComponent implements OnInit {
       nota: ['', { validators: [Validators.required] }]
     })
   }
-  guardarCambios(distribucion: Distribucion) {
+  guardarCambios(distribucion: DistribucionDTO) {
     console.log(distribucion)
-    // this.isLoading = true;
-    // this.distribucionService.guardarDistribucion(this.distribucion).subscribe((result) => {
-    //   if (result.success) {
-    //     this.notificacionesService.showNotificacion(result.message, 'x', 'success');
-    //     this.router.navigate(['/distribucion']);
-    //   }
-    //   else {
-    //     this.notificacionesService.showNotificacion(result.error, 'x', 'error');
-    //   }
-    //   this.isLoading = false
-    // }, (error) => { this.errores = parserarErroresAPI(error); this.isLoading = false })
+    this.isLoading = true;
+    this.distribucionService.guardarDistribucion(distribucion).subscribe((result) => {
+      if (result.success) {
+        this.notificacionesService.showNotificacion(result.message, 'x', 'success');
+        this.router.navigate(['/distribucion']);
+      }
+      else {
+        this.notificacionesService.showNotificacion(result.error, 'x', 'error');
+      }
+      this.isLoading = false
+    }, (error) => { this.errores = parserarErroresAPI(error); this.isLoading = false })
   }
 
 

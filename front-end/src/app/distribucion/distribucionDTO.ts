@@ -11,7 +11,8 @@ export class EstadosCeldas {
 }
 
 var estadosCeldas: EstadosCeldas = new EstadosCeldas();
-export class Distribucion {
+export class DistribucionDTO {
+  id: number = -1;
   filas: fila[] = []
   nota: string = '';
   un_piso: boolean = true;
@@ -40,12 +41,12 @@ export class Distribucion {
     }
   }
 }
-export class distribucionDTO {
-  id: number = -1;
-  filas: fila[];
-  nota: string = '';
-  un_piso: boolean = false;
-}
+// export class distribucionDTO {
+//   id: number = -1;
+//   filas: fila[];
+//   nota: string = '';
+//   un_piso: boolean = false;
+// }
 
 export interface fila {
   cells: cell[];
