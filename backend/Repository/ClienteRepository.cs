@@ -70,7 +70,7 @@ public class ClienteRepository : IClienteRepository
     public Expression<Func<Cliente, bool>> GetExpression(ClienteFilter filter)
     {
         return PredicateBuilder.New<Cliente>()
-            .And(p => !filter.Dni.HasValue || (filter.Dni.HasValue && p.Id == filter.Dni.Value))
+            .And(p => !filter.Dni.HasValue || (filter.Dni.HasValue && p.Id.ToString().Contains(filter.Dni.Value.ToString())))
             .And(p => string.IsNullOrEmpty(filter.Nombre) || (!string.IsNullOrEmpty(filter.Nombre) && p.Nombre.Contains(filter.Nombre)))
             .And(p => !filter.FechaNacimiento.HasValue || (filter.FechaNacimiento.HasValue && p.FechaNac == filter.FechaNacimiento.Value))
             .And(p => !filter.Genero.HasValue || (filter.Genero.HasValue && p.Genero == filter.Genero.Value))
