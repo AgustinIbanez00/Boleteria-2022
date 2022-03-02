@@ -22,26 +22,14 @@
         }}</mat-error>
       </mat-form-field>
     </div>
-    <!-- <div>
-      <mat-form-field appearance="outline">
-        <mat-label>Categoría* </mat-label>
-        <mat-select
-          multiple
-          formControlName="categoriasIds"
-          [compareWith]="compareObjects"
-        >
-          <mat-option
-            *ngFor="let categoria of categorias"
-            [value]="categoria"
-            (click)="guardarCategoria(categoria.id)"
-          >
-            {{ categoria.nombre }}
-          </mat-option>
-        </mat-select>
-        <mat-error>El campo categoría es obligatorio</mat-error>
-      </mat-form-field>
-      <mat-label>Imagen*</mat-label>
-    </div> -->
+    <div>
+      <app-select
+        [form]="form"
+        [pais]="'pais'"
+        [provincia]="'provincia'"
+        [validaciones]="validacionesParadas"
+      ></app-select>
+    </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-flat-button type="button" (click)="onClickNo()">

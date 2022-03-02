@@ -56,12 +56,9 @@ export class CrearClienteComponent implements OnInit {
 
   // crear
   guardarCliente(clienteDTO: clienteDTO) {
-    console.log(clienteDTO);
     if (this.data.dni != undefined) {
-      console.log('editar');
       this.editar(clienteDTO);
     } else {
-      console.log('crear');
       this.crear(clienteDTO);
     }
   }
@@ -80,8 +77,6 @@ export class CrearClienteComponent implements OnInit {
         }
       },
       (errorResult) => {
-        console.log('estocode', errorResult);
-
         this.notificacionesService.showNotificacion(
           errorResult.error.message,
           'x',
@@ -105,8 +100,6 @@ export class CrearClienteComponent implements OnInit {
         }
       },
       (errorResult) => {
-        console.log('estocode', errorResult);
-
         this.notificacionesService.showNotificacion(
           errorResult.error.message,
           'x',
@@ -119,7 +112,7 @@ export class CrearClienteComponent implements OnInit {
   validacionesCliente(nombre: string) {
     var campo = this.form.get(nombre);
     if (campo.hasError('required')) {
-      return 'Campo requerido';
+      return 'Campo ' + nombre + ' requerido';
     }
     if (campo.hasError('maxlength')) {
       return 'El minimo son 100 caracteres';
@@ -138,5 +131,6 @@ export class CrearClienteComponent implements OnInit {
     } else if (campo.hasError('email')) {
       return 'Formato email incorrecto';
     }
+    return '';
   }
 }

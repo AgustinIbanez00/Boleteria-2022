@@ -8,15 +8,16 @@ import {
 } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { webResult } from '../utilidades/webResult';
-import { clienteDTO } from './clienteDTO';
+import { clienteDTO, clienteFiltroDTO } from './clienteDTO';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClienteService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  private apiURL = environment.apiURL + 'clientes';
+  private apiURL = environment.apiURL;
   public obtenerClientes(
     pagina: number,
     cantidadRegistrosAMostrar: number
@@ -28,9 +29,12 @@ export class ClienteService {
       cantidadRegistrosAMostrar.toString()
     );
 
-    return this.http.get<webResult>(`${this.apiURL}`, {
+    const tree = this.router.createUrlTree([], {
+      queryParams: { pagina, cantidadRegistrosAMostrar },
+    });
+
+    return this.http.get<webResult>(`${this.apiURL}${tree.toString()}`, {
       observe: 'response',
-      params,
     });
   }
 
@@ -57,11 +61,24 @@ export class ClienteService {
   }
 
   public eliminar(clienteDTO: clienteDTO) {
-    console.log(clienteDTO);
     return this.http.delete<webResult>(`${this.apiURL}?id=${clienteDTO.dni}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
+      observe: 'response',
+    });
+  }
+
+  public filtrarClientes(
+    clienteFiltroDTO: clienteFiltroDTO,
+    pagina: number,
+    cantidadRegistrosAMostrar: number
+  ): Observable<HttpResponse<webResult>> {
+    const tree = this.router.createUrlTree([], {
+      queryParams: { ...clienteFiltroDTO, pagina, cantidadRegistrosAMostrar },
+    });
+
+    return this.http.get<webResult>(`${environment.apiURL}${tree.toString()}`, {
       observe: 'response',
     });
   }

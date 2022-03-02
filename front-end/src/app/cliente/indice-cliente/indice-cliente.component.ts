@@ -4,14 +4,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTable } from '@angular/material/table';
-import { CrearParadasComponent } from 'src/app/paradas/crear-paradas/crear-paradas.component';
 import { ConfirmComponent } from 'src/app/utilidades/confirm/confirm.component';
 import { EstadosClientes } from 'src/app/utilidades/estados';
 import { NotificacionesService } from 'src/app/utilidades/notificaciones.service';
 import { parserarErroresAPI } from 'src/app/utilidades/utilidades';
-import { webResult } from 'src/app/utilidades/webResult';
+import { webResult, webResultList } from 'src/app/utilidades/webResult';
 import { ClienteService } from '../cliente.service';
-import { clienteDTO } from '../clienteDTO';
+import { clienteDTO, clienteFiltroDTO } from '../clienteDTO';
 import { CrearClienteComponent } from '../crear-cliente/crear-cliente.component';
 
 @Component({
@@ -30,7 +29,7 @@ export class IndiceClienteComponent implements OnInit {
   @Input()
   clientes;
 
-  id: number;
+  dni: number;
   nombre: string;
   // estado: number;
   fecha_nacimiento: Date;
@@ -55,6 +54,13 @@ export class IndiceClienteComponent implements OnInit {
     'eliminar',
     'habilitar',
   ];
+
+  clienteFiltroDTO: clienteFiltroDTO = {
+    //estado: null,
+    nombre: null,
+    dni: null,
+    nacinalidad: null,
+  };
 
   //agarrar referencia de la tabla
   @ViewChild(MatTable) table: MatTable<any>;
@@ -82,31 +88,32 @@ export class IndiceClienteComponent implements OnInit {
         estado: 0,
       }));
 
-    this.form.valueChanges.subscribe((valores) => {
-      this.cargarRegistrosFiltrados(
-        valores,
-        this.paginaActual,
-        this.cantidadRegistrosAMostrar
-      );
-    });
+    this.cargarRegistrosFiltrados(
+      this.clienteFiltroDTO,
+      this.paginaActual,
+      this.cantidadRegistrosAMostrar
+    );
   }
 
   openDialogCliente(id: number) {
     var dialogRef;
     if (id === null) {
       dialogRef = this.dialog.open(CrearClienteComponent, {
-        width: '800px',
+        width: '600px',
         data: {
-          id: this.id,
+          dni: this.dni,
           nombre: this.nombre,
+          fechaNacimiento: this.fecha_nacimiento,
+          genero: this.genero,
+          nacinalidad: this.nacinalidad,
         },
       });
     } else {
-      var parada = this.clientes.find((it) => it.id === id);
-      console.log('parada', parada);
+      var cliente = this.clientes.find((it) => it.id === id);
+
       dialogRef = this.dialog.open(CrearClienteComponent, {
-        width: '800px',
-        data: parada,
+        width: '600px',
+        data: cliente,
       });
     }
 
@@ -125,13 +132,10 @@ export class IndiceClienteComponent implements OnInit {
     this.clienteService
       .obtenerClientes(pagina, cantidadRegistrosAMostrar)
       .subscribe(
-        (respuesta: HttpResponse<webResult>) => {
+        (respuesta: HttpResponse<webResultList>) => {
           this.clientes = Object.values(respuesta.body.result);
-          console.log('respuesta', Object.values(respuesta.headers));
-          this.clientes = Object.values(respuesta.body.result);
-          this.cantidadTotalRegistros = respuesta.headers.get(
-            'cantidadTotalRegistros'
-          );
+
+          this.cantidadTotalRegistros = respuesta.body.pagination.total_items;
         },
         (error) => {
           this.errores = parserarErroresAPI(error);
@@ -143,43 +147,41 @@ export class IndiceClienteComponent implements OnInit {
   actualizarPaginacion(datos: PageEvent) {
     this.paginaActual = datos.pageIndex + 1;
     this.cantidadRegistrosAMostrar = datos.pageSize;
-    // this.cargarRegistrosFiltrados(
-    //   this.form.value,
-    //   this.paginaActual,
-    //   this.cantidadRegistrosAMostrar
-    // );
+
+    this.cargarRegistrosFiltrados(
+      this.clienteFiltroDTO,
+      this.paginaActual,
+      this.cantidadRegistrosAMostrar
+    );
+  }
+
+  filtrar(clienteFiltroDTO: clienteFiltroDTO) {
+    this.paginaActual = 1;
+    this.cargarRegistrosFiltrados(
+      clienteFiltroDTO,
+      this.paginaActual,
+      this.cantidadRegistrosAMostrar
+    );
   }
 
   // filtro
   cargarRegistrosFiltrados(
-    valores: any,
+    clienteFiltroDTO: clienteFiltroDTO,
     pagina: number,
     cantidadRegistrosAMostrar: number
   ) {
-    // valores.pagina = pagina;
-    // valores.recordsPorPagina = cantidadRegistrosAMostrar;
-    // this.productoService.filtrarMisProductos(valores).subscribe(
-    //   (respuesta: HttpResponse<webResult>) => {
-    //     if (respuesta.body.success) {
-    //       this.misProductos = Object.values(respuesta.body.data);
-    //       this.cantidadTotalRegistros = respuesta.headers.get(
-    //         'cantidadTotalRegistros'
-    //       );
-    //     } else {
-    //       if (
-    //         respuesta.body.errorList &&
-    //         respuesta.body.errorList.length != 0
-    //       ) {
-    //         this.errores.push(...respuesta.body.errorList);
-    //       } else {
-    //         this.errores.push(respuesta.body.error);
-    //       }
-    //     }
-    //   },
-    //   (error) => {
-    //     this.errores = parserarErroresAPI(error);
-    //   }
-    //);
+    this.clienteService
+      .filtrarClientes(clienteFiltroDTO, pagina, cantidadRegistrosAMostrar)
+      .subscribe(
+        (respuesta: HttpResponse<webResultList>) => {
+          this.clientes = Object.values(respuesta.body.result);
+          console.log(respuesta.body.pagination);
+          this.cantidadTotalRegistros = respuesta.body.pagination.total_items;
+        },
+        (error) => {
+          this.errores = parserarErroresAPI(error);
+        }
+      );
   }
 
   hablitarDeshabilitar(event, cliente: clienteDTO) {
@@ -201,8 +203,6 @@ export class IndiceClienteComponent implements OnInit {
         }
       },
       (errorResult) => {
-        console.log('estocode', errorResult);
-
         this.notificacionesService.showNotificacion(
           errorResult.error.message,
           'x',
@@ -222,7 +222,6 @@ export class IndiceClienteComponent implements OnInit {
   eliminar(clienteDTO: clienteDTO) {
     this.clienteService.eliminar(clienteDTO).subscribe(
       (result) => {
-        console.log(result);
         if (result.body.success) {
           this.notificacionesService.showNotificacion(
             result.body.message,
@@ -236,8 +235,6 @@ export class IndiceClienteComponent implements OnInit {
         }
       },
       (errorResult) => {
-        console.log('estocode', errorResult);
-
         this.notificacionesService.showNotificacion(
           errorResult.error.message,
           'x',
@@ -246,6 +243,7 @@ export class IndiceClienteComponent implements OnInit {
       }
     );
   }
+
   openDialogEliminar(clienteDTO: clienteDTO) {
     var dialogRef = this.dialog.open(ConfirmComponent, {
       width: '300px',

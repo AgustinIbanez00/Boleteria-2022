@@ -8,43 +8,47 @@ import { UsuarioService } from '../usuario.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-
   isLoading: boolean = false;
   form: FormGroup;
-  errores: string[] = []
+  errores: string[] = [];
   error_messages: Map<string, string[]> = new Map<string, string[]>();
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private usuarioService: UsuarioService,
-    private seguridadService: SeguridadService) { }
+    private seguridadService: SeguridadService
+  ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       email: ['', { validators: [Validators.email, Validators.required] }],
-      password: ['', { validators: [Validators.required] }]
-    })
+      password: ['', { validators: [Validators.required] }],
+    });
   }
   validacionesLogin(nombre: string) {
     var campo = this.form.get(nombre);
     if (campo.hasError('required')) {
       return 'Campo requerido';
-    }
-    else if (campo.hasError('email')) {
+    } else if (campo.hasError('email')) {
       return 'Formato email incorrecto';
     }
   }
 
   submit(login: loginDTO) {
     this.isLoading = true;
-    this.usuarioService.login(login).subscribe((result) => {
-      this.isLoading = false;
-      if (result.success) {
-        this.seguridadService.guardarToken(result.result['token'])
+    this.usuarioService.login(login).subscribe(
+      (result) => {
+        this.isLoading = false;
+        if (result.success) {
+          this.seguridadService.guardarToken(result.result['token']);
+        }
+      },
+      (error) => {
+        this.errores = parserarErroresAPI(error);
+        this.isLoading = false;
       }
-      console.log(result)
-    }, (error) => { this.errores = parserarErroresAPI(error); this.isLoading = false; })
+    );
   }
-
 }

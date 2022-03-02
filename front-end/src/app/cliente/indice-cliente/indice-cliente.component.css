@@ -1,5 +1,15 @@
 table {
-  width: 100%;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 1%;
+}
+
+mat-paginator {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 1%;
 }
 .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
   background-color: #49c5b6;

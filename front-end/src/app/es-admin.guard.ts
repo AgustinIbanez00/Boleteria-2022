@@ -26,7 +26,6 @@ export class EsAdminGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log(this.seguridadService.obtenerRol() === 'admin');
     if (this.seguridadService.obtenerRol() === 'admin') {
       return true;
     }

@@ -4,6 +4,11 @@ import { paradasDTO } from '../paradasDTO';
 import { ParadasService } from '../paradas.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificacionesService } from 'src/app/utilidades/notificaciones.service';
+import { HttpResponse } from '@angular/common/http';
+import { webResultList } from 'src/app/utilidades/webResult';
+import { parserarErroresAPI } from 'src/app/utilidades/utilidades';
+import { PaisesService } from 'src/app/utilidades/paises/paises.service';
+import { paisDTO } from 'src/app/utilidades/paises/paisesDTO';
 
 @Component({
   selector: 'app-crear-paradas',
@@ -16,15 +21,18 @@ export class CrearParadasComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: paradasDTO,
     public paradaraService: ParadasService,
     private formBuilder: FormBuilder,
+    public paisesService: PaisesService,
 
     private notificacionesService: NotificacionesService
-  ) { }
+  ) {}
 
   error_messages: Map<string, string[]> = new Map<string, string[]>();
   form: FormGroup;
   dto: paradasDTO;
   paradas: paradasDTO[];
+  paises: paisDTO[];
   durationInSeconds = 3;
+  errores: string[] = [];
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -32,6 +40,8 @@ export class CrearParadasComponent implements OnInit {
         '',
         { validators: [Validators.required, Validators.maxLength(100)] },
       ],
+      pais: ['', { validators: [Validators.required] }],
+      provincia: ['', { validators: [Validators.required] }],
     });
 
     if (this.data.id !== undefined) {
@@ -41,12 +51,9 @@ export class CrearParadasComponent implements OnInit {
 
   // crear
   guardarParadas(paradasDTO: paradasDTO) {
-    console.log(paradasDTO);
     if (this.data.id != undefined) {
-      console.log('editar');
       this.editar(paradasDTO);
     } else {
-      console.log('crear');
       this.crear(paradasDTO);
     }
   }
@@ -65,8 +72,6 @@ export class CrearParadasComponent implements OnInit {
         }
       },
       (errorResult) => {
-        console.log('estocode', errorResult);
-
         this.notificacionesService.showNotificacion(
           errorResult.error.message,
           'x',
@@ -90,8 +95,6 @@ export class CrearParadasComponent implements OnInit {
         }
       },
       (errorResult) => {
-        console.log('estocode', errorResult);
-
         this.notificacionesService.showNotificacion(
           errorResult.error.message,
           'x',
@@ -104,7 +107,7 @@ export class CrearParadasComponent implements OnInit {
   validacionesParadas(nombre: string) {
     var campo = this.form.get(nombre);
     if (campo.hasError('required')) {
-      return 'Campo requerido';
+      return 'Campo ' + nombre + ' requerido';
     }
     if (campo.hasError('maxlength')) {
       return 'El minimo son 100 caracteres';

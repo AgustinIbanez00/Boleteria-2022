@@ -20,8 +20,48 @@
         [textoLabel]="'Nombre cliente*'"
         [type]="'text'"
         [error_messages]="error_messages"
-        [validaciones]="validacionesRegistro"
+        [validaciones]="validacionesCliente"
       ></app-form-control>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <app-form-control
+          [form]="form"
+          [propiedad]="'dni'"
+          [textoLabel]="'DNI*'"
+          [type]="'number'"
+          [error_messages]="error_messages"
+          [validaciones]="validacionesCliente"
+        ></app-form-control>
+      </div>
+      <div class="col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Género</mat-label>
+          <mat-select formControlName="genero">
+            <mat-option [value]="0">Indefinido</mat-option>
+            <mat-option [value]="1">Masculino</mat-option>
+            <mat-option [value]="2">Femenino</mat-option>
+            <mat-option [value]="3">No Binario</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <app-form-control
+      [form]="form"
+      [propiedad]="'fechaNacimiento'"
+      [textoLabel]="'Fecha de Nacimiento*'"
+      [type]="'date'"
+      [error_messages]="error_messages"
+      [validaciones]="validacionesCliente"
+    ></app-form-control>
+    <div>
+      <app-select
+        [form]="form"
+        [nacionalidad]="'nacionalidad'"
+        [validaciones]="validacionesCliente"
+      ></app-select>
     </div>
     <!-- <div>
         <mat-form-field appearance="outline">

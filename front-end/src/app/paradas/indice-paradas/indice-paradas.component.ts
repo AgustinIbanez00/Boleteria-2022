@@ -57,7 +57,7 @@ export class IndiceParadasComponent implements OnInit {
 
   ngOnInit(): void {
     this.paginaActual = 1;
-    // this.obtenerParadas(this.paginaActual, this.cantidadRegistrosAMostrar),
+
     this.cargarRegistrosFiltrados(
       this.paradasFiltroDTO,
       this.paginaActual,
@@ -113,7 +113,6 @@ export class IndiceParadasComponent implements OnInit {
 
   // paginacion
   actualizarPaginacion(datos: PageEvent) {
-    console.log('actualizarPaginacion', datos);
     this.paginaActual = datos.pageIndex + 1;
     this.cantidadRegistrosAMostrar = datos.pageSize;
 
@@ -125,7 +124,6 @@ export class IndiceParadasComponent implements OnInit {
   }
 
   filtrar(paradasFiltroDTO: paradasFiltroDTO) {
-    console.log('llego primero');
     this.paginaActual = 1;
     this.cargarRegistrosFiltrados(
       paradasFiltroDTO,
@@ -145,8 +143,6 @@ export class IndiceParadasComponent implements OnInit {
       .subscribe(
         (respuesta: HttpResponse<webResultList>) => {
           this.paradas = Object.values(respuesta.body.result);
-          console.log('respuesta', respuesta.body.pagination);
-          console.log('53', respuesta.body.pagination.total_items);
           this.cantidadTotalRegistros = respuesta.body.pagination.total_items;
         },
         (error) => {
@@ -174,8 +170,6 @@ export class IndiceParadasComponent implements OnInit {
         }
       },
       (errorResult) => {
-        console.log('estocode', errorResult);
-
         this.notificacionesService.showNotificacion(
           errorResult.error.message,
           'x',

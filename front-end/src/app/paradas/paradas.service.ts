@@ -74,13 +74,10 @@ export class ParadasService {
   ): Observable<HttpResponse<webResult>> {
     paradasFiltroDTO.estado =
       paradasFiltroDTO.estado == -1 ? null : paradasFiltroDTO.estado;
-    // paradasFiltroDTO.id =
-    //   paradasFiltroDTO.id == -1 ? null : paradasFiltroDTO.id;
 
     const tree = this.router.createUrlTree([], {
       queryParams: { ...paradasFiltroDTO, pagina, cantidadRegistrosAMostrar },
     });
-    console.log('arbolito', tree.toString());
 
     return this.http.get<webResult>(`${environment.apiURL}${tree.toString()}`, {
       observe: 'response',
