@@ -40,6 +40,7 @@ import { FiltroParadasComponent } from './paradas/filtro-paradas/filtro-paradas.
 import { FiltroClienteComponent } from './cliente/filtro-cliente/filtro-cliente.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SelectComponent } from './utilidades/paises/select/select.component';
+import { DistribucionComponent } from './distribucion/distribucion/distribucion.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +66,7 @@ import { SelectComponent } from './utilidades/paises/select/select.component';
     FiltroParadasComponent,
     FiltroClienteComponent,
     SelectComponent,
+    DistribucionComponent,
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,7 @@ export class EstadosCeldas {
 
 var estadosCeldas: EstadosCeldas = new EstadosCeldas();
 export class Distribucion {
-  filas: fila[];
+  filas: fila[] = []
   nota: string = '';
   un_piso: boolean = true;
   devolverIcono(value, celda: boolean) {
@@ -21,7 +21,6 @@ export class Distribucion {
       case estadosCeldas.ESPACIO_PASILLO: if (!celda) { return "assets/imagenes/distribucion/pasillo.png"; }
         return ''
       case estadosCeldas.ESPACIO_TV: return "assets/imagenes/distribucion/tv.png";
-      case estadosCeldas.ESPACIO_BUTACA_SEMICAMA: return "assets/imagenes/distribucion/semi_cama.png";
       case estadosCeldas.ESPACIO_BUTACA_CAMA: return "assets/imagenes/distribucion/cama.png";
       case estadosCeldas.ESPACIO_BUTACA_SEMICAMA: return "assets/imagenes/distribucion/semi_cama.png";
       case estadosCeldas.ESPACIO_ESCALERA: return "assets/imagenes/distribucion/escalera.png";
