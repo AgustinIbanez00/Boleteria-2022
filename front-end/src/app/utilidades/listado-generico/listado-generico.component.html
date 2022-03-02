@@ -1,14 +1,15 @@
-<div *ngIf="listado?.length === 0">
-  <span #vacio>
-    <ng-content select="[vacio]"></ng-content>
-  </span>
-  <span *ngIf="!vacio.innerHTML.trim()">
-    <div>
-      <span #cargando>
-        <ng-content select="[cargando]"> </ng-content>
-      </span>
-    </div>
-  </span>
+<div style="width: 100%; height: 100%" *ngIf="listado && listado.length === 0">
+  <div
+    style="
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+    "
+  >
+    <label class="mensaje" style="margin-top: 15%" for="">Sin elementos</label>
+  </div>
 </div>
 <div class="contenedor" *ngIf="!listado">
   <div class="hijo">
