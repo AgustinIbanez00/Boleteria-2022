@@ -37,6 +37,9 @@ import { ListadoClienteComponent } from './cliente/listado-cliente/listado-clien
 import { MatSelectModule } from '@angular/material/select';
 
 import { FiltroParadasComponent } from './paradas/filtro-paradas/filtro-paradas.component';
+import { FiltroClienteComponent } from './cliente/filtro-cliente/filtro-cliente.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { SelectComponent } from './utilidades/paises/select/select.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,8 +62,9 @@ import { FiltroParadasComponent } from './paradas/filtro-paradas/filtro-paradas.
     IndiceClienteComponent,
     CrearClienteComponent,
     ListadoClienteComponent,
-
     FiltroParadasComponent,
+    FiltroClienteComponent,
+    SelectComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,6 +80,7 @@ import { FiltroParadasComponent } from './paradas/filtro-paradas/filtro-paradas.
     MatSlideToggleModule,
     SweetAlert2Module.forRoot(),
     MatSelectModule,
+    MatAutocompleteModule,
   ],
   providers: [
     {
