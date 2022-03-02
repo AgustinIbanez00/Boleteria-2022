@@ -2,10 +2,11 @@
 using BoleteriaOnline.Web.Data;
 using BoleteriaOnline.Web.Data.Models;
 using BoleteriaOnline.Web.Repositories;
-using BoleteriaOnline.Core.ViewModels.Pagging;
-using BoleteriaOnline.Core.Extensions;
-using BoleteriaOnline.Web.Extensions;
 using BoleteriaOnline.Core.ViewModels.Filters;
+using System.Linq.Expressions;
+using LinqKit;
+using BoleteriaOnline.Core.ViewModels.Pagging;
+using BoleteriaOnline.Web.Extensions;
 
 namespace BoleteriaOnline.Web.Repository;
 
@@ -26,12 +27,6 @@ public class ParadaRepository : IParadaRepository
         return await Save();
     }
 
-    public async Task<bool> DeleteAsync(long id)
-    {
-        Parada destino = await GetAsync(id);
-        return destino == null ? false : await DeleteAsync(destino);
-    }
-
     public async Task<bool> DeleteAsync(Parada destino)
     {
         if (destino == null)
@@ -41,11 +36,6 @@ public class ParadaRepository : IParadaRepository
 
         return await Save();
     }
-
-    public async Task<bool> ExistsAsync(long id) => await _context.Paradas.AnyAsync(e => e.Id == id);
-
-    public async Task<Parada> GetAsync(long id) => await _context.Paradas.FirstOrDefaultAsync(m => m.Id == id);
-
     public async Task<bool> Save() => await _context.SaveChangesAsync() >= 0;
 
     public async Task<bool> UpdateAsync(Parada destino)
@@ -58,19 +48,37 @@ public class ParadaRepository : IParadaRepository
         return await Save();
     }
 
-    public async Task<PaginatedList<Parada>> GetAllAsync(ParadaFilter parameters)
+    public Task<bool> ExistsAsync(ParadaFilter filter)
     {
-        IQueryable<Parada> dbSet = null;
+        return _context.Paradas.AnyAsync(GetExpression(filter));
+    }
 
-        dbSet = _context.Paradas;
+    public async Task<bool> DeleteAsync(ParadaFilter filter)
+    {
+        var parada = await GetAsync(filter);
+        return await DeleteAsync(parada);
+    }
 
-        if (parameters.Id.HasValue)
-            dbSet = dbSet.Where(p => p.Id == parameters.Id.Value);
-        if (!string.IsNullOrEmpty(parameters.Nombre))
-            dbSet = dbSet.Where(p => p.Nombre.Contains(parameters.Nombre));
-        if (parameters.Estado.HasValue)
-            dbSet = dbSet.Where(p => p.Estado == parameters.Estado);
+    public Expression<Func<Parada, bool>> GetExpression(ParadaFilter filter)
+    {
+        return PredicateBuilder.New<Parada>()
+            .And(p => !filter.Id.HasValue || filter.Id.HasValue && p.Id == filter.Id.Value)
+            .And(p => string.IsNullOrEmpty(filter.Nombre) || !string.IsNullOrEmpty(filter.Nombre) && p.Nombre.Contains(filter.Nombre))
+            .And(p => !filter.Estado.HasValue || filter.Estado.HasValue && p.Estado == filter.Estado.Value);
+    }
 
-        return await PaggingExtensions.CreateAsync(dbSet, parameters.Pagina, parameters.RecordsPorPagina);
+    public async Task<ICollection<Parada>> GetAllAsync(ParadaFilter filter)
+    {
+        return await _context.Paradas.Where(GetExpression(filter)).ToListAsync();
+    }
+
+    public async Task<Parada> GetAsync(ParadaFilter filter)
+    {
+        return await _context.Paradas.FirstOrDefaultAsync(GetExpression(filter));
+    }
+
+    public async Task<PaginatedList<Parada>> GetAllPaginatedAsync(ParadaFilter filter)
+    {
+        return await PaggingExtensions.CreateAsync(_context.Paradas.Where(GetExpression(filter)), filter.Pagina, filter.RecordsPorPagina);
     }
 }

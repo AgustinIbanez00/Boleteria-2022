@@ -90,4 +90,24 @@ public class ParadaService : IParadaService
     {
         throw new NotImplementedException();
     }
+
+    public Task<WebResult<ParadaDTO>> GetAsync(ParadaFilter filter)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<WebResult<ParadaDTO>> UpdateAsync(ParadaDTO request, ParadaFilter filter)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<WebResult<ParadaDTO>> DeleteAsync(ParadaFilter filter)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<WebResult<ParadaDTO>> ValidateAsync(ParadaDTO request)
+    {
+        throw new NotImplementedException();
+    }
 }

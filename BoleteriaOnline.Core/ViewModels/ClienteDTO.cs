@@ -14,8 +14,11 @@ public class ClienteDTO
     public DateTime FechaNacimiento { get; set; }
 
     [Required, Display(Name = "nacionalidad")]
-    public string Nacionalidad { get; set; }
+    public int NacionalidadId { get; set; }
 
     [Required, Display(Name = "género")]
     public Gender Genero { get; set; }
+
+    [Display(Name = "estado")]
+    public Estado Estado { get; set; } = Estado.Activo;
 }

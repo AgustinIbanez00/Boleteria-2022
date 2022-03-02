@@ -5,5 +5,5 @@ using BoleteriaOnline.Core.ViewModels.Filters;
 namespace BoleteriaOnline.Core.Services;
 public interface IPaisService
 {
-    Task<WebResultList<PaisDTO>> AllAsync(PaisFilter parameters);
+    Task<WebResult<List<PaisDTO>>> AllAsync(PaisFilter parameters);
 }

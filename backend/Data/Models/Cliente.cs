@@ -12,6 +12,7 @@ public class Cliente : Auditory
     [Required]
     public DateTime FechaNac { get; set; }
     [Required]
-    public string Nacionalidad { get; set; }
-    public Gender? Genero { get; set; }
+    public Pais Nacionalidad { get; set; }
+    public int NacionalidadId { get; set; }
+    public Gender Genero { get; set; }
 }

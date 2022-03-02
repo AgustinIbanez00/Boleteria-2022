@@ -26,7 +26,7 @@ public class ParadaService : IParadaService
     {
         try
         {
-            PaginatedList<Parada> paradas = await _paradaRepository.GetAllAsync(parameters);
+            PaginatedList<Parada> paradas = await _paradaRepository.GetAllPaginatedAsync(parameters);
 
             var paradasDto = new List<ParadaDTO>();
 
@@ -47,6 +47,7 @@ public class ParadaService : IParadaService
         try
         {
             var parada = _mapper.Map<Parada>(request);
+
             if (!await _paradaRepository.CreateAsync(parada))
                 return Error<Parada, ParadaDTO>(ErrorMessage.CouldNotCreate);
 
@@ -67,7 +68,7 @@ public class ParadaService : IParadaService
     {
         try
         {
-            var parada = await _paradaRepository.GetAsync(id);
+            var parada = await _paradaRepository.GetAsync(new ParadaFilter() { Id = id });
             if (parada == null)
                 return Error<ParadaDTO>(ErrorMessage.NotFound);
 
@@ -82,31 +83,24 @@ public class ParadaService : IParadaService
         }
     }
 
-    public async Task<WebResult<ParadaDTO>> GetAsync(long id)
+    public Task<WebResult<ParadaDTO>> DeleteAsync(ParadaFilter filter)
     {
-        try
-        {
-            var parada = await _paradaRepository.GetAsync(id);
-
-            if (parada == null)
-                return Error<ParadaDTO>(ErrorMessage.NotFound);
-
-            return Ok(_mapper.Map<ParadaDTO>(parada));
-        }
-        catch (Exception ex)
-        {
-            return Error<ParadaDTO>(ErrorMessage.Generic, ex.Message);
-        }
+        throw new NotImplementedException();
     }
 
-    public async Task<WebResult<ParadaDTO>> UpdateAsync(ParadaDTO request, long id)
+    public Task<WebResult<ParadaDTO>> GetAsync(ParadaFilter filter)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<WebResult<ParadaDTO>> UpdateAsync(ParadaDTO request, ParadaFilter filter)
     {
         try
         {
-            if (id == 0)
+            if (filter.Id == 0)
                 return Error<ParadaDTO>(ErrorMessage.InvalidId);
 
-            var destino = await _paradaRepository.GetAsync(id);
+            var destino = await _paradaRepository.GetAsync(filter);
 
             if (destino == null)
                 return Error<ParadaDTO>(ErrorMessage.NotFound);
@@ -127,5 +121,10 @@ public class ParadaService : IParadaService
         {
             return Error<ParadaDTO>(ErrorMessage.Generic, ex.Message);
         }
+    }
+
+    public Task<WebResult<ParadaDTO>> ValidateAsync(ParadaDTO request)
+    {
+        throw new NotImplementedException();
     }
 }

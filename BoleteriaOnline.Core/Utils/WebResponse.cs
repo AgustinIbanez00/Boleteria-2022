@@ -37,6 +37,20 @@ public static class WebResponse
         };
     }
 
+    public static WebResult<TResult> KeyError<TResult>(string key, ErrorMessage error) where TResult : class
+    {
+        return new WebResult<TResult>
+        {
+            ErrorCode = error,
+            Result = default,
+            Error = ResolveErrorCode(error),
+            Success = false,
+            Message = "Se encontraron uno o más errores.",
+            ErrorMessages = new Dictionary<string, string[]>() { { new string(key.ToSnakeCase().ToArray()), new string[] { Smart.Format(error.GetDescription(), Options<TResult>()) } } }
+        };
+    }
+
+
     public static WebResult<TResult> KeyError<TEntity, TResult>(string key, ErrorMessage error, TResult result) where TResult : class
     {
         return new WebResult<TResult>

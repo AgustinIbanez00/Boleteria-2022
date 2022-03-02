@@ -6,9 +6,9 @@
     "description": "Colleción de API's correspondientes al sistema de Pasajes Online.",
     "version": "1.0.0"
   },
-  "host": "boleteria.azurewebsites.net",
+  "host": "localhost:7203",
   "schemes": [
-    "http"
+    "https"
   ],
   "produces": [
     "text/plain",
@@ -91,37 +91,6 @@
           }
         }
       },
-      "patch": {
-        "tags": [
-          "Clientes"
-        ],
-        "operationId": "Clientes_UpdateCliente",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "parameters": [
-          {
-            "name": "clienteDto",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ClienteDTO"
-            },
-            "x-nullable": false
-          }
-        ],
-        "responses": {
-          "200": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/WebResultOfClienteDTO"
-            }
-          }
-        }
-      },
       "delete": {
         "tags": [
           "Clientes"
@@ -159,7 +128,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "format": "int64",
+            "format": "int32",
             "x-nullable": false
           }
         ],
@@ -183,6 +152,45 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Clientes"
+        ],
+        "operationId": "Clientes_UpdateCliente",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "clienteDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ClienteDTO"
+            },
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int64",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfClienteDTO"
             }
           }
         }
@@ -683,7 +691,7 @@
             "type": "integer",
             "name": "Id",
             "in": "query",
-            "format": "int32",
+            "format": "int64",
             "x-nullable": true
           },
           {
@@ -1307,8 +1315,9 @@
         "dni",
         "nombre",
         "fecha_nacimiento",
-        "nacionalidad",
-        "genero"
+        "nacionalidad_id",
+        "genero",
+        "estado"
       ],
       "properties": {
         "dni": {
@@ -1327,16 +1336,24 @@
           "format": "date-time",
           "minLength": 1
         },
-        "nacionalidad": {
+        "nacionalidad_id": {
           "title": "nacionalidad",
-          "type": "string",
-          "minLength": 1
+          "type": "integer",
+          "format": "int32"
         },
         "genero": {
           "title": "género",
           "allOf": [
             {
               "$ref": "#/definitions/Gender"
+            }
+          ]
+        },
+        "estado": {
+          "title": "estado",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Estado"
             }
           ]
         }
@@ -1356,6 +1373,20 @@
         1,
         2,
         3
+      ]
+    },
+    "Estado": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Baja",
+        "Activo",
+        "Suspendido"
+      ],
+      "enum": [
+        0,
+        1,
+        -1
       ]
     },
     "ErrorMessage": {
@@ -1825,6 +1856,8 @@
       "required": [
         "id",
         "nombre",
+        "pais_id",
+        "provincia_id",
         "estado"
       ],
       "properties": {
@@ -1838,24 +1871,25 @@
           "maxLength": 100,
           "minLength": 3
         },
+        "pais_id": {
+          "title": "país",
+          "type": "integer",
+          "format": "int32"
+        },
+        "provincia_id": {
+          "title": "provincia",
+          "type": "integer",
+          "format": "int32"
+        },
         "estado": {
-          "$ref": "#/definitions/Estado"
+          "title": "estado",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Estado"
+            }
+          ]
         }
       }
-    },
-    "Estado": {
-      "type": "integer",
-      "description": "",
-      "x-enumNames": [
-        "Baja",
-        "Activo",
-        "Suspendido"
-      ],
-      "enum": [
-        0,
-        1,
-        -1
-      ]
     },
     "WebResultOfNodoResponse": {
       "type": "object",
