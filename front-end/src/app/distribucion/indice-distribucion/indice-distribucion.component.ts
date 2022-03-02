@@ -66,4 +66,6 @@ export class IndiceDistribucionComponent implements OnInit {
       data: id,
     });
   }
+
+
 }

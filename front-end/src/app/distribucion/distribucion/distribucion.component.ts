@@ -143,6 +143,7 @@ export class DistribucionComponent implements OnInit {
         })
       })
     }
+    this.seleccionarDeseleccionarTodo(false)
   }
 
   guardar() {

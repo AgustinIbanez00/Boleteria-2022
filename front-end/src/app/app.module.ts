@@ -68,7 +68,7 @@ import { DetalleDistribucionComponent } from './distribucion/detalle-distribucio
     FiltroClienteComponent,
     SelectComponent,
     DistribucionComponent,
-    DetalleDistribucionComponent,
+    DetalleDistribucionComponent
   ],
   imports: [
     BrowserModule,
@@ -95,4 +95,4 @@ import { DetalleDistribucionComponent } from './distribucion/detalle-distribucio
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
