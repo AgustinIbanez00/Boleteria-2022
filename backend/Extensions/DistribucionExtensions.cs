@@ -70,7 +70,7 @@ public static class DistribucionExtensions
             for (int i = 0; i < rows; i++)
             {
                 var lastItem = distribucion?.GetFilas(matriz).Last();
-                if(lastItem != null)
+                if (lastItem != null)
                     distribucion?.Filas?.Remove(lastItem);
             }
         }
@@ -78,10 +78,10 @@ public static class DistribucionExtensions
     public static void SetCellContent(this Distribucion distribucion, Planta planta, int indexRow, int indexColumn, DistribucionEspacio value)
     {
         var filas = GetFilas(distribucion, planta);
-        if(distribucion != null && indexRow > 0 && indexRow < filas.Count)
+        if (distribucion != null && indexRow > 0 && indexRow < filas.Count)
         {
             var row = distribucion.GetFilas(planta)[indexRow];
-            if(indexColumn > 0 && indexColumn < row.Cells?.Count)
+            if (indexColumn > 0 && indexColumn < row.Cells?.Count)
                 row.Cells[indexColumn].Value = value;
         }
     }

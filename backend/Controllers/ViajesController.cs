@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using BoleteriaOnline.Web.Extensions.Response;
-using BoleteriaOnline.Core.Services;
-using BoleteriaOnline.Core.ViewModels.Requests;
+﻿using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
+using BoleteriaOnline.Core.ViewModels.Requests;
 using BoleteriaOnline.Core.ViewModels.Responses;
+using BoleteriaOnline.Web.Extensions.Response;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BoleteriaOnline.Web.Controllers;
 
@@ -20,7 +19,7 @@ public class ViajesController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ICollection<ViajeResponse>>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<ICollection<ViajeResponse>>>> GetAll()
     {

@@ -4,8 +4,6 @@ using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Core.ViewModels.Filters;
-using BoleteriaOnline.Core.ViewModels.Pagging;
-using BoleteriaOnline.Web.Data.Models;
 using BoleteriaOnline.Web.Repositories;
 
 namespace BoleteriaOnline.Web.Services;
@@ -22,11 +20,11 @@ public class ProvinciaService : IProvinciaService
         _provinciaRepository = provinciaRepository;
     }
 
-    public async Task<WebResultList<ProvinciaDTO>> AllAsync(ProvinciaFilter parameters)
+    public async Task<WebResult<List<ProvinciaDTO>>> AllAsync(ProvinciaFilter parameters)
     {
         try
         {
-            PaginatedList<Provincia> provincias = await _provinciaRepository.GetAllAsync(parameters);
+            var provincias = await _provinciaRepository.GetAllAsync(parameters);
 
             var provinciasDTO = new List<ProvinciaDTO>();
 
@@ -34,11 +32,11 @@ public class ProvinciaService : IProvinciaService
             {
                 provinciasDTO.Add(_mapper.Map<ProvinciaDTO>(provincia));
             }
-            return List(provinciasDTO, Pagination.Page(provincias.TotalItems, parameters.Pagina, parameters.RecordsPorPagina));
+            return Ok(provinciasDTO);
         }
         catch (Exception ex)
         {
-            return ErrorList<ProvinciaDTO>(ErrorMessage.Generic, ex.Message);
+            return Error<List<ProvinciaDTO>>(ErrorMessage.Generic, ex.Message);
         }
     }
 }

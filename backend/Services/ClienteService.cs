@@ -16,13 +16,11 @@ public class ClienteService : IClienteService
 {
     private readonly IMapper _mapper;
     private readonly IClienteRepository _clienteRepository;
-    private readonly IPaisRepository _paisRepository;
 
-    public ClienteService(IMapper mapper, IClienteRepository clienteRepository, IPaisRepository paisRepository)
+    public ClienteService(IMapper mapper, IClienteRepository clienteRepository)
     {
         _mapper = mapper;
         _clienteRepository = clienteRepository;
-        this._paisRepository = paisRepository;
     }
 
     public async Task<WebResultList<ClienteDTO>> AllAsync(ClienteFilter parameters)
@@ -106,6 +104,11 @@ public class ClienteService : IClienteService
     {
         try
         {
+            var errors = await ValidateAsync(request);
+
+            if (!errors.Success)
+                return errors;
+
             if (filter.Dni == 0)
                 return Error<ClienteDTO>(ErrorMessage.InvalidId);
 
@@ -118,7 +121,6 @@ public class ClienteService : IClienteService
             cliente.FechaNac = request.FechaNacimiento;
             cliente.Genero = request.Genero;
             cliente.Estado = request.Estado;
-            cliente.NacionalidadId = request.NacionalidadId;
 
             if (!await _clienteRepository.UpdateAsync(cliente))
                 return Error<ClienteDTO>(ErrorMessage.CouldNotUpdate);
@@ -135,11 +137,8 @@ public class ClienteService : IClienteService
         }
     }
 
-    public async Task<WebResult<ClienteDTO>> ValidateAsync(ClienteDTO request)
+    public Task<WebResult<ClienteDTO>> ValidateAsync(ClienteDTO request)
     {
-        if (!await _paisRepository.ExistsAsync(new PaisFilter() { Id = request.NacionalidadId }))
-            return KeyError<ClienteDTO>(nameof(request.NacionalidadId), ErrorMessage.NotFound);
-
-        return Ok<ClienteDTO>();
+        return Task.FromResult(Ok<ClienteDTO>());
     }
 }

@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BoleteriaOnline.Web.Data.Models;
+﻿namespace BoleteriaOnline.Web.Data.Models;
 
 public class Nodo : AuditoryDates
 {

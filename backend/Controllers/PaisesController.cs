@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BoleteriaOnline.Web.Extensions.Response;
-using BoleteriaOnline.Core.Services;
+﻿using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Core.ViewModels.Filters;
+using BoleteriaOnline.Web.Extensions.Response;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BoleteriaOnline.Web.Controllers;
 

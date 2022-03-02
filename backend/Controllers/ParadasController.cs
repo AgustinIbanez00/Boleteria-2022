@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BoleteriaOnline.Web.Extensions.Response;
-using BoleteriaOnline.Core.Services;
+﻿using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
-using BoleteriaOnline.Core.ViewModels.Pagging;
 using BoleteriaOnline.Core.ViewModels.Filters;
+using BoleteriaOnline.Web.Extensions.Response;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BoleteriaOnline.Web.Controllers;
 
@@ -42,9 +41,9 @@ public class ParadasController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResult<ParadaDTO>>> Get(long id)
+    public async Task<ActionResult<WebResult<ParadaDTO>>> Get(int id)
     {
-        var destino = await _paradaService.GetAsync(new ParadaFilter() { Id = id});
+        var destino = await _paradaService.GetAsync(new ParadaFilter() { Id = id });
 
         if (!destino.Success)
             return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);
@@ -68,9 +67,9 @@ public class ParadasController : ControllerBase
 
     [HttpPatch("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<WebResult<ParadaDTO>>> UpdateDestino([FromBody] ParadaDTO destinoDto, long id)
+    public async Task<ActionResult<WebResult<ParadaDTO>>> UpdateDestino([FromBody] ParadaDTO destinoDto, int id)
     {
-        var destino = await _paradaService.UpdateAsync(destinoDto, new ParadaFilter() { Id = id});
+        var destino = await _paradaService.UpdateAsync(destinoDto, new ParadaFilter() { Id = id });
 
         if (!destino.Success)
             return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);
@@ -79,9 +78,9 @@ public class ParadasController : ControllerBase
 
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<WebResult<ParadaDTO>>> DeleteDestino(long id)
+    public async Task<ActionResult<WebResult<ParadaDTO>>> DeleteDestino(int id)
     {
-        var destino = await _paradaService.DeleteAsync(new ParadaFilter() { Id = id});
+        var destino = await _paradaService.DeleteAsync(new ParadaFilter() { Id = id });
 
         if (!destino.Success)
             return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);

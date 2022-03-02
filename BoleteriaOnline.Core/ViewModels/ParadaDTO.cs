@@ -14,6 +14,6 @@ public class ParadaDTO
     public int PaisId { get; set; }
     [Required, Display(Name = "provincia"), GreaterThanZero]
     public int ProvinciaId { get; set; }
-    [Required, Display(Name = "estado"), GreaterThanZero]
+    [Required, Display(Name = "estado")]
     public Estado Estado { get; set; }
 }

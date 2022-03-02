@@ -30,13 +30,13 @@ public class NodoService : INodoService
         {
             var nodo = _mapper.Map<Nodo>(nodoDto);
 
-            Parada nodoDtoOrigen = await _destinoRepository.GetAsync(new ParadaFilter() { Id = nodoDto.OrigenId});
+            Parada nodoDtoOrigen = await _destinoRepository.GetAsync(new ParadaFilter() { Id = nodoDto.OrigenId });
 
             if (nodoDtoOrigen != null)
                 nodo.Origen = nodoDtoOrigen;
             else
                 return KeyError<Parada, NodoResponse>(nameof(nodoDto.OrigenId), ErrorMessage.NotFound);
-            
+
             Parada nodoDtoDestino = await _destinoRepository.GetAsync(new ParadaFilter() { Id = nodoDto.DestinoId });
 
             if (nodoDtoDestino != null)
@@ -128,7 +128,7 @@ public class NodoService : INodoService
             if (nodo == null)
                 return Error<Nodo, NodoResponse>(ErrorMessage.NotFound);
 
-            if(nodo.Origen?.Id != nodoDto.OrigenId)
+            if (nodo.Origen?.Id != nodoDto.OrigenId)
             {
                 Parada nodoDtoOrigen = await _destinoRepository.GetAsync(new ParadaFilter() { Id = nodoDto.OrigenId });
 
@@ -140,7 +140,7 @@ public class NodoService : INodoService
 
             if (nodo.Destino?.Id != nodoDto.DestinoId)
             {
-                Parada nodoDtoDestino = await _destinoRepository.GetAsync(new ParadaFilter() { Id = nodoDto.DestinoId});
+                Parada nodoDtoDestino = await _destinoRepository.GetAsync(new ParadaFilter() { Id = nodoDto.DestinoId });
 
                 if (await _destinoRepository.ExistsAsync(new ParadaFilter() { Id = nodoDto.DestinoId }))
                     nodo.Destino = nodoDtoDestino;

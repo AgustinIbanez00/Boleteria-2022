@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using BoleteriaOnline.Core.ViewModels.Filters;
+using BoleteriaOnline.Core.ViewModels.Pagging;
 using BoleteriaOnline.Web.Data;
 using BoleteriaOnline.Web.Data.Models;
-using BoleteriaOnline.Web.Repositories;
-using BoleteriaOnline.Core.ViewModels.Filters;
-using System.Linq.Expressions;
-using LinqKit;
-using BoleteriaOnline.Core.ViewModels.Pagging;
 using BoleteriaOnline.Web.Extensions;
+using BoleteriaOnline.Web.Repositories;
+using LinqKit;
+using Microsoft.EntityFrameworkCore;
 
 namespace BoleteriaOnline.Web.Repository;
 

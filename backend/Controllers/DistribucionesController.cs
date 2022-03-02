@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using BoleteriaOnline.Web.Extensions.Response;
+﻿using BoleteriaOnline.Core.Data.Enums;
 using BoleteriaOnline.Core.Services;
-using BoleteriaOnline.Core.Data.Enums;
+using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels.Requests;
 using BoleteriaOnline.Core.ViewModels.Responses;
-using BoleteriaOnline.Core.Utils;
+using BoleteriaOnline.Web.Extensions.Response;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BoleteriaOnline.Web.Controllers;
 
@@ -21,7 +20,7 @@ public class DistribucionesController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<ICollection<DistribucionResponse>>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<ICollection<DistribucionResponse>>>> GetAll()
     {
@@ -34,7 +33,7 @@ public class DistribucionesController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<DistribucionResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<DistribucionResponse>>> Get(long id)
@@ -48,7 +47,7 @@ public class DistribucionesController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<DistribucionResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -62,7 +61,7 @@ public class DistribucionesController : ControllerBase
     }
 
     [HttpPatch("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<DistribucionResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<DistribucionResponse>>> UpdateDistribucion([FromBody] DistribucionUpdateRequest distribucionDto)
     {
         var distribucion = await _distribucionservice.UpdateDistribucionAsync(distribucionDto);
@@ -73,7 +72,7 @@ public class DistribucionesController : ControllerBase
     }
 
     [HttpDelete]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<DistribucionResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<DistribucionResponse>>> DeleteDistribucion(long id)
     {
         var distribucion = await _distribucionservice.DeleteDistribucionAsync(id);
@@ -83,9 +82,9 @@ public class DistribucionesController : ControllerBase
         return Ok(distribucion);
     }
 
-    
+
     [HttpPost("{id:int}/filas")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<DistribucionResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<DistribucionResponse>>> CreateFilas(long id, [FromBody] Planta planta)
     {
         var distribucion = await _distribucionservice.AppendFilasAsync(id, planta);
@@ -94,5 +93,5 @@ public class DistribucionesController : ControllerBase
             return StatusCode(ResponseHelper.GetHttpError(distribucion.ErrorCode), distribucion);
         return Ok(distribucion);
     }
-    
+
 }

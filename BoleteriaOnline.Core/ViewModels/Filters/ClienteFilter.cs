@@ -9,7 +9,6 @@ public class ClienteFilter : PaginationFilter
     public string Nombre { get; set; }
 
     public DateTime? FechaNacimiento { get; set; }
-    public int? NacionalidadId { get; set; }
     public Gender? Genero { get; set; }
 
     public Estado? Estado { get; set; }

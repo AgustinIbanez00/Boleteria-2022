@@ -2,7 +2,7 @@
 using Humanizer;
 
 namespace BoleteriaOnline.Core.ViewModels;
-[HumanDescription("país", GrammaticalGender.Feminine)]
+[HumanDescription("país", GrammaticalGender.Masculine)]
 public class PaisDTO
 {
     public int Id { get; set; }

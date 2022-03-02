@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using BoleteriaOnline.Web.Data;
-using BoleteriaOnline.Web.Data.Models;
+﻿using System.Linq.Expressions;
 using BoleteriaOnline.Core.Data.Enums;
-using BoleteriaOnline.Web.Repositories;
-using BoleteriaOnline.Web.Data.Filters;
-using System.Linq.Expressions;
-using LinqKit;
 using BoleteriaOnline.Core.ViewModels.Pagging;
+using BoleteriaOnline.Web.Data;
+using BoleteriaOnline.Web.Data.Filters;
+using BoleteriaOnline.Web.Data.Models;
 using BoleteriaOnline.Web.Extensions;
+using BoleteriaOnline.Web.Repositories;
+using LinqKit;
+using Microsoft.EntityFrameworkCore;
 
 namespace BoleteriaOnline.Web.Repository;
 
@@ -23,7 +23,7 @@ public class ClienteRepository : IClienteRepository
     public async Task<bool> CreateAsync(Cliente entity)
     {
         entity.CreatedAt = DateTime.Now;
-        entity.Id = 0;
+        entity.Estado = Estado.Activo;
         await _context.Clientes.AddAsync(entity);
         return await Save();
     }
@@ -73,7 +73,6 @@ public class ClienteRepository : IClienteRepository
             .And(p => !filter.Dni.HasValue || (filter.Dni.HasValue && p.Id == filter.Dni.Value))
             .And(p => string.IsNullOrEmpty(filter.Nombre) || (!string.IsNullOrEmpty(filter.Nombre) && p.Nombre.Contains(filter.Nombre)))
             .And(p => !filter.FechaNacimiento.HasValue || (filter.FechaNacimiento.HasValue && p.FechaNac == filter.FechaNacimiento.Value))
-            .And(p => !filter.NacionalidadId.HasValue || (filter.NacionalidadId.HasValue && p.NacionalidadId == filter.NacionalidadId.Value))
             .And(p => !filter.Genero.HasValue || (filter.Genero.HasValue && p.Genero == filter.Genero.Value))
             .And(p => !filter.Estado.HasValue || (filter.Estado.HasValue && p.Estado == filter.Estado.Value))
         ;

@@ -11,5 +11,4 @@ public class DistribucionRequest
 
     [Required, Display(Name = "un piso")]
     public bool UnPiso { get; set; }
-
 }
