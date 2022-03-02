@@ -32,7 +32,7 @@ const routes: Routes = [
   },
   //distribucion
   {
-    path: 'distribucion',
+    path: 'distribuciones',
     component: IndiceDistribucionComponent,
   },
   {
@@ -50,4 +50,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

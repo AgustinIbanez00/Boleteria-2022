@@ -6,12 +6,18 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./listado-generico.component.css'],
 })
 export class ListadoGenericoComponent implements OnInit {
-  constructor() {}
+  constructor() { }
 
   @Input()
   listado;
   @Input()
   mensajeLoading: string = 'Cargando...';
 
-  ngOnInit(): void {}
+  @Input()
+  esLista: boolean = true;
+
+  ngOnInit(): void {
+    console.log(this.esLista)
+    console.log(this.listado)
+  }
 }

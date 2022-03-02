@@ -41,6 +41,7 @@ import { FiltroClienteComponent } from './cliente/filtro-cliente/filtro-cliente.
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SelectComponent } from './utilidades/paises/select/select.component';
 import { DistribucionComponent } from './distribucion/distribucion/distribucion.component';
+import { DetalleDistribucionComponent } from './distribucion/detalle-distribucion/detalle-distribucion.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,6 +68,7 @@ import { DistribucionComponent } from './distribucion/distribucion/distribucion.
     FiltroClienteComponent,
     SelectComponent,
     DistribucionComponent,
+    DetalleDistribucionComponent,
   ],
   imports: [
     BrowserModule,

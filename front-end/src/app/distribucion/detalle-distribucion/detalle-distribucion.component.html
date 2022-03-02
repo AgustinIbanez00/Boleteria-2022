@@ -1,0 +1,73 @@
+<div class="contenedor" *ngIf="!distribucion">
+  <div class="hijo">
+    <div>
+      <img
+        [src]="'assets/imagenes/loading.gif'"
+        alt=""
+        style="border-radius: 100%; width: 400px"
+      />
+    </div>
+    <div>
+      <label class="mensaje" for="">{{ mensajeLoading }}</label>
+    </div>
+  </div>
+</div>
+<div *ngIf="distribucion" class="contenedor-detalle-distribucion">
+  <mat-tab-group class="tabs" mat-align-tabs="start">
+    <mat-tab label="Piso 0">
+      <div class="distribucion">
+        <div class="fila" *ngFor="let fila of piso0; index as indexFila">
+          <div
+            class="celda"
+            *ngFor="let celda of fila.cells; index as indexCelda"
+          >
+            <button
+              [style]="
+                'background-repeat: no-repeat; background-size: contain;background-position:center'
+              "
+              [style.background-image]="
+                'url(' + devolverIconoCelda(celda.value, true) + ')'
+              "
+              class="button-icon"
+              [matTooltip]="devolverTextiToolTips(celda.value)"
+            ></button>
+          </div>
+        </div></div
+    ></mat-tab>
+    <mat-tab *ngIf="!distribucion.un_piso" label="Piso 1">
+      <div class="distribucion">
+        <div class="fila" *ngFor="let fila of piso1; index as indexFila">
+          <div
+            class="celda"
+            *ngFor="let celda of fila.cells; index as indexCelda"
+          >
+            <button
+              [style]="
+                'background-repeat: no-repeat; background-size: contain;background-position:center'
+              "
+              [style.background-image]="
+                'url(' + devolverIconoCelda(celda.value, true) + ')'
+              "
+              class="button-icon"
+              [matTooltip]="devolverTextiToolTips(celda.value)"
+              (click)="seleccionarCelda(indexCelda, indexFila)"
+            ></button>
+          </div>
+        </div></div
+    ></mat-tab>
+  </mat-tab-group>
+  <div class="divAcciones">
+    <mat-form-field>
+      <mat-label>Nota</mat-label>
+      <input matInput [value]="distribucion.nota" readonly="true" />
+    </mat-form-field>
+    <mat-slide-toggle
+      [disabled]="true"
+      class="slide-toggle-distribucion"
+      (change)="distribucion.un_piso = !distribucion.un_piso"
+      [checked]="distribucion.un_piso"
+    >
+      {{ distribucion.un_piso ? "Un piso" : "Dos Pisos" }}
+    </mat-slide-toggle>
+  </div>
+</div>

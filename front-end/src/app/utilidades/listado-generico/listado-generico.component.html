@@ -25,6 +25,6 @@
     </div>
   </div>
 </div>
-<ng-container *ngIf="listado && listado.length > 0">
+<ng-container *ngIf="listado && listado.length > 0 && esLista">
   <ng-content select="[contenido]"></ng-content>
 </ng-container>

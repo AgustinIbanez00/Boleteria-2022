@@ -41,7 +41,7 @@ export class CrearDistribucionComponent implements OnInit {
     this.distribucionService.guardarDistribucion(distribucion).subscribe((result) => {
       if (result.success) {
         this.notificacionesService.showNotificacion(result.message, 'x', 'success');
-        this.router.navigate(['/distribucion']);
+        this.router.navigate(['/distribuciones']);
       }
       else {
         this.notificacionesService.showNotificacion(result.error, 'x', 'error');

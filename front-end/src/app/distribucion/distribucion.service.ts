@@ -10,8 +10,12 @@ import { DistribucionDTO } from './distribucionDTO';
 })
 export class DistribucionService {
 
-  private apiURL = environment.apiURL + 'distribuciones';
+  private apiURL = environment.apiURL + '/distribuciones';
   constructor(private http: HttpClient) { }
+
+  obtenerDistribucion(id: number): Observable<webResult> {
+    return this.http.get<webResult>(this.apiURL + "/" + id)
+  }
 
   obtenerDistribuciones(): Observable<webResult> {
     return this.http.get<webResult>(this.apiURL)
