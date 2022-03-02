@@ -81,4 +81,9 @@ public class ParadaRepository : IParadaRepository
     {
         return await PaggingExtensions.CreateAsync(_context.Paradas.Where(GetExpression(filter)), filter.Pagina, filter.RecordsPorPagina);
     }
+
+    public async Task<Parada> FindAsync(int id)
+    {
+        return await _context.Paradas.FindAsync(id);
+    }
 }

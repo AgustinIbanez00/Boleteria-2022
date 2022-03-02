@@ -1,4 +1,5 @@
-﻿using BoleteriaOnline.Core.Data.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using BoleteriaOnline.Core.Data.Enums;
 using BoleteriaOnline.Core.ViewModels.Pagging;
 
 namespace BoleteriaOnline.Web.Data.Filters;
@@ -8,6 +9,7 @@ public class ClienteFilter : PaginationFilter
 
     public string Nombre { get; set; }
 
+    [DataType(DataType.DateTime)]
     public DateTime? FechaNacimiento { get; set; }
     public Gender? Genero { get; set; }
 

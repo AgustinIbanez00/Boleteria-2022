@@ -4,6 +4,6 @@ using BoleteriaOnline.Core.ViewModels.Filters;
 using BoleteriaOnline.Core.ViewModels.Pagging;
 
 namespace BoleteriaOnline.Core.Services;
-public interface IParadaService : IGenericService<ParadaDTO, ParadaFilter>
+public interface IParadaService : IGenericService<int, ParadaDTO, ParadaFilter>
 {
 }

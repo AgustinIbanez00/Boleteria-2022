@@ -82,7 +82,11 @@ builder.Services.AddAuthentication(x =>
 
 builder.Services.AddControllers(options => options.Filters.Add<HttpResponseExceptionFilter>())
     .AddBadRequestServices()
-    .AddJsonOptions(o => o.JsonSerializerOptions.PropertyNamingPolicy = new SnakeCaseNamingPolicy());
+    .AddJsonOptions(pptions =>
+    {
+        pptions.JsonSerializerOptions.PropertyNamingPolicy = new SnakeCaseNamingPolicy();
+        pptions.JsonSerializerOptions.Converters.Add(new BobbyUtcDateTimeConverter());
+    });
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 

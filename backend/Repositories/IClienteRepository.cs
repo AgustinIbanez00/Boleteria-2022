@@ -2,6 +2,6 @@
 using BoleteriaOnline.Web.Data.Models;
 
 namespace BoleteriaOnline.Web.Repositories;
-public interface IClienteRepository : IGenericRepository<Cliente, ClienteFilter>
+public interface IClienteRepository : IGenericRepository<long, Cliente, ClienteFilter>
 {
 }

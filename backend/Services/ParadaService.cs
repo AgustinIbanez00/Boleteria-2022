@@ -74,14 +74,14 @@ public class ParadaService : IParadaService
         throw new NotImplementedException();
     }
 
-    public async Task<WebResult<ParadaDTO>> UpdateAsync(ParadaDTO request, ParadaFilter filter)
+    public async Task<WebResult<ParadaDTO>> UpdateAsync(ParadaDTO request, int id)
     {
         try
         {
-            if (filter.Id == 0)
+            if (id == 0)
                 return Error<ParadaDTO>(ErrorMessage.InvalidId);
 
-            var destino = await _paradaRepository.GetAsync(filter);
+            var destino = await _paradaRepository.FindAsync(id);
 
             if (destino == null)
                 return Error<ParadaDTO>(ErrorMessage.NotFound);

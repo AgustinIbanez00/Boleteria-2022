@@ -33,10 +33,8 @@ public class ClienteRepository : IClienteRepository
         if (entity == null)
             return false;
 
-        if (entity.Estado == Estado.Baja)
-            return false;
+        _context.Clientes.Remove(entity);
 
-        entity.Estado = Estado.Baja;
         return await Save();
     }
 
@@ -48,6 +46,11 @@ public class ClienteRepository : IClienteRepository
     public Task<bool> ExistsAsync(ClienteFilter filter)
     {
         return _context.Clientes.AnyAsync(GetExpression(filter));
+    }
+
+    public async Task<Cliente> FindAsync(long id)
+    {
+        return await _context.Clientes.FindAsync(id);
     }
 
     public async Task<ICollection<Cliente>> GetAllAsync(ClienteFilter filter)
@@ -65,12 +68,10 @@ public class ClienteRepository : IClienteRepository
         return await _context.Clientes.FirstOrDefaultAsync(GetExpression(filter));
     }
 
-    public async Task<Cliente> GetClienteAsync(long id) => await _context.Clientes.FirstOrDefaultAsync(m => m.Estado == Estado.Activo && m.Id == id);
-
     public Expression<Func<Cliente, bool>> GetExpression(ClienteFilter filter)
     {
         return PredicateBuilder.New<Cliente>()
-            .And(p => !filter.Dni.HasValue || (filter.Dni.HasValue && p.Id.ToString().Contains(filter.Dni.Value.ToString())))
+            .And(p => !filter.Dni.HasValue || (filter.Dni.HasValue && p.Id == filter.Dni.Value))
             .And(p => string.IsNullOrEmpty(filter.Nombre) || (!string.IsNullOrEmpty(filter.Nombre) && p.Nombre.Contains(filter.Nombre)))
             .And(p => !filter.FechaNacimiento.HasValue || (filter.FechaNacimiento.HasValue && p.FechaNac == filter.FechaNacimiento.Value))
             .And(p => !filter.Genero.HasValue || (filter.Genero.HasValue && p.Genero == filter.Genero.Value))
@@ -82,7 +83,7 @@ public class ClienteRepository : IClienteRepository
 
     public async Task<bool> UpdateAsync(Cliente entity)
     {
-        if (entity == null || entity.Estado == Estado.Baja)
+        if (entity == null)
             return false;
 
         _context.Clientes.Update(entity);

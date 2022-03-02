@@ -35,7 +35,7 @@ public class ClientesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResult<ClienteDTO>>> Get(int id)
+    public async Task<ActionResult<WebResult<ClienteDTO>>> Get(long id)
     {
         var cliente = await _clienteservice.GetAsync(new ClienteFilter() { Dni = id });
 
@@ -59,11 +59,11 @@ public class ClientesController : ControllerBase
         return Created(nameof(Get), cliente);
     }
 
-    [HttpPatch("{id:int}")]
+    [HttpPatch("{id:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ClienteDTO>>> UpdateCliente([FromBody] ClienteDTO clienteDto, long id)
     {
-        var cliente = await _clienteservice.UpdateAsync(clienteDto, new ClienteFilter() { Dni = id });
+        var cliente = await _clienteservice.UpdateAsync(clienteDto, id);
 
         if (!cliente.Success)
             return StatusCode(ResponseHelper.GetHttpError(cliente.ErrorCode), cliente);

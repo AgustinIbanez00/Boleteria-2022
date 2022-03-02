@@ -2,11 +2,12 @@
 using BoleteriaOnline.Core.ViewModels.Pagging;
 
 namespace BoleteriaOnline.Web.Repositories;
-public interface IGenericRepository<TEntity, TFilter> where TEntity : class
+public interface IGenericRepository<TKey, TEntity, TFilter> where TEntity : class
 {
     Task<ICollection<TEntity>> GetAllAsync(TFilter filter);
     Task<PaginatedList<TEntity>> GetAllPaginatedAsync(TFilter filter);
     Task<TEntity> GetAsync(TFilter filter);
+    Task<TEntity> FindAsync(TKey id);
     Task<bool> ExistsAsync(TFilter filter);
     Task<bool> CreateAsync(TEntity entity);
     Task<bool> DeleteAsync(TEntity entity);

@@ -47,6 +47,12 @@ public class ClienteService : IClienteService
     {
         try
         {
+            if (request.Dni <= 0)
+                return Error<ClienteDTO>(ErrorMessage.InvalidId);
+
+            if (await _clienteRepository.ExistsAsync(new ClienteFilter() { Dni = request.Dni }))
+                return Error<ClienteDTO>(ErrorMessage.AlreadyExists);
+
             var cliente = _mapper.Map<Cliente>(request);
             if (!await _clienteRepository.CreateAsync(cliente))
                 return Error<Cliente, ClienteDTO>(ErrorMessage.CouldNotCreate);
@@ -100,19 +106,14 @@ public class ClienteService : IClienteService
         }
     }
 
-    public async Task<WebResult<ClienteDTO>> UpdateAsync(ClienteDTO request, ClienteFilter filter)
+    public async Task<WebResult<ClienteDTO>> UpdateAsync(ClienteDTO request, long id)
     {
         try
         {
-            var errors = await ValidateAsync(request);
-
-            if (!errors.Success)
-                return errors;
-
-            if (filter.Dni == 0)
+            if (id <= 0)
                 return Error<ClienteDTO>(ErrorMessage.InvalidId);
 
-            var cliente = await _clienteRepository.GetAsync(filter);
+            var cliente = await _clienteRepository.FindAsync(id);
 
             if (cliente == null)
                 return Error<ClienteDTO>(ErrorMessage.NotFound);

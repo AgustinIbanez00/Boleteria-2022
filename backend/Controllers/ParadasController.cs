@@ -69,7 +69,7 @@ public class ParadasController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ParadaDTO>>> UpdateDestino([FromBody] ParadaDTO destinoDto, int id)
     {
-        var destino = await _paradaService.UpdateAsync(destinoDto, new ParadaFilter() { Id = id });
+        var destino = await _paradaService.UpdateAsync(destinoDto, id);
 
         if (!destino.Success)
             return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);
