@@ -4,7 +4,7 @@ using BoleteriaOnline.Core.ViewModels.Pagging;
 namespace BoleteriaOnline.Core.ViewModels.Filters;
 public class ParadaFilter : PaginationFilter
 {
-    public long? Id { get; set; }
+    public int? Id { get; set; }
 
     public string Nombre { get; set; }
 
