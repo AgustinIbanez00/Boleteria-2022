@@ -61,16 +61,9 @@
               (click)="openDialogDetalle(element.id)"
               [matTooltip]="'Ver distribución'"
             >
-              <mat-icon>info</mat-icon>
+              <mat-icon>visibility</mat-icon>
             </button>
-            <button
-              class="botonEditar"
-              mat-flat-button
-              (click)="openDialog(element.id)"
-              [matTooltip]="'Editar distribución'"
-            >
-              <mat-icon>edit</mat-icon>
-            </button>
+
             <button
               mat-flat-button
               [matTooltip]="'Eliminar distribución'"
@@ -84,11 +77,11 @@
             >
               <mat-icon>delete</mat-icon>
             </button>
-            <mat-slide-toggle
+            <!-- <mat-slide-toggle
               style="margin-top: 5px"
               (change)="hablitarDeshabilitar($event)"
             >
-            </mat-slide-toggle>
+            </mat-slide-toggle> -->
           </div>
           <!-- [(ngModel)]="data.estado"  formControlName="estado"
               -->

@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MaterialModule } from './material/material.module';
 import { AutorizadoComponent } from './seguridad/autorizado/autorizado/autorizado.component';
-import { ListadoParadasComponent } from './paradas/listado-paradas/listado-paradas.component';
+
 import { ListadoGenericoComponent } from './utilidades/listado-generico/listado-generico.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CrearParadasComponent } from './paradas/crear-paradas/crear-paradas.component';
@@ -33,7 +33,7 @@ import { ConfirmComponent } from './utilidades/confirm/confirm.component';
 import { CrearDistribucionComponent } from './distribucion/crear-distribucion/crear-distribucion.component';
 import { IndiceClienteComponent } from './cliente/indice-cliente/indice-cliente.component';
 import { CrearClienteComponent } from './cliente/crear-cliente/crear-cliente.component';
-import { ListadoClienteComponent } from './cliente/listado-cliente/listado-cliente.component';
+
 import { MatSelectModule } from '@angular/material/select';
 
 import { FiltroParadasComponent } from './paradas/filtro-paradas/filtro-paradas.component';
@@ -42,12 +42,15 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { SelectComponent } from './utilidades/paises/select/select.component';
 import { DistribucionComponent } from './distribucion/distribucion/distribucion.component';
 import { DetalleDistribucionComponent } from './distribucion/detalle-distribucion/detalle-distribucion.component';
+import { IndiceViajesComponent } from './viajes/indice-viajes/indice-viajes.component';
+import { CrearViajesComponent } from './viajes/crear-viajes/crear-viajes.component';
+import { FiltroViajesComponent } from './viajes/filtro-viajes/filtro-viajes.component';
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     AutorizadoComponent,
-    ListadoParadasComponent,
+
     ListadoGenericoComponent,
     CrearParadasComponent,
     LandingPageComponent,
@@ -63,12 +66,15 @@ import { DetalleDistribucionComponent } from './distribucion/detalle-distribucio
     CrearDistribucionComponent,
     IndiceClienteComponent,
     CrearClienteComponent,
-    ListadoClienteComponent,
+
     FiltroParadasComponent,
     FiltroClienteComponent,
     SelectComponent,
     DistribucionComponent,
     DetalleDistribucionComponent,
+    IndiceViajesComponent,
+    CrearViajesComponent,
+    FiltroViajesComponent,
   ],
   imports: [
     BrowserModule,

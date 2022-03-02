@@ -37,7 +37,6 @@ export class ParadasService {
   }
 
   public crear(paradaDTO: paradasDTO): Observable<HttpResponse<webResult>> {
-    console.log('crear 2');
     return this.http.post<webResult>(this.apiURL, JSON.stringify(paradaDTO), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
