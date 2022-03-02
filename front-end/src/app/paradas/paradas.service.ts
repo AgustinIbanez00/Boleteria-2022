@@ -17,7 +17,7 @@ import { paradasDTO, paradasFiltroDTO } from './paradasDTO';
 export class ParadasService {
   constructor(private http: HttpClient, private router: Router) {}
 
-  private apiURL = environment.apiURL + 'paradas';
+  private apiURL = environment.apiURL + '/paradas';
 
   public obtenerParadas(
     pagina: number,
@@ -37,6 +37,7 @@ export class ParadasService {
   }
 
   public crear(paradaDTO: paradasDTO): Observable<HttpResponse<webResult>> {
+    console.log('crear 2');
     return this.http.post<webResult>(this.apiURL, JSON.stringify(paradaDTO), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -78,6 +79,8 @@ export class ParadasService {
     const tree = this.router.createUrlTree([], {
       queryParams: { ...paradasFiltroDTO, pagina, cantidadRegistrosAMostrar },
     });
+
+    console.log(`${environment.apiURL}${tree.toString()}`);
 
     return this.http.get<webResult>(`${environment.apiURL}${tree.toString()}`, {
       observe: 'response',

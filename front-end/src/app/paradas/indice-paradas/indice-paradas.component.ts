@@ -31,6 +31,8 @@ export class IndiceParadasComponent implements OnInit {
 
   id: number;
   nombre: string;
+  pais_id: number;
+  provincia_id: number;
   cantidadTotalRegistros;
   paginaActual = 1;
   cantidadRegistrosAMostrar = 10;
@@ -50,7 +52,13 @@ export class IndiceParadasComponent implements OnInit {
     'habilitar',
   ];
 
-  paradasFiltroDTO: paradasFiltroDTO = { estado: null, nombre: null, id: null };
+  paradasFiltroDTO: paradasFiltroDTO = {
+    estado: null,
+    nombre: null,
+    id: null,
+    pais_id: null,
+    provincia_id: null,
+  };
 
   //agarrar referencia de la tabla
   @ViewChild(MatTable) table: MatTable<any>;
@@ -73,11 +81,13 @@ export class IndiceParadasComponent implements OnInit {
         data: {
           id: this.id,
           nombre: this.nombre,
+          pais_id: this.pais_id,
+          provincia_id: this.provincia_id,
         },
       });
     } else {
       var parada = this.paradas.find((it) => it.id === id);
-
+      console.log(parada);
       dialogRef = this.dialog.open(CrearParadasComponent, {
         width: '800px',
         data: parada,
@@ -101,12 +111,13 @@ export class IndiceParadasComponent implements OnInit {
       .subscribe(
         (respuesta: HttpResponse<webResultList>) => {
           this.paradas = Object.values(respuesta.body.result);
-          console.log('respuesta', respuesta.body.pagination);
+          // console.log('respuesta', respuesta.body.pagination);
 
           this.cantidadTotalRegistros = respuesta.body.pagination.total_items;
         },
         (error) => {
           this.errores = parserarErroresAPI(error);
+          this.paradas = [];
         }
       );
   }

@@ -4,9 +4,9 @@ export interface DialogData {
 
 export function parserarErroresAPI(response: any): string[] {
   const resultado: string[] = [];
-  console.log(response)
+  // console.log(response)
   if (response.status != 200) {
-    resultado.push(`${response.statusText}: ${response.message}`)
+    resultado.push(`${response.statusText}: ${response.message}`);
   }
   if (response.error) {
     if (typeof response.error === 'string') {

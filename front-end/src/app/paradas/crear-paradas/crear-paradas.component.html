@@ -11,12 +11,12 @@
   </div>
 </div>
 
-<form [formGroup]="form" (submit)="guardarParadas(data)">
+<form [formGroup]="form" (submit)="guardarParadas(form.value)">
   <mat-dialog-content>
     <div>
       <mat-form-field appearance="outline">
         <mat-label>Nombre*</mat-label>
-        <input formControlName="nombre" matInput [(ngModel)]="data.nombre" />
+        <input formControlName="nombre" matInput />
         <mat-error *ngIf="form.invalid">{{
           validacionesParadas("nombre")
         }}</mat-error>
@@ -25,8 +25,8 @@
     <div>
       <app-select
         [form]="form"
-        [pais]="'pais'"
-        [provincia]="'provincia'"
+        [pais]="'pais_id'"
+        [provincia]="'provincia_id'"
         [validaciones]="validacionesParadas"
       ></app-select>
     </div>

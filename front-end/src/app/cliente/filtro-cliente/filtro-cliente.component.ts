@@ -21,11 +21,8 @@ export class FiltroClienteComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       nombre: [null, { validators: [Validators.maxLength(100)] }],
-      //estado: -1,
-      dni: [
-        null,
-        { validators: [Validators.maxLength(8), Validators.minLength(8)] },
-      ],
+      estado: -1,
+      dni: [null, { validators: [Validators.maxLength(8)] }],
     });
   }
 

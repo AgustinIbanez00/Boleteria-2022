@@ -31,7 +31,7 @@ export class IndiceClienteComponent implements OnInit {
 
   dni: number;
   nombre: string;
-  // estado: number;
+  estado: number;
   fecha_nacimiento: Date;
   genero: number;
   nacinalidad: string;
@@ -47,7 +47,7 @@ export class IndiceClienteComponent implements OnInit {
   form: FormGroup;
 
   columnasAMostrar = [
-    // 'estado',
+    'estado',
     'dni',
     'nombre',
     'editar',
@@ -56,10 +56,9 @@ export class IndiceClienteComponent implements OnInit {
   ];
 
   clienteFiltroDTO: clienteFiltroDTO = {
-    //estado: null,
+    estado: null,
     nombre: null,
     dni: null,
-    nacinalidad: null,
   };
 
   //agarrar referencia de la tabla
@@ -83,7 +82,6 @@ export class IndiceClienteComponent implements OnInit {
           },
         ],
         fechaNacimiento: ['', { validators: [Validators.required] }],
-        nacionalidad: ['', { validators: [Validators.required] }],
         genero: ['', { validators: [Validators.required] }],
         estado: 0,
       }));
@@ -134,11 +132,12 @@ export class IndiceClienteComponent implements OnInit {
       .subscribe(
         (respuesta: HttpResponse<webResultList>) => {
           this.clientes = Object.values(respuesta.body.result);
-
+          console.log(this.clientes);
           this.cantidadTotalRegistros = respuesta.body.pagination.total_items;
         },
         (error) => {
           this.errores = parserarErroresAPI(error);
+          this.clientes = [];
         }
       );
   }
@@ -175,7 +174,7 @@ export class IndiceClienteComponent implements OnInit {
       .subscribe(
         (respuesta: HttpResponse<webResultList>) => {
           this.clientes = Object.values(respuesta.body.result);
-          console.log(respuesta.body.pagination);
+          //console.log(respuesta.body.pagination);
           this.cantidadTotalRegistros = respuesta.body.pagination.total_items;
         },
         (error) => {
