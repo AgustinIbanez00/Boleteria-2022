@@ -21,9 +21,9 @@ public class ClientesController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResult<ICollection<ClienteDTO>>>> GetAll()
+    public async Task<ActionResult<WebResult<ICollection<ClienteDTO>>>> GetAll(ClienteFilter filter)
     {
-        var clientes = await _clienteservice.AllAsync(new ClienteFilter() { });
+        var clientes = await _clienteservice.AllAsync(filter);
 
         if (!clientes.Success)
             return StatusCode(ResponseHelper.GetHttpError(clientes.ErrorCode), clientes);
