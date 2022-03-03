@@ -127,6 +127,10 @@ public class ViajeService : IViajeService
 
             return Ok<Viaje, ViajeDTO>(_mapper.Map<ViajeDTO>(viaje), SuccessMessage.Deleted);
         }
+        catch (ReferenceConstraintException)
+        {
+            return Error<ViajeDTO>(ErrorMessage.CouldNotDeleteReferenced);
+        }
         catch (Exception ex)
         {
             return Error<Viaje, ViajeDTO>(ErrorMessage.Generic, ex.Message);
@@ -163,6 +167,7 @@ public class ViajeService : IViajeService
                 return Error<Viaje, ViajeDTO>(ErrorMessage.NotFound);
 
             viaje.Nombre = request.Nombre;
+            viaje.Estado = request.Estado;
 
             await _nodoRepository.DeleteAsync(new NodoFilter() { ViajeId = id });
 

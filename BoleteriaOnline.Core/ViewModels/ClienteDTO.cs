@@ -13,8 +13,8 @@ public class ClienteDTO
     [Required, Display(Name = "nombre")]
     public string Nombre { get; set; }
 
-    [Required, Display(Name = "fecha de nacimiento"), DataType(DataType.DateTime)]
-    public DateTime FechaNacimiento { get; set; }
+    [Required, Display(Name = "fecha de nacimiento"), DataType(DataType.Date)]
+    public string FechaNacimiento { get; set; }
 
     [Required, Display(Name = "género")]
     public Gender Genero { get; set; }

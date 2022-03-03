@@ -15,9 +15,12 @@ public class AutoMapperProfiles : Profile
         CreateMap<Usuario, UsuarioResponse>()
             .ForMember(o => o.Dni, b => b.MapFrom(z => z.Id))
             .ReverseMap();
+        CreateMap<ClienteDTO, Cliente>()
+            .ForMember(o => o.Id, b => b.MapFrom(z => z.Dni))
+            .ForMember(o => o.FechaNac, opt => opt.MapFrom(d => DateTime.Parse(d.FechaNacimiento)));
         CreateMap<Cliente, ClienteDTO>()
             .ForMember(o => o.Dni, b => b.MapFrom(z => z.Id))
-            .ReverseMap();
+            .ForMember(o => o.FechaNacimiento, opt => opt.MapFrom(d => d.FechaNac.ToString("yyyy-MM-dd")));
         CreateMap<Parada, ParadaDTO>()
             .ForMember(o => o.Descripcion, b => b.MapFrom(z => $"{z.Nombre}, {z.Provincia.Nombre}, {z.Pais.Nombre}"))
             .ReverseMap();

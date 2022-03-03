@@ -29,4 +29,6 @@ public enum ErrorMessage
     EmptyList,
     [Description("Ocurrieron uno o más errores durante la validación.")]
     GenericValidation,
+    [Description("No se pudo eliminar {Gender:ese|esa} {Entity} porque se está utilizando en otro lugar.")]
+    CouldNotDeleteReferenced
 }

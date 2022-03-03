@@ -104,6 +104,10 @@ public class ClienteService : IClienteService
 
             return Ok(_mapper.Map<ClienteDTO>(cliente), SuccessMessage.Deleted);
         }
+        catch (ReferenceConstraintException)
+        {
+            return Error<ClienteDTO>(ErrorMessage.CouldNotDeleteReferenced);
+        }
         catch (Exception ex)
         {
             return Error<ClienteDTO>(ErrorMessage.Generic, ex.Message);
@@ -140,7 +144,13 @@ public class ClienteService : IClienteService
                 return Error<ClienteDTO>(ErrorMessage.NotFound);
 
             cliente.Nombre = request.Nombre;
-            cliente.FechaNac = request.FechaNacimiento;
+
+            DateTime fechaNac;
+
+            if (!DateTime.TryParse(request.FechaNacimiento, out fechaNac))
+                return KeyError<ClienteDTO>(nameof(request.FechaNacimiento), "El formato de fecha es inválido.");
+
+            cliente.FechaNac = Convert.ToDateTime(request.FechaNacimiento);
             cliente.Genero = request.Genero;
             cliente.Estado = request.Estado;
 

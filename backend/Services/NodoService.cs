@@ -118,6 +118,10 @@ public class NodoService : INodoService
 
             return Ok<Nodo, NodoDTO>(_mapper.Map<NodoDTO>(nodo), SuccessMessage.Deleted);
         }
+        catch (ReferenceConstraintException)
+        {
+            return Error<NodoDTO>(ErrorMessage.CouldNotDeleteReferenced);
+        }
         catch (Exception ex)
         {
             return Error<Nodo, NodoDTO>(ErrorMessage.Generic, ex.Message);
