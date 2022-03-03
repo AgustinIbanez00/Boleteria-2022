@@ -17,4 +17,6 @@ public class ViajeDTO
 
     [Display(Name = "estado")]
     public Estado Estado { get; set; }
+
+    public List<NodoDTO> Conexiones { get; set; }
 }

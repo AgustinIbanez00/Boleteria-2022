@@ -79,7 +79,6 @@ public class ViajeRepository : IViajeRepository
             .And(p => !filter.Estado.HasValue || (filter.Estado.HasValue && p.Estado == filter.Estado.Value))
         ;
     }
-
     public async Task<Viaje> GetViajeAsync(long id) => await _context.Viajes.FirstOrDefaultAsync(m => m.Id == id);
 
     public async Task<ICollection<Viaje>> GetViajesAsync() => await _context.Viajes.ToListAsync();

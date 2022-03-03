@@ -43,9 +43,9 @@ public class ClienteRepository : IClienteRepository
         Cliente cliente = await GetAsync(filter);
         return await DeleteAsync(cliente);
     }
-    public Task<bool> ExistsAsync(ClienteFilter filter)
+    public async Task<bool> ExistsAsync(ClienteFilter filter)
     {
-        return _context.Clientes.AnyAsync(GetExpression(filter));
+        return await _context.Clientes.AnyAsync(GetExpression(filter));
     }
 
     public async Task<Cliente> FindAsync(long id)

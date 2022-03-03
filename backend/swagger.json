@@ -496,7 +496,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfICollectionOfNodoResponse"
+              "$ref": "#/definitions/WebResultOfICollectionOfNodoDTO"
             }
           },
           "404": {
@@ -534,7 +534,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfNodoResponse"
+              "$ref": "#/definitions/WebResultOfNodoDTO"
             }
           },
           "400": {
@@ -555,7 +555,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfNodoResponse"
+              "$ref": "#/definitions/WebResultOfNodoDTO"
             }
           }
         }
@@ -586,7 +586,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfNodoResponse"
+              "$ref": "#/definitions/WebResultOfNodoDTO"
             }
           }
         }
@@ -610,7 +610,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfNodoResponse"
+              "$ref": "#/definitions/WebResultOfNodoDTO"
             }
           }
         }
@@ -637,7 +637,7 @@
             "x-nullable": false,
             "description": "",
             "schema": {
-              "$ref": "#/definitions/WebResultOfNodoResponse"
+              "$ref": "#/definitions/WebResultOfNodoDTO"
             }
           },
           "400": {
@@ -1907,7 +1907,7 @@
         }
       ]
     },
-    "WebResultOfICollectionOfNodoResponse": {
+    "WebResultOfICollectionOfNodoDTO": {
       "type": "object",
       "required": [
         "success",
@@ -1917,7 +1917,7 @@
         "result": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/NodoResponse"
+            "$ref": "#/definitions/NodoDTO"
           }
         },
         "success": {
@@ -1943,7 +1943,7 @@
         }
       }
     },
-    "NodoResponse": {
+    "NodoDTO": {
       "type": "object",
       "required": [
         "id",
@@ -2009,7 +2009,7 @@
         }
       }
     },
-    "WebResultOfNodoResponse": {
+    "WebResultOfNodoDTO": {
       "type": "object",
       "required": [
         "success",
@@ -2017,7 +2017,7 @@
       ],
       "properties": {
         "result": {
-          "$ref": "#/definitions/NodoResponse"
+          "$ref": "#/definitions/NodoDTO"
         },
         "success": {
           "type": "boolean"

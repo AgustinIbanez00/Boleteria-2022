@@ -27,7 +27,7 @@ public class ParadasController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResultList<ParadaDTO>>> GetAll([FromQuery] ParadaFilter filter)
     {
-        var paradas = await _paradaService.AllAsync(filter);
+        var paradas = await _paradaService.AllPaginatedAsync(filter);
 
         if (!paradas.Success)
             return StatusCode(ResponseHelper.GetHttpError(paradas.ErrorCode), paradas);

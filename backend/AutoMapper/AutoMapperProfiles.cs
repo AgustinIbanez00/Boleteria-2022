@@ -21,9 +21,9 @@ public class AutoMapperProfiles : Profile
         CreateMap<Parada, ParadaDTO>()
             .ForMember(o => o.Descripcion, b => b.MapFrom(z => $"{z.Nombre}, {z.Provincia.Nombre}, {z.Pais.Nombre}"))
             .ReverseMap();
-        CreateMap<Nodo, NodoRequest>()
+        CreateMap<Nodo, NodoDTO>()
             .ReverseMap();
-        CreateMap<Nodo, NodoResponse>()
+        CreateMap<Nodo, NodoDTO>()
             .ReverseMap();
         CreateMap<Distribucion, DistribucionRequest>()
             .ReverseMap();

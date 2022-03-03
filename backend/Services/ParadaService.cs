@@ -22,11 +22,11 @@ public class ParadaService : IParadaService
         _paradaRepository = paradaRepository;
     }
 
-    public async Task<WebResultList<ParadaDTO>> AllAsync(ParadaFilter parameters)
+    public async Task<WebResult<ICollection<ParadaDTO>>> AllAsync(ParadaFilter filter)
     {
         try
         {
-            PaginatedList<Parada> paradas = await _paradaRepository.GetAllPaginatedAsync(parameters);
+            var paradas = await _paradaRepository.GetAllAsync(filter);
 
             var paradasDto = new List<ParadaDTO>();
 
@@ -34,14 +34,35 @@ public class ParadaService : IParadaService
             {
                 paradasDto.Add(_mapper.Map<ParadaDTO>(parada));
             }
-            return List(paradasDto, Pagination.Page(paradas.TotalItems, parameters.Pagina, parameters.RecordsPorPagina));
+
+            return Ok<ICollection<ParadaDTO>>(paradasDto);
+        }
+        catch (Exception ex)
+        {
+            return Error<ICollection<ParadaDTO>>(ErrorMessage.Generic, ex.Message);
+        }
+    }
+
+    public async Task<WebResultList<ParadaDTO>> AllPaginatedAsync(ParadaFilter filter)
+    {
+        try
+        {
+            PaginatedList<Parada> paradas = await _paradaRepository.GetAllPaginatedAsync(filter);
+
+            var paradasDto = new List<ParadaDTO>();
+
+            foreach (var parada in paradas)
+            {
+                paradasDto.Add(_mapper.Map<ParadaDTO>(parada));
+            }
+
+            return List(paradasDto, Pagination.Page(paradas.TotalItems, filter.Pagina, filter.RecordsPorPagina));
         }
         catch (Exception ex)
         {
             return ErrorList<ParadaDTO>(ErrorMessage.Generic, ex.Message);
         }
     }
-
     public async Task<WebResult<ParadaDTO>> CreateAsync(ParadaDTO request)
     {
         try
@@ -108,4 +129,5 @@ public class ParadaService : IParadaService
     {
         throw new NotImplementedException();
     }
+
 }

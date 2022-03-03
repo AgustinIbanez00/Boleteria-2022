@@ -94,4 +94,16 @@ public class DistribucionesController : ControllerBase
         return Ok(distribucion);
     }
 
+    /*
+    [HttpGet("{viajeId:int}/filas")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<WebResult<DistribucionResponse>>> Compra(long viajeId, [FromBody] Planta planta)
+    {
+        var distribucion = await _distribucionservice.AppendFilasAsync(id, planta);
+
+        if (!distribucion.Success)
+            return StatusCode(ResponseHelper.GetHttpError(distribucion.ErrorCode), distribucion);
+        return Ok(distribucion);
+    }
+    */
 }

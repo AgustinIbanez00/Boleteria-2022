@@ -10,6 +10,8 @@ public class PaginationFilter
     private int recordsPorPagina = 10;
     private readonly int cantidadMaximaRecordsPorPagina = 50;
 
+    public bool Paginar { get; set; }
+
     [GreaterThanZero, Display(Name = "elementos por página"), Range(1, 100)]
     public int RecordsPorPagina
     {

@@ -15,14 +15,15 @@ public class ViajeService : IViajeService
 {
     private readonly IMapper _mapper;
     private readonly IViajeRepository _viajeRepository;
-    private readonly IDistribucionRepository _distribucionRepository
-        ;
+    private readonly IDistribucionRepository _distribucionRepository;
+    private readonly INodoRepository _nodoRepository;
 
-    public ViajeService(IMapper mapper, IViajeRepository viajeRepository, IDistribucionRepository distribucionRepository)
+    public ViajeService(IMapper mapper, IViajeRepository viajeRepository, IDistribucionRepository distribucionRepository, INodoRepository nodoRepository)
     {
         _mapper = mapper;
         _viajeRepository = viajeRepository;
         _distribucionRepository = distribucionRepository;
+        _nodoRepository = nodoRepository;
     }
 
     public async Task<WebResultList<ViajeDTO>> AllAsync(ViajeFilter filter)
@@ -43,6 +44,11 @@ public class ViajeService : IViajeService
         {
             return ErrorList<ViajeDTO>(ErrorMessage.Generic, ex.Message);
         }
+    }
+
+    public Task<WebResultList<ViajeDTO>> AllPaginatedAsync(ViajeFilter filter)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<WebResult<ViajeDTO>> CreateAsync(ViajeDTO request)
@@ -126,8 +132,13 @@ public class ViajeService : IViajeService
                 return Error<Viaje, ViajeDTO>(ErrorMessage.NotFound);
 
             viaje.Nombre = request.Nombre;
-            //viaje.Horarios = viajeDto.Horarios;
-            //viaje.Nodos = viajeDto.Nodos;
+
+            await _nodoRepository.DeleteAsync(new NodoFilter() {  ViajeId = id });
+
+            foreach (var nodo in request.Conexiones)
+            {
+                viaje.Nodos.Add(_mapper.Map<Nodo>(nodo));
+            }
 
             if (!await _viajeRepository.UpdateAsync(viaje))
                 return Error<Viaje, ViajeDTO>(ErrorMessage.CouldNotUpdate);
@@ -145,6 +156,11 @@ public class ViajeService : IViajeService
     }
 
     public Task<WebResult<ViajeDTO>> ValidateAsync(ViajeDTO request)
+    {
+        throw new NotImplementedException();
+    }
+
+    Task<WebResult<ICollection<ViajeDTO>>> IGenericService<int, ViajeDTO, ViajeFilter>.AllAsync(ViajeFilter filter)
     {
         throw new NotImplementedException();
     }

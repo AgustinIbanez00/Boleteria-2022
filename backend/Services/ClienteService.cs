@@ -3,7 +3,6 @@ using BoleteriaOnline.Core.Extensions.Response;
 using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
-using BoleteriaOnline.Core.ViewModels.Filters;
 using BoleteriaOnline.Core.ViewModels.Pagging;
 using BoleteriaOnline.Web.Data.Filters;
 using BoleteriaOnline.Web.Data.Models;
@@ -23,7 +22,28 @@ public class ClienteService : IClienteService
         _clienteRepository = clienteRepository;
     }
 
-    public async Task<WebResultList<ClienteDTO>> AllAsync(ClienteFilter filter)
+    public async Task<WebResult<ICollection<ClienteDTO>>> AllAsync(ClienteFilter filter)
+    {
+        try
+        {
+            var clientes = await _clienteRepository.GetAllAsync(filter);
+
+            var clientesDto = new List<ClienteDTO>();
+
+            foreach (var cliente in clientes)
+            {
+                clientesDto.Add(_mapper.Map<ClienteDTO>(cliente));
+            }
+
+            return Ok<ICollection<ClienteDTO>>(clientesDto);
+        }
+        catch (Exception ex)
+        {
+            return Error<ICollection<ClienteDTO>>(ErrorMessage.Generic, ex.Message);
+        }
+    }
+
+    public async Task<WebResultList<ClienteDTO>> AllPaginatedAsync(ClienteFilter filter)
     {
         try
         {
@@ -35,6 +55,7 @@ public class ClienteService : IClienteService
             {
                 clientesDto.Add(_mapper.Map<ClienteDTO>(cliente));
             }
+
             return List(clientesDto, Pagination.Page(clientes.TotalItems, filter.Pagina, filter.RecordsPorPagina));
         }
         catch (Exception ex)

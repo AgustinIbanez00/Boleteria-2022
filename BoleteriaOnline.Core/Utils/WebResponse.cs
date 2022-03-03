@@ -37,6 +37,19 @@ public static class WebResponse
         };
     }
 
+    public static WebResultList<TResult> KeyErrorList<TEntity, TResult>(string key, ErrorMessage error) where TResult : class
+    {
+        return new WebResultList<TResult>
+        {
+            ErrorCode = error,
+            Result = default,
+            Error = ResolveErrorCode(error),
+            Success = false,
+            Message = "Se encontraron uno o más errores.",
+            ErrorMessages = new Dictionary<string, string[]>() { { new string(key.ToSnakeCase().ToArray()), new string[] { Smart.Format(error.GetDescription(), Options<TEntity>()) } } }
+        };
+    }
+
     public static WebResult<TResult> KeyError<TResult>(string key, ErrorMessage error) where TResult : class
     {
         return new WebResult<TResult>
@@ -111,6 +124,21 @@ public static class WebResponse
             ErrorMessages = string.IsNullOrEmpty(message) ? new Dictionary<string, string[]>() : new Dictionary<string, string[]>() { { "error", new string[] { message } } }
         };
     }
+
+
+    public static WebResultList<TResult> ErrorList<TResult>(string message) where TResult : class
+    {
+        return new WebResultList<TResult>
+        {
+            ErrorCode = ErrorMessage.GenericValidation,
+            Error = "CUSTOM_ERROR",
+            Result = default,
+            Success = false,
+            Message = message,
+            ErrorMessages = new Dictionary<string, string[]>()
+        };
+    }
+
 
 
     /// <summary>
