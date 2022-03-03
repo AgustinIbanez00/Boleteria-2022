@@ -25,6 +25,26 @@ public class ApplicationDbContext : IdentityDbContext
         builder.Entity<Pais>().HasData(PaisSeeder.Paises);
         builder.Entity<Provincia>().HasData(ProvinciaSeeder.Provincias);
 
+        builder.Entity<Boleto>()
+            .HasOne(e => e.Origen)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Boleto>()
+            .HasOne(e => e.Destino)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Nodo>()
+            .HasOne(e => e.Origen)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Nodo>()
+            .HasOne(e => e.Destino)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
+
         base.OnModelCreating(builder);
     }
 

@@ -17,13 +17,15 @@ public class ViajeService : IViajeService
     private readonly IViajeRepository _viajeRepository;
     private readonly IDistribucionRepository _distribucionRepository;
     private readonly INodoRepository _nodoRepository;
+    private readonly IParadaRepository _paradaRepository;
 
-    public ViajeService(IMapper mapper, IViajeRepository viajeRepository, IDistribucionRepository distribucionRepository, INodoRepository nodoRepository)
+    public ViajeService(IMapper mapper, IViajeRepository viajeRepository, IDistribucionRepository distribucionRepository, INodoRepository nodoRepository, IParadaRepository paradaRepository)
     {
         _mapper = mapper;
         _viajeRepository = viajeRepository;
         _distribucionRepository = distribucionRepository;
         _nodoRepository = nodoRepository;
+        _paradaRepository = paradaRepository;
     }
     public async Task<WebResult<ICollection<ViajeDTO>>> AllAsync(ViajeFilter filter)
     {
@@ -79,6 +81,19 @@ public class ViajeService : IViajeService
                 horario.Id = 0;
                 if (!await _distribucionRepository.ExistsDistribucionAsync(horario.DistribucionId))
                     return Error<Distribucion, ViajeDTO>(ErrorMessage.NotFound);
+            }
+
+            foreach (var conexion in request.Conexiones)
+            {
+                conexion.Id = 0;
+                if (!await _viajeRepository.ExistsAsync(new ViajeFilter() { Id = conexion.ViajeId }))
+                    return Error<ViajeDTO, ViajeDTO>(ErrorMessage.NotFound);
+
+                if (!await _paradaRepository.ExistsAsync(new ParadaFilter() { Id = conexion.OrigenId }))
+                    return Error<ParadaDTO, ViajeDTO>(ErrorMessage.NotFound);
+
+                if (!await _paradaRepository.ExistsAsync(new ParadaFilter() { Id = conexion.DestinoId }))
+                    return Error<ParadaDTO, ViajeDTO>(ErrorMessage.NotFound);
             }
 
             Viaje viaje = _mapper.Map<Viaje>(request);

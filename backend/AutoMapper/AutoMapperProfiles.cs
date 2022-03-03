@@ -23,13 +23,12 @@ public class AutoMapperProfiles : Profile
             .ReverseMap();
         CreateMap<Nodo, NodoDTO>()
             .ReverseMap();
-        CreateMap<Nodo, NodoDTO>()
-            .ReverseMap();
         CreateMap<Distribucion, DistribucionRequest>()
             .ReverseMap();
         CreateMap<Distribucion, DistribucionResponse>()
             .ReverseMap();
         CreateMap<Viaje, ViajeDTO>()
+            .ForMember(o => o.Conexiones, b => b.MapFrom(z => z.Nodos))
             .ReverseMap();
         CreateMap<Fila, FilaRequest>()
             .ReverseMap();
