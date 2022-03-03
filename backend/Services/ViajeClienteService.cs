@@ -74,15 +74,18 @@ namespace BoleteriaOnline.Web.Services
                             if (nodosPorViaje[0].Id < nodosPorViaje[1].Id)
                             {
 
-                                DateTime? horarioSalida = await CalcularFechaAsync(viaje, horario, paradaOrigen, true);
-                                DateTime? horarioLlegada = await CalcularFechaAsync(viaje, horario, paradaOrigen, false);
+                                DateTime? horarioSalida = CalcularFecha(viaje.Nodos.ToList(), viaje, horario, paradaOrigen, true);
+                                DateTime? horarioLlegada = CalcularFecha(viaje.Nodos.ToList(), viaje, horario, paradaDestino, false);
+
+                                //var asientosDisponibles = _context.Boletos.Where(b => b.RecorridoId == viaje.Id && b.OrigenId == paradaOrigen.Id && b.DestinoId == paradaDestino.Id && b.Fecha.Date == DateTime.Now.Date).Select(b => b.Id).ToList();
 
                                 var viajesDto = new ViajeClienteDTO()
                                 {
                                     Empresa = "Boletería Online",
                                     HorarioSalida = horarioSalida.HasValue ? horarioSalida.Value.ToString("HH:mm") : "00:00:00",
-                                    HorarioLlegada = horarioLlegada.HasValue ? horarioLlegada.Value.ToString("HH:mm") : "00:00:00",
-                                    AsientosDisponibles = await _context.Boletos.Where(b => b.RecorridoId == viaje.Id && b.OrigenId == paradaOrigen.Id && b.DestinoId == paradaDestino.Id && b.Fecha.Date == DateTime.Now.Date).Select(b => b.Id).ToListAsync()
+                                    HorarioLlegada = horarioLlegada.HasValue ? horarioLlegada.Value.ToString("HH:mm") : "00:00:00"
+                                    
+                                    //AsientosDisponibles = asientosDisponibles
                                 };
 
                                 viajesAceptados.Add(viajesDto);
@@ -99,10 +102,8 @@ namespace BoleteriaOnline.Web.Services
             }
         }
 
-        public async Task<DateTime?> CalcularFechaAsync(Viaje viaje, Horario horario, Parada parada, bool Origen)
+        public DateTime? CalcularFecha(List<Nodo> nodos, Viaje viaje, Horario horario, Parada parada, bool Origen)
         {
-            var nodos = await _context.Nodos.Where(x => x.ViajeId == viaje.Id).ToListAsync();
-
             DateTime inicial = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, horario.Hora.Hour, horario.Hora.Minute, horario.Hora.Second);
 
             foreach (var nodo in nodos)
