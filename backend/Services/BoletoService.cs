@@ -104,6 +104,10 @@ public class BoletoService : IBoletoService
 
             return Ok(_mapper.Map<BoletoDTO>(boleto), SuccessMessage.Deleted);
         }
+        catch (ReferenceConstraintException)
+        {
+            return Error<BoletoDTO>(ErrorMessage.CouldNotDeleteReferenced);
+        }
         catch (Exception ex)
         {
             return Error<BoletoDTO>(ErrorMessage.Generic, ex.Message);

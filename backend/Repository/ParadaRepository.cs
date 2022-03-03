@@ -76,7 +76,7 @@ public class ParadaRepository : IParadaRepository
 
     public async Task<Parada> GetAsync(ParadaFilter filter)
     {
-        return await _context.Paradas.FirstOrDefaultAsync(GetExpression(filter));
+        return await _context.Paradas.Include(p => p.Pais).Include(p => p.Provincia).FirstOrDefaultAsync(GetExpression(filter));
     }
 
     public async Task<PaginatedList<Parada>> GetAllPaginatedAsync(ParadaFilter filter)

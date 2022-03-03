@@ -202,4 +202,9 @@
     <value>conexiones</value>
     <comment>Created by XLocalizer</comment>
   </data>
+  <data isActive="false">
+    <key>fecha</key>
+    <value>fecha</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
 </root>

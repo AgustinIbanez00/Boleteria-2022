@@ -58,17 +58,22 @@ namespace BoleteriaOnline.Web.Services
 
                 foreach (var viajeId in viajesId)
                 {
-                    foreach (var viaje in _context.Viajes.Include(x => x.Horarios).Where(x => x.Id == viajeId && x.Horarios.Exists(h => ((DateTime.Now.DayOfWeek == DayOfWeek.Monday && h.Lunes) || (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday && h.Martes) || (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && h.Miercoles) || (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && h.Jueves) || (DateTime.Now.DayOfWeek == DayOfWeek.Friday && h.Viernes) || (DateTime.Now.DayOfWeek == DayOfWeek.Saturday && h.Sabado) || (DateTime.Now.DayOfWeek == DayOfWeek.Sunday && h.Domingo)))))
+                    foreach (var viaje in _context.Viajes.Include(x => x.Horarios).Include(x => x.Nodos).Where(x => x.Id == viajeId))
                     {
-                        var horario = await _context.Horarios.FirstOrDefaultAsync(h => ((DateTime.Now.DayOfWeek == DayOfWeek.Monday && h.Lunes) || (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday && h.Martes) || (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && h.Miercoles) || (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && h.Jueves) || (DateTime.Now.DayOfWeek == DayOfWeek.Friday && h.Viernes) || (DateTime.Now.DayOfWeek == DayOfWeek.Saturday && h.Sabado) || (DateTime.Now.DayOfWeek == DayOfWeek.Sunday && h.Domingo)));
+                        //.Where(h => ((DateTime.Now.DayOfWeek == DayOfWeek.Monday && h.Lunes) || (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday && h.Martes) || (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && h.Miercoles) || (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && h.Jueves) || (DateTime.Now.DayOfWeek == DayOfWeek.Friday && h.Viernes) || (DateTime.Now.DayOfWeek == DayOfWeek.Saturday && h.Sabado) || (DateTime.Now.DayOfWeek == DayOfWeek.Sunday && h.Domingo))
+                        var horario = viaje.Horarios.FirstOrDefault(h => (DateTime.Now.DayOfWeek == DayOfWeek.Monday && h.Lunes) || (DateTime.Now.DayOfWeek == DayOfWeek.Tuesday && h.Martes) || (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday && h.Miercoles) || (DateTime.Now.DayOfWeek == DayOfWeek.Thursday && h.Jueves) || (DateTime.Now.DayOfWeek == DayOfWeek.Friday && h.Viernes) || (DateTime.Now.DayOfWeek == DayOfWeek.Saturday && h.Sabado) || (DateTime.Now.DayOfWeek == DayOfWeek.Sunday && h.Domingo));
 
-                        var nodosPorViaje = await _context.Nodos.Where(x => (x.OrigenId == paradaOrigen.Id || x.DestinoId == paradaDestino.Id) && x.ViajeId == viajeId).OrderBy(x => x.Id).ToListAsync();
+                        if (horario == null)
+                            continue;
+
+                        var nodosPorViaje = viaje.Nodos.Where(x => x.OrigenId == paradaOrigen.Id || x.DestinoId == paradaDestino.Id).ToList();
 
                         if (nodosPorViaje.Count == 2)
                         {
                             // EL ID DEL NODO ORIGEN (ÍNDICE 0) DEBE SER MENOR AL ID DEL NODO DESTINO (ÍNDICE 1)
                             if (nodosPorViaje[0].Id < nodosPorViaje[1].Id)
                             {
+
                                 DateTime? horarioSalida = await CalcularFechaAsync(viaje, horario, paradaOrigen, true);
                                 DateTime? horarioLlegada = await CalcularFechaAsync(viaje, horario, paradaOrigen, false);
 
@@ -83,16 +88,17 @@ namespace BoleteriaOnline.Web.Services
                                 viajesAceptados.Add(viajesDto);
                             }
                         }
+
                     }
                 }
                 return Ok<ICollection<ViajeClienteDTO>>(viajesAceptados);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                return Error<Viaje, ICollection<ViajeClienteDTO>>(ErrorMessage.Generic, ex.Message);
             }
         }
-        
+
         public async Task<DateTime?> CalcularFechaAsync(Viaje viaje, Horario horario, Parada parada, bool Origen)
         {
             var nodos = await _context.Nodos.Where(x => x.ViajeId == viaje.Id).ToListAsync();

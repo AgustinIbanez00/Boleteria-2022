@@ -80,6 +80,10 @@ public class DistribucionService : IDistribucionService
 
             return Ok<Distribucion, DistribucionResponse>(_mapper.Map<DistribucionResponse>(distribucion), SuccessMessage.Deleted);
         }
+        catch (ReferenceConstraintException)
+        {
+            return Error<DistribucionResponse>(ErrorMessage.CouldNotDeleteReferenced);
+        }
         catch (Exception ex)
         {
             return Error<Distribucion, DistribucionResponse>(ErrorMessage.Generic, ex.Message);

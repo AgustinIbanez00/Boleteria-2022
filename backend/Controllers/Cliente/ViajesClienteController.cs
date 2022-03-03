@@ -21,7 +21,7 @@ public class ViajesClienteController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResult<ICollection<ViajeDTO>>>> GetAll([FromQuery] ViajeClienteFilter filter)
+    public async Task<ActionResult<WebResult<ICollection<ViajeClienteDTO>>>> GetAll([FromQuery] ViajeClienteFilter filter)
     {
         var viajes = await _viajeClienteService.AllAsync(filter);
 
