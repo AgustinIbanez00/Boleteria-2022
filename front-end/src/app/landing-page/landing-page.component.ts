@@ -10,6 +10,8 @@ import { ParadasService } from '../paradas/paradas.service';
 import { paradasDTO } from '../paradas/paradasDTO';
 import { parserarErroresAPI } from '../utilidades/utilidades';
 import { webResultList } from '../utilidades/webResult';
+import { filtrarViajes, viajeDTO } from '../viajes/viajaeDTO';
+import { ViajesService } from '../viajes/viajes.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -17,6 +19,7 @@ import { webResultList } from '../utilidades/webResult';
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit {
+  destinosDTO: viajeDTO[] = []
   errores: string[] = []
   isLoading: boolean = false;
   form: FormGroup;
@@ -28,6 +31,7 @@ export class LandingPageComponent implements OnInit {
   constructor(
     private servicioParadas: ParadasService,
     private formBuilder: FormBuilder,
+    private viajesService: ViajesService,
     public dialog: MatDialog,) { }
 
   ngOnInit(): void {
@@ -56,7 +60,6 @@ export class LandingPageComponent implements OnInit {
       .obtenerParadas(1, 50)
       .subscribe(
         (respuesta: HttpResponse<webResultList>) => {
-          console.log(Object.values(respuesta.body)[1])
           this.paradas = Object.values(respuesta.body)[1];
         },
         (error) => {
@@ -72,7 +75,6 @@ export class LandingPageComponent implements OnInit {
   opcionSelectedDestino(event: MatAutocompleteSelectedEvent) {
     var origen = this.paradas.find((item) => item.descripcion === event.option.value)
     this.form.get('DestinoId').setValue(origen.id)
-    console.log(this.form.value)
   }
 
   verViaje(idViaje: number) {
@@ -82,7 +84,12 @@ export class LandingPageComponent implements OnInit {
     });
   }
 
-  buscarViajes() {
-
+  buscarViajes(filtroViaje: filtrarViajes) {
+    this.isLoading = true;
+    this.viajesService.obtenerDestinos(filtroViaje).subscribe((result) => {
+      console.log(Object.values(result.body))
+      this.destinosDTO = Object.values(result.body)[1]
+      this.isLoading = false;
+    }, (error) => { this.errores = parserarErroresAPI(error); this.isLoading = false; })
   }
 }

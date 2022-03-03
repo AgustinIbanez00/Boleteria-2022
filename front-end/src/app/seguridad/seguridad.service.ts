@@ -43,8 +43,7 @@ export class SeguridadService {
   }
 
   obtenerRol(): string {
-    // return this.obtenerCapmpoJWT(this.campoRol);
-    return 'admin';
+    return this.obtenerCapmpoJWT(this.campoRol);
   }
 
   obtenerCapmpoJWT(campo: string): string {

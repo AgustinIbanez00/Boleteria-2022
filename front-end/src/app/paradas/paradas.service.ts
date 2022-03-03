@@ -15,7 +15,7 @@ import { paradasDTO, paradasFiltroDTO } from './paradasDTO';
   providedIn: 'root',
 })
 export class ParadasService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   private apiURL = environment.apiURL + '/paradas';
 
@@ -85,7 +85,6 @@ export class ParadasService {
   }
 
   public obtenerListParadas(): Observable<HttpResponse<webResult>> {
-    console.log(`${this.apiURL}`);
 
     return this.http.get<webResult>(`${this.apiURL}/all`, {
       observe: 'response',

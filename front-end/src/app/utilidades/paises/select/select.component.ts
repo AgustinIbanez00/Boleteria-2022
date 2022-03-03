@@ -14,7 +14,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./select.component.css'],
 })
 export class SelectComponent implements OnInit {
-  constructor(public paisesService: PaisesService) {}
+  constructor(public paisesService: PaisesService) { }
 
   @Input()
   form: FormControl;
@@ -32,7 +32,6 @@ export class SelectComponent implements OnInit {
   errores: string[];
 
   ngOnInit() {
-    console.log(this.form);
     this.obtenerPaises('');
 
     this.form.value[this.provincia] != '' &&

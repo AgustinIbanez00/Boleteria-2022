@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { parserarErroresAPI } from 'src/app/utilidades/utilidades';
 import { SeguridadService } from '../seguridad.service';
 import { loginDTO } from '../usuario';
@@ -18,8 +19,9 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private usuarioService: UsuarioService,
-    private seguridadService: SeguridadService
-  ) {}
+    private seguridadService: SeguridadService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -43,7 +45,9 @@ export class LoginComponent implements OnInit {
         this.isLoading = false;
         if (result.success) {
           this.seguridadService.guardarToken(result.result['token']);
+          this.router.navigate(['/']);
         }
+
       },
       (error) => {
         this.errores = parserarErroresAPI(error);

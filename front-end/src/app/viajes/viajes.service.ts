@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { paradasDTO } from '../paradas/paradasDTO';
 import { webResult } from '../utilidades/webResult';
-import { viajeDTO, viajeFiltroDTO } from './viajaeDTO';
+import { filtrarViajes, viajeDTO, viajeFiltroDTO } from './viajaeDTO';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
+import { formatearFecha } from '../utilidades/utilidades';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,21 @@ export class ViajesService {
     return this.http.get<webResult>(`${this.apiURL}`, {
       observe: 'response',
       params,
+    });
+  }
+
+  public obtenerDestinos(filtro: filtrarViajes): Observable<HttpResponse<webResult>> {
+    let params = new HttpParams();
+    params = params.append('OrigenId', filtro.OrigenId.toString());
+    params = params.append('DestinoId', filtro.DestinoId.toString());
+    params = params.append('Fecha', formatearFecha(filtro.Fecha));
+    params = params.append('pagina', 1);
+    params = params.append(
+      'recordsPorPagina',
+      15
+    );
+    return this.http.get<webResult>(`${this.apiURL}?OrigenId=${filtro.OrigenId}&DestinoId=${filtro.DestinoId}&Fecha=${formatearFecha(filtro.Fecha)}`, {
+      observe: 'response'
     });
   }
 

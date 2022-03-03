@@ -5,6 +5,7 @@
     </mat-card-header>
     <mat-card-content>
       <form
+        (submit)="buscarViajes(form.value)"
         [formGroup]="form"
         style="display: flex; flex-direction: column; flex-wrap: nowrap"
       >
@@ -69,34 +70,38 @@
     </mat-card-content>
   </mat-card>
   <mat-card class="cardListado">
-    <mat-card class="cardItem">
-      <mat-card-content class="cardContentItem">
-        <label class="labelTitulo">Empresa</label>
-        <label class="labelDescripcion">Boltereia Online</label>
-      </mat-card-content>
-      <mat-card-content class="cardContentItem">
-        <label class="labelTitulo">Horario Salida</label>
-        <label class="labelDescripcion"> 9:30</label>
-      </mat-card-content>
-      <mat-card-content class="cardContentItem">
-        <label class="labelTitulo">Horario llegada</label>
-        <label class="labelDescripcion">10:45</label>
-      </mat-card-content>
-      <mat-card-content class="cardContentItem">
-        <label class="labelTitulo">Asientos disponibles</label>
-        <label class="labelDescripcion">12</label>
-      </mat-card-content>
-      <mat-card-content class="cardContentItem">
-        <label class="labelTitulo">Precio</label>
-        <label class="labelDescripcion">$521</label></mat-card-content
-      >
-      <mat-card-content class="cardContentItem">
-        <div class="divBotonVer">
-          <button mat-button class="botonVerItem" (click)="verViaje(24)">
-            Ver
-          </button>
-        </div></mat-card-content
-      >
-    </mat-card>
+    <div *ngIf="destinosDTO">
+      <mat-card class="cardItem" *ngFor="let destino of destinosDTO">
+        <mat-card-content class="cardContentItem">
+          <label class="labelTitulo">Destino</label>
+          <label class="labelDescripcion">{{ destino.nombre }}</label>
+        </mat-card-content>
+        <mat-card-content class="cardContentItem">
+          <label class="labelTitulo">Horario Salida</label>
+          <label class="labelDescripcion"> 9:30</label>
+        </mat-card-content>
+        <mat-card-content class="cardContentItem">
+          <label class="labelTitulo">Horario llegada</label>
+          <label class="labelDescripcion">10:45</label>
+        </mat-card-content>
+        <mat-card-content class="cardContentItem">
+          <label class="labelTitulo">Asientos disponibles</label>
+          <label class="labelDescripcion">12</label>
+        </mat-card-content>
+        <mat-card-content class="cardContentItem">
+          <label class="labelTitulo">Precio</label>
+          <label class="labelDescripcion">$521</label></mat-card-content
+        >
+        <mat-card-content class="cardContentItem">
+          <div class="divBotonVer">
+            <button mat-button class="botonVerItem" (click)="verViaje(24)">
+              Ver
+            </button>
+          </div></mat-card-content
+        >
+      </mat-card>
+    </div>
   </mat-card>
 </div>
+<app-mostrar-errores [errores]="errores"></app-mostrar-errores>
+<app-loading [isLoading]="isLoading"></app-loading>

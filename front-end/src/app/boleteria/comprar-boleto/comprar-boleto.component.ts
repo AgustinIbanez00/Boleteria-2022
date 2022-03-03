@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DistribucionService } from 'src/app/distribucion/distribucion.service';
 import { distribucionDTO, DistribucionDTO } from 'src/app/distribucion/distribucionDTO';
+import { NotificacionesService } from 'src/app/utilidades/notificaciones.service';
 import { parserarErroresAPI } from 'src/app/utilidades/utilidades';
 
 @Component({
@@ -26,6 +27,7 @@ export class ComprarBoletoComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: number,
     private distribucionService: DistribucionService,
     private formBuilder: FormBuilder,
+    private notificacionesService: NotificacionesService
   ) { }
 
   ngOnInit(): void {
@@ -60,12 +62,12 @@ export class ComprarBoletoComponent implements OnInit {
   }
 
   seleccionarAsiento(celda: any) {
-    console.log(celda)
-    // console.log("celda", celda)
     if (celda.value == 2 || celda.value == 6 || celda.value == 7) {
       this.asientoSeleccionado = celda.numero
-      // document.getElementById(celda.numero).style.border = "1000px solid green"
-      console.log(celda.numero == this.asientoSeleccionado)
     }
+  }
+
+  comprarBoleto() {
+    this.notificacionesService.showNotificacion("Boleto comprado con éxito", "X", "success")
   }
 }

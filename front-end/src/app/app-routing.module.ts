@@ -36,28 +36,34 @@ const routes: Routes = [
   {
     path: 'distribuciones',
     component: IndiceDistribucionComponent,
+    canActivate: [EsAdminGuard],
   },
   {
     path: 'crear-distribucion',
     component: CrearDistribucionComponent,
+    canActivate: [EsAdminGuard],
   },
   //clientes
   {
     path: 'clientes',
     component: IndiceClienteComponent,
+    canActivate: [EsAdminGuard],
   },
   //viajes
   {
     path: 'viajes',
     component: IndiceViajesComponent,
+    canActivate: [EsAdminGuard],
   },
   {
     path: 'crear-viaje',
     component: CrearViajesComponent,
+    canActivate: [EsAdminGuard],
   },
   {
     path: 'crear-viajer/editar/:id',
     component: CrearViajesComponent,
+    canActivate: [EsAdminGuard],
   },
 ];
 
@@ -65,4 +71,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

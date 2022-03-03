@@ -23,7 +23,7 @@ export class ConexionComponent implements OnInit {
   constructor(
     public paradasService: ParadasService,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.conexionForm = this.formBuilder.group({

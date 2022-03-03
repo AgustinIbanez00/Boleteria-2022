@@ -8,6 +8,11 @@ export interface viajeDTO {
   conexiones: conexionDTO[];
 }
 
+export interface filtrarViajes {
+  OrigenId: number;
+  DestinoId: number;
+  Fecha: Date;
+}
 export interface viajeFiltroDTO {
   id?: number;
   nombre?: string;

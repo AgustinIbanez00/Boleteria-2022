@@ -16,7 +16,7 @@ export class EsAdminGuard implements CanActivate {
   constructor(
     private seguridadService: SeguridadService,
     private router: Router
-  ) {}
+  ) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -26,10 +26,10 @@ export class EsAdminGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.seguridadService.obtenerRol() === 'admin') {
+    if (this.seguridadService.obtenerRol() === 'ADMIN') {
       return true;
     }
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
     return false;
   }
 }

@@ -10,7 +10,7 @@ import { loginDTO, registroDTO } from './usuario';
   providedIn: 'root'
 })
 export class UsuarioService {
-  private apiURL = environment.apiURL + 'usuario';
+  private apiURL = environment.apiURL + '/usuario';
   constructor(private http: HttpClient) { }
 
   crearUsuario(usuario: registroDTO): Observable<webResult> {
