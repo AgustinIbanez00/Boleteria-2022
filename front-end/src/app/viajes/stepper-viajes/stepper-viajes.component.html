@@ -1,4 +1,4 @@
-<mat-stepper #stepper linear class="mat-elevation-z8">
+<mat-stepper #stepper class="mat-elevation-z8">
   <!-- NOMBRE -->
   <mat-step
     [stepControl]="viajeDistribucionForm"
@@ -53,8 +53,8 @@
     <app-horarios (cargarHorario)="agregarHorario($event)"></app-horarios>
     <div align="center">
       <button mat-button matStepperPrevious>Atrás</button>
-      <button mat-button matStepperNext (click)="guardarViajes()">
-        Guardar
+      <button mat-button matStepperNext (click)="guardarViajes(false)">
+        Siguente
       </button>
     </div>
   </mat-step>
@@ -62,42 +62,36 @@
   <!-- CONEXIONES -->
   <mat-step>
     <div>Conexiones</div>
+    <div *ngIf="listConexiones.length != 0">
+      <button mat-button (click)="borrarConexiones()">Borrar Conexiones</button>
+    </div>
     <div class="flex-container w-100">
       <mat-card *ngFor="let conex of listConexiones; index">
         <mat-card-content style="font-size: 20px">
           <div style="display: flex; flex-direction: row">
             <div style="width: 93%">
               <h3 style="font-size: 15px">
-                Origen: {{ buscarParaPorId(conex.origen_id).descripcion }}
+                {{ buscarParaPorId(conex.destino_id).descripcion }}
               </h3>
-              <h3 style="font-size: 15px">
-                Origen: {{ buscarParaPorId(conex.destino_id).descripcion }}
-              </h3>
-              <!-- {{ horario.hora }} -
-              <span style="font-size: 15px">
-                {{ obtenerDescripcionDias(horario.dias) }}
-              </span>  -->
             </div>
-            <mat-icon
-              style="cursor: pointer"
-              [matTooltip]="'Eliminar horario'"
-              (click)="eliminarHorario(index)"
-              >delete</mat-icon
-            >
+
+            <mat-icon>forward</mat-icon>
           </div>
         </mat-card-content>
       </mat-card>
     </div>
-
-    <app-conexion
-      (cargarConexion)="agregarConexion($event)"
-      [viajeDTO]="viajeDTO"
-    ></app-conexion>
-
+    <div *ngIf="viajeDTO">
+      <app-conexion
+        (cargarConexion)="agregarConexion($event)"
+        [viajeDTO]="viajeDTO"
+      ></app-conexion>
+    </div>
     <div>
       <button mat-button matStepperPrevious>Anterior</button>
       <button mat-button (click)="stepper.reset()">Paso 1</button>
-      <button mat-button>Crear Conexión</button>
+      <button mat-button *ngIf="isViajeCompleto" (click)="guardarViajes(true)">
+        Guardar Viaje
+      </button>
     </div>
   </mat-step>
 </mat-stepper>
