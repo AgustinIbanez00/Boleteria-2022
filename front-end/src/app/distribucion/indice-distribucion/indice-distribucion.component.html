@@ -68,12 +68,7 @@
               mat-flat-button
               [matTooltip]="'Eliminar distribución'"
               class="botonEliminar"
-              [swal]="{
-                title: 'Confirmación',
-                text: '¿Está seguro que desea borrar la parada?',
-                showCancelButton: true
-              }"
-              (confirm)="borrarRegistro(element.id)"
+              (click)="openDialogEliminar(element)"
             >
               <mat-icon>delete</mat-icon>
             </button>

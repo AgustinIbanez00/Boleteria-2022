@@ -4,9 +4,11 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatTable } from '@angular/material/table';
 import { parserarErroresAPI } from 'src/app/utilidades/utilidades';
 import { DistribucionService } from '../distribucion.service';
-import { DistribucionDTO } from '../distribucionDTO';
+import { distribucionDTO, DistribucionDTO } from '../distribucionDTO';
 import { DistribucionComponent } from '../distribucion/distribucion.component';
 import { DetalleDistribucionComponent } from '../detalle-distribucion/detalle-distribucion.component';
+import { ConfirmComponent } from 'src/app/utilidades/confirm/confirm.component';
+import { NotificacionesService } from 'src/app/utilidades/notificaciones.service';
 @Component({
   selector: 'app-indice-distribucion',
   templateUrl: './indice-distribucion.component.html',
@@ -15,7 +17,8 @@ import { DetalleDistribucionComponent } from '../detalle-distribucion/detalle-di
 export class IndiceDistribucionComponent implements OnInit {
   constructor(
     private distribucionService: DistribucionService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private notificacionesService: NotificacionesService
   ) {}
 
   cantidadTotalRegistros;
@@ -55,10 +58,48 @@ export class IndiceDistribucionComponent implements OnInit {
   actualizarPaginacion(datos: PageEvent) {}
 
   borrarRegistro(id: number) {}
+
   openDialogDetalle(id: number) {
     var dialogRef = this.dialog.open(DetalleDistribucionComponent, {
       width: '600px',
       data: id,
     });
+  }
+
+  // elimninar
+
+  openDialogEliminar(distribucionDTO: distribucionDTO) {
+    var dialogRef = this.dialog.open(ConfirmComponent, {
+      width: '300px',
+      data: {
+        mensaje: '¿Desea eliminar permanentemente este registro?',
+      },
+    });
+
+    dialogRef.beforeClosed().subscribe((result) => {
+      result ? this.eliminar(distribucionDTO) : null;
+    });
+  }
+
+  eliminar(distribucionDTO: distribucionDTO) {
+    this.distribucionService.eliminar(distribucionDTO).subscribe(
+      (result) => {
+        if (result.body.success) {
+          this.notificacionesService.showNotificacion(
+            result.body.message,
+            'x',
+            'success'
+          );
+          this.cargarDistribuciones();
+        }
+      },
+      (errorResult) => {
+        this.notificacionesService.showNotificacion(
+          errorResult.error.message,
+          'x',
+          'error'
+        );
+      }
+    );
   }
 }
