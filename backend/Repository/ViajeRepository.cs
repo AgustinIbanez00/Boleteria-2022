@@ -52,7 +52,7 @@ public class ViajeRepository : IViajeRepository
 
     public async Task<Viaje> FindAsync(int id)
     {
-        return await _context.Viajes.Include(v => v.Horarios.OrderBy(h => h.Hora))
+        return await _context.Viajes.Include(v => v.Horarios.OrderBy(h => h.Hora)).Include(v => v.Nodos.OrderBy(n => n.Id))
             .FirstOrDefaultAsync(v => v.Id == id);
     }
 
@@ -68,7 +68,7 @@ public class ViajeRepository : IViajeRepository
 
     public async Task<Viaje> GetAsync(ViajeFilter filter)
     {
-        return await _context.Viajes.Include(v => v.Horarios.OrderBy(h => h.Hora)).FirstOrDefaultAsync(GetExpression(filter));
+        return await _context.Viajes.Include(v => v.Horarios.OrderBy(h => h.Hora)).Include(v => v.Nodos.OrderBy(n => n.Id)).FirstOrDefaultAsync(GetExpression(filter));
     }
 
     public Expression<Func<Viaje, bool>> GetExpression(ViajeFilter filter)
@@ -79,10 +79,6 @@ public class ViajeRepository : IViajeRepository
             .And(p => !filter.Estado.HasValue || (filter.Estado.HasValue && p.Estado == filter.Estado.Value))
         ;
     }
-    public async Task<Viaje> GetViajeAsync(long id) => await _context.Viajes.FirstOrDefaultAsync(m => m.Id == id);
-
-    public async Task<ICollection<Viaje>> GetViajesAsync() => await _context.Viajes.ToListAsync();
-
     public async Task<bool> Save() => await _context.SaveChangesAsync() >= 0;
 
     public async Task<bool> UpdateAsync(Viaje entity)
