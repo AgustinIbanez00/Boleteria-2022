@@ -29,4 +29,10 @@ export class FormControlComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  validar(propiedad: string) {
+    if (this.validaciones) {
+      this.validaciones(propiedad)
+    }
+
+  }
 }

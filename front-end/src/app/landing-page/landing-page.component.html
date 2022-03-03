@@ -1,1 +1,63 @@
-<p>landing-page works!</p>
+<div class="contenedor-landing-page">
+  <mat-card class="cardFiltro">
+    <mat-card-header>
+      <mat-card-title>Buscar pasajes</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Origen</mat-label>
+          <input
+            type="text"
+            placeholder="Seleccione un origen"
+            aria-label="Origen"
+            matInput
+            [formControl]="controlOrigen"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete
+            (optionSelected)="opcionSelectedOrigen($event)"
+            autoActiveFirstOption
+            #auto="matAutocomplete"
+          >
+            <mat-option
+              *ngFor="let parada of filteredOptionsOrigen | async"
+              [value]="parada.descripcion"
+            >
+              {{ parada.descripcion }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Destino</mat-label>
+          <input
+            type="text"
+            placeholder="Seleccione un destino"
+            aria-label="Destinino"
+            matInput
+            [formControl]="controlOrigen"
+            [matAutocomplete]="autocompletarDestino"
+          />
+          <mat-autocomplete
+            (optionSelected)="opcionSelectedDestino($event)"
+            autoActiveFirstOption
+            #autocompletarDestino="matAutocomplete"
+          >
+            <mat-option
+              *ngFor="let parada of filteredOptionsDestino | async"
+              [value]="parada.descripcion"
+            >
+              {{ parada.descripcion }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <app-form-control
+          [form]="form"
+          [type]="'date'"
+          [textoLabel]="'Fecha de salida'"
+          [propiedad]="'fecha_salida'"
+        ></app-form-control>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
