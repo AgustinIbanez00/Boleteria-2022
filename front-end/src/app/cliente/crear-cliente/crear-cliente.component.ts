@@ -43,7 +43,7 @@ export class CrearClienteComponent implements OnInit {
           ],
         },
       ],
-      fechaNacimiento: ['', { validators: [Validators.required] }],
+      fecha_nacimiento: ['', { validators: [Validators.required] }],
 
       genero: ['', { validators: [Validators.required] }],
     });

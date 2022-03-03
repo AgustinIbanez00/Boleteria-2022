@@ -87,7 +87,7 @@ export class IndiceParadasComponent implements OnInit {
       });
     } else {
       var parada = this.paradas.find((it) => it.id === id);
-
+      console.log(parada);
       dialogRef = this.dialog.open(CrearParadasComponent, {
         width: '800px',
         data: parada,

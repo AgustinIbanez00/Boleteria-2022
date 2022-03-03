@@ -32,12 +32,14 @@ export class CrearParadasComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
+      id: 0,
       nombre: [
         '',
         { validators: [Validators.required, Validators.maxLength(100)] },
       ],
       pais_id: ['', { validators: [Validators.required] }],
       provincia_id: ['', { validators: [Validators.required] }],
+      estado: 1,
     });
 
     if (this.data.id !== undefined) {
@@ -93,6 +95,7 @@ export class CrearParadasComponent implements OnInit {
           );
           this.dialogRef.close('algo');
         } else {
+          console.log(result, paradasDTO);
           this.notificacionesService.showNotificacion(
             result.body.message,
             'x',
@@ -101,6 +104,7 @@ export class CrearParadasComponent implements OnInit {
         }
       },
       (errorResult) => {
+        console.log(errorResult, paradasDTO, 'aca');
         this.notificacionesService.showNotificacion(
           errorResult.error.message,
           'x',
