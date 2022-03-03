@@ -51,6 +51,7 @@ export class ViajesService {
   }
 
   public editar(viajeDTO: viajeDTO) {
+    console.log(JSON.stringify(viajeDTO));
     return this.http.patch<webResult>(
       `${this.apiURL}/${viajeDTO.id}`,
       JSON.stringify(viajeDTO),

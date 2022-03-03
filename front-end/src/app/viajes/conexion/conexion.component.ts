@@ -40,11 +40,13 @@ export class ConexionComponent implements OnInit {
   guardarConexion(conexion: conexionDTO) {
     var conexion: conexionDTO = JSON.parse(JSON.stringify(conexion));
     var con = conexion;
+    console.log(this.cont);
     if (this.cont != 1) {
       conexion.destino_id = con.origen_id;
     }
     conexion.viaje_id = this.viajeDTO.id;
     this.cont++;
+    console.log(conexion);
     this.cargarConexion.emit(conexion);
   }
 

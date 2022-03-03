@@ -55,6 +55,7 @@ export class StepperViajesComponent implements OnInit {
   errores: string[] = [];
   isEditar: boolean = false;
   isViajeCompleto = false;
+  verConexionModal = false;
 
   paradas;
   ngOnInit(): void {
@@ -179,7 +180,9 @@ export class StepperViajesComponent implements OnInit {
       this.viajeDTO.conexiones = this.listConexiones;
       this.crear(this.viajeDTO, guardarFinal);
     } else {
-      this.editar(this.viajeDTO, guardarFinal);
+      console.log('estoy editando', this.listConexiones);
+      this.viajeDTO.conexiones = this.listConexiones;
+      this.editar(this.viajeDTO);
     }
   }
 
@@ -218,7 +221,7 @@ export class StepperViajesComponent implements OnInit {
     );
   }
 
-  editar(viajeDTO: viajeDTO, guardarFinal: boolean) {
+  editar(viajeDTO: viajeDTO) {
     console.log(viajeDTO);
     this.viajesService.editar(viajeDTO).subscribe(
       (result) => {
@@ -226,16 +229,16 @@ export class StepperViajesComponent implements OnInit {
           this.viajeHorarioForm.get('horarios').setValue(viajeDTO.horarios);
 
           this.viajeDTO = result.body.result as viajeDTO;
-          console.log('aca 2', viajeDTO);
-          if (guardarFinal) {
-            this.notificacionesService.showNotificacion(
-              result.body.message,
-              'x',
-              'success'
-            );
-            this.router.navigate(['/viajes']);
-          }
+          console.log('aca editando editar', viajeDTO);
+
+          this.notificacionesService.showNotificacion(
+            result.body.message,
+            'x',
+            'success'
+          );
+          this.router.navigate(['/viajes']);
         } else {
+          console.log(result);
           this.notificacionesService.showNotificacion(
             result.body.message,
             'x',
@@ -244,6 +247,7 @@ export class StepperViajesComponent implements OnInit {
         }
       },
       (errorResult) => {
+        console.log('500', errorResult);
         this.notificacionesService.showNotificacion(
           errorResult.error.message,
           'x',
@@ -255,17 +259,20 @@ export class StepperViajesComponent implements OnInit {
 
   // -------- CONEXION ----------------
 
-  agregarConexion(conexion: conexionDTO) {
+  agregarConexion(conexion: conexionDTO, verConexionModal: boolean) {
+    console.log('conecnnnnnnn', conexion);
     var con = conexion;
+    console.log('lista conexiones ahora', this.listConexiones.length);
     if (this.listConexiones.length == 0) {
       conexion.destino_id = con.origen_id;
     } else {
       let ultimaConexion = this.listConexiones[this.listConexiones.length - 1];
       conexion.origen_id = ultimaConexion.destino_id;
     }
-
+    console.log('origen = destino', conexion);
     this.listConexiones.push(conexion);
     this.isViajeCompleto = true;
+    this.verConexionModal = verConexionModal;
   }
 
   borrarConexiones() {
@@ -316,7 +323,9 @@ export class StepperViajesComponent implements OnInit {
   }
 
   buscarParaPorId(id: number) {
-    var parada = this.paradas.find((it) => it.id === id);
-    return parada;
+    if (this.paradas) {
+      var parada = this.paradas.find((it) => it.id === id);
+      return parada.descripcion;
+    }
   }
 }

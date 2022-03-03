@@ -53,9 +53,15 @@
     <app-horarios (cargarHorario)="agregarHorario($event)"></app-horarios>
     <div align="center">
       <button mat-button matStepperPrevious>Atrás</button>
-      <button mat-button matStepperNext (click)="guardarViajes(false)">
-        Siguente
+      <button
+        *ngIf="!isEditar"
+        mat-button
+        matStepperNext
+        (click)="guardarViajes(false)"
+      >
+        Siguente -
       </button>
+      <button *ngIf="isEditar" mat-button matStepperNext>Siguente</button>
     </div>
   </mat-step>
 
@@ -71,7 +77,7 @@
           <div style="display: flex; flex-direction: row">
             <div style="width: 93%">
               <h3 style="font-size: 15px">
-                {{ buscarParaPorId(conex.destino_id).descripcion }}
+                {{ buscarParaPorId(conex.destino_id) }}
               </h3>
             </div>
 
@@ -80,9 +86,9 @@
         </mat-card-content>
       </mat-card>
     </div>
-    <div *ngIf="viajeDTO">
+    <div *ngIf="(viajeDTO && listConexiones.length == 0) || verConexionModal">
       <app-conexion
-        (cargarConexion)="agregarConexion($event)"
+        (cargarConexion)="agregarConexion($event, true)"
         [viajeDTO]="viajeDTO"
       ></app-conexion>
     </div>
