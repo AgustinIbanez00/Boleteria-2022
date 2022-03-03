@@ -5,6 +5,6 @@ using BoleteriaOnline.Core.ViewModels.Filters;
 namespace BoleteriaOnline.Core.Services;
 public interface IViajeClienteService
 {
-    Task<WebResultList<ViajeClienteDTO>> AllAsync(ViajeClienteFilter filter);
+    Task<WebResult<ICollection<ViajeClienteDTO>>> AllAsync(ViajeClienteFilter filter);
 
 }

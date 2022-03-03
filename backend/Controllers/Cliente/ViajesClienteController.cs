@@ -11,11 +11,11 @@ namespace BoleteriaOnline.Web.Controllers;
 [ApiController]
 public class ViajesClienteController : ControllerBase
 {
-    private readonly IViajeClienteService _viajeservice;
+    private readonly IViajeClienteService _viajeClienteService;
 
     public ViajesClienteController(IViajeClienteService service)
     {
-        _viajeservice = service;
+        _viajeClienteService = service;
     }
 
     [HttpGet]
@@ -23,7 +23,7 @@ public class ViajesClienteController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<ICollection<ViajeDTO>>>> GetAll([FromQuery] ViajeClienteFilter filter)
     {
-        var viajes = await _viajeservice.AllAsync(filter);
+        var viajes = await _viajeClienteService.AllAsync(filter);
 
         if (!viajes.Success)
             return StatusCode(ResponseHelper.GetHttpError(viajes.ErrorCode), viajes);

@@ -192,4 +192,14 @@
     <value>estado</value>
     <comment>Created by XLocalizer</comment>
   </data>
+  <data isActive="false">
+    <key>viaje</key>
+    <value>viaje</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>conexiones</key>
+    <value>conexiones</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
 </root>
