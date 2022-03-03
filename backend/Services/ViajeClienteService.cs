@@ -6,7 +6,6 @@ using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Core.ViewModels.Filters;
 using BoleteriaOnline.Web.Data;
 using BoleteriaOnline.Web.Repositories;
-using BoleteriaOnline.Web.Repository;
 using static BoleteriaOnline.Core.Utils.WebResponse;
 
 namespace BoleteriaOnline.Web.Services
@@ -46,7 +45,7 @@ namespace BoleteriaOnline.Web.Services
                 if (!DateTime.TryParse(filter.Fecha, out fechaDateTime))
                     return ErrorList<ViajeClienteDTO>("No se pudo convertir la fecha solicitada.");
 
-                if(fechaDateTime < DateTime.Now)
+                if (fechaDateTime < DateTime.Now)
                     return ErrorList<ViajeClienteDTO>("La fecha debe ser mayor a la fecha actual.");
 
                 var nodos = _context.Nodos.Where(n => n.OrigenId == paradaOrigen.Id);
@@ -56,7 +55,7 @@ namespace BoleteriaOnline.Web.Services
 
                 return null;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }

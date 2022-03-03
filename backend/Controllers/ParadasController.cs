@@ -1,4 +1,5 @@
-﻿using BoleteriaOnline.Core.Services;
+﻿using BoleteriaOnline.Core.Data.Enums;
+using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Core.ViewModels.Filters;
@@ -17,8 +18,9 @@ public class ParadasController : ControllerBase
     {
         _paradaService = service;
     }
+
     /// <summary>
-    /// Devuelve todas las paradas que cumplan la condición del filtro.
+    /// Todas las paradas con filtro
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
@@ -37,11 +39,15 @@ public class ParadasController : ControllerBase
         return Ok(paradas);
     }
 
+    /// <summary>
+    /// Todas las paradas sin filtro
+    /// </summary>
+    /// <returns></returns>
     [HttpGet("all")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<WebResult<ICollection<ParadaDTO>>>> GetAll([FromQuery] ParadaFilter filter)
+    public async Task<ActionResult<WebResult<ICollection<ParadaDTO>>>> GetAll()
     {
-        var paradas = await _paradaService.AllAsync(filter);
+        var paradas = await _paradaService.AllAsync(new ParadaFilter() { Estado = Estado.Activo });
 
         if (!paradas.Success)
             return StatusCode(ResponseHelper.GetHttpError(paradas.ErrorCode), paradas);
@@ -49,54 +55,75 @@ public class ParadasController : ControllerBase
         return Ok(paradas);
     }
 
+    /// <summary>
+    /// Parada por id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<ParadaDTO>>> Get(int id)
     {
-        var destino = await _paradaService.GetAsync(new ParadaFilter() { Id = id });
+        var parada = await _paradaService.GetAsync(new ParadaFilter() { Id = id });
 
-        if (!destino.Success)
-            return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);
+        if (!parada.Success)
+            return StatusCode(ResponseHelper.GetHttpError(parada.ErrorCode), parada);
 
-        return Ok(destino);
+        return Ok(parada);
     }
 
+    /// <summary>
+    /// Crear una parada
+    /// </summary>
+    /// <param name="paradaDto"></param>
+    /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<ActionResult<WebResult<ParadaDTO>>> CreateDestino([FromBody] ParadaDTO destinoDto)
+    public async Task<ActionResult<WebResult<ParadaDTO>>> CreateParada([FromBody] ParadaDTO paradaDto)
     {
-        var destino = await _paradaService.CreateAsync(destinoDto);
+        var parada = await _paradaService.CreateAsync(paradaDto);
 
-        if (!destino.Success)
-            return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);
-        return Created(nameof(Get), destino);
+        if (!parada.Success)
+            return StatusCode(ResponseHelper.GetHttpError(parada.ErrorCode), parada);
+        return Created(nameof(Get), parada);
     }
 
+    /// <summary>
+    /// Modificar una parada
+    /// </summary>
+    /// <param name="paradaDto"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpPatch("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<WebResult<ParadaDTO>>> UpdateDestino([FromBody] ParadaDTO destinoDto, int id)
+    public async Task<ActionResult<WebResult<ParadaDTO>>> UpdateParada([FromBody] ParadaDTO paradaDto, int id)
     {
-        var destino = await _paradaService.UpdateAsync(destinoDto, id);
+        var parada = await _paradaService.UpdateAsync(paradaDto, id);
 
-        if (!destino.Success)
-            return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);
-        return Ok(destino);
+        if (!parada.Success)
+            return StatusCode(ResponseHelper.GetHttpError(parada.ErrorCode), parada);
+        return Ok(parada);
     }
 
+    /// <summary>
+    /// Eliminar una parada
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<WebResult<ParadaDTO>>> DeleteDestino(int id)
+    public async Task<ActionResult<WebResult<ParadaDTO>>> DeleteParada(int id)
     {
-        var destino = await _paradaService.DeleteAsync(new ParadaFilter() { Id = id });
+        var parada = await _paradaService.DeleteAsync(new ParadaFilter() { Id = id });
 
-        if (!destino.Success)
-            return StatusCode(ResponseHelper.GetHttpError(destino.ErrorCode), destino);
-        return Ok(destino);
+        if (!parada.Success)
+            return StatusCode(ResponseHelper.GetHttpError(parada.ErrorCode), parada);
+        return Ok(parada);
     }
 
 

@@ -1,4 +1,5 @@
-﻿using BoleteriaOnline.Core.Services;
+﻿using BoleteriaOnline.Core.Data.Enums;
+using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Web.Data.Filters;
@@ -18,6 +19,11 @@ public class ClientesController : ControllerBase
         _clienteservice = service;
     }
 
+    /// <summary>
+    /// Clientes paginados
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -31,11 +37,15 @@ public class ClientesController : ControllerBase
         return Ok(clientes);
     }
 
+    /// <summary>
+    /// Clientes sin paginado
+    /// </summary>
+    /// <returns></returns>
     [HttpGet("all")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<WebResult<ICollection<ClienteDTO>>>> GetAll([FromQuery] ClienteFilter filter)
+    public async Task<ActionResult<WebResult<ICollection<ClienteDTO>>>> GetAll()
     {
-        var clientes = await _clienteservice.AllAsync(filter);
+        var clientes = await _clienteservice.AllAsync(new ClienteFilter() { Estado = Estado.Activo });
 
         if (!clientes.Success)
             return StatusCode(ResponseHelper.GetHttpError(clientes.ErrorCode), clientes);
@@ -43,6 +53,11 @@ public class ClientesController : ControllerBase
         return Ok(clientes);
     }
 
+    /// <summary>
+    /// Clientes por id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -57,6 +72,11 @@ public class ClientesController : ControllerBase
         return Ok(cliente);
     }
 
+    /// <summary>
+    /// Crear un cliente
+    /// </summary>
+    /// <param name="clienteDto"></param>
+    /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -71,6 +91,12 @@ public class ClientesController : ControllerBase
         return Created(nameof(Get), cliente);
     }
 
+    /// <summary>
+    /// Modificar un cliente
+    /// </summary>
+    /// <param name="clienteDto"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpPatch("{id:long}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ClienteDTO>>> UpdateCliente([FromBody] ClienteDTO clienteDto, long id)
@@ -82,6 +108,11 @@ public class ClientesController : ControllerBase
         return Ok(cliente);
     }
 
+    /// <summary>
+    /// Eliminar una parada
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ClienteDTO>>> DeleteCliente(long id)
@@ -92,6 +123,4 @@ public class ClientesController : ControllerBase
             return StatusCode(ResponseHelper.GetHttpError(cliente.ErrorCode), cliente);
         return Ok(cliente);
     }
-
-
 }

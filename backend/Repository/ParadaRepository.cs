@@ -71,7 +71,7 @@ public class ParadaRepository : IParadaRepository
 
     public async Task<ICollection<Parada>> GetAllAsync(ParadaFilter filter)
     {
-        return await _context.Paradas.Where(GetExpression(filter)).ToListAsync();
+        return await _context.Paradas.Include(p => p.Pais).Include(p => p.Provincia).Where(GetExpression(filter)).ToListAsync();
     }
 
     public async Task<Parada> GetAsync(ParadaFilter filter)

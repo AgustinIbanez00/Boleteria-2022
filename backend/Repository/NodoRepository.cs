@@ -60,7 +60,7 @@ public class NodoRepository : INodoRepository
 
     public async Task<bool> ExistsAsync(NodoFilter filter)
     {
-        return  await _context.Nodos.AnyAsync(GetExpression(filter));
+        return await _context.Nodos.AnyAsync(GetExpression(filter));
     }
 
     public async Task<Nodo> FindAsync(int id)

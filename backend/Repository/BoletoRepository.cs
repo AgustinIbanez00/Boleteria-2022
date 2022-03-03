@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using BoleteriaOnline.Core.Data.Enums;
 using BoleteriaOnline.Core.ViewModels.Filters;
 using BoleteriaOnline.Core.ViewModels.Pagging;

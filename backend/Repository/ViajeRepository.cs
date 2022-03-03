@@ -52,7 +52,7 @@ public class ViajeRepository : IViajeRepository
 
     public async Task<Viaje> FindAsync(int id)
     {
-        return await _context.Viajes.Include(v => v.Horarios.OrderBy(h=> h.Hora))
+        return await _context.Viajes.Include(v => v.Horarios.OrderBy(h => h.Hora))
             .FirstOrDefaultAsync(v => v.Id == id);
     }
 

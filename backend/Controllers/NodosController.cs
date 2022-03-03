@@ -2,7 +2,6 @@
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Core.ViewModels.Filters;
-using BoleteriaOnline.Core.ViewModels.Responses;
 using BoleteriaOnline.Web.Extensions.Response;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +18,10 @@ public class NodosController : ControllerBase
         _nodoservice = service;
     }
 
+    /// <summary>
+    /// Todos los nodos
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -32,13 +35,18 @@ public class NodosController : ControllerBase
         return Ok(nodos);
     }
 
+    /// <summary>
+    /// Nodos por id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<NodoDTO>>> Get(int id)
     {
-        var nodo = await _nodoservice.GetAsync(new NodoFilter() { Id = id});
+        var nodo = await _nodoservice.GetAsync(new NodoFilter() { Id = id });
 
         if (!nodo.Success)
             return StatusCode(ResponseHelper.GetHttpError(nodo.ErrorCode), nodo);
@@ -46,6 +54,11 @@ public class NodosController : ControllerBase
         return Ok(nodo);
     }
 
+    /// <summary>
+    /// Crear un nodo
+    /// </summary>
+    /// <param name="nodoDto"></param>
+    /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -60,6 +73,12 @@ public class NodosController : ControllerBase
         return Created(nameof(Get), nodo);
     }
 
+    /// <summary>
+    /// Actualizar un nodo
+    /// </summary>
+    /// <param name="nodoDto"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpPatch("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<NodoDTO>>> UpdateNodo([FromBody] NodoDTO nodoDto, int id)
@@ -71,11 +90,16 @@ public class NodosController : ControllerBase
         return Ok(nodo);
     }
 
+    /// <summary>
+    /// Eliminar un nodo
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<NodoDTO>>> DeleteNodo(int id)
     {
-        var nodo = await _nodoservice.DeleteAsync(new NodoFilter() { Id = id});
+        var nodo = await _nodoservice.DeleteAsync(new NodoFilter() { Id = id });
 
         if (!nodo.Success)
             return StatusCode(ResponseHelper.GetHttpError(nodo.ErrorCode), nodo);

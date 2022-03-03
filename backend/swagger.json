@@ -6,9 +6,9 @@
     "description": "Colleción de API's correspondientes al sistema de Pasajes Online.",
     "version": "1.0.0"
   },
-  "host": "localhost:7203",
+  "host": "boleteria.azurewebsites.net",
   "schemes": [
-    "https"
+    "http"
   ],
   "produces": [
     "text/plain",
@@ -16,12 +16,516 @@
     "text/json"
   ],
   "paths": {
+    "/api/boletos": {
+      "get": {
+        "tags": [
+          "Boletos"
+        ],
+        "operationId": "Boletos_GetPaginated",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "Id",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "RecorridoId",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "OrigenId",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "DestinoId",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "PasajeroId",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "PagoId",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "Asiento",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "number",
+            "name": "Precio",
+            "in": "query",
+            "format": "float",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "HoraSalida",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "HoraSalidaAdicional",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "HoraLlegada",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "Estado",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/BoletoEstado"
+            },
+            "x-nullable": true,
+            "enum": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "type": "string",
+            "name": "Fecha",
+            "in": "query",
+            "format": "date-time",
+            "x-nullable": true
+          },
+          {
+            "title": "página",
+            "type": "integer",
+            "name": "Pagina",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "boolean",
+            "name": "Paginar",
+            "in": "query",
+            "x-nullable": false
+          },
+          {
+            "title": "elementos por página",
+            "type": "integer",
+            "name": "RecordsPorPagina",
+            "in": "query",
+            "format": "int32",
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfICollectionOfBoletoDTO"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Boletos"
+        ],
+        "operationId": "Boletos_CreateBoleto",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "boletoDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BoletoDTO"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfBoletoDTO"
+            }
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "201": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfBoletoDTO"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Boletos"
+        ],
+        "operationId": "Boletos_DeleteBoleto",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfBoletoDTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/boletos/all": {
+      "get": {
+        "tags": [
+          "Boletos"
+        ],
+        "operationId": "Boletos_GetAll",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "Id",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "RecorridoId",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "OrigenId",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "DestinoId",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "PasajeroId",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "PagoId",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "Asiento",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "number",
+            "name": "Precio",
+            "in": "query",
+            "format": "float",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "HoraSalida",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "HoraSalidaAdicional",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "HoraLlegada",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "Estado",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/BoletoEstado"
+            },
+            "x-nullable": true,
+            "enum": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "type": "string",
+            "name": "Fecha",
+            "in": "query",
+            "format": "date-time",
+            "x-nullable": true
+          },
+          {
+            "title": "página",
+            "type": "integer",
+            "name": "Pagina",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "boolean",
+            "name": "Paginar",
+            "in": "query",
+            "x-nullable": false
+          },
+          {
+            "title": "elementos por página",
+            "type": "integer",
+            "name": "RecordsPorPagina",
+            "in": "query",
+            "format": "int32",
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfICollectionOfBoletoDTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/boletos/{id}": {
+      "get": {
+        "tags": [
+          "Boletos"
+        ],
+        "operationId": "Boletos_Get",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfBoletoDTO"
+            }
+          },
+          "400": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Boletos"
+        ],
+        "operationId": "Boletos_UpdateBoleto",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "boletoDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BoletoDTO"
+            },
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfBoletoDTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/viajescliente": {
+      "get": {
+        "tags": [
+          "ViajesCliente"
+        ],
+        "operationId": "ViajesCliente_GetAll",
+        "parameters": [
+          {
+            "title": "origen",
+            "type": "string",
+            "name": "Origen",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "title": "destino",
+            "type": "string",
+            "name": "Destino",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "title": "fecha",
+            "type": "string",
+            "name": "Fecha",
+            "in": "query",
+            "format": "date",
+            "x-nullable": true
+          },
+          {
+            "title": "página",
+            "type": "integer",
+            "name": "Pagina",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "boolean",
+            "name": "Paginar",
+            "in": "query",
+            "x-nullable": false
+          },
+          {
+            "title": "elementos por página",
+            "type": "integer",
+            "name": "RecordsPorPagina",
+            "in": "query",
+            "format": "int32",
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfICollectionOfViajeDTO"
+            }
+          },
+          "404": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
     "/api/clientes": {
       "get": {
         "tags": [
           "Clientes"
         ],
-        "operationId": "Clientes_GetAll",
+        "operationId": "Clientes_GetPaginated",
         "parameters": [
           {
             "type": "integer",
@@ -78,6 +582,12 @@
             "name": "Pagina",
             "in": "query",
             "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "boolean",
+            "name": "Paginar",
+            "in": "query",
             "x-nullable": false
           },
           {
@@ -180,6 +690,98 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/WebResultOfClienteDTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/clientes/all": {
+      "get": {
+        "tags": [
+          "Clientes"
+        ],
+        "operationId": "Clientes_GetAll",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "Dni",
+            "in": "query",
+            "format": "int64",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Nombre",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "FechaNacimiento",
+            "in": "query",
+            "format": "date-time",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "Genero",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/Gender"
+            },
+            "x-nullable": true,
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "type": "integer",
+            "name": "Estado",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/Estado"
+            },
+            "x-nullable": true,
+            "enum": [
+              0,
+              1,
+              -1
+            ]
+          },
+          {
+            "title": "página",
+            "type": "integer",
+            "name": "Pagina",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "boolean",
+            "name": "Paginar",
+            "in": "query",
+            "x-nullable": false
+          },
+          {
+            "title": "elementos por página",
+            "type": "integer",
+            "name": "RecordsPorPagina",
+            "in": "query",
+            "format": "int32",
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfICollectionOfClienteDTO"
             }
           }
         }
@@ -524,7 +1126,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/NodoRequest"
+              "$ref": "#/definitions/NodoDTO"
             },
             "x-nullable": false
           }
@@ -560,37 +1162,6 @@
           }
         }
       },
-      "patch": {
-        "tags": [
-          "Nodos"
-        ],
-        "operationId": "Nodos_UpdateNodo",
-        "consumes": [
-          "application/json",
-          "text/json",
-          "application/*+json"
-        ],
-        "parameters": [
-          {
-            "name": "nodoDto",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/NodoRequest"
-            },
-            "x-nullable": false
-          }
-        ],
-        "responses": {
-          "200": {
-            "x-nullable": false,
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/WebResultOfNodoDTO"
-            }
-          }
-        }
-      },
       "delete": {
         "tags": [
           "Nodos"
@@ -601,7 +1172,7 @@
             "type": "integer",
             "name": "id",
             "in": "query",
-            "format": "int64",
+            "format": "int32",
             "x-nullable": false
           }
         ],
@@ -628,7 +1199,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "format": "int64",
+            "format": "int32",
             "x-nullable": false
           }
         ],
@@ -652,6 +1223,45 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Nodos"
+        ],
+        "operationId": "Nodos_UpdateNodo",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "nodoDto",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NodoDTO"
+            },
+            "x-nullable": false
+          },
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfNodoDTO"
             }
           }
         }
@@ -683,6 +1293,12 @@
             "name": "Pagina",
             "in": "query",
             "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "boolean",
+            "name": "Paginar",
+            "in": "query",
             "x-nullable": false
           },
           {
@@ -754,7 +1370,7 @@
           "Paradas"
         ],
         "summary": "Devuelve todas las paradas que cumplan la condición del filtro.",
-        "operationId": "Paradas_GetAll",
+        "operationId": "Paradas_GetPaginated",
         "parameters": [
           {
             "type": "integer",
@@ -789,6 +1405,12 @@
             "name": "Pagina",
             "in": "query",
             "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "boolean",
+            "name": "Paginar",
+            "in": "query",
             "x-nullable": false
           },
           {
@@ -891,6 +1513,76 @@
             "description": "",
             "schema": {
               "$ref": "#/definitions/WebResultOfParadaDTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/paradas/all": {
+      "get": {
+        "tags": [
+          "Paradas"
+        ],
+        "operationId": "Paradas_GetAll",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "Id",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Nombre",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "Estado",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/Estado"
+            },
+            "x-nullable": true,
+            "enum": [
+              0,
+              1,
+              -1
+            ]
+          },
+          {
+            "title": "página",
+            "type": "integer",
+            "name": "Pagina",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "boolean",
+            "name": "Paginar",
+            "in": "query",
+            "x-nullable": false
+          },
+          {
+            "title": "elementos por página",
+            "type": "integer",
+            "name": "RecordsPorPagina",
+            "in": "query",
+            "format": "int32",
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfICollectionOfParadaDTO"
             }
           }
         }
@@ -1173,7 +1865,7 @@
         "tags": [
           "Viajes"
         ],
-        "operationId": "Viajes_GetAll",
+        "operationId": "Viajes_GetPaginated",
         "parameters": [
           {
             "type": "integer",
@@ -1208,6 +1900,12 @@
             "name": "Pagina",
             "in": "query",
             "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "boolean",
+            "name": "Paginar",
+            "in": "query",
             "x-nullable": false
           },
           {
@@ -1315,6 +2013,76 @@
         }
       }
     },
+    "/api/viajes/all": {
+      "get": {
+        "tags": [
+          "Viajes"
+        ],
+        "operationId": "Viajes_GetAll",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "Id",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": true
+          },
+          {
+            "type": "string",
+            "name": "Nombre",
+            "in": "query",
+            "x-nullable": true
+          },
+          {
+            "type": "integer",
+            "name": "Estado",
+            "in": "query",
+            "x-schema": {
+              "$ref": "#/definitions/Estado"
+            },
+            "x-nullable": true,
+            "enum": [
+              0,
+              1,
+              -1
+            ]
+          },
+          {
+            "title": "página",
+            "type": "integer",
+            "name": "Pagina",
+            "in": "query",
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "type": "boolean",
+            "name": "Paginar",
+            "in": "query",
+            "x-nullable": false
+          },
+          {
+            "title": "elementos por página",
+            "type": "integer",
+            "name": "RecordsPorPagina",
+            "in": "query",
+            "format": "int32",
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": false,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/WebResultOfICollectionOfViajeDTO"
+            }
+          }
+        }
+      }
+    },
     "/api/viajes/{id}": {
       "get": {
         "tags": [
@@ -1397,6 +2165,400 @@
     }
   },
   "definitions": {
+    "WebResultOfICollectionOfBoletoDTO": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BoletoDTO"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "BoletoDTO": {
+      "type": "object",
+      "required": [
+        "id",
+        "recorrido_id",
+        "origen_id",
+        "destino_id",
+        "pasajero_id",
+        "pago_id",
+        "asiento",
+        "precio",
+        "estado",
+        "fecha"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "recorrido_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "origen_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "destino_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pasajero_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pago_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "asiento": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "precio": {
+          "type": "number",
+          "format": "float"
+        },
+        "hora_salida": {
+          "type": "string"
+        },
+        "hora_salida_adicional": {
+          "type": "string"
+        },
+        "hora_llegada": {
+          "type": "string"
+        },
+        "estado": {
+          "$ref": "#/definitions/BoletoEstado"
+        },
+        "fecha": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "BoletoEstado": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "RESERVADO",
+        "VENDIDO",
+        "EXPIRADO"
+      ],
+      "enum": [
+        0,
+        1,
+        2
+      ]
+    },
+    "ErrorMessage": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Generic",
+        "InvalidEmail",
+        "InvalidPassword",
+        "InvalidId",
+        "DuplicatedEntity",
+        "NotFound",
+        "AlreadyExists",
+        "AlreadyDeleted",
+        "CouldNotCreate",
+        "CouldNotDelete",
+        "CouldNotUpdate",
+        "EmptyList",
+        "GenericValidation"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    "WebResultOfBoletoDTO": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/BoletoDTO"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "ProblemDetails": {
+      "type": "object",
+      "additionalProperties": {},
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "instance": {
+          "type": "string"
+        }
+      }
+    },
+    "WebResultOfICollectionOfViajeDTO": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ViajeDTO"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "ViajeDTO": {
+      "type": "object",
+      "required": [
+        "id",
+        "nombre",
+        "horarios",
+        "estado",
+        "conexiones"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "nombre": {
+          "title": "nombre",
+          "type": "string",
+          "minLength": 1
+        },
+        "horarios": {
+          "title": "horario",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HorarioDTO"
+          }
+        },
+        "estado": {
+          "title": "estado",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Estado"
+            }
+          ]
+        },
+        "conexiones": {
+          "title": "conexiones",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/NodoDTO"
+          }
+        }
+      }
+    },
+    "HorarioDTO": {
+      "type": "object",
+      "required": [
+        "id",
+        "hora",
+        "dias",
+        "distribucion_id"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "hora": {
+          "title": "hora",
+          "type": "string",
+          "minLength": 1
+        },
+        "dias": {
+          "title": "días de la semana",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DayOfWeek"
+          }
+        },
+        "distribucion_id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "DayOfWeek": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "Estado": {
+      "type": "integer",
+      "description": "",
+      "x-enumNames": [
+        "Baja",
+        "Activo",
+        "Suspendido"
+      ],
+      "enum": [
+        0,
+        1,
+        -1
+      ]
+    },
+    "NodoDTO": {
+      "type": "object",
+      "required": [
+        "id",
+        "origen_id",
+        "destino_id",
+        "demora",
+        "precio",
+        "viaje_id"
+      ],
+      "properties": {
+        "id": {
+          "title": "identificador",
+          "type": "integer",
+          "format": "int32"
+        },
+        "origen_id": {
+          "title": "origen",
+          "type": "integer",
+          "format": "int32"
+        },
+        "destino_id": {
+          "title": "destino",
+          "type": "integer",
+          "format": "int32"
+        },
+        "demora": {
+          "title": "demora",
+          "type": "string",
+          "format": "date-time",
+          "minLength": 1
+        },
+        "precio": {
+          "title": "precio",
+          "type": "number",
+          "format": "float"
+        },
+        "viaje_id": {
+          "title": "viaje",
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
     "WebResultOfICollectionOfClienteDTO": {
       "type": "object",
       "required": [
@@ -1492,76 +2654,6 @@
         2,
         3
       ]
-    },
-    "Estado": {
-      "type": "integer",
-      "description": "",
-      "x-enumNames": [
-        "Baja",
-        "Activo",
-        "Suspendido"
-      ],
-      "enum": [
-        0,
-        1,
-        -1
-      ]
-    },
-    "ErrorMessage": {
-      "type": "integer",
-      "description": "",
-      "x-enumNames": [
-        "Generic",
-        "InvalidEmail",
-        "InvalidPassword",
-        "InvalidId",
-        "DuplicatedEntity",
-        "NotFound",
-        "AlreadyExists",
-        "AlreadyDeleted",
-        "CouldNotCreate",
-        "CouldNotDelete",
-        "CouldNotUpdate",
-        "EmptyList",
-        "GenericValidation"
-      ],
-      "enum": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12
-      ]
-    },
-    "ProblemDetails": {
-      "type": "object",
-      "additionalProperties": {},
-      "properties": {
-        "type": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "status": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "detail": {
-          "type": "string"
-        },
-        "instance": {
-          "type": "string"
-        }
-      }
     },
     "WebResultOfClienteDTO": {
       "type": "object",
@@ -1943,72 +3035,6 @@
         }
       }
     },
-    "NodoDTO": {
-      "type": "object",
-      "required": [
-        "id",
-        "precio"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "origen": {
-          "$ref": "#/definitions/ParadaDTO"
-        },
-        "destino": {
-          "$ref": "#/definitions/ParadaDTO"
-        },
-        "demora": {
-          "type": "string"
-        },
-        "precio": {
-          "type": "number",
-          "format": "float"
-        }
-      }
-    },
-    "ParadaDTO": {
-      "type": "object",
-      "required": [
-        "id",
-        "nombre",
-        "pais_id",
-        "provincia_id",
-        "estado"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "nombre": {
-          "title": "nombre",
-          "type": "string",
-          "maxLength": 100,
-          "minLength": 3
-        },
-        "pais_id": {
-          "title": "país",
-          "type": "integer",
-          "format": "int32"
-        },
-        "provincia_id": {
-          "title": "provincia",
-          "type": "integer",
-          "format": "int32"
-        },
-        "estado": {
-          "title": "estado",
-          "allOf": [
-            {
-              "$ref": "#/definitions/Estado"
-            }
-          ]
-        }
-      }
-    },
     "WebResultOfNodoDTO": {
       "type": "object",
       "required": [
@@ -2039,44 +3065,6 @@
         },
         "error": {
           "type": "string"
-        }
-      }
-    },
-    "NodoRequest": {
-      "type": "object",
-      "required": [
-        "id",
-        "origen_id",
-        "destino_id",
-        "demora",
-        "precio"
-      ],
-      "properties": {
-        "id": {
-          "title": "identificador",
-          "type": "integer",
-          "format": "int32"
-        },
-        "origen_id": {
-          "title": "origen",
-          "type": "integer",
-          "format": "int32"
-        },
-        "destino_id": {
-          "title": "destino",
-          "type": "integer",
-          "format": "int32"
-        },
-        "demora": {
-          "title": "demora",
-          "type": "string",
-          "format": "time",
-          "minLength": 1
-        },
-        "precio": {
-          "title": "precio",
-          "type": "number",
-          "format": "float"
         }
       }
     },
@@ -2177,6 +3165,85 @@
       }
     },
     "WebResultOfListOfParadaDTO": {
+      "type": "object",
+      "required": [
+        "success",
+        "error_code"
+      ],
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ParadaDTO"
+          }
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "error_messages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "error_code": {
+          "$ref": "#/definitions/ErrorMessage"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "ParadaDTO": {
+      "type": "object",
+      "required": [
+        "id",
+        "nombre",
+        "pais_id",
+        "provincia_id",
+        "estado"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "nombre": {
+          "title": "nombre",
+          "type": "string",
+          "maxLength": 100,
+          "minLength": 3
+        },
+        "pais_id": {
+          "title": "país",
+          "type": "integer",
+          "format": "int32"
+        },
+        "provincia_id": {
+          "title": "provincia",
+          "type": "integer",
+          "format": "int32"
+        },
+        "estado": {
+          "title": "estado",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Estado"
+            }
+          ]
+        },
+        "descripcion": {
+          "type": "string"
+        }
+      }
+    },
+    "WebResultOfICollectionOfParadaDTO": {
       "type": "object",
       "required": [
         "success",
@@ -2436,130 +3503,6 @@
           "minLength": 6
         }
       }
-    },
-    "WebResultOfICollectionOfViajeDTO": {
-      "type": "object",
-      "required": [
-        "success",
-        "error_code"
-      ],
-      "properties": {
-        "result": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ViajeDTO"
-          }
-        },
-        "success": {
-          "type": "boolean"
-        },
-        "message": {
-          "type": "string"
-        },
-        "error_messages": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "error_code": {
-          "$ref": "#/definitions/ErrorMessage"
-        },
-        "error": {
-          "type": "string"
-        }
-      }
-    },
-    "ViajeDTO": {
-      "type": "object",
-      "required": [
-        "id",
-        "nombre",
-        "horarios",
-        "estado"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "nombre": {
-          "title": "nombre",
-          "type": "string",
-          "minLength": 1
-        },
-        "horarios": {
-          "title": "horario",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/HorarioDTO"
-          }
-        },
-        "estado": {
-          "title": "estado",
-          "allOf": [
-            {
-              "$ref": "#/definitions/Estado"
-            }
-          ]
-        }
-      }
-    },
-    "HorarioDTO": {
-      "type": "object",
-      "required": [
-        "id",
-        "hora",
-        "dias",
-        "distribucion_id"
-      ],
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "hora": {
-          "title": "hora",
-          "type": "string",
-          "minLength": 1
-        },
-        "dias": {
-          "title": "días de la semana",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/DayOfWeek"
-          }
-        },
-        "distribucion_id": {
-          "type": "integer",
-          "format": "int32"
-        }
-      }
-    },
-    "DayOfWeek": {
-      "type": "integer",
-      "description": "",
-      "x-enumNames": [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
-      "enum": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ]
     },
     "WebResultOfViajeDTO": {
       "type": "object",

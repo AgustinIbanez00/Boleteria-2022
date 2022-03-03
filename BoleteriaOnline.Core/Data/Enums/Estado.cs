@@ -6,12 +6,12 @@ public enum Estado
     /// <summary>
     /// Cuando una entidad se encuentra en este estado no se podrá listar, modificar ni eliminar.
     /// </summary>
-    [Display(Name ="Baja")]
+    [Display(Name = "Baja")]
     Baja = 0,
     /// <summary>
     /// El objeto se encuentra en su estado default.
     /// </summary>
-    [Display(Name ="Activo")]
+    [Display(Name = "Activo")]
     Activo = 1,
     /// <summary>
     /// Características similares al estado de BAJA.

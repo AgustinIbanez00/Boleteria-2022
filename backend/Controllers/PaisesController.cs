@@ -20,6 +20,11 @@ public class PaisesController : ControllerBase
         _provinciaService = provinciaService;
     }
 
+    /// <summary>
+    /// Todos los paises
+    /// </summary>
+    /// <param name="parameters"></param>
+    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -33,6 +38,11 @@ public class PaisesController : ControllerBase
         return Ok(paises);
     }
 
+    /// <summary>
+    /// Todas las provincias de un país
+    /// </summary>
+    /// <param name="id">id de provincia</param>
+    /// <returns></returns>
     [HttpGet("{id:int}/provincias")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
