@@ -10,7 +10,7 @@
           >{{ pais_lugar.nombre }}</mat-option
         >
       </mat-select>
-      <mat-error>{{ validaciones(pais) }}</mat-error>
+      <mat-error>{{ validar(pais) }}</mat-error>
     </mat-form-field>
   </div>
   <div class="col-6">
@@ -23,7 +23,24 @@
           >{{ provincia_lugar.nombre }}</mat-option
         >
       </mat-select>
-      <mat-error>{{ validaciones(provincia) }}</mat-error>
+      <mat-error>{{ validar(provincia) }}</mat-error>
     </mat-form-field>
   </div>
+</div>
+<div class="row" *ngIf="pais && provincia && usarParadas">
+  <div class="col-6">
+    <mat-form-field appearance="outline">
+      <mat-label>Paradas</mat-label>
+      <mat-select>
+        <mat-option
+          *ngFor="let pais_lugar of paises"
+          [value]="pais_lugar.id"
+          (click)="buscarProvinciaPorPais(pais_lugar.id)"
+          >{{ pais_lugar.nombre }}</mat-option
+        >
+      </mat-select>
+      <mat-error>{{ validar(pais) }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-6"></div>
 </div>

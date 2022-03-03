@@ -87,7 +87,7 @@ export class IndiceParadasComponent implements OnInit {
       });
     } else {
       var parada = this.paradas.find((it) => it.id === id);
-      console.log(parada);
+
       dialogRef = this.dialog.open(CrearParadasComponent, {
         width: '800px',
         data: parada,
@@ -111,7 +111,6 @@ export class IndiceParadasComponent implements OnInit {
       .subscribe(
         (respuesta: HttpResponse<webResultList>) => {
           this.paradas = Object.values(respuesta.body.result);
-          // console.log('respuesta', respuesta.body.pagination);
 
           this.cantidadTotalRegistros = respuesta.body.pagination.total_items;
         },

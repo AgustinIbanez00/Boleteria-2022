@@ -13,11 +13,10 @@ import { DetalleDistribucionComponent } from '../detalle-distribucion/detalle-di
   styleUrls: ['./indice-distribucion.component.css'],
 })
 export class IndiceDistribucionComponent implements OnInit {
-  constructor(private distribucionService: DistribucionService,
-    public dialog: MatDialog,
-  ) { }
-
-
+  constructor(
+    private distribucionService: DistribucionService,
+    public dialog: MatDialog
+  ) {}
 
   cantidadTotalRegistros;
   paginaActual = 1;
@@ -28,44 +27,38 @@ export class IndiceDistribucionComponent implements OnInit {
 
   @ViewChild(MatTable) table: MatTable<any>;
   ngOnInit(): void {
-    this.cargarDistribuciones()
+    this.cargarDistribuciones();
   }
 
   columnasAMostrar = ['id', 'nota', 'pisos', 'acciones'];
 
   cargarDistribuciones() {
-    this.distribucionService.obtenerDistribuciones().subscribe((result) => {
-      this.distribuciones = result.result;
-    }, (error) => { this.errores = parserarErroresAPI(error); this.distribuciones = [] })
+    this.distribucionService.obtenerDistribuciones().subscribe(
+      (result) => {
+        this.distribuciones = result.result;
+      },
+      (error) => {
+        this.errores = parserarErroresAPI(error);
+        this.distribuciones = [];
+      }
+    );
   }
 
-  openDialog(id: number) {
+  openDialog(id: number) {}
 
-  }
-
-  refreshDistribucion(pagina: number, cantidadRegistrosAMostrar: number) {
-
-  }
+  refreshDistribucion(pagina: number, cantidadRegistrosAMostrar: number) {}
 
   //    // listado
-  obtenerParadas(pagina: number, cantidadRegistrosAMostrar: number) {
-
-  }
+  obtenerParadas(pagina: number, cantidadRegistrosAMostrar: number) {}
 
   // paginacion
-  actualizarPaginacion(datos: PageEvent) {
+  actualizarPaginacion(datos: PageEvent) {}
 
-  }
-
-  borrarRegistro(id: number) {
-
-  }
+  borrarRegistro(id: number) {}
   openDialogDetalle(id: number) {
     var dialogRef = this.dialog.open(DetalleDistribucionComponent, {
       width: '600px',
       data: id,
     });
   }
-
-
 }

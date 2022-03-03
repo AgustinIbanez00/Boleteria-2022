@@ -133,7 +133,7 @@ export class IndiceClienteComponent implements OnInit {
       .subscribe(
         (respuesta: HttpResponse<webResultList>) => {
           this.clientes = Object.values(respuesta.body.result);
-          console.log(this.clientes);
+
           this.cantidadTotalRegistros = respuesta.body.pagination.total_items;
         },
         (error) => {

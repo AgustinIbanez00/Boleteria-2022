@@ -1,14 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu/menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { MaterialModule } from './material/material.module';
 import { AutorizadoComponent } from './seguridad/autorizado/autorizado/autorizado.component';
-
 import { ListadoGenericoComponent } from './utilidades/listado-generico/listado-generico.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CrearParadasComponent } from './paradas/crear-paradas/crear-paradas.component';
@@ -33,9 +30,7 @@ import { ConfirmComponent } from './utilidades/confirm/confirm.component';
 import { CrearDistribucionComponent } from './distribucion/crear-distribucion/crear-distribucion.component';
 import { IndiceClienteComponent } from './cliente/indice-cliente/indice-cliente.component';
 import { CrearClienteComponent } from './cliente/crear-cliente/crear-cliente.component';
-
 import { MatSelectModule } from '@angular/material/select';
-
 import { FiltroParadasComponent } from './paradas/filtro-paradas/filtro-paradas.component';
 import { FiltroClienteComponent } from './cliente/filtro-cliente/filtro-cliente.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -45,12 +40,18 @@ import { DetalleDistribucionComponent } from './distribucion/detalle-distribucio
 import { IndiceViajesComponent } from './viajes/indice-viajes/indice-viajes.component';
 import { CrearViajesComponent } from './viajes/crear-viajes/crear-viajes.component';
 import { FiltroViajesComponent } from './viajes/filtro-viajes/filtro-viajes.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { StepperViajesComponent } from './viajes/stepper-viajes/stepper-viajes.component';
+import { SelectDistribucionComponent } from './utilidades/distribucion/select-distribucion/select-distribucion.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { HorariosComponent } from './utilidades/horarios/horarios.component';
+import { SelectViajesComponent } from './utilidades/select-viajes/select-viajes.component';
+import { ConexionComponent } from './viajes/conexion/conexion.component';
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     AutorizadoComponent,
-
     ListadoGenericoComponent,
     CrearParadasComponent,
     LandingPageComponent,
@@ -66,7 +67,6 @@ import { FiltroViajesComponent } from './viajes/filtro-viajes/filtro-viajes.comp
     CrearDistribucionComponent,
     IndiceClienteComponent,
     CrearClienteComponent,
-
     FiltroParadasComponent,
     FiltroClienteComponent,
     SelectComponent,
@@ -75,6 +75,11 @@ import { FiltroViajesComponent } from './viajes/filtro-viajes/filtro-viajes.comp
     IndiceViajesComponent,
     CrearViajesComponent,
     FiltroViajesComponent,
+    StepperViajesComponent,
+    SelectDistribucionComponent,
+    HorariosComponent,
+    SelectViajesComponent,
+    ConexionComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,6 +96,8 @@ import { FiltroViajesComponent } from './viajes/filtro-viajes/filtro-viajes.comp
     SweetAlert2Module.forRoot(),
     MatSelectModule,
     MatAutocompleteModule,
+    MatStepperModule,
+    MatCheckboxModule,
   ],
   providers: [
     {

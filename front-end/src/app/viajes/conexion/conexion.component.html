@@ -1,0 +1,57 @@
+<form [formGroup]="conexionForm" (submit)="guardarConexion(conexionForm.value)">
+  <ng-template matStepLabel>Conexiones</ng-template>
+
+  <div style="width: 100%">
+    <mat-form-field appearance="outline">
+      <mat-label>Viaje</mat-label>
+      <input value="{{ viajeDTO ? viajeDTO.nombre : '' }}" matInput />
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <mat-form-field appearance="outline">
+        <mat-label>Origen</mat-label>
+        <mat-select formControlName="origen_id">
+          <mat-option *ngFor="let parada of paradas" [value]="parada.id">{{
+            parada.descripcion
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field appearance="outline">
+        <mat-label>Destino</mat-label>
+        <mat-select formControlName="destino_id">
+          <mat-option *ngFor="let parada of paradas" [value]="parada.id">{{
+            parada.descripcion
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <mat-form-field appearance="outline">
+        <mat-label>Demora</mat-label>
+        <input formControlName="demora" matInput type="time" />
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field appearance="outline">
+        <mat-label>Precio </mat-label>
+        <span matPrefix>$ &nbsp;</span>
+        <input
+          formControlName="precio"
+          type="tel"
+          matInput
+          placeholder="1"
+          value="1"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <button mat-flat-button class="guardar" [disabled]="conexionForm.invalid">
+    Guardar
+  </button>
+</form>

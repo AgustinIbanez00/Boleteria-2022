@@ -24,14 +24,17 @@ export class SelectComponent implements OnInit {
   provincia: string;
   @Input()
   validaciones;
+  @Input()
+  usarParadas: boolean = false;
 
   paises: paisDTO[] = [];
   provincias: provinciaDTO[] = [];
   errores: string[];
 
   ngOnInit() {
+    console.log(this.form);
     this.obtenerPaises('');
-    console.log(this.form.value);
+
     this.form.value[this.provincia] != '' &&
       this.buscarProvinciaPorPais(this.form.value[this.pais]);
   }
@@ -59,5 +62,21 @@ export class SelectComponent implements OnInit {
         this.errores = parserarErroresAPI(error);
       }
     );
+  }
+
+  validar(campo: string) {
+    if (this.validaciones != undefined) {
+      this.validaciones(campo);
+    } else {
+      var propiedad = this.form.get(campo);
+
+      if (propiedad.hasError('required')) {
+        return 'Campo requerido';
+      } else if (propiedad.hasError('maxlength')) {
+        return 'El minimo son 100 caracteres';
+      }
+
+      return '';
+    }
   }
 }

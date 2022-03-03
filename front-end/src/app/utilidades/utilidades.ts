@@ -4,7 +4,7 @@ export interface DialogData {
 
 export function parserarErroresAPI(response: any): string[] {
   const resultado: string[] = [];
-  // console.log(response)
+
   if (response.status != 200) {
     resultado.push(`${response.statusText}: ${response.message}`);
   }

@@ -54,7 +54,6 @@ export class ClienteService {
   }
 
   public editar(clienteDTO: clienteDTO) {
-    console.log('editar', clienteDTO);
     return this.http.patch<webResult>(
       `${this.apiURL}/clientes/${clienteDTO.dni}`,
       JSON.stringify(clienteDTO),

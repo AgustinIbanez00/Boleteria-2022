@@ -26,7 +26,6 @@ export class PaisesService {
   public obtenerProvincias(
     idPais: number
   ): Observable<HttpResponse<webResult>> {
-    console.log(`${this.apiURL}/paises/${idPais}/provincias`);
     return this.http.get<webResult>(
       `${this.apiURL}/paises/${idPais}/provincias`,
       {

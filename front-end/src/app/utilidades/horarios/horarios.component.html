@@ -1,0 +1,31 @@
+<form
+  [formGroup]="formHorario"
+  (submit)="guardarHorario(formHorario.value)"
+  class="formHorarios"
+>
+  <div style="width: 20%">
+    <app-select-distribucion
+      [form]="formHorario"
+      [propiedad]="'distribucion_id'"
+    ></app-select-distribucion>
+  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>Horario*</mat-label>
+    <input formControlName="hora" matInput type="time" />
+  </mat-form-field>
+  <h5 class="example-h2">Frecuencia</h5>
+  <section class="example-section" style="margin-left: 20px">
+    <section class="example-section">
+      <ul>
+        <li *ngFor="let dia of listDiasSemana">
+          <mat-checkbox (change)="guardarDia(dia.value)">
+            {{ dia.descripcion }}
+          </mat-checkbox>
+        </li>
+      </ul>
+    </section>
+  </section>
+  <button mat-flat-button class="guardar" [disabled]="formHorario.invalid">
+    Guardar
+  </button>
+</form>

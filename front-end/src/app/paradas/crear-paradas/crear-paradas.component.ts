@@ -19,7 +19,6 @@ export class CrearParadasComponent implements OnInit {
     public paradaraService: ParadasService,
     private formBuilder: FormBuilder,
     public paisesService: PaisesService,
-
     private notificacionesService: NotificacionesService
   ) {}
 
@@ -28,7 +27,7 @@ export class CrearParadasComponent implements OnInit {
   dto: paradasDTO;
   paradas: paradasDTO[];
   paises: paisDTO[];
-  durationInSeconds = 3;
+
   errores: string[] = [];
 
   ngOnInit(): void {
@@ -48,7 +47,6 @@ export class CrearParadasComponent implements OnInit {
 
   // crear
   guardarParadas(paradasDTO: paradasDTO) {
-    console.log(paradasDTO);
     if (this.data.id != undefined) {
       this.editar(paradasDTO);
     } else {
@@ -87,7 +85,6 @@ export class CrearParadasComponent implements OnInit {
   crear(paradasDTO: paradasDTO) {
     this.paradaraService.crear(paradasDTO).subscribe(
       (result) => {
-        console.log(result);
         if (result.body.success) {
           this.notificacionesService.showNotificacion(
             result.body.message,
@@ -104,7 +101,6 @@ export class CrearParadasComponent implements OnInit {
         }
       },
       (errorResult) => {
-        console.log(errorResult);
         this.notificacionesService.showNotificacion(
           errorResult.error.message,
           'x',

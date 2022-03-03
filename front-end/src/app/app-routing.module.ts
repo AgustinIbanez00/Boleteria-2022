@@ -8,6 +8,8 @@ import { RegistroComponent } from './seguridad/registro/registro.component';
 import { IndiceDistribucionComponent } from './distribucion/indice-distribucion/indice-distribucion.component';
 import { CrearDistribucionComponent } from './distribucion/crear-distribucion/crear-distribucion.component';
 import { IndiceClienteComponent } from './cliente/indice-cliente/indice-cliente.component';
+import { IndiceViajesComponent } from './viajes/indice-viajes/indice-viajes.component';
+import { CrearViajesComponent } from './viajes/crear-viajes/crear-viajes.component';
 
 const routes: Routes = [
   {
@@ -44,10 +46,23 @@ const routes: Routes = [
     path: 'clientes',
     component: IndiceClienteComponent,
   },
+  //viajes
+  {
+    path: 'viajes',
+    component: IndiceViajesComponent,
+  },
+  {
+    path: 'crear-viaje',
+    component: CrearViajesComponent,
+  },
+  {
+    path: 'crear-viajer/editar/:id',
+    component: CrearViajesComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

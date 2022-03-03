@@ -79,9 +79,15 @@ export class ParadasService {
       queryParams: { ...paradasFiltroDTO, pagina, cantidadRegistrosAMostrar },
     });
 
-    console.log(`${environment.apiURL}${tree.toString()}`);
-
     return this.http.get<webResult>(`${environment.apiURL}${tree.toString()}`, {
+      observe: 'response',
+    });
+  }
+
+  public obtenerListParadas(): Observable<HttpResponse<webResult>> {
+    console.log(`${this.apiURL}`);
+
+    return this.http.get<webResult>(`${this.apiURL}/all`, {
       observe: 'response',
     });
   }

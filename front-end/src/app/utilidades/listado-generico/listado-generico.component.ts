@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./listado-generico.component.css'],
 })
 export class ListadoGenericoComponent implements OnInit {
-  constructor() { }
+  constructor() {}
 
   @Input()
   listado;
@@ -16,8 +16,5 @@ export class ListadoGenericoComponent implements OnInit {
   @Input()
   esLista: boolean = true;
 
-  ngOnInit(): void {
-    console.log(this.esLista)
-    console.log(this.listado)
-  }
+  ngOnInit(): void {}
 }
