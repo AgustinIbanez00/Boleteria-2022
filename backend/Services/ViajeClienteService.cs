@@ -77,7 +77,7 @@ namespace BoleteriaOnline.Web.Services
                                     Empresa = "Boletería Online",
                                     HorarioSalida = horarioSalida.HasValue ? horarioSalida.Value.ToString("HH:mm") : "00:00:00",
                                     HorarioLlegada = horarioLlegada.HasValue ? horarioLlegada.Value.ToString("HH:mm") : "00:00:00",
-                                    AsientosDisponibles = await _context.Boletos.Where(b => b.OrigenId == paradaOrigen.Id && b.DestinoId == paradaDestino.Id && b.Fecha.Date == DateTime.Now.Date).Select(b => b.Id).ToListAsync()
+                                    AsientosDisponibles = await _context.Boletos.Where(b => b.RecorridoId == viaje.Id && b.OrigenId == paradaOrigen.Id && b.DestinoId == paradaDestino.Id && b.Fecha.Date == DateTime.Now.Date).Select(b => b.Id).ToListAsync()
                                 };
 
                                 viajesAceptados.Add(viajesDto);
