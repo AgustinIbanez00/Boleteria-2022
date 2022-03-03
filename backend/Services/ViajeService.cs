@@ -25,30 +25,46 @@ public class ViajeService : IViajeService
         _distribucionRepository = distribucionRepository;
         _nodoRepository = nodoRepository;
     }
-
-    public async Task<WebResultList<ViajeDTO>> AllAsync(ViajeFilter filter)
+    public async Task<WebResult<ICollection<ViajeDTO>>> AllAsync(ViajeFilter filter)
     {
         try
         {
-            var viajes = await _viajeRepository.GetAllPaginatedAsync(filter);
+            var viajes = await _viajeRepository.GetAllAsync(filter);
 
             var viajesDto = new List<ViajeDTO>();
 
-            foreach (var Viaje in viajes)
+            foreach (var viaje in viajes)
             {
-                viajesDto.Add(_mapper.Map<ViajeDTO>(Viaje));
+                viajesDto.Add(_mapper.Map<ViajeDTO>(viaje));
             }
+
+            return Ok<ICollection<ViajeDTO>>(viajesDto);
+        }
+        catch (Exception ex)
+        {
+            return Error<ICollection<ViajeDTO>>(ErrorMessage.Generic, ex.Message);
+        }
+    }
+
+    public async Task<WebResultList<ViajeDTO>> AllPaginatedAsync(ViajeFilter filter)
+    {
+        try
+        {
+            PaginatedList<Viaje> viajes = await _viajeRepository.GetAllPaginatedAsync(filter);
+
+            var viajesDto = new List<ViajeDTO>();
+
+            foreach (var viaje in viajes)
+            {
+                viajesDto.Add(_mapper.Map<ViajeDTO>(viaje));
+            }
+
             return List(viajesDto, Pagination.Page(viajes.TotalItems, filter.Pagina, filter.RecordsPorPagina));
         }
         catch (Exception ex)
         {
             return ErrorList<ViajeDTO>(ErrorMessage.Generic, ex.Message);
         }
-    }
-
-    public Task<WebResultList<ViajeDTO>> AllPaginatedAsync(ViajeFilter filter)
-    {
-        throw new NotImplementedException();
     }
 
     public async Task<WebResult<ViajeDTO>> CreateAsync(ViajeDTO request)
@@ -156,11 +172,6 @@ public class ViajeService : IViajeService
     }
 
     public Task<WebResult<ViajeDTO>> ValidateAsync(ViajeDTO request)
-    {
-        throw new NotImplementedException();
-    }
-
-    Task<WebResult<ICollection<ViajeDTO>>> IGenericService<int, ViajeDTO, ViajeFilter>.AllAsync(ViajeFilter filter)
     {
         throw new NotImplementedException();
     }

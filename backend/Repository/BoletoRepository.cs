@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using BoleteriaOnline.Core.Data.Enums;
 using BoleteriaOnline.Core.ViewModels.Filters;
 using BoleteriaOnline.Core.ViewModels.Pagging;
 using BoleteriaOnline.Web.Data;
@@ -23,6 +24,7 @@ public class BoletoRepository : IBoletoRepository
     public async Task<bool> CreateAsync(Boleto entity)
     {
         entity.CreatedAt = DateTime.Now;
+        entity.Estado = BoletoEstado.RESERVADO;
         await _context.Boletos.AddAsync(entity);
         return await Save();
     }

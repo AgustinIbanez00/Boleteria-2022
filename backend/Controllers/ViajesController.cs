@@ -21,7 +21,7 @@ public class ViajesController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResult<ICollection<ViajeDTO>>>> GetAll([FromQuery] ViajeFilter filter)
+    public async Task<ActionResult<WebResult<ICollection<ViajeDTO>>>> GetPaginated([FromQuery] ViajeFilter filter)
     {
         var viajes = await _viajeservice.AllPaginatedAsync(filter);
 
@@ -30,6 +30,19 @@ public class ViajesController : ControllerBase
 
         return Ok(viajes);
     }
+
+    [HttpGet("all")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<WebResult<ICollection<ViajeDTO>>>> GetAll([FromQuery] ViajeFilter filter)
+    {
+        var viajes = await _viajeservice.AllAsync(filter);
+
+        if (!viajes.Success)
+            return StatusCode(ResponseHelper.GetHttpError(viajes.ErrorCode), viajes);
+
+        return Ok(viajes);
+    }
+
 
     [HttpGet("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]

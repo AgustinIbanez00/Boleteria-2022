@@ -20,8 +20,7 @@ public class BoletosController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResult<ICollection<BoletoDTO>>>> GetAll([FromQuery] BoletoFilter filter)
+    public async Task<ActionResult<WebResult<ICollection<BoletoDTO>>>> GetPaginated([FromQuery] BoletoFilter filter)
     {
         var boletos = await _boletoservice.AllPaginatedAsync(filter);
 
@@ -30,6 +29,19 @@ public class BoletosController : ControllerBase
 
         return Ok(boletos);
     }
+
+    [HttpGet("all")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<WebResult<ICollection<BoletoDTO>>>> GetAll([FromQuery] BoletoFilter filter)
+    {
+        var boletos = await _boletoservice.AllAsync(filter);
+
+        if (!boletos.Success)
+            return StatusCode(ResponseHelper.GetHttpError(boletos.ErrorCode), boletos);
+
+        return Ok(boletos);
+    }
+
 
     [HttpGet("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]

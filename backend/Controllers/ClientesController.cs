@@ -21,9 +21,21 @@ public class ClientesController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResult<ICollection<ClienteDTO>>>> GetAll([FromQuery] ClienteFilter filter)
+    public async Task<ActionResult<WebResult<ICollection<ClienteDTO>>>> GetPaginated([FromQuery] ClienteFilter filter)
     {
         var clientes = await _clienteservice.AllPaginatedAsync(filter);
+
+        if (!clientes.Success)
+            return StatusCode(ResponseHelper.GetHttpError(clientes.ErrorCode), clientes);
+
+        return Ok(clientes);
+    }
+
+    [HttpGet("all")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<WebResult<ICollection<ClienteDTO>>>> GetAll([FromQuery] ClienteFilter filter)
+    {
+        var clientes = await _clienteservice.AllAsync(filter);
 
         if (!clientes.Success)
             return StatusCode(ResponseHelper.GetHttpError(clientes.ErrorCode), clientes);

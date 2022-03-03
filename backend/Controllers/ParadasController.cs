@@ -25,7 +25,7 @@ public class ParadasController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<WebResultList<ParadaDTO>>> GetAll([FromQuery] ParadaFilter filter)
+    public async Task<ActionResult<WebResultList<ParadaDTO>>> GetPaginated([FromQuery] ParadaFilter filter)
     {
         var paradas = await _paradaService.AllPaginatedAsync(filter);
 
@@ -33,6 +33,18 @@ public class ParadasController : ControllerBase
             return StatusCode(ResponseHelper.GetHttpError(paradas.ErrorCode), paradas);
         else
             Response.Headers.Add("cantidadTotalRegistros", paradas.Result.Capacity.ToString());
+
+        return Ok(paradas);
+    }
+
+    [HttpGet("all")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<WebResult<ICollection<ParadaDTO>>>> GetAll([FromQuery] ParadaFilter filter)
+    {
+        var paradas = await _paradaService.AllAsync(filter);
+
+        if (!paradas.Success)
+            return StatusCode(ResponseHelper.GetHttpError(paradas.ErrorCode), paradas);
 
         return Ok(paradas);
     }

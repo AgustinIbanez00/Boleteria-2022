@@ -85,14 +85,40 @@ public class ParadaService : IParadaService
         }
     }
 
-    public Task<WebResult<ParadaDTO>> DeleteAsync(ParadaFilter filter)
+    public async Task<WebResult<ParadaDTO>> DeleteAsync(ParadaFilter filter)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var parada = await _paradaRepository.GetAsync(filter);
+            if (parada == null)
+                return Error<ParadaDTO>(ErrorMessage.NotFound);
+
+            if (!await _paradaRepository.DeleteAsync(parada))
+                return Error<ParadaDTO>(ErrorMessage.CouldNotDelete);
+
+            return Ok(_mapper.Map<ParadaDTO>(parada), SuccessMessage.Deleted);
+        }
+        catch (Exception ex)
+        {
+            return Error<ParadaDTO>(ErrorMessage.Generic, ex.Message);
+        }
     }
 
-    public Task<WebResult<ParadaDTO>> GetAsync(ParadaFilter filter)
+    public async Task<WebResult<ParadaDTO>> GetAsync(ParadaFilter filter)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var parada = await _paradaRepository.GetAsync(filter);
+
+            if (parada == null)
+                return Error<ParadaDTO>(ErrorMessage.NotFound);
+
+            return Ok(_mapper.Map<ParadaDTO>(parada));
+        }
+        catch (Exception ex)
+        {
+            return Error<ParadaDTO>(ErrorMessage.Generic, ex.Message);
+        }
     }
 
     public async Task<WebResult<ParadaDTO>> UpdateAsync(ParadaDTO request, int id)

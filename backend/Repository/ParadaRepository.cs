@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using BoleteriaOnline.Core.Data.Enums;
 using BoleteriaOnline.Core.ViewModels.Filters;
 using BoleteriaOnline.Core.ViewModels.Pagging;
 using BoleteriaOnline.Web.Data;
@@ -19,32 +20,33 @@ public class ParadaRepository : IParadaRepository
         _context = context;
     }
 
-    public async Task<bool> CreateAsync(Parada destino)
+    public async Task<bool> CreateAsync(Parada entity)
     {
-        destino.CreatedAt = DateTime.Now;
-        destino.Id = 0;
-        await _context.Paradas.AddAsync(destino);
+        entity.CreatedAt = DateTime.Now;
+        entity.Id = 0;
+        entity.Estado = Estado.Activo;
+        await _context.Paradas.AddAsync(entity);
         return await Save();
     }
 
-    public async Task<bool> DeleteAsync(Parada destino)
+    public async Task<bool> DeleteAsync(Parada entity)
     {
-        if (destino == null)
+        if (entity == null)
             return false;
 
-        _context.Paradas.Remove(destino);
+        _context.Paradas.Remove(entity);
 
         return await Save();
     }
     public async Task<bool> Save() => await _context.SaveChangesAsync() >= 0;
 
-    public async Task<bool> UpdateAsync(Parada destino)
+    public async Task<bool> UpdateAsync(Parada entity)
     {
-        if (destino == null)
+        if (entity == null)
             return false;
 
-        _context.Paradas.Update(destino);
-        destino.UpdatedAt = DateTime.Now;
+        _context.Paradas.Update(entity);
+        entity.UpdatedAt = DateTime.Now;
         return await Save();
     }
 
