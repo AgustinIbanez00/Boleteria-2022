@@ -129,6 +129,7 @@ export class IndiceViajesComponent implements OnInit {
 
   hablitarDeshabilitar(event, viaje: viajeDTO) {
     viaje.estado = event.checked ? 1 : 0;
+    console.log(viaje);
     this.editar(viaje);
   }
 
@@ -191,8 +192,8 @@ export class IndiceViajesComponent implements OnInit {
   }
 
   devolverEstado(estado: number) {
-    // return this.estadosViajes.filter((items) => {
-    //   return items[1] == estado;
-    // })[0][0];
+    return this.estadosViajes.filter((items) => {
+      return items[1] == estado;
+    })[0][0];
   }
 }
