@@ -1,22 +1,19 @@
-import {
-  HttpClient,
-  HttpResponse,
-  HttpParams,
-  HttpHeaders,
-} from '@angular/common/http';
-import { Injectable } from '@angular/core';
+
+
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { paradasDTO } from '../paradas/paradasDTO';
 import { webResult } from '../utilidades/webResult';
 import { viajeDTO, viajeFiltroDTO } from './viajaeDTO';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ViajesService {
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   private apiURL = environment.apiURL + '/viajes';
 
@@ -51,6 +48,7 @@ export class ViajesService {
   }
 
   public editar(viajeDTO: viajeDTO) {
+    console.log(JSON.stringify(viajeDTO));
     return this.http.patch<webResult>(
       `${this.apiURL}/${viajeDTO.id}`,
       JSON.stringify(viajeDTO),
@@ -88,4 +86,5 @@ export class ViajesService {
       observe: 'response',
     });
   }
+
 }

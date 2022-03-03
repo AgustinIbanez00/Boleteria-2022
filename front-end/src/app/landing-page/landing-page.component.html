@@ -4,7 +4,10 @@
       <mat-card-title>Buscar pasajes</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <form [formGroup]="form">
+      <form
+        [formGroup]="form"
+        style="display: flex; flex-direction: column; flex-wrap: nowrap"
+      >
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>Origen</mat-label>
           <input
@@ -55,9 +58,45 @@
           [form]="form"
           [type]="'date'"
           [textoLabel]="'Fecha de salida'"
-          [propiedad]="'fecha_salida'"
+          [propiedad]="'Fecha'"
         ></app-form-control>
+        <div style="display: flex; justify-content: center; width: 100%">
+          <button mat-button class="botonVerItem" [disabled]="form.invalid">
+            Buscar
+          </button>
+        </div>
       </form>
     </mat-card-content>
+  </mat-card>
+  <mat-card class="cardListado">
+    <mat-card class="cardItem">
+      <mat-card-content class="cardContentItem">
+        <label class="labelTitulo">Empresa</label>
+        <label class="labelDescripcion">Boltereia Online</label>
+      </mat-card-content>
+      <mat-card-content class="cardContentItem">
+        <label class="labelTitulo">Horario Salida</label>
+        <label class="labelDescripcion"> 9:30</label>
+      </mat-card-content>
+      <mat-card-content class="cardContentItem">
+        <label class="labelTitulo">Horario llegada</label>
+        <label class="labelDescripcion">10:45</label>
+      </mat-card-content>
+      <mat-card-content class="cardContentItem">
+        <label class="labelTitulo">Asientos disponibles</label>
+        <label class="labelDescripcion">12</label>
+      </mat-card-content>
+      <mat-card-content class="cardContentItem">
+        <label class="labelTitulo">Precio</label>
+        <label class="labelDescripcion">$521</label></mat-card-content
+      >
+      <mat-card-content class="cardContentItem">
+        <div class="divBotonVer">
+          <button mat-button class="botonVerItem" (click)="verViaje(24)">
+            Ver
+          </button>
+        </div></mat-card-content
+      >
+    </mat-card>
   </mat-card>
 </div>

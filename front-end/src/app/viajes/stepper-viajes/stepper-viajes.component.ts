@@ -10,7 +10,7 @@ import { DistribucionService } from 'src/app/distribucion/distribucion.service';
 import { distribucionDTO } from 'src/app/distribucion/distribucionDTO';
 import { parserarErroresAPI } from 'src/app/utilidades/utilidades';
 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ParadasService } from 'src/app/paradas/paradas.service';
 import { NodosService } from '../nodos.service';
 
@@ -38,7 +38,8 @@ export class StepperViajesComponent implements OnInit {
     private notificacionesService: NotificacionesService,
     public distribucionService: DistribucionService,
     public paradasService: ParadasService,
-    public nodosService: NodosService
+    public nodosService: NodosService,
+    private router: Router
   ) {}
 
   @Input()
@@ -53,10 +54,12 @@ export class StepperViajesComponent implements OnInit {
   viajes;
   errores: string[] = [];
   isEditar: boolean = false;
+  isViajeCompleto = false;
+  verConexionModal = false;
 
   paradas;
   ngOnInit(): void {
-    console.log('viaje', this.viajeDTO);
+    this.buscarParadas();
     this.viajeDistribucionForm = this.formBuilder.group({
       nombre: [
         '',
@@ -69,12 +72,16 @@ export class StepperViajesComponent implements OnInit {
     this.cargarDistribuciones();
 
     this.viajeConexionForm = this.formBuilder.group({
-      viaje_id: [this.viajeDTO.id, { validators: [Validators.required] }],
+      viaje_id: [
+        this.viajeDTO ? this.viajeDTO.id : '',
+        { validators: [Validators.required] },
+      ],
       origen_id: ['', { validators: [Validators.required] }],
       destino_id: ['', { validators: [Validators.required] }],
       precio: ['', { validators: [Validators.required] }],
       demora: ['', { validators: [Validators.required] }],
     });
+    console.log('viaje por que estoy editando', this.viajeDTO);
     if (this.viajeDTO) {
       this.isEditar = true;
       this.viajeDistribucionForm.patchValue(this.viajeDTO);
@@ -82,7 +89,8 @@ export class StepperViajesComponent implements OnInit {
 
       this.listHorarios = this.viajeDTO.horarios;
       if (this.viajeDTO.conexiones) {
-        this.listConexiones = this.viajeDTO.conexiones;
+        console.log('conexiones porque estoy editando', this.listConexiones);
+        this.listConexiones.push(...this.viajeDTO.conexiones);
       }
     }
 
@@ -94,8 +102,6 @@ export class StepperViajesComponent implements OnInit {
       pais_id: ['', { validators: [Validators.required] }],
       provincia_id: ['', { validators: [Validators.required] }],
     });
-
-    this.buscarParadas();
   }
 
   public validacionesD(propiedad: string) {
@@ -163,29 +169,40 @@ export class StepperViajesComponent implements OnInit {
   // --------- VIAJE ----------------
 
   // guardar
-  guardarViajes() {
+  guardarViajes(guardarFinal: boolean) {
     if (!this.isEditar) {
       this.viajeDTO = {
         ...this.viajeDistribucionForm.value,
       };
 
       this.viajeDTO.horarios = this.listHorarios;
+      console.log('aca');
       this.viajeDTO.conexiones = this.listConexiones;
-      this.crear(this.viajeDTO);
+      this.crear(this.viajeDTO, guardarFinal);
+    } else {
+      console.log('estoy editando', this.listConexiones);
+      this.viajeDTO.conexiones = this.listConexiones;
+      this.editar(this.viajeDTO);
     }
   }
 
-  crear(viajeDTO: viajeDTO) {
+  crear(viajeDTO: viajeDTO, guardarFinal: boolean) {
+    console.log(viajeDTO);
     this.viajesService.crear(viajeDTO).subscribe(
       (result) => {
         if (result.body.success) {
           this.viajeHorarioForm.get('horarios').setValue(viajeDTO.horarios);
-          this.viajeDTO.id = (result.body.result as viajeDTO).id;
-          this.notificacionesService.showNotificacion(
-            result.body.message,
-            'x',
-            'success'
-          );
+
+          this.viajeDTO = result.body.result as viajeDTO;
+          console.log('aca 2', viajeDTO);
+          if (guardarFinal) {
+            this.notificacionesService.showNotificacion(
+              result.body.message,
+              'x',
+              'success'
+            );
+            this.router.navigate(['/viajes']);
+          }
         } else {
           this.notificacionesService.showNotificacion(
             result.body.message,
@@ -204,15 +221,62 @@ export class StepperViajesComponent implements OnInit {
     );
   }
 
-  // -------- CONEXION ----------------
+  editar(viajeDTO: viajeDTO) {
+    console.log(viajeDTO);
+    this.viajesService.editar(viajeDTO).subscribe(
+      (result) => {
+        if (result.body.success) {
+          this.viajeHorarioForm.get('horarios').setValue(viajeDTO.horarios);
 
-  agregarConexion(conexion: conexionDTO) {
-    console.log('conexcion stepper', conexion);
-    this.listConexiones.push(conexion);
+          this.viajeDTO = result.body.result as viajeDTO;
+          console.log('aca editando editar', viajeDTO);
+
+          this.notificacionesService.showNotificacion(
+            result.body.message,
+            'x',
+            'success'
+          );
+          this.router.navigate(['/viajes']);
+        } else {
+          console.log(result);
+          this.notificacionesService.showNotificacion(
+            result.body.message,
+            'x',
+            'error'
+          );
+        }
+      },
+      (errorResult) => {
+        console.log('500', errorResult);
+        this.notificacionesService.showNotificacion(
+          errorResult.error.message,
+          'x',
+          'error'
+        );
+      }
+    );
   }
 
-  eliminarConexion(index: number) {
-    this.listConexiones.splice(index, 1);
+  // -------- CONEXION ----------------
+
+  agregarConexion(conexion: conexionDTO, verConexionModal: boolean) {
+    console.log('conecnnnnnnn', conexion);
+    var con = conexion;
+    console.log('lista conexiones ahora', this.listConexiones.length);
+    if (this.listConexiones.length == 0) {
+      conexion.destino_id = con.origen_id;
+    } else {
+      let ultimaConexion = this.listConexiones[this.listConexiones.length - 1];
+      conexion.origen_id = ultimaConexion.destino_id;
+    }
+    console.log('origen = destino', conexion);
+    this.listConexiones.push(conexion);
+    this.isViajeCompleto = true;
+    this.verConexionModal = verConexionModal;
+  }
+
+  borrarConexiones() {
+    this.listConexiones = [];
   }
 
   guardarConexion(conexion) {
@@ -250,7 +314,7 @@ export class StepperViajesComponent implements OnInit {
     this.paradasService.obtenerListParadas().subscribe(
       (result) => {
         this.paradas = result.body.result;
-        console.log(this.paradas);
+        console.log('paradas luci', this.paradas);
       },
       (error) => {
         this.errores = parserarErroresAPI(error);
@@ -259,7 +323,9 @@ export class StepperViajesComponent implements OnInit {
   }
 
   buscarParaPorId(id: number) {
-    var parada = this.paradas.find((it) => it.id === id);
-    return parada;
+    if (this.paradas) {
+      var parada = this.paradas.find((it) => it.id === id);
+      return parada.descripcion;
+    }
   }
 }

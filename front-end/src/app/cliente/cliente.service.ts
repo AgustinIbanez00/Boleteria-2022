@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { webResult } from '../utilidades/webResult';
 import { clienteDTO, clienteFiltroDTO } from './clienteDTO';
 import { Router } from '@angular/router';
+import { formatearFecha } from '../utilidades/utilidades';
 
 @Injectable({
   providedIn: 'root',
@@ -40,10 +41,16 @@ export class ClienteService {
   }
 
   public crear(clienteDTO: clienteDTO): Observable<HttpResponse<webResult>> {
+    var valor = {
+      ...clienteDTO,
+    };
+
+    console.log(JSON.stringify(valor));
+
     return this.http.post<webResult>(
       this.apiURL + '/clientes',
 
-      JSON.stringify(clienteDTO),
+      JSON.stringify(valor),
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',

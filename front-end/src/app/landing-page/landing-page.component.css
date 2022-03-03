@@ -4,8 +4,56 @@
   display: flex;
   flex-direction: row;
   padding: 3%;
+  justify-content: space-around;
 }
 
 .cardFiltro {
   width: 30%;
+}
+.cardListado {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.cardItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 10px;
+}
+.cardContentItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-height: 100px;
+  height: 100%;
+  width: auto;
+  border-right: 0.5px rgb(167, 214, 91) solid;
+  border-radius: 2px;
+  flex-grow: 1;
+}
+.cardContentItem:last-child {
+  border: 0;
+}
+.labelTitulo {
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-align: center;
+}
+.labelDescripcion {
+  font-size: 13px;
+  text-align: center;
+  width: 90%;
+  font-weight: 600;
+}
+.divBotonVer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.botonVerItem {
+  width: 90%;
+  background-color: rgb(200, 230, 241);
 }

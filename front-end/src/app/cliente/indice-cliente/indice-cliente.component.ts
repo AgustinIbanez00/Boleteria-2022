@@ -82,7 +82,7 @@ export class IndiceClienteComponent implements OnInit {
             ],
           },
         ],
-        fechaNacimiento: ['', { validators: [Validators.required] }],
+        fecha_nacimiento: ['', { validators: [Validators.required] }],
         genero: ['', { validators: [Validators.required] }],
         estado: 0,
       }));
@@ -102,7 +102,7 @@ export class IndiceClienteComponent implements OnInit {
         data: {
           dni: this.dni,
           nombre: this.nombre,
-          fechaNacimiento: this.fecha_nacimiento,
+          fecha_nacimiento: this.fecha_nacimiento,
           genero: this.genero,
           nacinalidad: this.nacinalidad,
         },

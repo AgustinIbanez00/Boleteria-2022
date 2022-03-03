@@ -2,8 +2,10 @@ import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { ComprarBoletoComponent } from '../boleteria/comprar-boleto/comprar-boleto.component';
 import { ParadasService } from '../paradas/paradas.service';
 import { paradasDTO } from '../paradas/paradasDTO';
 import { parserarErroresAPI } from '../utilidades/utilidades';
@@ -23,13 +25,16 @@ export class LandingPageComponent implements OnInit {
   filteredOptionsDestino: Observable<paradasDTO[]>;
   controlOrigen = new FormControl()
   controlDestino = new FormControl()
-  constructor(private servicioParadas: ParadasService, private formBuilder: FormBuilder) { }
+  constructor(
+    private servicioParadas: ParadasService,
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog,) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      origen_id: ['', { validators: [Validators.required] }],
-      destino_id: ['', { validators: [Validators.required] }],
-      fecha_salida: ['', { validators: [Validators.required] }]
+      OrigenId: ['', { validators: [Validators.required] }],
+      DestinoId: ['', { validators: [Validators.required] }],
+      Fecha: ['', { validators: [Validators.required] }]
     })
     this.obtenerParadas()
     this.filteredOptionsOrigen = this.controlOrigen.valueChanges.pipe(
@@ -62,11 +67,22 @@ export class LandingPageComponent implements OnInit {
   }
   opcionSelectedOrigen(event: MatAutocompleteSelectedEvent) {
     var origen = this.paradas.find((item) => item.descripcion === event.option.value)
-    this.form.get('origen_id').setValue(origen.id)
+    this.form.get('OrigenId').setValue(origen.id)
   }
   opcionSelectedDestino(event: MatAutocompleteSelectedEvent) {
     var origen = this.paradas.find((item) => item.descripcion === event.option.value)
-    this.form.get('destino_id').setValue(origen.id)
+    this.form.get('DestinoId').setValue(origen.id)
     console.log(this.form.value)
+  }
+
+  verViaje(idViaje: number) {
+    var dialogRef = this.dialog.open(ComprarBoletoComponent, {
+      width: '600px',
+      data: idViaje,
+    });
+  }
+
+  buscarViajes() {
+
   }
 }

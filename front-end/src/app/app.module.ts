@@ -47,6 +47,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HorariosComponent } from './utilidades/horarios/horarios.component';
 import { SelectViajesComponent } from './utilidades/select-viajes/select-viajes.component';
 import { ConexionComponent } from './viajes/conexion/conexion.component';
+import { ComprarBoletoComponent } from './boleteria/comprar-boleto/comprar-boleto.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,6 +81,7 @@ import { ConexionComponent } from './viajes/conexion/conexion.component';
     HorariosComponent,
     SelectViajesComponent,
     ConexionComponent,
+    ComprarBoletoComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,4 +110,4 @@ import { ConexionComponent } from './viajes/conexion/conexion.component';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
