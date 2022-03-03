@@ -1,4 +1,5 @@
-﻿using BoleteriaOnline.Core.Services;
+﻿using BoleteriaOnline.Core.Data.Enums;
+using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Core.ViewModels.Filters;
@@ -18,6 +19,11 @@ public class ViajesController : ControllerBase
         _viajeservice = service;
     }
 
+    /// <summary>
+    /// Todos los viajes paginados
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -31,11 +37,15 @@ public class ViajesController : ControllerBase
         return Ok(viajes);
     }
 
+    /// <summary>
+    /// Todos los viajes sin paginado
+    /// </summary>
+    /// <returns></returns>
     [HttpGet("all")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<WebResult<ICollection<ViajeDTO>>>> GetAll([FromQuery] ViajeFilter filter)
+    public async Task<ActionResult<WebResult<ICollection<ViajeDTO>>>> GetAll()
     {
-        var viajes = await _viajeservice.AllAsync(filter);
+        var viajes = await _viajeservice.AllAsync(new ViajeFilter() { Estado = Estado.Activo });
 
         if (!viajes.Success)
             return StatusCode(ResponseHelper.GetHttpError(viajes.ErrorCode), viajes);
@@ -43,14 +53,18 @@ public class ViajesController : ControllerBase
         return Ok(viajes);
     }
 
-
+    /// <summary>
+    /// Viaje por id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<ViajeDTO>>> Get(int id)
     {
-        var viaje = await _viajeservice.GetAsync(new ViajeFilter() { Id = id});
+        var viaje = await _viajeservice.GetAsync(new ViajeFilter() { Id = id });
 
         if (!viaje.Success)
             return StatusCode(ResponseHelper.GetHttpError(viaje.ErrorCode), viaje);
@@ -58,6 +72,11 @@ public class ViajesController : ControllerBase
         return Ok(viaje);
     }
 
+    /// <summary>
+    /// Crear un viaje
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -72,6 +91,12 @@ public class ViajesController : ControllerBase
         return Created(nameof(Get), viaje);
     }
 
+    /// <summary>
+    /// Modificar un viaje
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpPatch("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ViajeDTO>>> UpdateViaje([FromBody] ViajeDTO request, int id)
@@ -83,6 +108,11 @@ public class ViajesController : ControllerBase
         return Ok(viaje);
     }
 
+    /// <summary>
+    /// Eliminar un viaje
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ViajeDTO>>> DeleteViaje(int id)

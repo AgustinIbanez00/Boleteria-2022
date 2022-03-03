@@ -19,6 +19,10 @@ public class DistribucionesController : ControllerBase
         _distribucionservice = service;
     }
 
+    /// <summary>
+    /// Todas las distribuciones
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -32,6 +36,11 @@ public class DistribucionesController : ControllerBase
         return Ok(distribucions);
     }
 
+    /// <summary>
+    /// Distribución por id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -46,6 +55,11 @@ public class DistribucionesController : ControllerBase
         return Ok(distribucion);
     }
 
+    /// <summary>
+    /// Crear una distribución
+    /// </summary>
+    /// <param name="distribucionDto"></param>
+    /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -60,6 +74,11 @@ public class DistribucionesController : ControllerBase
         return Created(nameof(Get), distribucion);
     }
 
+    /// <summary>
+    /// Modificar una distribución
+    /// </summary>
+    /// <param name="distribucionDto"></param>
+    /// <returns></returns>
     [HttpPatch("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<DistribucionResponse>>> UpdateDistribucion([FromBody] DistribucionUpdateRequest distribucionDto)
@@ -71,6 +90,11 @@ public class DistribucionesController : ControllerBase
         return Ok(distribucion);
     }
 
+    /// <summary>
+    /// Eliminar una distribución
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<DistribucionResponse>>> DeleteDistribucion(long id)
@@ -82,7 +106,12 @@ public class DistribucionesController : ControllerBase
         return Ok(distribucion);
     }
 
-
+    /// <summary>
+    /// Crear filas de una distribución
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="planta"></param>
+    /// <returns></returns>
     [HttpPost("{id:int}/filas")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<DistribucionResponse>>> CreateFilas(long id, [FromBody] Planta planta)
@@ -93,17 +122,4 @@ public class DistribucionesController : ControllerBase
             return StatusCode(ResponseHelper.GetHttpError(distribucion.ErrorCode), distribucion);
         return Ok(distribucion);
     }
-
-    /*
-    [HttpGet("{viajeId:int}/filas")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<WebResult<DistribucionResponse>>> Compra(long viajeId, [FromBody] Planta planta)
-    {
-        var distribucion = await _distribucionservice.AppendFilasAsync(id, planta);
-
-        if (!distribucion.Success)
-            return StatusCode(ResponseHelper.GetHttpError(distribucion.ErrorCode), distribucion);
-        return Ok(distribucion);
-    }
-    */
 }

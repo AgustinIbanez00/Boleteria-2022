@@ -2,7 +2,6 @@
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Core.ViewModels.Filters;
-using BoleteriaOnline.Web.Data;
 using BoleteriaOnline.Web.Extensions.Response;
 using Microsoft.AspNetCore.Mvc;
 

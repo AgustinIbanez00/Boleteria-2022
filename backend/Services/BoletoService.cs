@@ -5,7 +5,6 @@ using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Core.ViewModels.Filters;
 using BoleteriaOnline.Core.ViewModels.Pagging;
-using BoleteriaOnline.Web.Data.Filters;
 using BoleteriaOnline.Web.Data.Models;
 using BoleteriaOnline.Web.Repositories;
 using EntityFramework.Exceptions.Common;

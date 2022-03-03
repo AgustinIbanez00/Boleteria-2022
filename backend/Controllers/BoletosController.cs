@@ -18,6 +18,11 @@ public class BoletosController : ControllerBase
         _boletoservice = service;
     }
 
+    /// <summary>
+    /// Boletos con paginación
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ICollection<BoletoDTO>>>> GetPaginated([FromQuery] BoletoFilter filter)
@@ -30,6 +35,11 @@ public class BoletosController : ControllerBase
         return Ok(boletos);
     }
 
+    /// <summary>
+    /// Boletos sin paginación
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     [HttpGet("all")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ICollection<BoletoDTO>>>> GetAll([FromQuery] BoletoFilter filter)
@@ -42,7 +52,11 @@ public class BoletosController : ControllerBase
         return Ok(boletos);
     }
 
-
+    /// <summary>
+    /// Boleto por id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -57,6 +71,11 @@ public class BoletosController : ControllerBase
         return Ok(boleto);
     }
 
+    /// <summary>
+    /// Crear un boleto
+    /// </summary>
+    /// <param name="boletoDto"></param>
+    /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -71,6 +90,12 @@ public class BoletosController : ControllerBase
         return Created(nameof(Get), boleto);
     }
 
+    /// <summary>
+    /// Modificar un boleto
+    /// </summary>
+    /// <param name="boletoDto"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpPatch("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<BoletoDTO>>> UpdateBoleto([FromBody] BoletoDTO boletoDto, int id)
@@ -82,6 +107,11 @@ public class BoletosController : ControllerBase
         return Ok(boleto);
     }
 
+    /// <summary>
+    /// Eliminar un boleto
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<BoletoDTO>>> DeleteBoleto(int id)

@@ -142,14 +142,14 @@ public class ViajeService : IViajeService
             if (id <= 0)
                 return Error<Viaje, ViajeDTO>(ErrorMessage.InvalidId);
 
-            var viaje = await _viajeRepository.GetAsync(new ViajeFilter() { Id = id});
+            var viaje = await _viajeRepository.GetAsync(new ViajeFilter() { Id = id });
 
             if (viaje == null)
                 return Error<Viaje, ViajeDTO>(ErrorMessage.NotFound);
 
             viaje.Nombre = request.Nombre;
 
-            await _nodoRepository.DeleteAsync(new NodoFilter() {  ViajeId = id });
+            await _nodoRepository.DeleteAsync(new NodoFilter() { ViajeId = id });
 
             foreach (var nodo in request.Conexiones)
             {
