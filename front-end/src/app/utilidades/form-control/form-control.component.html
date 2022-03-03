@@ -39,7 +39,7 @@
     />
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
-    <mat-error *ngIf="form.invalid">{{ validaciones(propiedad) }}</mat-error>
+    <mat-error *ngIf="form.invalid">{{ validar(propiedad) }}</mat-error>
     <ng-container
       *ngIf="error_messages && error_messages.hasOwnProperty(propiedad)"
     >
