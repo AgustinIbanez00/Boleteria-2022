@@ -1,16 +1,17 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DistribucionService } from 'src/app/distribucion/distribucion.service';
+import { distribucionDTO, DistribucionDTO } from 'src/app/distribucion/distribucionDTO';
 import { parserarErroresAPI } from 'src/app/utilidades/utilidades';
-import { DistribucionService } from '../distribucion.service';
-import { distribucionDTO, DistribucionDTO, fila, filaDTO } from '../distribucionDTO';
 
 @Component({
-  selector: 'app-detalle-distribucion',
-  templateUrl: './detalle-distribucion.component.html',
-  styleUrls: ['./detalle-distribucion.component.css']
+  selector: 'app-comprar-boleto',
+  templateUrl: './comprar-boleto.component.html',
+  styleUrls: ['./comprar-boleto.component.css']
 })
-export class DetalleDistribucionComponent implements OnInit {
-
+export class ComprarBoletoComponent implements OnInit {
+  form: FormGroup;
   contadorPiso0: number = 0
   errores: string[] = []
   isLoading: boolean = false;
@@ -19,13 +20,16 @@ export class DetalleDistribucionComponent implements OnInit {
   distribucionDTO: DistribucionDTO = new DistribucionDTO()
   distribucion: distribucionDTO;
   contador = 1;
+  asientoSeleccionado = '-'
   constructor(
-    public dialogRef: MatDialogRef<DetalleDistribucionComponent>,
+    public dialogRef: MatDialogRef<ComprarBoletoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: number,
-    private distribucionService: DistribucionService
+    private distribucionService: DistribucionService,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit(): void {
+
     this.isLoading = true;
     this.distribucionService.obtenerDistribucion(this.data).subscribe((result) => {
       this.distribucion = { id: result.result['id'], filas: result.result['filas'], nota: result.result['nota'], un_piso: result.result['un_piso'] }
@@ -53,5 +57,15 @@ export class DetalleDistribucionComponent implements OnInit {
           celda.numero = this.contador++;
       })
     })
+  }
+
+  seleccionarAsiento(celda: any) {
+    console.log(celda)
+    // console.log("celda", celda)
+    if (celda.value == 2 || celda.value == 6 || celda.value == 7) {
+      this.asientoSeleccionado = celda.numero
+      // document.getElementById(celda.numero).style.border = "1000px solid green"
+      console.log(celda.numero == this.asientoSeleccionado)
+    }
   }
 }
