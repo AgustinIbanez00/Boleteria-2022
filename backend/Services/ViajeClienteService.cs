@@ -34,15 +34,15 @@ namespace BoleteriaOnline.Web.Services
         {
             try
             {
-                var paradaOrigen = await _paradaRepository.GetAsync(new ParadaFilter() { Nombre = filter.Origen });
+                var paradaOrigen = await _paradaRepository.FindAsync(filter.OrigenId);
 
                 if (paradaOrigen == null)
-                    return KeyError<ParadaDTO, ICollection<ViajeClienteDTO>>(nameof(filter.Origen), ErrorMessage.NotFound);
+                    return KeyError<ParadaDTO, ICollection<ViajeClienteDTO>>(nameof(filter.OrigenId), ErrorMessage.NotFound);
 
-                var paradaDestino = await _paradaRepository.GetAsync(new ParadaFilter() { Nombre = filter.Origen });
+                var paradaDestino = await _paradaRepository.FindAsync(filter.DestinoId);
 
                 if (paradaDestino == null)
-                    return KeyError<ParadaDTO, ICollection<ViajeClienteDTO>>(nameof(filter.Destino), ErrorMessage.NotFound);
+                    return KeyError<ParadaDTO, ICollection<ViajeClienteDTO>>(nameof(filter.DestinoId), ErrorMessage.NotFound);
 
                 DateTime fechaDateTime = DateTime.MinValue;
 

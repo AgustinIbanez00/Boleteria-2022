@@ -6,9 +6,9 @@ namespace BoleteriaOnline.Core.ViewModels.Filters;
 public class ViajeClienteFilter : PaginationFilter
 {
     [Required, Display(Name = "origen")]
-    public string Origen { get; set; }
+    public int OrigenId { get; set; }
     [Required, Display(Name = "destino")]
-    public string Destino { get; set; }
+    public int DestinoId { get; set; }
     [Required, Display(Name = "fecha"), DataType(DataType.Date)]
     public string Fecha { get; set; }
 
