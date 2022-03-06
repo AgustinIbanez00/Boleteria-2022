@@ -1,0 +1,80 @@
+<app-loading
+  [isLoading]="isLoading"
+  [mensaje]="'Registrando usuario'"
+></app-loading>
+<div class="containerRegistro">
+  <div class="contenedorForm">
+    <mat-card class="cardRegistro">
+      <form
+        [formGroup]="form"
+        class="formRegistro"
+        (submit)="submit(form.value)"
+      >
+        <app-form-control
+          [form]="form"
+          [propiedad]="'first_name'"
+          [textoLabel]="'Nombre'"
+          [type]="'text'"
+          [error_messages]="error_messages"
+          [validaciones]="validacionesRegistro"
+        ></app-form-control>
+        <app-form-control
+          [form]="form"
+          [propiedad]="'last_name'"
+          [textoLabel]="'Apellido*'"
+          [type]="'text'"
+          [error_messages]="error_messages"
+          [validaciones]="validacionesRegistro"
+        ></app-form-control>
+        <app-form-control
+          [form]="form"
+          [propiedad]="'dni'"
+          [textoLabel]="'DNI*'"
+          [type]="'number'"
+          [error_messages]="error_messages"
+          [validaciones]="validacionesRegistro"
+        ></app-form-control>
+        <app-form-control
+          [form]="form"
+          [propiedad]="'fecha_nacimiento'"
+          [textoLabel]="'Fecha de Nacimiento*'"
+          [type]="'date'"
+          [error_messages]="error_messages"
+          [validaciones]="validacionesRegistro"
+        ></app-form-control>
+        <app-form-control
+          [form]="form"
+          [propiedad]="'email'"
+          [textoLabel]="'Email*'"
+          [type]="'email'"
+          [error_messages]="error_messages"
+          [validaciones]="validacionesRegistro"
+        ></app-form-control>
+        <app-form-control
+          [form]="form"
+          [propiedad]="'password'"
+          [textoLabel]="'Contraseña*'"
+          [type]="'password'"
+          [error_messages]="error_messages"
+          [validaciones]="validacionesRegistro"
+        ></app-form-control>
+        <app-form-control
+          [form]="form"
+          [propiedad]="'confirm_password'"
+          [textoLabel]="'Confirmar contraseña*'"
+          [type]="'password'"
+          [error_messages]="error_messages"
+          [validaciones]="validacionesRegistro"
+        ></app-form-control>
+        <button
+          mat-flat-button
+          class="guardarRegistro"
+          [disabled]="form.invalid"
+        >
+          Guardar
+        </button>
+      </form>
+      <app-mostrar-errores [errores]="errores"></app-mostrar-errores>
+    </mat-card>
+  </div>
+</div>

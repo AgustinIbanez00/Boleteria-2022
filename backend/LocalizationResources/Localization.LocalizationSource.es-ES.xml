@@ -167,4 +167,44 @@
     <value>días de la semana</value>
     <comment>Created by XLocalizer</comment>
   </data>
+  <data isActive="false">
+    <key>página</key>
+    <value>página</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>elementos por página</key>
+    <value>elementos por página</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>país</key>
+    <value>país</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>provincia</key>
+    <value>provincia</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>estado</key>
+    <value>estado</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>viaje</key>
+    <value>viaje</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>conexiones</key>
+    <value>conexiones</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
+  <data isActive="false">
+    <key>fecha</key>
+    <value>fecha</value>
+    <comment>Created by XLocalizer</comment>
+  </data>
 </root>

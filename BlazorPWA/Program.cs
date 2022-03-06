@@ -12,7 +12,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("HostUrl")) });
 builder.Services.AddScoped<IDistribucionService, DistribucionService>();
-builder.Services.AddScoped<IDestinoService, DestinoService>();
+builder.Services.AddScoped<IParadaService, ParadaService>();
 builder.Services.AddScoped<IViajeService, ViajeService>();
 builder.Services.AddScoped<DialogService>();
 builder.Services.AddScoped<NotificationService>();

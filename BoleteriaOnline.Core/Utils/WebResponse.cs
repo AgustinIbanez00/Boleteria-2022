@@ -2,6 +2,7 @@
 using BoleteriaOnline.Core.Attributes;
 using BoleteriaOnline.Core.Extensions;
 using BoleteriaOnline.Core.Extensions.Response;
+using BoleteriaOnline.Core.ViewModels.Pagging;
 using Humanizer;
 using SmartFormat;
 
@@ -35,6 +36,33 @@ public static class WebResponse
             ErrorMessages = new Dictionary<string, string[]>() { { new string(key.ToSnakeCase().ToArray()), new string[] { Smart.Format(error.GetDescription(), Options<TEntity>()) } } }
         };
     }
+
+    public static WebResultList<TResult> KeyErrorList<TEntity, TResult>(string key, ErrorMessage error) where TResult : class
+    {
+        return new WebResultList<TResult>
+        {
+            ErrorCode = error,
+            Result = default,
+            Error = ResolveErrorCode(error),
+            Success = false,
+            Message = "Se encontraron uno o más errores.",
+            ErrorMessages = new Dictionary<string, string[]>() { { new string(key.ToSnakeCase().ToArray()), new string[] { Smart.Format(error.GetDescription(), Options<TEntity>()) } } }
+        };
+    }
+
+    public static WebResult<TResult> KeyError<TResult>(string key, ErrorMessage error) where TResult : class
+    {
+        return new WebResult<TResult>
+        {
+            ErrorCode = error,
+            Result = default,
+            Error = ResolveErrorCode(error),
+            Success = false,
+            Message = "Se encontraron uno o más errores.",
+            ErrorMessages = new Dictionary<string, string[]>() { { new string(key.ToSnakeCase().ToArray()), new string[] { Smart.Format(error.GetDescription(), Options<TResult>()) } } }
+        };
+    }
+
 
     public static WebResult<TResult> KeyError<TEntity, TResult>(string key, ErrorMessage error, TResult result) where TResult : class
     {
@@ -71,6 +99,47 @@ public static class WebResponse
         };
     }
 
+    public static WebResultList<TResult> ErrorList<TEntity, TResult>(ErrorMessage error, [Optional] string message) where TResult : class
+    {
+        return new WebResultList<TResult>
+        {
+            ErrorCode = error,
+            Error = ResolveErrorCode(error),
+            Result = default,
+            Success = false,
+            Message = Smart.Format(error.GetDescription(), Options<TEntity>()),
+            ErrorMessages = string.IsNullOrEmpty(message) ? new Dictionary<string, string[]>() : new Dictionary<string, string[]>() { { "error", new string[] { message } } }
+        };
+    }
+
+    public static WebResultList<TResult> ErrorList<TResult>(ErrorMessage error, [Optional] string message) where TResult : class
+    {
+        return new WebResultList<TResult>
+        {
+            ErrorCode = error,
+            Error = ResolveErrorCode(error),
+            Result = default,
+            Success = false,
+            Message = Smart.Format(error.GetDescription(), Options<TResult>()),
+            ErrorMessages = string.IsNullOrEmpty(message) ? new Dictionary<string, string[]>() : new Dictionary<string, string[]>() { { "error", new string[] { message } } }
+        };
+    }
+
+
+    public static WebResultList<TResult> ErrorList<TResult>(string message) where TResult : class
+    {
+        return new WebResultList<TResult>
+        {
+            ErrorCode = ErrorMessage.GenericValidation,
+            Error = "CUSTOM_ERROR",
+            Result = default,
+            Success = false,
+            Message = message,
+            ErrorMessages = new Dictionary<string, string[]>()
+        };
+    }
+
+
 
     /// <summary>
     /// Devuelve un objeto personalizado del sistema del tipo TResult con el mensaje de error computado de TEntity.
@@ -89,6 +158,19 @@ public static class WebResponse
             Result = default,
             Success = false,
             Message = Smart.Format(error.GetDescription(), Options<TEntity>()),
+            ErrorMessages = string.IsNullOrEmpty(message) ? new Dictionary<string, string[]>() : new Dictionary<string, string[]>() { { "error", new string[] { message } } }
+        };
+    }
+
+    public static WebResult<TResult> Error<TResult>(ErrorMessage error, [Optional] string message) where TResult : class
+    {
+        return new WebResult<TResult>
+        {
+            ErrorCode = error,
+            Error = ResolveErrorCode(error),
+            Result = default,
+            Success = false,
+            Message = Smart.Format(error.GetDescription(), Options<TResult>()),
             ErrorMessages = string.IsNullOrEmpty(message) ? new Dictionary<string, string[]>() : new Dictionary<string, string[]>() { { "error", new string[] { message } } }
         };
     }
@@ -120,6 +202,17 @@ public static class WebResponse
             options.Gender = GrammaticalGender.Masculine;
         }
         return options;
+    }
+
+    public static WebResultList<TResult> List<TResult>(List<TResult> list, Pagination pagination) where TResult : class
+    {
+        return new WebResultList<TResult>
+        {
+            Result = list,
+            Pagination = pagination,
+            Message = "Correcto.",
+            ErrorMessages = new Dictionary<string, string[]>()
+        };
     }
 
     public static WebResult<TResult> Ok<TResult>(TResult data) where TResult : class
@@ -162,6 +255,17 @@ public static class WebResponse
             Result = data,
             Success = true,
             Message = Smart.Format(message.GetDescription(), Options<TEntity>()),
+            ErrorMessages = new Dictionary<string, string[]>()
+        };
+    }
+
+    public static WebResult<TResult> Ok<TResult>(TResult data, SuccessMessage message) where TResult : class
+    {
+        return new WebResult<TResult>
+        {
+            Result = data,
+            Success = true,
+            Message = Smart.Format(message.GetDescription(), Options<TResult>()),
             ErrorMessages = new Dictionary<string, string[]>()
         };
     }

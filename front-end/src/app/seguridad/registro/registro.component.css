@@ -1,0 +1,28 @@
+.containerRegistro {
+  width: 100%;
+  height: 100%;
+}
+.contenedorForm {
+  width: 100%;
+  height: 90%;
+  padding-left: 20%;
+  padding-right: 20%;
+  padding-top: 2%;
+  /* padding: 20%; */
+  /* padding-bottom: 5%; */
+}
+.cardRegistro {
+  background-color: rgb(255, 255, 255);
+}
+.formRegistro {
+  display: flex;
+  flex-direction: column;
+}
+.guardarRegistro {
+  margin: 0 auto;
+  width: 50%;
+  background-color: aquamarine;
+}
+mat-form-field {
+  margin-top: 1%;
+}

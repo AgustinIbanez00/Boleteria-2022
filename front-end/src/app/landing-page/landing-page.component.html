@@ -1,0 +1,107 @@
+<div class="contenedor-landing-page">
+  <mat-card class="cardFiltro">
+    <mat-card-header>
+      <mat-card-title>Buscar pasajes</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form
+        (submit)="buscarViajes(form.value)"
+        [formGroup]="form"
+        style="display: flex; flex-direction: column; flex-wrap: nowrap"
+      >
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Origen</mat-label>
+          <input
+            type="text"
+            placeholder="Seleccione un origen"
+            aria-label="Origen"
+            matInput
+            [formControl]="controlOrigen"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete
+            (optionSelected)="opcionSelectedOrigen($event)"
+            autoActiveFirstOption
+            #auto="matAutocomplete"
+          >
+            <mat-option
+              *ngFor="let parada of filteredOptionsOrigen | async"
+              [value]="parada.descripcion"
+            >
+              {{ parada.descripcion }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Destino</mat-label>
+          <input
+            type="text"
+            placeholder="Seleccione un destino"
+            aria-label="Destinino"
+            matInput
+            [formControl]="controlOrigen"
+            [matAutocomplete]="autocompletarDestino"
+          />
+          <mat-autocomplete
+            (optionSelected)="opcionSelectedDestino($event)"
+            autoActiveFirstOption
+            #autocompletarDestino="matAutocomplete"
+          >
+            <mat-option
+              *ngFor="let parada of filteredOptionsDestino | async"
+              [value]="parada.descripcion"
+            >
+              {{ parada.descripcion }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <app-form-control
+          [form]="form"
+          [type]="'date'"
+          [textoLabel]="'Fecha de salida'"
+          [propiedad]="'Fecha'"
+        ></app-form-control>
+        <div style="display: flex; justify-content: center; width: 100%">
+          <button mat-button class="botonVerItem" [disabled]="form.invalid">
+            Buscar
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="cardListado">
+    <div *ngIf="destinosDTO">
+      <mat-card class="cardItem" *ngFor="let destino of destinosDTO">
+        <mat-card-content class="cardContentItem">
+          <label class="labelTitulo">Destino</label>
+          <label class="labelDescripcion">{{ destino.nombre }}</label>
+        </mat-card-content>
+        <mat-card-content class="cardContentItem">
+          <label class="labelTitulo">Horario Salida</label>
+          <label class="labelDescripcion"> 9:30</label>
+        </mat-card-content>
+        <mat-card-content class="cardContentItem">
+          <label class="labelTitulo">Horario llegada</label>
+          <label class="labelDescripcion">10:45</label>
+        </mat-card-content>
+        <mat-card-content class="cardContentItem">
+          <label class="labelTitulo">Asientos disponibles</label>
+          <label class="labelDescripcion">12</label>
+        </mat-card-content>
+        <mat-card-content class="cardContentItem">
+          <label class="labelTitulo">Precio</label>
+          <label class="labelDescripcion">$521</label></mat-card-content
+        >
+        <mat-card-content class="cardContentItem">
+          <div class="divBotonVer">
+            <button mat-button class="botonVerItem" (click)="verViaje(24)">
+              Ver
+            </button>
+          </div></mat-card-content
+        >
+      </mat-card>
+    </div>
+  </mat-card>
+</div>
+<app-mostrar-errores [errores]="errores"></app-mostrar-errores>
+<app-loading [isLoading]="isLoading"></app-loading>

@@ -1,13 +1,7 @@
-﻿using BoleteriaOnline.Core.Utils;
-using BoleteriaOnline.Core.ViewModels.Requests;
-using BoleteriaOnline.Core.ViewModels.Responses;
+﻿using BoleteriaOnline.Core.ViewModels;
+using BoleteriaOnline.Core.ViewModels.Filters;
 
 namespace BoleteriaOnline.Core.Services;
-public interface IViajeService
+public interface IViajeService : IGenericService<int, ViajeDTO, ViajeFilter>
 {
-    Task<WebResult<ICollection<ViajeResponse>>> GetViajesAsync();
-    Task<WebResult<ViajeResponse>> GetViajeAsync(long id);
-    Task<WebResult<ViajeResponse>> CreateViajeAsync(ViajeRequest viajeDto);
-    Task<WebResult<ViajeResponse>> UpdateViajeAsync(ViajeUpdateRequest viajeDto);
-    Task<WebResult<ViajeResponse>> DeleteViajeAsync(long id);
 }

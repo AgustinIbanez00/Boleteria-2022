@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using BoleteriaOnline.Web.Extensions.Response;
+﻿using System.Security.Claims;
 using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
-using BoleteriaOnline.Core.ViewModels.Responses;
 using BoleteriaOnline.Core.ViewModels.Requests;
+using BoleteriaOnline.Core.ViewModels.Responses;
+using BoleteriaOnline.Web.Extensions.Response;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BoleteriaOnline.Web.Controllers;
 
@@ -23,7 +23,7 @@ public class UsuarioController : ControllerBase
 
 
     [HttpGet("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<UsuarioResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<UsuarioResponse>>> Get(int id)
@@ -37,7 +37,7 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<UsuarioResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -52,7 +52,7 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPost("login")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<UsuarioResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -67,7 +67,7 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpPost("ban")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<UsuarioResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<UsuarioResponse>>> LockUsuario(int id)
     {
         var usuario = await _usuarioService.LockUsuarioAsync(id);
@@ -78,7 +78,7 @@ public class UsuarioController : ControllerBase
     }
 
     [HttpGet("me")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WebResult<UsuarioResponse>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<UsuarioResponse>>> GetMe()
     {
         var currentClaim = ((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.NameIdentifier);

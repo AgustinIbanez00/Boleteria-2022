@@ -30,18 +30,18 @@ public class DistribucionService : IDistribucionService
         {
             var distribucion = _mapper.Map<Distribucion>(distribucionDto);
 
-            if(distribucion.Filas.Count == 0)
+            if (distribucion.Filas.Count == 0)
                 return Error<Distribucion, DistribucionResponse>(ErrorMessage.EmptyList);
             else
             {
                 foreach (var fila in distribucion.Filas)
                 {
-                    if(fila.Cells.Count == 0)
+                    if (fila.Cells.Count == 0)
                         return Error<DistribucionResponse>($"Se encontró una fila sin celdas.");
                 }
             }
 
-            if(distribucion.UnPiso && distribucion.Filas.Where(f => f.Planta == Planta.ALTA).Count() > 0)
+            if (distribucion.UnPiso && distribucion.Filas.Where(f => f.Planta == Planta.ALTA).Count() > 0)
             {
                 return Error<DistribucionResponse>($"Se encontró una fila sin celdas.");
             }
@@ -79,6 +79,10 @@ public class DistribucionService : IDistribucionService
                 return Error<Distribucion, DistribucionResponse>(ErrorMessage.CouldNotDelete);
 
             return Ok<Distribucion, DistribucionResponse>(_mapper.Map<DistribucionResponse>(distribucion), SuccessMessage.Deleted);
+        }
+        catch (ReferenceConstraintException)
+        {
+            return Error<DistribucionResponse>(ErrorMessage.CouldNotDeleteReferenced);
         }
         catch (Exception ex)
         {
@@ -133,7 +137,7 @@ public class DistribucionService : IDistribucionService
             if (distribucion == null)
                 return Error<Distribucion, DistribucionResponse>(ErrorMessage.NotFound);
 
-            if(distribucion.Filas.Where(f => f.Planta == Planta.BAJA).Count() >= MAX_ITEMS_PER_PLANTA)
+            if (distribucion.Filas.Where(f => f.Planta == Planta.BAJA).Count() >= MAX_ITEMS_PER_PLANTA)
                 return Error<DistribucionResponse>($"La cantidad de filas para la planta baja excede el límite permitido ({MAX_ITEMS_PER_PLANTA}).");
 
             if (distribucion.Filas.Where(f => f.Planta == Planta.ALTA).Count() >= MAX_ITEMS_PER_PLANTA)
@@ -141,7 +145,7 @@ public class DistribucionService : IDistribucionService
 
             foreach (var fila in distribucionDto.Filas)
             {
-                if(distribucion.Filas.Any(f => f.DistribucionId == distribucionDto.Id && f.Id == fila.Id))
+                if (distribucion.Filas.Any(f => f.DistribucionId == distribucionDto.Id && f.Id == fila.Id))
                 {
                     foreach (var celda in fila.Cells)
                     {
@@ -150,7 +154,7 @@ public class DistribucionService : IDistribucionService
                             var filaDistri = distribucion.Filas
                                 .FirstOrDefault(f => f.Id == fila.Id);
 
-                            if(filaDistri != null)
+                            if (filaDistri != null)
                             {
                                 var celdaDistri = filaDistri.Cells.FirstOrDefault(c => c.Id == celda.Id);
 
@@ -163,15 +167,15 @@ public class DistribucionService : IDistribucionService
                 }
                 else
                     return Error<DistribucionResponse>("No se encontró la fila.");
-                
+
             }
 
             distribucion.Filas = _mapper.Map<List<Fila>>(distribucionDto.Filas);
 
             if (distribucion.Nota != distribucionDto.Nota)
                 distribucion.Nota = distribucionDto.Nota;
-             
-            if(distribucion.UnPiso != distribucionDto.UnPiso)
+
+            if (distribucion.UnPiso != distribucionDto.UnPiso)
                 distribucion.UnPiso = distribucionDto.UnPiso;
 
             if (!await _distribucionRepository.UpdateDistribucionAsync(distribucion))
@@ -208,7 +212,7 @@ public class DistribucionService : IDistribucionService
 
             return Ok<Distribucion, DistribucionResponse>(_mapper.Map<DistribucionResponse>(distribucion), SuccessMessage.Modified);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             return Error<Distribucion, DistribucionResponse>(ErrorMessage.Generic, ex.Message);
         }

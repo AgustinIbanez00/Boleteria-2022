@@ -1,0 +1,112 @@
+html {
+  min-width: 800px;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-image: url("assets/imagenes/fondo.jpg");
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: cover;
+}
+
+.imagenBackground {
+  position: absolute;
+}
+
+.mat-toolbar button {
+  font-size: medium;
+}
+
+.botonLogin {
+  background-color: rgb(200, 230, 241);
+}
+
+.mat-toolbar {
+  background-color: rgb(200, 230, 241);
+}
+
+.success.mat-snack-bar-container {
+  background: rgb(150, 245, 186);
+  color: black;
+}
+
+.error.mat-snack-bar-container {
+  background: tomato;
+  color: black;
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: rgb(200, 230, 241);
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: rgb(128, 215, 247);
+}
+
+.buscarButton {
+  background-color: rgb(200, 230, 241);
+}
+/* ------------------------------ */
+/* 
+.guardar {
+  background-color: #c2e48b;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.mat-toolbar {
+  background-color: #c2e48b;
+}
+
+.botonEditar {
+  margin-right: 1rem;
+  background-color: #b345fc;
+  color: white;
+}
+
+.botonEditar:hover {
+  background-color: #9153bb;
+}
+
+.botonEliminar {
+  margin-left: 1rem;
+  background-color: #f4e3fc;
+  color: #b345fc;
+}
+
+.botonEliminar:hover {
+  background-color: #dec8ec;
+}
+
+.botonCrear {
+  background-color: #b345fc;
+  color: #f4e3fc;
+}
+
+.botonCrear:hover {
+  background-color: #9153bb;
+}
+
+.botonVer {
+  background-color: #b345fc;
+  color: #f4e3fc;
+}
+
+.botonVer:hover {
+  background-color: #9153bb;
+}
+
+.botonComprar {
+  background-color: #b345fc;
+  color: #f4e3fc;
+}
+
+.botonComprar:hover {
+  background-color: #9153bb;
+} */

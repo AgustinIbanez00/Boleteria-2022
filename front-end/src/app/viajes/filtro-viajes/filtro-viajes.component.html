@@ -1,0 +1,20 @@
+<div style="width: 100%; background-color: rgb(255, 249, 249)">
+  <form [formGroup]="form" *ngIf="viajes" (submit)="filtrarViajes(form.value)">
+    <mat-form-field appearance="outline">
+      <mat-label>Buscar por Nombre</mat-label>
+      <input formControlName="nombre" matInput />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Buscar por Estado</mat-label>
+      <mat-select formControlName="estado">
+        <mat-option [value]="-1">Todos</mat-option>
+        <mat-option [value]="0">Deshabilitado</mat-option>
+        <mat-option [value]="1">Habilitado</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-flat-button class="buscarButton">
+      <mat-icon>search</mat-icon> Buscar
+    </button>
+  </form>
+</div>

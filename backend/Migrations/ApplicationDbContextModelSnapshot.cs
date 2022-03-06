@@ -35,12 +35,16 @@ namespace BoleteriaOnline.Web.Migrations
                         .HasColumnType("int")
                         .HasColumnName("asiento");
 
-                    b.Property<int?>("DestinoId")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("DestinoId")
                         .HasColumnType("int")
                         .HasColumnName("destino_id");
 
-                    b.Property<string>("Estado")
-                        .HasColumnType("nvarchar(max)")
+                    b.Property<int>("Estado")
+                        .HasColumnType("int")
                         .HasColumnName("estado");
 
                     b.Property<DateTime>("Fecha")
@@ -63,29 +67,33 @@ namespace BoleteriaOnline.Web.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("hora_salida_adicional");
 
-                    b.Property<int?>("OrigenId")
+                    b.Property<int>("OrigenId")
                         .HasColumnType("int")
                         .HasColumnName("origen_id");
 
-                    b.Property<int?>("PagoId")
+                    b.Property<int>("PagoId")
                         .HasColumnType("int")
                         .HasColumnName("pago_id");
 
-                    b.Property<long?>("PasajeroId")
-                        .HasColumnType("bigint")
+                    b.Property<int>("PasajeroId")
+                        .HasColumnType("int")
                         .HasColumnName("pasajero_id");
 
-                    b.Property<string>("Precio")
-                        .HasColumnType("nvarchar(max)")
+                    b.Property<long?>("PasajeroId1")
+                        .HasColumnType("bigint")
+                        .HasColumnName("pasajero_id1");
+
+                    b.Property<float>("Precio")
+                        .HasColumnType("real")
                         .HasColumnName("precio");
 
-                    b.Property<int?>("RecorridoId")
+                    b.Property<int>("RecorridoId")
                         .HasColumnType("int")
                         .HasColumnName("recorrido_id");
 
-                    b.Property<long?>("VendedorId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("vendedor_id");
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at");
 
                     b.HasKey("Id")
                         .HasName("pk_boletos");
@@ -99,14 +107,11 @@ namespace BoleteriaOnline.Web.Migrations
                     b.HasIndex("PagoId")
                         .HasDatabaseName("ix_boletos_pago_id");
 
-                    b.HasIndex("PasajeroId")
-                        .HasDatabaseName("ix_boletos_pasajero_id");
+                    b.HasIndex("PasajeroId1")
+                        .HasDatabaseName("ix_boletos_pasajero_id1");
 
                     b.HasIndex("RecorridoId")
                         .HasDatabaseName("ix_boletos_recorrido_id");
-
-                    b.HasIndex("VendedorId")
-                        .HasDatabaseName("ix_boletos_vendedor_id");
 
                     b.ToTable("boletos", (string)null);
                 });
@@ -148,11 +153,8 @@ namespace BoleteriaOnline.Web.Migrations
             modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Cliente", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasColumnName("id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
@@ -166,14 +168,9 @@ namespace BoleteriaOnline.Web.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("fecha_nac");
 
-                    b.Property<int?>("Genero")
+                    b.Property<int>("Genero")
                         .HasColumnType("int")
                         .HasColumnName("genero");
-
-                    b.Property<string>("Nacionalidad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("nacionalidad");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -190,39 +187,6 @@ namespace BoleteriaOnline.Web.Migrations
                     b.ToTable("clientes", (string)null);
                 });
 
-            modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Destino", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("Nombre")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("nombre");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("Id")
-                        .HasName("pk_destinos");
-
-                    b.HasIndex("Nombre")
-                        .IsUnique()
-                        .HasDatabaseName("ix_destinos_nombre")
-                        .HasFilter("[nombre] IS NOT NULL");
-
-                    b.ToTable("destinos", (string)null);
-                });
-
             modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Distribucion", b =>
                 {
                     b.Property<int>("Id")
@@ -235,6 +199,10 @@ namespace BoleteriaOnline.Web.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
+
+                    b.Property<int>("Estado")
+                        .HasColumnType("int")
+                        .HasColumnName("estado");
 
                     b.Property<string>("Nota")
                         .HasMaxLength(128)
@@ -362,11 +330,11 @@ namespace BoleteriaOnline.Web.Migrations
                         .HasColumnType("nvarchar(5)")
                         .HasColumnName("demora");
 
-                    b.Property<int?>("DestinoId")
+                    b.Property<int>("DestinoId")
                         .HasColumnType("int")
                         .HasColumnName("destino_id");
 
-                    b.Property<int?>("OrigenId")
+                    b.Property<int>("OrigenId")
                         .HasColumnType("int")
                         .HasColumnName("origen_id");
 
@@ -378,7 +346,7 @@ namespace BoleteriaOnline.Web.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("updated_at");
 
-                    b.Property<int?>("ViajeId")
+                    b.Property<int>("ViajeId")
                         .HasColumnType("int")
                         .HasColumnName("viaje_id");
 
@@ -450,6 +418,1724 @@ namespace BoleteriaOnline.Web.Migrations
                         .HasName("pk_pagos");
 
                     b.ToTable("pagos", (string)null);
+                });
+
+            modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Pais", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Nombre")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)")
+                        .HasColumnName("nombre");
+
+                    b.Property<string>("Sigla")
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)")
+                        .HasColumnName("sigla");
+
+                    b.HasKey("Id")
+                        .HasName("pk_paises");
+
+                    b.ToTable("paises", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 20,
+                            Nombre = "Andorra",
+                            Sigla = "AND"
+                        },
+                        new
+                        {
+                            Id = 784,
+                            Nombre = "Emiratos Árabes Unidos",
+                            Sigla = "ARE"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Nombre = "Afganistán",
+                            Sigla = "AFG"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Nombre = "Antigua y Barbuda",
+                            Sigla = "ATG"
+                        },
+                        new
+                        {
+                            Id = 660,
+                            Nombre = "Anguila",
+                            Sigla = "AIA"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Nombre = "Albania",
+                            Sigla = "ALB"
+                        },
+                        new
+                        {
+                            Id = 51,
+                            Nombre = "Armenia",
+                            Sigla = "ARM"
+                        },
+                        new
+                        {
+                            Id = 530,
+                            Nombre = "Antillas Neerlandesas",
+                            Sigla = "ANT"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Nombre = "Angola",
+                            Sigla = "AGO"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Nombre = "Antártida",
+                            Sigla = "ATA"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Nombre = "Argentina",
+                            Sigla = "ARG"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Nombre = "Samoa Americana",
+                            Sigla = "ASM"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Nombre = "Austria",
+                            Sigla = "AUT"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Nombre = "Australia",
+                            Sigla = "AUS"
+                        },
+                        new
+                        {
+                            Id = 533,
+                            Nombre = "Aruba",
+                            Sigla = "ABW"
+                        },
+                        new
+                        {
+                            Id = 248,
+                            Nombre = "Islas Áland",
+                            Sigla = "ALA"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Nombre = "Azerbaiyán",
+                            Sigla = "AZE"
+                        },
+                        new
+                        {
+                            Id = 70,
+                            Nombre = "Bosnia y Herzegovina",
+                            Sigla = "BIH"
+                        },
+                        new
+                        {
+                            Id = 52,
+                            Nombre = "Barbados",
+                            Sigla = "BRB"
+                        },
+                        new
+                        {
+                            Id = 50,
+                            Nombre = "Bangladesh",
+                            Sigla = "BGD"
+                        },
+                        new
+                        {
+                            Id = 56,
+                            Nombre = "Bélgica",
+                            Sigla = "BEL"
+                        },
+                        new
+                        {
+                            Id = 854,
+                            Nombre = "Burkina Faso",
+                            Sigla = "BFA"
+                        },
+                        new
+                        {
+                            Id = 100,
+                            Nombre = "Bulgaria",
+                            Sigla = "BGR"
+                        },
+                        new
+                        {
+                            Id = 48,
+                            Nombre = "Bahréin",
+                            Sigla = "BHR"
+                        },
+                        new
+                        {
+                            Id = 108,
+                            Nombre = "Burundi",
+                            Sigla = "BDI"
+                        },
+                        new
+                        {
+                            Id = 204,
+                            Nombre = "Benin",
+                            Sigla = "BEN"
+                        },
+                        new
+                        {
+                            Id = 652,
+                            Nombre = "San Bartolomé",
+                            Sigla = "BLM"
+                        },
+                        new
+                        {
+                            Id = 60,
+                            Nombre = "Bermudas",
+                            Sigla = "BMU"
+                        },
+                        new
+                        {
+                            Id = 96,
+                            Nombre = "Brunéi",
+                            Sigla = "BRN"
+                        },
+                        new
+                        {
+                            Id = 68,
+                            Nombre = "Bolivia",
+                            Sigla = "BOL"
+                        },
+                        new
+                        {
+                            Id = 76,
+                            Nombre = "Brasil",
+                            Sigla = "BRA"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Nombre = "Bahamas",
+                            Sigla = "BHS"
+                        },
+                        new
+                        {
+                            Id = 64,
+                            Nombre = "Bhután",
+                            Sigla = "BTN"
+                        },
+                        new
+                        {
+                            Id = 74,
+                            Nombre = "Isla Bouvet",
+                            Sigla = "BVT"
+                        },
+                        new
+                        {
+                            Id = 72,
+                            Nombre = "Botsuana",
+                            Sigla = "BWA"
+                        },
+                        new
+                        {
+                            Id = 112,
+                            Nombre = "Belarús",
+                            Sigla = "BLR"
+                        },
+                        new
+                        {
+                            Id = 84,
+                            Nombre = "Belice",
+                            Sigla = "BLZ"
+                        },
+                        new
+                        {
+                            Id = 124,
+                            Nombre = "Canadá",
+                            Sigla = "CAN"
+                        },
+                        new
+                        {
+                            Id = 166,
+                            Nombre = "Islas Cocos",
+                            Sigla = "CCK"
+                        },
+                        new
+                        {
+                            Id = 140,
+                            Nombre = "República Centro-Africana",
+                            Sigla = "CAF"
+                        },
+                        new
+                        {
+                            Id = 178,
+                            Nombre = "Congo",
+                            Sigla = "COG"
+                        },
+                        new
+                        {
+                            Id = 756,
+                            Nombre = "Suiza",
+                            Sigla = "CHE"
+                        },
+                        new
+                        {
+                            Id = 384,
+                            Nombre = "Costa de Marfil",
+                            Sigla = "CIV"
+                        },
+                        new
+                        {
+                            Id = 184,
+                            Nombre = "Islas Cook",
+                            Sigla = "COK"
+                        },
+                        new
+                        {
+                            Id = 152,
+                            Nombre = "Chile",
+                            Sigla = "CHL"
+                        },
+                        new
+                        {
+                            Id = 120,
+                            Nombre = "Camerún",
+                            Sigla = "CMR"
+                        },
+                        new
+                        {
+                            Id = 156,
+                            Nombre = "China",
+                            Sigla = "CHN"
+                        },
+                        new
+                        {
+                            Id = 170,
+                            Nombre = "Colombia",
+                            Sigla = "COL"
+                        },
+                        new
+                        {
+                            Id = 188,
+                            Nombre = "Costa Rica",
+                            Sigla = "CRI"
+                        },
+                        new
+                        {
+                            Id = 192,
+                            Nombre = "Cuba",
+                            Sigla = "CUB"
+                        },
+                        new
+                        {
+                            Id = 132,
+                            Nombre = "Cabo Verde",
+                            Sigla = "CPV"
+                        },
+                        new
+                        {
+                            Id = 162,
+                            Nombre = "Islas Christmas",
+                            Sigla = "CXR"
+                        },
+                        new
+                        {
+                            Id = 196,
+                            Nombre = "Chipre",
+                            Sigla = "CYP"
+                        },
+                        new
+                        {
+                            Id = 203,
+                            Nombre = "República Checa",
+                            Sigla = "CZE"
+                        },
+                        new
+                        {
+                            Id = 276,
+                            Nombre = "Alemania",
+                            Sigla = "DEU"
+                        },
+                        new
+                        {
+                            Id = 262,
+                            Nombre = "Yibuti",
+                            Sigla = "DJI"
+                        },
+                        new
+                        {
+                            Id = 208,
+                            Nombre = "Dinamarca",
+                            Sigla = "DNK"
+                        },
+                        new
+                        {
+                            Id = 212,
+                            Nombre = "Domínica",
+                            Sigla = "DMA"
+                        },
+                        new
+                        {
+                            Id = 214,
+                            Nombre = "República Dominicana",
+                            Sigla = "DOM"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Nombre = "Argel",
+                            Sigla = "DZA"
+                        },
+                        new
+                        {
+                            Id = 218,
+                            Nombre = "Ecuador",
+                            Sigla = "ECU"
+                        },
+                        new
+                        {
+                            Id = 233,
+                            Nombre = "Estonia",
+                            Sigla = "EST"
+                        },
+                        new
+                        {
+                            Id = 818,
+                            Nombre = "Egipto",
+                            Sigla = "EGY"
+                        },
+                        new
+                        {
+                            Id = 732,
+                            Nombre = "Sahara Occidental",
+                            Sigla = "ESH"
+                        },
+                        new
+                        {
+                            Id = 232,
+                            Nombre = "Eritrea",
+                            Sigla = "ERI"
+                        },
+                        new
+                        {
+                            Id = 724,
+                            Nombre = "España",
+                            Sigla = "ESP"
+                        },
+                        new
+                        {
+                            Id = 231,
+                            Nombre = "Etiopía",
+                            Sigla = "ETH"
+                        },
+                        new
+                        {
+                            Id = 246,
+                            Nombre = "Finlandia",
+                            Sigla = "FIN"
+                        },
+                        new
+                        {
+                            Id = 242,
+                            Nombre = "Fiji",
+                            Sigla = "FJI"
+                        },
+                        new
+                        {
+                            Id = 238,
+                            Nombre = "Islas Malvinas",
+                            Sigla = "KLK"
+                        },
+                        new
+                        {
+                            Id = 583,
+                            Nombre = "Micronesia",
+                            Sigla = "FSM"
+                        },
+                        new
+                        {
+                            Id = 234,
+                            Nombre = "Islas Faroe",
+                            Sigla = "FRO"
+                        },
+                        new
+                        {
+                            Id = 250,
+                            Nombre = "Francia",
+                            Sigla = "FRA"
+                        },
+                        new
+                        {
+                            Id = 266,
+                            Nombre = "Gabón",
+                            Sigla = "GAB"
+                        },
+                        new
+                        {
+                            Id = 826,
+                            Nombre = "Reino Unido",
+                            Sigla = "GBR"
+                        },
+                        new
+                        {
+                            Id = 308,
+                            Nombre = "Granada",
+                            Sigla = "GRD"
+                        },
+                        new
+                        {
+                            Id = 268,
+                            Nombre = "Georgia",
+                            Sigla = "GEO"
+                        },
+                        new
+                        {
+                            Id = 254,
+                            Nombre = "Guayana Francesa",
+                            Sigla = "GUF"
+                        },
+                        new
+                        {
+                            Id = 831,
+                            Nombre = "Guernsey",
+                            Sigla = "GGY"
+                        },
+                        new
+                        {
+                            Id = 288,
+                            Nombre = "Ghana",
+                            Sigla = "GHA"
+                        },
+                        new
+                        {
+                            Id = 292,
+                            Nombre = "Gibraltar",
+                            Sigla = "GIB"
+                        },
+                        new
+                        {
+                            Id = 304,
+                            Nombre = "Groenlandia",
+                            Sigla = "GRL"
+                        },
+                        new
+                        {
+                            Id = 270,
+                            Nombre = "Gambia",
+                            Sigla = "GMB"
+                        },
+                        new
+                        {
+                            Id = 324,
+                            Nombre = "Guinea",
+                            Sigla = "GIN"
+                        },
+                        new
+                        {
+                            Id = 312,
+                            Nombre = "Guadalupe",
+                            Sigla = "GLP"
+                        },
+                        new
+                        {
+                            Id = 226,
+                            Nombre = "Guinea Ecuatorial",
+                            Sigla = "GNQ"
+                        },
+                        new
+                        {
+                            Id = 300,
+                            Nombre = "Grecia",
+                            Sigla = "GRC"
+                        },
+                        new
+                        {
+                            Id = 239,
+                            Nombre = "Georgia del Sur e Islas Sandwich del Sur",
+                            Sigla = "SGS"
+                        },
+                        new
+                        {
+                            Id = 320,
+                            Nombre = "Guatemala",
+                            Sigla = "GTM"
+                        },
+                        new
+                        {
+                            Id = 316,
+                            Nombre = "Guam",
+                            Sigla = "GUM"
+                        },
+                        new
+                        {
+                            Id = 624,
+                            Nombre = "Guinea-Bissau",
+                            Sigla = "GNB"
+                        },
+                        new
+                        {
+                            Id = 328,
+                            Nombre = "Guayana",
+                            Sigla = "GUY"
+                        },
+                        new
+                        {
+                            Id = 344,
+                            Nombre = "Hong Kong",
+                            Sigla = "HKG"
+                        },
+                        new
+                        {
+                            Id = 334,
+                            Nombre = "Islas Heard y McDonald",
+                            Sigla = "HMD"
+                        },
+                        new
+                        {
+                            Id = 340,
+                            Nombre = "Honduras",
+                            Sigla = "HND"
+                        },
+                        new
+                        {
+                            Id = 191,
+                            Nombre = "Croacia",
+                            Sigla = "HRV"
+                        },
+                        new
+                        {
+                            Id = 332,
+                            Nombre = "Haití",
+                            Sigla = "HTI"
+                        },
+                        new
+                        {
+                            Id = 348,
+                            Nombre = "Hungría",
+                            Sigla = "HUN"
+                        },
+                        new
+                        {
+                            Id = 360,
+                            Nombre = "Indonesia",
+                            Sigla = "IDN"
+                        },
+                        new
+                        {
+                            Id = 372,
+                            Nombre = "Irlanda",
+                            Sigla = "IRL"
+                        },
+                        new
+                        {
+                            Id = 376,
+                            Nombre = "Israel",
+                            Sigla = "ISR"
+                        },
+                        new
+                        {
+                            Id = 833,
+                            Nombre = "Isla de Man",
+                            Sigla = "IMN"
+                        },
+                        new
+                        {
+                            Id = 356,
+                            Nombre = "India",
+                            Sigla = "IND"
+                        },
+                        new
+                        {
+                            Id = 86,
+                            Nombre = "Territorio Británico del Océano Índico",
+                            Sigla = "IOT"
+                        },
+                        new
+                        {
+                            Id = 368,
+                            Nombre = "Irak",
+                            Sigla = "IRQ"
+                        },
+                        new
+                        {
+                            Id = 364,
+                            Nombre = "Irán",
+                            Sigla = "IRN"
+                        },
+                        new
+                        {
+                            Id = 352,
+                            Nombre = "Islandia",
+                            Sigla = "ISL"
+                        },
+                        new
+                        {
+                            Id = 380,
+                            Nombre = "Italia",
+                            Sigla = "ITA"
+                        },
+                        new
+                        {
+                            Id = 832,
+                            Nombre = "Jersey",
+                            Sigla = "JEY"
+                        },
+                        new
+                        {
+                            Id = 388,
+                            Nombre = "Jamaica",
+                            Sigla = "JAM"
+                        },
+                        new
+                        {
+                            Id = 400,
+                            Nombre = "Jordania",
+                            Sigla = "JOR"
+                        },
+                        new
+                        {
+                            Id = 392,
+                            Nombre = "Japón",
+                            Sigla = "JPN"
+                        },
+                        new
+                        {
+                            Id = 404,
+                            Nombre = "Kenia",
+                            Sigla = "KEN"
+                        },
+                        new
+                        {
+                            Id = 417,
+                            Nombre = "Kirguistán",
+                            Sigla = "KGZ"
+                        },
+                        new
+                        {
+                            Id = 116,
+                            Nombre = "Camboya",
+                            Sigla = "KHM"
+                        },
+                        new
+                        {
+                            Id = 296,
+                            Nombre = "Kiribati",
+                            Sigla = "KIR"
+                        },
+                        new
+                        {
+                            Id = 174,
+                            Nombre = "Comoros",
+                            Sigla = "COM"
+                        },
+                        new
+                        {
+                            Id = 659,
+                            Nombre = "San Cristóbal y Nieves",
+                            Sigla = "KNA"
+                        },
+                        new
+                        {
+                            Id = 408,
+                            Nombre = "Corea del Norte",
+                            Sigla = "PRK"
+                        },
+                        new
+                        {
+                            Id = 410,
+                            Nombre = "Corea del Sur",
+                            Sigla = "KOR"
+                        },
+                        new
+                        {
+                            Id = 414,
+                            Nombre = "Kuwait",
+                            Sigla = "KWT"
+                        },
+                        new
+                        {
+                            Id = 136,
+                            Nombre = "Islas Caimán",
+                            Sigla = "CYM"
+                        },
+                        new
+                        {
+                            Id = 398,
+                            Nombre = "Kazajstán",
+                            Sigla = "KAZ"
+                        },
+                        new
+                        {
+                            Id = 418,
+                            Nombre = "Laos",
+                            Sigla = "LAO"
+                        },
+                        new
+                        {
+                            Id = 422,
+                            Nombre = "Líbano",
+                            Sigla = "LBN"
+                        },
+                        new
+                        {
+                            Id = 662,
+                            Nombre = "Santa Lucía",
+                            Sigla = "LCA"
+                        },
+                        new
+                        {
+                            Id = 438,
+                            Nombre = "Liechtenstein",
+                            Sigla = "LIE"
+                        },
+                        new
+                        {
+                            Id = 144,
+                            Nombre = "Sri Lanka",
+                            Sigla = "LKA"
+                        },
+                        new
+                        {
+                            Id = 430,
+                            Nombre = "Liberia",
+                            Sigla = "LBR"
+                        },
+                        new
+                        {
+                            Id = 426,
+                            Nombre = "Lesotho",
+                            Sigla = "LSO"
+                        },
+                        new
+                        {
+                            Id = 440,
+                            Nombre = "Lituania",
+                            Sigla = "LTU"
+                        },
+                        new
+                        {
+                            Id = 442,
+                            Nombre = "Luxemburgo",
+                            Sigla = "LUX"
+                        },
+                        new
+                        {
+                            Id = 428,
+                            Nombre = "Letonia",
+                            Sigla = "LVA"
+                        },
+                        new
+                        {
+                            Id = 434,
+                            Nombre = "Libia",
+                            Sigla = "LBY"
+                        },
+                        new
+                        {
+                            Id = 504,
+                            Nombre = "Marruecos",
+                            Sigla = "MAR"
+                        },
+                        new
+                        {
+                            Id = 492,
+                            Nombre = "Mónaco",
+                            Sigla = "MCO"
+                        },
+                        new
+                        {
+                            Id = 498,
+                            Nombre = "Moldova",
+                            Sigla = "MDA"
+                        },
+                        new
+                        {
+                            Id = 499,
+                            Nombre = "Montenegro",
+                            Sigla = "MNE"
+                        },
+                        new
+                        {
+                            Id = 450,
+                            Nombre = "Madagascar",
+                            Sigla = "MDG"
+                        },
+                        new
+                        {
+                            Id = 584,
+                            Nombre = "Islas Marshall",
+                            Sigla = "MHL"
+                        },
+                        new
+                        {
+                            Id = 807,
+                            Nombre = "Macedonia",
+                            Sigla = "MKD"
+                        },
+                        new
+                        {
+                            Id = 466,
+                            Nombre = "Mali",
+                            Sigla = "MLI"
+                        },
+                        new
+                        {
+                            Id = 104,
+                            Nombre = "Myanmar",
+                            Sigla = "MMR"
+                        },
+                        new
+                        {
+                            Id = 496,
+                            Nombre = "Mongolia",
+                            Sigla = "MNG"
+                        },
+                        new
+                        {
+                            Id = 446,
+                            Nombre = "Macao",
+                            Sigla = "MAC"
+                        },
+                        new
+                        {
+                            Id = 474,
+                            Nombre = "Martinica",
+                            Sigla = "MTQ"
+                        },
+                        new
+                        {
+                            Id = 478,
+                            Nombre = "Mauritania",
+                            Sigla = "MRT"
+                        },
+                        new
+                        {
+                            Id = 500,
+                            Nombre = "Montserrat",
+                            Sigla = "MSR"
+                        },
+                        new
+                        {
+                            Id = 470,
+                            Nombre = "Malta",
+                            Sigla = "MLT"
+                        },
+                        new
+                        {
+                            Id = 480,
+                            Nombre = "Mauricio",
+                            Sigla = "MUS"
+                        },
+                        new
+                        {
+                            Id = 462,
+                            Nombre = "Maldivas",
+                            Sigla = "MDV"
+                        },
+                        new
+                        {
+                            Id = 454,
+                            Nombre = "Malawi",
+                            Sigla = "MWI"
+                        },
+                        new
+                        {
+                            Id = 484,
+                            Nombre = "México",
+                            Sigla = "MEX"
+                        },
+                        new
+                        {
+                            Id = 458,
+                            Nombre = "Malasia",
+                            Sigla = "MYS"
+                        },
+                        new
+                        {
+                            Id = 508,
+                            Nombre = "Mozambique",
+                            Sigla = "MOZ"
+                        },
+                        new
+                        {
+                            Id = 516,
+                            Nombre = "Namibia",
+                            Sigla = "NAM"
+                        },
+                        new
+                        {
+                            Id = 540,
+                            Nombre = "Nueva Caledonia",
+                            Sigla = "NCL"
+                        },
+                        new
+                        {
+                            Id = 562,
+                            Nombre = "Níger",
+                            Sigla = "NER"
+                        },
+                        new
+                        {
+                            Id = 574,
+                            Nombre = "Islas Norkfolk",
+                            Sigla = "NFK"
+                        },
+                        new
+                        {
+                            Id = 566,
+                            Nombre = "Nigeria",
+                            Sigla = "NGA"
+                        },
+                        new
+                        {
+                            Id = 558,
+                            Nombre = "Nicaragua",
+                            Sigla = "NIC"
+                        },
+                        new
+                        {
+                            Id = 528,
+                            Nombre = "Países Bajos",
+                            Sigla = "NLD"
+                        },
+                        new
+                        {
+                            Id = 578,
+                            Nombre = "Noruega",
+                            Sigla = "NOR"
+                        },
+                        new
+                        {
+                            Id = 524,
+                            Nombre = "Nepal",
+                            Sigla = "NPL"
+                        },
+                        new
+                        {
+                            Id = 520,
+                            Nombre = "Nauru",
+                            Sigla = "NRU"
+                        },
+                        new
+                        {
+                            Id = 570,
+                            Nombre = "Niue",
+                            Sigla = "NIU"
+                        },
+                        new
+                        {
+                            Id = 554,
+                            Nombre = "Nueva Zelanda",
+                            Sigla = "NZL"
+                        },
+                        new
+                        {
+                            Id = 512,
+                            Nombre = "Omán",
+                            Sigla = "OMN"
+                        },
+                        new
+                        {
+                            Id = 591,
+                            Nombre = "Panamá",
+                            Sigla = "PAN"
+                        },
+                        new
+                        {
+                            Id = 604,
+                            Nombre = "Perú",
+                            Sigla = "PER"
+                        },
+                        new
+                        {
+                            Id = 258,
+                            Nombre = "Polinesia Francesa",
+                            Sigla = "PYF"
+                        },
+                        new
+                        {
+                            Id = 598,
+                            Nombre = "Papúa Nueva Guinea",
+                            Sigla = "PNG"
+                        },
+                        new
+                        {
+                            Id = 608,
+                            Nombre = "Filipinas",
+                            Sigla = "PHL"
+                        },
+                        new
+                        {
+                            Id = 586,
+                            Nombre = "Pakistán",
+                            Sigla = "PAK"
+                        },
+                        new
+                        {
+                            Id = 616,
+                            Nombre = "Polonia",
+                            Sigla = "POL"
+                        },
+                        new
+                        {
+                            Id = 666,
+                            Nombre = "San Pedro y Miquelón",
+                            Sigla = "SPM"
+                        },
+                        new
+                        {
+                            Id = 612,
+                            Nombre = "Islas Pitcairn",
+                            Sigla = "PCN"
+                        },
+                        new
+                        {
+                            Id = 630,
+                            Nombre = "Puerto Rico",
+                            Sigla = "PRI"
+                        },
+                        new
+                        {
+                            Id = 275,
+                            Nombre = "Palestina",
+                            Sigla = "PSE"
+                        },
+                        new
+                        {
+                            Id = 620,
+                            Nombre = "Portugal",
+                            Sigla = "PRT"
+                        },
+                        new
+                        {
+                            Id = 585,
+                            Nombre = "Islas Palaos",
+                            Sigla = "PLW"
+                        },
+                        new
+                        {
+                            Id = 600,
+                            Nombre = "Paraguay",
+                            Sigla = "PRY"
+                        },
+                        new
+                        {
+                            Id = 634,
+                            Nombre = "Qatar",
+                            Sigla = "QAT"
+                        },
+                        new
+                        {
+                            Id = 638,
+                            Nombre = "Reunión",
+                            Sigla = "REU"
+                        },
+                        new
+                        {
+                            Id = 642,
+                            Nombre = "Rumanía",
+                            Sigla = "ROU"
+                        },
+                        new
+                        {
+                            Id = 688,
+                            Nombre = "Serbia y Montenegro",
+                            Sigla = "SRB"
+                        },
+                        new
+                        {
+                            Id = 643,
+                            Nombre = "Rusia",
+                            Sigla = "RUS"
+                        },
+                        new
+                        {
+                            Id = 646,
+                            Nombre = "Ruanda",
+                            Sigla = "RWA"
+                        },
+                        new
+                        {
+                            Id = 682,
+                            Nombre = "Arabia Saudita",
+                            Sigla = "SAU"
+                        },
+                        new
+                        {
+                            Id = 90,
+                            Nombre = "Islas Solomón",
+                            Sigla = "SLB"
+                        },
+                        new
+                        {
+                            Id = 690,
+                            Nombre = "Seychelles",
+                            Sigla = "SYC"
+                        },
+                        new
+                        {
+                            Id = 736,
+                            Nombre = "Sudán",
+                            Sigla = "SDN"
+                        },
+                        new
+                        {
+                            Id = 752,
+                            Nombre = "Suecia",
+                            Sigla = "SWE"
+                        },
+                        new
+                        {
+                            Id = 702,
+                            Nombre = "Singapur",
+                            Sigla = "SGP"
+                        },
+                        new
+                        {
+                            Id = 654,
+                            Nombre = "Santa Elena",
+                            Sigla = "SHN"
+                        },
+                        new
+                        {
+                            Id = 705,
+                            Nombre = "Eslovenia",
+                            Sigla = "SVN"
+                        },
+                        new
+                        {
+                            Id = 744,
+                            Nombre = "Islas Svalbard y Jan Mayen",
+                            Sigla = "SJM"
+                        },
+                        new
+                        {
+                            Id = 703,
+                            Nombre = "Eslovaquia",
+                            Sigla = "SVK"
+                        },
+                        new
+                        {
+                            Id = 694,
+                            Nombre = "Sierra Leona",
+                            Sigla = "SLE"
+                        },
+                        new
+                        {
+                            Id = 674,
+                            Nombre = "San Marino",
+                            Sigla = "SMR"
+                        },
+                        new
+                        {
+                            Id = 686,
+                            Nombre = "Senegal",
+                            Sigla = "SEN"
+                        },
+                        new
+                        {
+                            Id = 706,
+                            Nombre = "Somalia",
+                            Sigla = "SOM"
+                        },
+                        new
+                        {
+                            Id = 740,
+                            Nombre = "Surinam",
+                            Sigla = "SUR"
+                        },
+                        new
+                        {
+                            Id = 678,
+                            Nombre = "Santo Tomé y Príncipe",
+                            Sigla = "STP"
+                        },
+                        new
+                        {
+                            Id = 222,
+                            Nombre = "El Salvador",
+                            Sigla = "SLV"
+                        },
+                        new
+                        {
+                            Id = 760,
+                            Nombre = "Siria",
+                            Sigla = "SYR"
+                        },
+                        new
+                        {
+                            Id = 748,
+                            Nombre = "Suazilandia",
+                            Sigla = "SWZ"
+                        },
+                        new
+                        {
+                            Id = 796,
+                            Nombre = "Islas Turcas y Caicos",
+                            Sigla = "TCA"
+                        },
+                        new
+                        {
+                            Id = 148,
+                            Nombre = "Chad",
+                            Sigla = "TCD"
+                        },
+                        new
+                        {
+                            Id = 260,
+                            Nombre = "Territorios Australes Franceses",
+                            Sigla = "ATF"
+                        },
+                        new
+                        {
+                            Id = 768,
+                            Nombre = "Togo",
+                            Sigla = "TGO"
+                        },
+                        new
+                        {
+                            Id = 764,
+                            Nombre = "Tailandia",
+                            Sigla = "THA"
+                        },
+                        new
+                        {
+                            Id = 834,
+                            Nombre = "Tanzania",
+                            Sigla = "TZA"
+                        },
+                        new
+                        {
+                            Id = 762,
+                            Nombre = "Tayikistán",
+                            Sigla = "TJK"
+                        },
+                        new
+                        {
+                            Id = 772,
+                            Nombre = "Tokelau",
+                            Sigla = "TKL"
+                        },
+                        new
+                        {
+                            Id = 626,
+                            Nombre = "Timor-Leste",
+                            Sigla = "TLS"
+                        },
+                        new
+                        {
+                            Id = 795,
+                            Nombre = "Turkmenistán",
+                            Sigla = "TKM"
+                        },
+                        new
+                        {
+                            Id = 788,
+                            Nombre = "Túnez",
+                            Sigla = "TUN"
+                        },
+                        new
+                        {
+                            Id = 776,
+                            Nombre = "Tonga",
+                            Sigla = "TON"
+                        },
+                        new
+                        {
+                            Id = 792,
+                            Nombre = "Turquía",
+                            Sigla = "TUR"
+                        },
+                        new
+                        {
+                            Id = 780,
+                            Nombre = "Trinidad y Tobago",
+                            Sigla = "TTO"
+                        },
+                        new
+                        {
+                            Id = 798,
+                            Nombre = "Tuvalu",
+                            Sigla = "TUV"
+                        },
+                        new
+                        {
+                            Id = 158,
+                            Nombre = "Taiwán",
+                            Sigla = "TWN"
+                        },
+                        new
+                        {
+                            Id = 804,
+                            Nombre = "Ucrania",
+                            Sigla = "UKR"
+                        },
+                        new
+                        {
+                            Id = 800,
+                            Nombre = "Uganda",
+                            Sigla = "UGA"
+                        },
+                        new
+                        {
+                            Id = 840,
+                            Nombre = "Estados Unidos de América",
+                            Sigla = "USA"
+                        },
+                        new
+                        {
+                            Id = 858,
+                            Nombre = "Uruguay",
+                            Sigla = "URY"
+                        },
+                        new
+                        {
+                            Id = 860,
+                            Nombre = "Uzbekistán",
+                            Sigla = "UZB"
+                        },
+                        new
+                        {
+                            Id = 336,
+                            Nombre = "Ciudad del Vaticano",
+                            Sigla = "VAT"
+                        },
+                        new
+                        {
+                            Id = 670,
+                            Nombre = "San Vicente y las Granadinas",
+                            Sigla = "VCT"
+                        },
+                        new
+                        {
+                            Id = 862,
+                            Nombre = "Venezuela",
+                            Sigla = "VEN"
+                        },
+                        new
+                        {
+                            Id = 92,
+                            Nombre = "Islas Vírgenes Británicas",
+                            Sigla = "VGB"
+                        },
+                        new
+                        {
+                            Id = 850,
+                            Nombre = "Islas Vírgenes de los Estados Unidos de América",
+                            Sigla = "VIR"
+                        },
+                        new
+                        {
+                            Id = 704,
+                            Nombre = "Vietnam",
+                            Sigla = "VNM"
+                        },
+                        new
+                        {
+                            Id = 548,
+                            Nombre = "Vanuatu",
+                            Sigla = "VUT"
+                        },
+                        new
+                        {
+                            Id = 876,
+                            Nombre = "Wallis y Futuna",
+                            Sigla = "WLF"
+                        },
+                        new
+                        {
+                            Id = 882,
+                            Nombre = "Samoa",
+                            Sigla = "WSM"
+                        },
+                        new
+                        {
+                            Id = 887,
+                            Nombre = "Yemen",
+                            Sigla = "YEM"
+                        },
+                        new
+                        {
+                            Id = 175,
+                            Nombre = "Mayotte",
+                            Sigla = "MYT"
+                        },
+                        new
+                        {
+                            Id = 710,
+                            Nombre = "Sudáfrica",
+                            Sigla = "ZAF"
+                        });
+                });
+
+            modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Parada", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created_at");
+
+                    b.Property<int>("Estado")
+                        .HasColumnType("int")
+                        .HasColumnName("estado");
+
+                    b.Property<string>("Nombre")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("nombre");
+
+                    b.Property<int>("PaisId")
+                        .HasColumnType("int")
+                        .HasColumnName("pais_id");
+
+                    b.Property<int>("ProvinciaId")
+                        .HasColumnType("int")
+                        .HasColumnName("provincia_id");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_paradas");
+
+                    b.HasIndex("PaisId")
+                        .HasDatabaseName("ix_paradas_pais_id");
+
+                    b.HasIndex("ProvinciaId")
+                        .HasDatabaseName("ix_paradas_provincia_id");
+
+                    b.HasIndex("Nombre", "PaisId", "ProvinciaId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_paradas_nombre_pais_id_provincia_id")
+                        .HasFilter("[nombre] IS NOT NULL");
+
+                    b.ToTable("paradas", (string)null);
+                });
+
+            modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Provincia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("nombre");
+
+                    b.Property<int>("PaisId")
+                        .HasColumnType("int")
+                        .HasColumnName("pais_id");
+
+                    b.Property<string>("Sigla")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("sigla");
+
+                    b.HasKey("Id")
+                        .HasName("pk_provincias");
+
+                    b.HasIndex("PaisId")
+                        .HasDatabaseName("ix_provincias_pais_id");
+
+                    b.ToTable("provincias", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            Nombre = "Buenos Aires",
+                            PaisId = 32,
+                            Sigla = "AR-B"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nombre = "Catamarca",
+                            PaisId = 32,
+                            Sigla = "AR-K"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Nombre = "Chaco",
+                            PaisId = 32,
+                            Sigla = "AR-H"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Nombre = "Chubut",
+                            PaisId = 32,
+                            Sigla = "AR-U"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Nombre = "Ciudad Autónoma de Buenos Aires",
+                            PaisId = 32,
+                            Sigla = "AR-C"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Nombre = "Corrientes",
+                            PaisId = 32,
+                            Sigla = "AR-W"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Nombre = "Córdoba",
+                            PaisId = 32,
+                            Sigla = "AR-X"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Nombre = "Entre Ríos",
+                            PaisId = 32,
+                            Sigla = "AR-E"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Nombre = "Formosa",
+                            PaisId = 32,
+                            Sigla = "AR-P"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Nombre = "Jujuy",
+                            PaisId = 32,
+                            Sigla = "AR-Y"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Nombre = "La Pampa",
+                            PaisId = 32,
+                            Sigla = "AR-L"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Nombre = "La Rioja",
+                            PaisId = 32,
+                            Sigla = "AR-F"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Nombre = "Mendoza",
+                            PaisId = 32,
+                            Sigla = "AR-M"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Nombre = "Misiones",
+                            PaisId = 32,
+                            Sigla = "AR-N"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Nombre = "Neuquén",
+                            PaisId = 32,
+                            Sigla = "AR-Q"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Nombre = "Río Negro",
+                            PaisId = 32,
+                            Sigla = "AR-R"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Nombre = "Salta",
+                            PaisId = 32,
+                            Sigla = "AR-A"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Nombre = "San Juan",
+                            PaisId = 32,
+                            Sigla = "AR-J"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Nombre = "San Luis",
+                            PaisId = 32,
+                            Sigla = "AR-D"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Nombre = "Santa Cruz",
+                            PaisId = 32,
+                            Sigla = "AR-Z"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Nombre = "Santa Fe",
+                            PaisId = 32,
+                            Sigla = "AR-S"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Nombre = "Santiago del Estero",
+                            PaisId = 32,
+                            Sigla = "AR-G"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Nombre = "Tierra del Fuego",
+                            PaisId = 32,
+                            Sigla = "AR-V"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Nombre = "Tucumán",
+                            PaisId = 32,
+                            Sigla = "AR-T"
+                        });
                 });
 
             modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Usuario", b =>
@@ -566,6 +2252,10 @@ namespace BoleteriaOnline.Web.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("created_at");
 
+                    b.Property<int>("Estado")
+                        .HasColumnType("int")
+                        .HasColumnName("estado");
+
                     b.Property<string>("Nombre")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
@@ -577,11 +2267,6 @@ namespace BoleteriaOnline.Web.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_viajes");
-
-                    b.HasIndex("Nombre")
-                        .IsUnique()
-                        .HasDatabaseName("ix_viajes_nombre")
-                        .HasFilter("[nombre] IS NOT NULL");
 
                     b.ToTable("viajes", (string)null);
                 });
@@ -834,35 +2519,38 @@ namespace BoleteriaOnline.Web.Migrations
 
             modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Boleto", b =>
                 {
-                    b.HasOne("BoleteriaOnline.Web.Data.Models.Destino", "Destino")
+                    b.HasOne("BoleteriaOnline.Web.Data.Models.Parada", "Destino")
                         .WithMany()
                         .HasForeignKey("DestinoId")
-                        .HasConstraintName("fk_boletos_destinos_destino_id");
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_boletos_paradas_destino_id");
 
-                    b.HasOne("BoleteriaOnline.Web.Data.Models.Destino", "Origen")
+                    b.HasOne("BoleteriaOnline.Web.Data.Models.Parada", "Origen")
                         .WithMany()
                         .HasForeignKey("OrigenId")
-                        .HasConstraintName("fk_boletos_destinos_origen_id");
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_boletos_paradas_origen_id");
 
                     b.HasOne("BoleteriaOnline.Web.Data.Models.Pago", "Pago")
                         .WithMany()
                         .HasForeignKey("PagoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("fk_boletos_pagos_pago_id");
 
                     b.HasOne("BoleteriaOnline.Web.Data.Models.Cliente", "Pasajero")
                         .WithMany()
-                        .HasForeignKey("PasajeroId")
-                        .HasConstraintName("fk_boletos_clientes_pasajero_id");
+                        .HasForeignKey("PasajeroId1")
+                        .HasConstraintName("fk_boletos_clientes_pasajero_id1");
 
                     b.HasOne("BoleteriaOnline.Web.Data.Models.Viaje", "Recorrido")
                         .WithMany()
                         .HasForeignKey("RecorridoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("fk_boletos_viajes_recorrido_id");
-
-                    b.HasOne("BoleteriaOnline.Web.Data.Models.Usuario", "Vendedor")
-                        .WithMany()
-                        .HasForeignKey("VendedorId")
-                        .HasConstraintName("fk_boletos_usuarios_vendedor_id");
 
                     b.Navigation("Destino");
 
@@ -873,8 +2561,6 @@ namespace BoleteriaOnline.Web.Migrations
                     b.Navigation("Pasajero");
 
                     b.Navigation("Recorrido");
-
-                    b.Navigation("Vendedor");
                 });
 
             modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Celda", b =>
@@ -907,24 +2593,63 @@ namespace BoleteriaOnline.Web.Migrations
 
             modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Nodo", b =>
                 {
-                    b.HasOne("BoleteriaOnline.Web.Data.Models.Destino", "Destino")
+                    b.HasOne("BoleteriaOnline.Web.Data.Models.Parada", "Destino")
                         .WithMany()
                         .HasForeignKey("DestinoId")
-                        .HasConstraintName("fk_nodos_destinos_destino_id");
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_nodos_paradas_destino_id");
 
-                    b.HasOne("BoleteriaOnline.Web.Data.Models.Destino", "Origen")
+                    b.HasOne("BoleteriaOnline.Web.Data.Models.Parada", "Origen")
                         .WithMany()
                         .HasForeignKey("OrigenId")
-                        .HasConstraintName("fk_nodos_destinos_origen_id");
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_nodos_paradas_origen_id");
 
-                    b.HasOne("BoleteriaOnline.Web.Data.Models.Viaje", null)
+                    b.HasOne("BoleteriaOnline.Web.Data.Models.Viaje", "Viaje")
                         .WithMany("Nodos")
                         .HasForeignKey("ViajeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("fk_nodos_viajes_viaje_id");
 
                     b.Navigation("Destino");
 
                     b.Navigation("Origen");
+
+                    b.Navigation("Viaje");
+                });
+
+            modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Parada", b =>
+                {
+                    b.HasOne("BoleteriaOnline.Web.Data.Models.Pais", "Pais")
+                        .WithMany()
+                        .HasForeignKey("PaisId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_paradas_paises_pais_id");
+
+                    b.HasOne("BoleteriaOnline.Web.Data.Models.Provincia", "Provincia")
+                        .WithMany()
+                        .HasForeignKey("ProvinciaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_paradas_provincias_provincia_id");
+
+                    b.Navigation("Pais");
+
+                    b.Navigation("Provincia");
+                });
+
+            modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Provincia", b =>
+                {
+                    b.HasOne("BoleteriaOnline.Web.Data.Models.Pais", null)
+                        .WithMany("Provincias")
+                        .HasForeignKey("PaisId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_provincias_paises_pais_id");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -992,6 +2717,11 @@ namespace BoleteriaOnline.Web.Migrations
             modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Fila", b =>
                 {
                     b.Navigation("Cells");
+                });
+
+            modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Pais", b =>
+                {
+                    b.Navigation("Provincias");
                 });
 
             modelBuilder.Entity("BoleteriaOnline.Web.Data.Models.Viaje", b =>

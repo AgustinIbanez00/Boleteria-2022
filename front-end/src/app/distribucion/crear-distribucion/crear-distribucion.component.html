@@ -1,0 +1,7 @@
+<app-loading
+  [isLoading]="isLoading"
+  [mensaje]="'Subiendo distribución'"
+></app-loading>
+<div class="containerCrearDistribucion">
+  <app-distribucion (OnSubmit)="guardarCambios($event)"></app-distribucion>
+</div>

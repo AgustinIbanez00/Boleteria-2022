@@ -1,0 +1,9 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span class="col-6">Viajes </span>
+    <div class="col-6" style="float: right"></div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<app-stepper-viajes *ngIf="!isLoading" [viajeDTO]="viaje"></app-stepper-viajes>
+<app-loading [isLoading]="isLoading"></app-loading>

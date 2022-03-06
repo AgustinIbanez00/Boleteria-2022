@@ -1,0 +1,30 @@
+<div style="width: 100%; height: 100%" *ngIf="listado && listado.length === 0">
+  <div
+    style="
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-content: center;
+    "
+  >
+    <label class="mensaje" style="margin-top: 15%" for="">Sin elementos</label>
+  </div>
+</div>
+<div class="contenedor" *ngIf="!listado">
+  <div class="hijo">
+    <div>
+      <img
+        [src]="'assets/imagenes/loading.gif'"
+        alt=""
+        style="border-radius: 100%; width: 400px"
+      />
+    </div>
+    <div>
+      <label class="mensaje" for="">{{ mensajeLoading }}</label>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="listado && listado.length > 0 && esLista">
+  <ng-content select="[contenido]"></ng-content>
+</ng-container>

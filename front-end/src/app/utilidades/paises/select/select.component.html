@@ -1,0 +1,46 @@
+<div class="row" [formGroup]="form" *ngIf="pais && provincia">
+  <div class="col-6">
+    <mat-form-field appearance="outline">
+      <mat-label>Pais*</mat-label>
+      <mat-select formControlName="{{ pais }}">
+        <mat-option
+          *ngFor="let pais_lugar of paises"
+          [value]="pais_lugar.id"
+          (click)="buscarProvinciaPorPais(pais_lugar.id)"
+          >{{ pais_lugar.nombre }}</mat-option
+        >
+      </mat-select>
+      <mat-error>{{ validar(pais) }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-6">
+    <mat-form-field appearance="outline">
+      <mat-label>Provincia*</mat-label>
+      <mat-select formControlName="{{ provincia }}">
+        <mat-option
+          *ngFor="let provincia_lugar of provincias"
+          [value]="provincia_lugar.id"
+          >{{ provincia_lugar.nombre }}</mat-option
+        >
+      </mat-select>
+      <mat-error>{{ validar(provincia) }}</mat-error>
+    </mat-form-field>
+  </div>
+</div>
+<div class="row" *ngIf="pais && provincia && usarParadas">
+  <div class="col-6">
+    <mat-form-field appearance="outline">
+      <mat-label>Paradas</mat-label>
+      <mat-select>
+        <mat-option
+          *ngFor="let pais_lugar of paises"
+          [value]="pais_lugar.id"
+          (click)="buscarProvinciaPorPais(pais_lugar.id)"
+          >{{ pais_lugar.nombre }}</mat-option
+        >
+      </mat-select>
+      <mat-error>{{ validar(pais) }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="col-6"></div>
+</div>

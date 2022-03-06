@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
-using BoleteriaOnline.Core.Data.Enums;
 using BoleteriaOnline.Core.Extensions.Response;
 using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
-using BoleteriaOnline.Core.ViewModels.Requests;
-using BoleteriaOnline.Core.ViewModels.Responses;
+using BoleteriaOnline.Core.ViewModels;
+using BoleteriaOnline.Core.ViewModels.Pagging;
+using BoleteriaOnline.Web.Data.Filters;
 using BoleteriaOnline.Web.Data.Models;
 using BoleteriaOnline.Web.Repositories;
 using EntityFramework.Exceptions.Common;
+using static BoleteriaOnline.Core.Utils.WebResponse;
 
 namespace BoleteriaOnline.Web.Services;
-using static WebResponse;
 public class ClienteService : IClienteService
 {
     private readonly IMapper _mapper;
@@ -22,112 +22,155 @@ public class ClienteService : IClienteService
         _clienteRepository = clienteRepository;
     }
 
-    public async Task<WebResult<ClienteResponse>> CreateClienteAsync(ClienteRequest clienteDto)
+    public async Task<WebResult<ICollection<ClienteDTO>>> AllAsync(ClienteFilter filter)
     {
         try
         {
-            var cliente = _mapper.Map<Cliente>(clienteDto);
-            if (!await _clienteRepository.CreateClienteAsync(cliente))
-                return Error<Cliente, ClienteResponse>(ErrorMessage.CouldNotCreate);
+            var clientes = await _clienteRepository.GetAllAsync(filter);
 
-            var dto = _mapper.Map<ClienteResponse>(cliente);
-            return Ok<Cliente, ClienteResponse>(dto, SuccessMessage.Created);
-        }
-        catch (UniqueConstraintException)
-        {
-            return Error<Cliente, ClienteResponse>(ErrorMessage.AlreadyExists);
-        }
-        catch (Exception ex)
-        {
-            return Error<Cliente, ClienteResponse>(ErrorMessage.Generic, ex.Message);
-        }
-    }
-    public async Task<WebResult<ClienteResponse>> DeleteClienteAsync(long id)
-    {
-        try
-        {
-            var cliente = await _clienteRepository.GetClienteAsync(id);
-            if (cliente == null)
-                return Error<Cliente, ClienteResponse>(ErrorMessage.NotFound);
+            var clientesDto = new List<ClienteDTO>();
 
-            if (cliente.Estado == Estado.Baja)
-                return Error<Cliente, ClienteResponse>(ErrorMessage.AlreadyDeleted);
-
-            if (!await _clienteRepository.DeleteClienteAsync(cliente))
-                return Error<Cliente, ClienteResponse>(ErrorMessage.CouldNotDelete);
-
-            return Ok<Cliente, ClienteResponse>(_mapper.Map<ClienteResponse>(cliente), SuccessMessage.Deleted);
-        }
-        catch (Exception ex)
-        {
-            return Error<Cliente, ClienteResponse>(ErrorMessage.Generic, ex.Message);
-        }
-    }
-    public async Task<WebResult<ClienteResponse>> GetClienteAsync(long id)
-    {
-        try
-        {
-            var cliente = await _clienteRepository.GetClienteAsync(id);
-
-            if (cliente == null)
-                return Error<Cliente, ClienteResponse>(ErrorMessage.NotFound);
-
-            return Ok(_mapper.Map<ClienteResponse>(cliente));
-        }
-        catch (Exception ex)
-        {
-            return Error<Cliente, ClienteResponse>(ErrorMessage.Generic, ex.Message);
-        }
-    }
-    public async Task<WebResult<ICollection<ClienteResponse>>> GetClientesAsync()
-    {
-        try
-        {
-            var clientes = await _clienteRepository.GetClientesAsync();
-
-            var clientesDto = new List<ClienteResponse>();
-
-            foreach (var Cliente in clientes)
+            foreach (var cliente in clientes)
             {
-                clientesDto.Add(_mapper.Map<ClienteResponse>(Cliente));
+                clientesDto.Add(_mapper.Map<ClienteDTO>(cliente));
             }
-            return Ok<ICollection<ClienteResponse>>(clientesDto);
+
+            return Ok<ICollection<ClienteDTO>>(clientesDto);
         }
         catch (Exception ex)
         {
-            return Error<Cliente, ICollection<ClienteResponse>>(ErrorMessage.Generic, ex.Message);
+            return Error<ICollection<ClienteDTO>>(ErrorMessage.Generic, ex.Message);
         }
     }
 
-    public async Task<WebResult<ClienteResponse>> UpdateClienteAsync(ClienteRequest clienteDto)
+    public async Task<WebResultList<ClienteDTO>> AllPaginatedAsync(ClienteFilter filter)
     {
         try
         {
-            if (clienteDto.Dni == 0)
-                return Error<Cliente, ClienteResponse>(ErrorMessage.InvalidId);
+            PaginatedList<Cliente> clientes = await _clienteRepository.GetAllPaginatedAsync(filter);
 
-            var cliente = await _clienteRepository.GetClienteAsync(clienteDto.Dni);
+            var clientesDto = new List<ClienteDTO>();
 
-            if (cliente == null)
-                return Error<Cliente, ClienteResponse>(ErrorMessage.NotFound);
+            foreach (var cliente in clientes)
+            {
+                clientesDto.Add(_mapper.Map<ClienteDTO>(cliente));
+            }
 
-            cliente.Nombre = clienteDto.Nombre;
-            cliente.FechaNac = clienteDto.FechaNacimiento;
-            cliente.Nacionalidad = clienteDto.Nacionalidad;
-            cliente.Genero = clienteDto.Genero;
-
-            if (!await _clienteRepository.UpdateClienteAsync(cliente))
-                return Error<Cliente, ClienteResponse>(ErrorMessage.CouldNotUpdate);
-
-            return Ok<Cliente, ClienteResponse>(_mapper.Map<ClienteResponse>(cliente), SuccessMessage.Modified);
-        }
-        catch (UniqueConstraintException)
-        {
-            return Error<Cliente, ClienteResponse>(ErrorMessage.AlreadyExists);
+            return List(clientesDto, Pagination.Page(clientes.TotalItems, filter.Pagina, filter.RecordsPorPagina));
         }
         catch (Exception ex)
         {
-            return Error<Cliente, ClienteResponse>(ErrorMessage.Generic, ex.Message);
+            return ErrorList<ClienteDTO>(ErrorMessage.Generic, ex.Message);
         }
+    }
+
+    public async Task<WebResult<ClienteDTO>> CreateAsync(ClienteDTO request)
+    {
+        try
+        {
+            if (request.Dni <= 0)
+                return Error<ClienteDTO>(ErrorMessage.InvalidId);
+
+            if (await _clienteRepository.ExistsAsync(new ClienteFilter() { Dni = request.Dni }))
+                return Error<ClienteDTO>(ErrorMessage.AlreadyExists);
+
+            var cliente = _mapper.Map<Cliente>(request);
+            if (!await _clienteRepository.CreateAsync(cliente))
+                return Error<Cliente, ClienteDTO>(ErrorMessage.CouldNotCreate);
+
+            var dto = _mapper.Map<ClienteDTO>(cliente);
+            return Ok(dto, SuccessMessage.Created);
+        }
+        catch (UniqueConstraintException)
+        {
+            return Error<ClienteDTO>(ErrorMessage.AlreadyExists);
+        }
+        catch (Exception ex)
+        {
+            return Error<ClienteDTO>(ErrorMessage.Generic, ex.Message);
+        }
+    }
+
+    public async Task<WebResult<ClienteDTO>> DeleteAsync(ClienteFilter filter)
+    {
+        try
+        {
+            var cliente = await _clienteRepository.GetAsync(filter);
+            if (cliente == null)
+                return Error<ClienteDTO>(ErrorMessage.NotFound);
+
+            if (!await _clienteRepository.DeleteAsync(cliente))
+                return Error<ClienteDTO>(ErrorMessage.CouldNotDelete);
+
+            return Ok(_mapper.Map<ClienteDTO>(cliente), SuccessMessage.Deleted);
+        }
+        catch (ReferenceConstraintException)
+        {
+            return Error<ClienteDTO>(ErrorMessage.CouldNotDeleteReferenced);
+        }
+        catch (Exception ex)
+        {
+            return Error<ClienteDTO>(ErrorMessage.Generic, ex.Message);
+        }
+    }
+
+    public async Task<WebResult<ClienteDTO>> GetAsync(ClienteFilter filter)
+    {
+        try
+        {
+            var cliente = await _clienteRepository.GetAsync(filter);
+
+            if (cliente == null)
+                return Error<ClienteDTO>(ErrorMessage.NotFound);
+
+            return Ok(_mapper.Map<ClienteDTO>(cliente));
+        }
+        catch (Exception ex)
+        {
+            return Error<ClienteDTO>(ErrorMessage.Generic, ex.Message);
+        }
+    }
+
+    public async Task<WebResult<ClienteDTO>> UpdateAsync(ClienteDTO request, long id)
+    {
+        try
+        {
+            if (id <= 0)
+                return Error<ClienteDTO>(ErrorMessage.InvalidId);
+
+            var cliente = await _clienteRepository.FindAsync(id);
+
+            if (cliente == null)
+                return Error<ClienteDTO>(ErrorMessage.NotFound);
+
+            cliente.Nombre = request.Nombre;
+
+            DateTime fechaNac;
+
+            if (!DateTime.TryParse(request.FechaNacimiento, out fechaNac))
+                return KeyError<ClienteDTO>(nameof(request.FechaNacimiento), "El formato de fecha es inválido.");
+
+            cliente.FechaNac = Convert.ToDateTime(request.FechaNacimiento);
+            cliente.Genero = request.Genero;
+            cliente.Estado = request.Estado;
+
+            if (!await _clienteRepository.UpdateAsync(cliente))
+                return Error<ClienteDTO>(ErrorMessage.CouldNotUpdate);
+
+            return Ok(_mapper.Map<ClienteDTO>(cliente), SuccessMessage.Modified);
+        }
+        catch (UniqueConstraintException)
+        {
+            return Error<ClienteDTO>(ErrorMessage.AlreadyExists);
+        }
+        catch (Exception ex)
+        {
+            return Error<ClienteDTO>(ErrorMessage.Generic, ex.Message);
+        }
+    }
+
+    public Task<WebResult<ClienteDTO>> ValidateAsync(ClienteDTO request)
+    {
+        return Task.FromResult(Ok<ClienteDTO>());
     }
 }

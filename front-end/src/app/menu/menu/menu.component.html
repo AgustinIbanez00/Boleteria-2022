@@ -1,0 +1,71 @@
+<mat-toolbar class="mat-elevation-z8">
+  <img
+    [src]="'assets/imagenes/icono.jpg'"
+    alt="Foto"
+    class="d-block"
+    style="border-radius: 50%; width: 2.5em"
+    routerLink=""
+  />
+  <button mat-button routerLink="" style="font-size: 23px">BOLETERIA</button>
+
+  <app-autorizado [rol]="'ADMIN'">
+    <ng-container autorizado>
+      <div>
+        <button mat-button routerLink="paradas">
+          <mat-icon><span class="material-icons"> pin_drop </span></mat-icon>
+          Paradas
+        </button>
+      </div>
+      <div>
+        <button mat-button routerLink="distribuciones">
+          <mat-icon><span class="material-icons"> event_seat </span></mat-icon>
+          Distribución
+        </button>
+      </div>
+      <div>
+        <button mat-button routerLink="viajes">
+          <mat-icon
+            ><span class="material-icons"> directions_bus </span></mat-icon
+          >
+          Viajes
+        </button>
+      </div>
+
+      <!-- <div>
+        <button mat-button routerLink="usuarios">
+          <mat-icon
+            ><span class="material-icons"> supervisor_account </span></mat-icon
+          >
+          Usuarios
+        </button>
+      </div> -->
+      <div>
+        <button mat-button routerLink="clientes">
+          <mat-icon
+            ><span class="material-icons">
+              settings_accessibility
+            </span></mat-icon
+          >
+          Clientes
+        </button>
+      </div>
+    </ng-container>
+  </app-autorizado>
+
+  <div class="espacio"></div>
+
+  <app-autorizado>
+    <ng-container autorizado>
+      <span style="font-size: medium">
+        Hola, {{ seguridadService.obtenerCapmpoJWT("nameid") }}
+      </span>
+      <button mat-button (click)="seguridadService.logout()">
+        Cerrar Sesión
+      </button>
+    </ng-container>
+    <ng-container noAutorizado>
+      <button mat-button class="botonLogin" routerLink="login">Login</button>
+      <button mat-button routerLink="registro">Registro</button>
+    </ng-container>
+  </app-autorizado>
+</mat-toolbar>

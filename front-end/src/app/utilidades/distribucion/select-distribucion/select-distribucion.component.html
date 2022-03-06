@@ -1,0 +1,12 @@
+<div [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label>Distribuciones*</mat-label>
+    <mat-select formControlName="{{ propiedad }}">
+      <mat-option
+        *ngFor="let distribucion_viaje of distribuciones"
+        [value]="distribucion_viaje.id"
+        >{{ distribucion_viaje.nota }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+</div>

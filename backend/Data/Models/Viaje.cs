@@ -1,8 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace BoleteriaOnline.Web.Data.Models;
-[Index(nameof(Nombre), IsUnique = true)]
-public class Viaje : AuditoryDates
+﻿namespace BoleteriaOnline.Web.Data.Models;
+public class Viaje : Auditory
 {
     public int Id { get; set; }
     [MaxLength(100)]

@@ -1,13 +1,7 @@
-﻿using BoleteriaOnline.Core.Utils;
-using BoleteriaOnline.Core.ViewModels.Requests;
-using BoleteriaOnline.Core.ViewModels.Responses;
+﻿using BoleteriaOnline.Core.ViewModels;
+using BoleteriaOnline.Core.ViewModels.Filters;
 
 namespace BoleteriaOnline.Core.Services;
-public interface INodoService
+public interface INodoService : IGenericService<int, NodoDTO, NodoFilter>
 {
-    Task<WebResult<ICollection<NodoResponse>>> GetNodosAsync();
-    Task<WebResult<NodoResponse>> GetNodoAsync(long id);
-    Task<WebResult<NodoResponse>> CreateNodoAsync(NodoRequest nodoDto);
-    Task<WebResult<NodoResponse>> UpdateNodoAsync(NodoRequest nodoDto);
-    Task<WebResult<NodoResponse>> DeleteNodoAsync(long id);
 }

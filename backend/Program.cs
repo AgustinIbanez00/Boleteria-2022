@@ -10,7 +10,7 @@ using BoleteriaOnline.Web.Middlewares;
 using BoleteriaOnline.Web.Repositories;
 using BoleteriaOnline.Web.Repository;
 using BoleteriaOnline.Web.Services;
-using EntityFramework.Exceptions.MySQL.Pomelo;
+using EntityFramework.Exceptions.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -44,18 +44,24 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
-builder.Services.AddScoped<IDestinoRepository, DestinoRepository>();
+builder.Services.AddScoped<IParadaRepository, ParadaRepository>();
 builder.Services.AddScoped<IViajeRepository, ViajeRepository>();
 builder.Services.AddScoped<INodoRepository, NodoRepository>();
 builder.Services.AddScoped<IDistribucionRepository, DistribucionRepository>();
+builder.Services.AddScoped<IPaisRepository, PaisRepository>();
+builder.Services.AddScoped<IProvinciaRepository, ProvinciaRepository>();
+builder.Services.AddScoped<IViajeClienteRepository, ViajeClienteRepository>();
 
 /* INYECCION DE SERVICIOS */
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IClienteService, ClienteService>();
-builder.Services.AddScoped<IDestinoService, DestinoService>();
+builder.Services.AddScoped<IParadaService, ParadaService>();
 builder.Services.AddScoped<IViajeService, ViajeService>();
 builder.Services.AddScoped<INodoService, NodoService>();
 builder.Services.AddScoped<IDistribucionService, DistribucionService>();
+builder.Services.AddScoped<IPaisService, PaisService>();
+builder.Services.AddScoped<IProvinciaService, ProvinciaService>();
+builder.Services.AddScoped<IViajeClienteService, ViajeClienteService>();
 
 builder.Services.AddCors();
 
@@ -78,7 +84,11 @@ builder.Services.AddAuthentication(x =>
 
 builder.Services.AddControllers(options => options.Filters.Add<HttpResponseExceptionFilter>())
     .AddBadRequestServices()
-    .AddJsonOptions(o => o.JsonSerializerOptions.PropertyNamingPolicy = new SnakeCaseNamingPolicy());
+    .AddJsonOptions(pptions =>
+    {
+        pptions.JsonSerializerOptions.PropertyNamingPolicy = new SnakeCaseNamingPolicy();
+        pptions.JsonSerializerOptions.Converters.Add(new BobbyUtcDateTimeConverter());
+    });
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
@@ -114,7 +124,7 @@ builder.Services.AddMvc()
     .AddXLocalizer<LocalizationSource>(ops => builder.Configuration.GetSection("XLocalizerOptions").Bind(ops));
 builder.Services.AddSwaggerDocument(options =>
 {
-    options.Description = "Colleción de API's correspondientes al sistema de Pasajes Online.";
+    options.Description = "ColleciÃ³n de API's correspondientes al sistema de Pasajes Online.";
     options.Title = "Boleteria Online";
 });
 builder.Services.AddSwaggerGen(c =>
@@ -123,8 +133,8 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "Boleteria Online",
         Version = "v1",
-        Description = "Colleción de API's correspondientes al sistema de Pasajes Online.",
-        Contact = new OpenApiContact() { Email = "admin@boleteriasystem.com", Name = "Agustin Ibañez" }
+        Description = "ColleciÃ³n de API's correspondientes al sistema de Pasajes Online.",
+        Contact = new OpenApiContact() { Email = "admin@boleteriasystem.com", Name = "Agustin IbaÃ±ez" }
 
     });
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -150,11 +160,12 @@ app.UseCors(builder => builder
     .AllowAnyOrigin()
     .AllowAnyMethod()
     .AllowAnyHeader()
+    .WithExposedHeaders(new string[] { "cantidadTotalRegistros" })
 );
-
+/*
 app.UseDefaultFiles();
 app.UseStaticFiles();
-
+*/
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

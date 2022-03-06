@@ -1,0 +1,44 @@
+<div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 mat-dialog-title>
+        {{ data.id ? "Editar Parada" : "Crear Parada" }}
+      </h2>
+    </div>
+    <div mat-dialog-close class="col-md-6" style="text-align: right">
+      <mat-icon>close</mat-icon>
+    </div>
+  </div>
+</div>
+
+<form [formGroup]="form" (submit)="guardarParadas(form.value)">
+  <mat-dialog-content>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre*</mat-label>
+        <input formControlName="nombre" matInput />
+        <mat-error *ngIf="form.invalid">{{
+          validacionesParadas("nombre")
+        }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <app-select
+        [form]="form"
+        [pais]="'pais_id'"
+        [provincia]="'provincia_id'"
+        [usarParadas]="false"
+        [validaciones]="validacionesParadas"
+      ></app-select>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-flat-button type="button" (click)="onClickNo()">
+      Cancelar
+    </button>
+    <button mat-flat-button class="guardar" [disabled]="form.invalid">
+      Guardar
+    </button>
+  </mat-dialog-actions>
+</form>
+<!-- <app-mostrar-errores [errores]="errores"></app-mostrar-errores> -->

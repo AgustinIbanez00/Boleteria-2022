@@ -1,0 +1,51 @@
+<div [formGroup]="form">
+  <mat-form-field
+    *ngIf="type !== 'date'"
+    class="{{ clase }}"
+    appearance="{{ apareance }}"
+  >
+    <mat-label>{{ textoLabel }}</mat-label>
+    <input
+      [type]="!hidePassword ? type : 'text'"
+      formControlName="{{ propiedad }}"
+      matInput
+    />
+    <mat-error *ngIf="form.invalid">{{ validaciones(propiedad) }}</mat-error>
+    <mat-icon
+      *ngIf="type == 'password'"
+      matSuffix
+      (click)="hidePassword = !hidePassword"
+      >{{ hidePassword ? "visibility_off" : "visibility" }}</mat-icon
+    >
+    <ng-container
+      *ngIf="error_messages && error_messages.hasOwnProperty(propiedad)"
+    >
+      <mat-error *ngFor="let error of error_messages[propiedad]">
+        {{ error }}
+      </mat-error>
+    </ng-container>
+  </mat-form-field>
+  <!-- Date -->
+  <mat-form-field
+    class="{{ clase }}"
+    *ngIf="type === 'date'"
+    appearance="{{ apareance }}"
+  >
+    <mat-label>{{ textoLabel }}</mat-label>
+    <input
+      formControlName="{{ propiedad }}"
+      matInput
+      [matDatepicker]="picker"
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="form.invalid">{{ validar(propiedad) }}</mat-error>
+    <ng-container
+      *ngIf="error_messages && error_messages.hasOwnProperty(propiedad)"
+    >
+      <mat-error *ngFor="let error of error_messages[propiedad]">
+        {{ error }}
+      </mat-error>
+    </ng-container>
+  </mat-form-field>
+</div>

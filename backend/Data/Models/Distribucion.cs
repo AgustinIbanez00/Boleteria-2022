@@ -6,19 +6,15 @@ using Microsoft.EntityFrameworkCore;
 namespace BoleteriaOnline.Web.Data.Models;
 [Index(nameof(Nota), IsUnique = true)]
 [HumanDescription("distribución", Humanizer.GrammaticalGender.Feminine)]
-public class Distribucion : AuditoryDates
+public class Distribucion : Auditory
 {
     public int Id { get; set; }
     public List<Fila> Filas { get; set; }
-
     [StringLength(128)]
     public string Nota { get; set; }
     public bool UnPiso { get; set; }
 
-    public Distribucion()
-    {
-
-    }
+    public Distribucion() { }
 
     public Distribucion(int cantidad_PB)
     {

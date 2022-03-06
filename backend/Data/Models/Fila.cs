@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using BoleteriaOnline.Core.Data.Enums;
+﻿using BoleteriaOnline.Core.Data.Enums;
 
 namespace BoleteriaOnline.Web.Data.Models;
 public class Fila
