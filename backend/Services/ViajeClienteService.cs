@@ -77,7 +77,7 @@ namespace BoleteriaOnline.Web.Services
                                 DateTime? horarioSalida = CalcularFecha(viaje.Nodos.ToList(), viaje, horario, paradaOrigen, true);
                                 DateTime? horarioLlegada = CalcularFecha(viaje.Nodos.ToList(), viaje, horario, paradaDestino, false);
 
-                                //var asientosDisponibles = _context.Boletos.Where(b => b.RecorridoId == viaje.Id && b.OrigenId == paradaOrigen.Id && b.DestinoId == paradaDestino.Id && b.Fecha.Date == DateTime.Now.Date);
+                                var asientosDisponibles = _context.Boletos.Where(b => b.RecorridoId == viaje.Id && b.OrigenId == paradaOrigen.Id && b.DestinoId == paradaDestino.Id && b.Fecha.Date == DateTime.Now.Date).ToList();
 
                                 var viajesDto = new ViajeClienteDTO()
                                 {
