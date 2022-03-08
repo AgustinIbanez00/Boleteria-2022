@@ -12,14 +12,14 @@ public class Boleto : AuditoryDates
     public int DestinoId { get; set; }
     public Cliente Pasajero { get; set; }
     public int PasajeroId { get; set; }
-    public Pago Pago { get; set; }
-    public int PagoId { get; set; }
+    //public Pago Pago { get; set; }
+    //public int PagoId { get; set; }
     public int Asiento { get; set; }
     public float Precio { get; set; }
     public string HoraSalida { get; set; }
-    public string HoraSalidaAdicional { get; set; }
+    //public string HoraSalidaAdicional { get; set; }
     public string HoraLlegada { get; set; }
     public BoletoEstado Estado { get; set; }
     public DateTime Fecha { get; set; }
-    public DateTime FechaEmision { get; set; } = DateTime.Now;
+    //public DateTime FechaEmision { get; set; } = DateTime.Now;
 }

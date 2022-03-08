@@ -4,6 +4,7 @@ using BoleteriaOnline.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BoleteriaOnline.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220307041245_HorarioDiasString")]
+    partial class HorarioDiasString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,6 +53,10 @@ namespace BoleteriaOnline.Web.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("fecha");
 
+                    b.Property<DateTime>("FechaEmision")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("fecha_emision");
+
                     b.Property<string>("HoraLlegada")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("hora_llegada");
@@ -59,9 +65,17 @@ namespace BoleteriaOnline.Web.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("hora_salida");
 
+                    b.Property<string>("HoraSalidaAdicional")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("hora_salida_adicional");
+
                     b.Property<int>("OrigenId")
                         .HasColumnType("int")
                         .HasColumnName("origen_id");
+
+                    b.Property<int>("PagoId")
+                        .HasColumnType("int")
+                        .HasColumnName("pago_id");
 
                     b.Property<int>("PasajeroId")
                         .HasColumnType("int")
@@ -91,6 +105,9 @@ namespace BoleteriaOnline.Web.Migrations
 
                     b.HasIndex("OrigenId")
                         .HasDatabaseName("ix_boletos_origen_id");
+
+                    b.HasIndex("PagoId")
+                        .HasDatabaseName("ix_boletos_pago_id");
 
                     b.HasIndex("PasajeroId1")
                         .HasDatabaseName("ix_boletos_pasajero_id1");
@@ -2495,6 +2512,13 @@ namespace BoleteriaOnline.Web.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_boletos_paradas_origen_id");
 
+                    b.HasOne("BoleteriaOnline.Web.Data.Models.Pago", "Pago")
+                        .WithMany()
+                        .HasForeignKey("PagoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_boletos_pagos_pago_id");
+
                     b.HasOne("BoleteriaOnline.Web.Data.Models.Cliente", "Pasajero")
                         .WithMany()
                         .HasForeignKey("PasajeroId1")
@@ -2510,6 +2534,8 @@ namespace BoleteriaOnline.Web.Migrations
                     b.Navigation("Destino");
 
                     b.Navigation("Origen");
+
+                    b.Navigation("Pago");
 
                     b.Navigation("Pasajero");
 

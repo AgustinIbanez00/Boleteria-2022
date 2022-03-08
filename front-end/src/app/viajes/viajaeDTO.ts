@@ -8,6 +8,14 @@ export interface viajeDTO {
   conexiones: conexionDTO[];
 }
 
+export interface viajeClienteDTO {
+  empresa: string;
+  horario_salida: Date;
+  horario_llegada: Date;
+  precio: number;
+  asientos_disponibles: number;
+}
+
 export interface filtrarViajes {
   OrigenId: number;
   DestinoId: number;

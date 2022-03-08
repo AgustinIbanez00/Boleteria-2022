@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiURL: 'https://boleteria.azurewebsites.net/api',
+  apiURL: 'https://localhost:7203/api',
 };
 
 /*
