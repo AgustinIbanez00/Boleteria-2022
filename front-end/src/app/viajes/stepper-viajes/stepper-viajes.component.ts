@@ -57,6 +57,8 @@ export class StepperViajesComponent implements OnInit {
   isViajeCompleto = false;
   verConexionModal = false;
 
+  panelOpenState = false;
+  
   paradas;
   ngOnInit(): void {
     this.buscarParadas();
@@ -125,6 +127,11 @@ export class StepperViajesComponent implements OnInit {
   }
 
   // ---------- HORARIOS ----------
+
+  openCrearHorarioModal()
+  {
+
+  }
 
   agregarHorario(horario: horarioDTO) {
     this.listHorarios.push(horario);
@@ -325,7 +332,7 @@ export class StepperViajesComponent implements OnInit {
   buscarParaPorId(id: number) {
     if (this.paradas) {
       var parada = this.paradas.find((it) => it.id === id);
-      return parada.descripcion;
+      return parada.nombre;
     }
   }
 }

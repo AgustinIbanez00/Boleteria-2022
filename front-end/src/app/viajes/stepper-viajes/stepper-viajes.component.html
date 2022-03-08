@@ -1,18 +1,13 @@
 <mat-stepper #stepper class="mat-elevation-z8">
   <!-- NOMBRE -->
-  <mat-step
-    [stepControl]="viajeDistribucionForm"
-    errorMessage="El nombre es obligatorio."
-  >
+  <mat-step [stepControl]="viajeDistribucionForm" errorMessage="El nombre es obligatorio." label="Asigna un nombre">
     <form [formGroup]="viajeDistribucionForm">
-      <ng-template matStepLabel>Distribución </ng-template>
-
       <mat-form-field appearance="outline">
         <mat-label>Nombre*</mat-label>
         <input formControlName="nombre" matInput />
         <mat-error *ngIf="viajeDistribucionForm.invalid">{{
           validacionesD("nombre")
-        }}</mat-error>
+          }}</mat-error>
       </mat-form-field>
 
       <div align="center">
@@ -21,44 +16,62 @@
     </form>
   </mat-step>
   <!-- DISTRIBUCION Y HORARIO -->
-  <mat-step
-    errorMessage="Agregar al menos un horario es obligatorio."
-    [stepControl]="viajeHorarioForm"
-  >
-    <ng-template matStepLabel>Horarios</ng-template>
-    <div class="flex-container w-100">
+  <mat-step errorMessage="Agregar al menos un horario es obligatorio." label="Indica horarios de salida"
+    [stepControl]="viajeHorarioForm">
+
+    <mat-accordion>
+      <mat-expansion-panel hideToggle (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Crear nuevo horario
+          </mat-panel-title>
+          <mat-panel-description>
+            {{panelOpenState ? 'Haz click para ocultar' : 'Haz click para expandir'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+    
+        <app-horarios (cargarHorario)="agregarHorario($event)"></app-horarios>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <div class="flex-container w-100 p-3">
       <mat-card *ngFor="let horario of listHorarios; index">
         <mat-card-content style="font-size: 20px">
-          <div style="display: flex; flex-direction: row">
-            <div style="width: 93%">
-              <h3 style="font-size: 15px">
-                Distribución: {{ obtenerDistribucion(horario.distribucion_id) }}
-              </h3>
-              {{ horario.hora }} -
-              <span style="font-size: 15px">
-                {{ obtenerDescripcionDias(horario.dias) }}
-              </span>
-            </div>
-            <mat-icon
-              style="cursor: pointer"
-              [matTooltip]="'Eliminar horario'"
-              (click)="eliminarHorario(index)"
-              >delete</mat-icon
-            >
-          </div>
+          <mat-card-title>
+            {{ horario.hora }}
+          </mat-card-title>
+          <mat-card-subtitle>{{ obtenerDescripcionDias(horario.dias) }}</mat-card-subtitle>
+          <p>{{ obtenerDistribucion(horario.distribucion_id) }}</p>
         </mat-card-content>
+        <mat-card-actions align="center">
+          <button mat-button (click)="eliminarHorario(index)">
+            <mat-icon style="cursor: pointer" [matTooltip]="'Eliminar horario'">delete
+            </mat-icon>
+          </button>
+        </mat-card-actions>
       </mat-card>
     </div>
 
-    <app-horarios (cargarHorario)="agregarHorario($event)"></app-horarios>
+    <button mat-flat-button color="primary">Nuevo horario
+      <mat-icon>add</mat-icon>
+    </button>
+
+    <button mat-flat-button color="accent">Nuevo horario
+      <mat-icon>add</mat-icon>
+    </button>
+
+    <!--
+    <button mat-button (click)="openCrearHorarioModal()">
+      Editar
+      <mat-icon style="cursor: pointer" [matTooltip]="'Eliminar horario'">edit
+      </mat-icon>
+    </button>
+
+  
+-->
     <div align="center">
       <button mat-button matStepperPrevious>Atrás</button>
-      <button
-        *ngIf="!isEditar"
-        mat-button
-        matStepperNext
-        (click)="guardarViajes(false)"
-      >
+      <button *ngIf="!isEditar" mat-button matStepperNext (click)="guardarViajes(false)">
         Siguente -
       </button>
       <button *ngIf="isEditar" mat-button matStepperNext>Siguente</button>
@@ -66,31 +79,40 @@
   </mat-step>
 
   <!-- CONEXIONES -->
-  <mat-step>
-    <div>Conexiones</div>
+  <mat-step label="Configura las conexiones">
     <div *ngIf="listConexiones.length != 0">
       <button mat-button (click)="borrarConexiones()">Borrar Conexiones</button>
     </div>
-    <div class="flex-container w-100">
-      <mat-card *ngFor="let conex of listConexiones; index">
-        <mat-card-content style="font-size: 20px">
-          <div style="display: flex; flex-direction: row">
-            <div style="width: 93%">
-              <h3 style="font-size: 15px">
-                {{ buscarParaPorId(conex.destino_id) }}
-              </h3>
-            </div>
+    <div class="flex-container">
+      <div *ngFor="let conex of listConexiones; let index"
+        style="display: flex; flex-direction: row; align-items: center;">
+        <div *ngIf="listConexiones.indexOf(conex) == 0"
+          style="display: flex; flex-direction: row; align-items: center;">
+          <mat-card class="m-2">
+            <mat-card-title>
+              {{ buscarParaPorId(conex.origen_id) }}
+            </mat-card-title>
+          </mat-card>
+          <mat-icon class="d-inline" style="vertical-align: middle; align-items: center; text-align: center;">
+            arrow_forward
+          </mat-icon>
 
-            <mat-icon>forward</mat-icon>
-          </div>
-        </mat-card-content>
-      </mat-card>
+        </div>
+        <mat-card class="m-2">
+          <mat-card-title>
+            {{ buscarParaPorId(conex.destino_id) }}
+          </mat-card-title>
+        </mat-card>
+
+        <mat-icon *ngIf="listConexiones.indexOf(conex) < listConexiones.length -1"
+          style="align-items: center; text-align: center;" class="d-inline" style="vertical-align: middle;">
+          arrow_forward
+        </mat-icon>
+      </div>
+
     </div>
     <div *ngIf="(viajeDTO && listConexiones.length == 0) || verConexionModal">
-      <app-conexion
-        (cargarConexion)="agregarConexion($event, true)"
-        [viajeDTO]="viajeDTO"
-      ></app-conexion>
+      <app-conexion (cargarConexion)="agregarConexion($event, true)" [viajeDTO]="viajeDTO"></app-conexion>
     </div>
     <div>
       <button mat-button matStepperPrevious>Anterior</button>

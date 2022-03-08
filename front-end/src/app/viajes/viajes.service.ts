@@ -40,16 +40,8 @@ export class ViajesService {
   }
 
   public obtenerDestinos(filtro: filtrarViajes): Observable<HttpResponse<webResult>> {
-    let params = new HttpParams();
-    params = params.append('OrigenId', filtro.OrigenId.toString());
-    params = params.append('DestinoId', filtro.DestinoId.toString());
-    params = params.append('Fecha', formatearFecha(filtro.Fecha));
-    params = params.append('pagina', 1);
-    params = params.append(
-      'recordsPorPagina',
-      15
-    );
-    return this.http.get<webResult>(`${this.apiURL}?OrigenId=${filtro.OrigenId}&DestinoId=${filtro.DestinoId}&Fecha=${formatearFecha(filtro.Fecha)}`, {
+    console.log("apiurl", environment.apiURL);
+    return this.http.get<webResult>(`${environment.apiURL}/viajesCliente?OrigenId=${filtro.OrigenId}&DestinoId=${filtro.DestinoId}&Fecha=${formatearFecha(filtro.Fecha)}`, {
       observe: 'response'
     });
   }

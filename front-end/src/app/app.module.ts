@@ -48,6 +48,8 @@ import { HorariosComponent } from './utilidades/horarios/horarios.component';
 import { SelectViajesComponent } from './utilidades/select-viajes/select-viajes.component';
 import { ConexionComponent } from './viajes/conexion/conexion.component';
 import { ComprarBoletoComponent } from './boleteria/comprar-boleto/comprar-boleto.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -100,6 +102,7 @@ import { ComprarBoletoComponent } from './boleteria/comprar-boleto/comprar-bolet
     MatAutocompleteModule,
     MatStepperModule,
     MatCheckboxModule,
+    MatExpansionModule
   ],
   providers: [
     {

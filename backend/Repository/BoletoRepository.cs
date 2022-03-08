@@ -76,7 +76,7 @@ public class BoletoRepository : IBoletoRepository
             .And(p => !filter.OrigenId.HasValue || (filter.OrigenId.HasValue && p.OrigenId == filter.OrigenId.Value))
             .And(p => !filter.DestinoId.HasValue || (filter.DestinoId.HasValue && p.DestinoId == filter.DestinoId.Value))
             .And(p => !filter.PasajeroId.HasValue || (filter.PasajeroId.HasValue && p.PasajeroId == filter.PasajeroId.Value))
-            .And(p => !filter.PagoId.HasValue || (filter.PagoId.HasValue && p.PagoId == filter.PagoId.Value))
+            //.And(p => !filter.PagoId.HasValue || (filter.PagoId.HasValue && p.PagoId == filter.PagoId.Value))
             .And(p => !filter.Asiento.HasValue || (filter.Asiento.HasValue && p.Asiento == filter.Asiento.Value))
             .And(p => !filter.Precio.HasValue || (filter.Precio.HasValue && p.Precio == filter.Precio.Value))
             .And(p => string.IsNullOrEmpty(filter.HoraSalida) || (!string.IsNullOrEmpty(filter.HoraSalida) && p.HoraSalida.Contains(filter.HoraSalida)))

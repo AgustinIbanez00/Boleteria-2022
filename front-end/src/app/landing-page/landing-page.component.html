@@ -73,28 +73,28 @@
     <div *ngIf="destinosDTO">
       <mat-card class="cardItem" *ngFor="let destino of destinosDTO">
         <mat-card-content class="cardContentItem">
-          <label class="labelTitulo">Destino</label>
-          <label class="labelDescripcion">{{ destino.nombre }}</label>
+          <label class="labelTitulo">Empresa</label>
+          <label class="labelDescripcion">{{ destino.empresa }}</label>
         </mat-card-content>
         <mat-card-content class="cardContentItem">
           <label class="labelTitulo">Horario Salida</label>
-          <label class="labelDescripcion"> 9:30</label>
+          <label class="labelDescripcion">{{ destino.horario_salida }}</label>
         </mat-card-content>
         <mat-card-content class="cardContentItem">
           <label class="labelTitulo">Horario llegada</label>
-          <label class="labelDescripcion">10:45</label>
+          <label class="labelDescripcion">{{ destino.horario_llegada }}</label>
         </mat-card-content>
         <mat-card-content class="cardContentItem">
           <label class="labelTitulo">Asientos disponibles</label>
-          <label class="labelDescripcion">12</label>
+          <label class="labelDescripcion">{{ destino.asientos_disponibles }}</label>
         </mat-card-content>
         <mat-card-content class="cardContentItem">
           <label class="labelTitulo">Precio</label>
-          <label class="labelDescripcion">$521</label></mat-card-content
+          <label class="labelDescripcion">${{ destino.precio }}</label></mat-card-content
         >
         <mat-card-content class="cardContentItem">
           <div class="divBotonVer">
-            <button mat-button class="botonVerItem" (click)="verViaje(24)">
+            <button mat-button class="botonVerItem" (click)="verViaje(destino.viaje_id)">
               Ver
             </button>
           </div></mat-card-content

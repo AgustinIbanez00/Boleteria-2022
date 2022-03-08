@@ -44,16 +44,10 @@ public class AutoMapperProfiles : Profile
         CreateMap<Celda, CeldaResponse>()
             .ReverseMap();
         CreateMap<Horario, HorarioDTO>()
-            .ForMember(h => h.Dias, opt => opt.MapFrom(new HorarioResolver()))
+            .ForMember(h => h.Dias, opt => opt.MapFrom(d => d.Dias.ToCharArray().Select(v => (DayOfWeek)int.Parse(v.ToString()))))
             .ForMember(h => h.Hora, opt => opt.MapFrom(d => d.Hora.ToString("HH:mm:ss")));
         CreateMap<HorarioDTO, Horario>()
-            .ForMember(h => h.Lunes, opt => opt.MapFrom(d => d.Dias.Contains(DayOfWeek.Monday)))
-            .ForMember(h => h.Martes, opt => opt.MapFrom(d => d.Dias.Contains(DayOfWeek.Tuesday)))
-            .ForMember(h => h.Miercoles, opt => opt.MapFrom(d => d.Dias.Contains(DayOfWeek.Wednesday)))
-            .ForMember(h => h.Jueves, opt => opt.MapFrom(d => d.Dias.Contains(DayOfWeek.Thursday)))
-            .ForMember(h => h.Viernes, opt => opt.MapFrom(d => d.Dias.Contains(DayOfWeek.Friday)))
-            .ForMember(h => h.Sabado, opt => opt.MapFrom(d => d.Dias.Contains(DayOfWeek.Saturday)))
-            .ForMember(h => h.Domingo, opt => opt.MapFrom(d => d.Dias.Contains(DayOfWeek.Sunday)))
+            .ForMember(h => h.Dias, opt => opt.MapFrom(d => string.Join<string>("", d.Dias.Select(v => ((int)v).ToString()))))
             .ForMember(h => h.Hora, opt => opt.MapFrom(d => DateTime.Parse(d.Hora)))
         ;
         CreateMap<Pais, PaisDTO>()

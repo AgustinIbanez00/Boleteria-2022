@@ -10,7 +10,7 @@ import { ParadasService } from '../paradas/paradas.service';
 import { paradasDTO } from '../paradas/paradasDTO';
 import { parserarErroresAPI } from '../utilidades/utilidades';
 import { webResultList } from '../utilidades/webResult';
-import { filtrarViajes, viajeDTO } from '../viajes/viajaeDTO';
+import { filtrarViajes, viajeClienteDTO, viajeDTO } from '../viajes/viajaeDTO';
 import { ViajesService } from '../viajes/viajes.service';
 
 @Component({
@@ -19,7 +19,7 @@ import { ViajesService } from '../viajes/viajes.service';
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit {
-  destinosDTO: viajeDTO[] = []
+  destinosDTO: viajeClienteDTO[] = []
   errores: string[] = []
   isLoading: boolean = false;
   form: FormGroup;
@@ -88,7 +88,9 @@ export class LandingPageComponent implements OnInit {
     this.isLoading = true;
     this.viajesService.obtenerDestinos(filtroViaje).subscribe((result) => {
       console.log(Object.values(result.body))
-      this.destinosDTO = Object.values(result.body)[1]
+      this.destinosDTO = result.body.result as viajeClienteDTO[];
+
+      console.log("destinos changed", this.destinosDTO)
       this.isLoading = false;
     }, (error) => { this.errores = parserarErroresAPI(error); this.isLoading = false; })
   }
