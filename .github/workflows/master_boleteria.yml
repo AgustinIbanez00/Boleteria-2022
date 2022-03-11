@@ -11,6 +11,7 @@ on:
     paths:
       - BoleteriaOnline.Core/**
       - backend/**
+      - BoleteriaOnline.Solution.sln
   workflow_dispatch:
 
 jobs:
