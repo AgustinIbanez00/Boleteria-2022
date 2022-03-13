@@ -29,4 +29,5 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: /front-end/dist/front-end
+          FOLDER: dist/front-end
+          
