@@ -23,6 +23,7 @@ jobs:
         run: |
           npm install
           npm run-script deploy
+        working-directory: front-end        
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
