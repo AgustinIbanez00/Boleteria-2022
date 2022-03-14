@@ -28,14 +28,17 @@ jobs:
       # changes the base-tag in index.html from '/' to 'Aspiradora.WebAssembly' to match GitHub Pages repository subdirectory
       - name: Change base-tag in index.html from / to Boleteria-2022
         run: sed -i 's/<base href="\/" \/>/<base href="\/Boleteria-2022\/" \/>/g' dist/front-end/index.html
+        working-directory: front-end
 
       # copy index.html to 404.html to serve the same file when a file is not found
       - name: copy index.html to 404.html
         run: cp dist/front-end/index.html dist/front-end/404.html
+        working-directory: front-end
 
       # add .nojekyll file to tell GitHub pages to not treat this as a Jekyll project. (Allow files and folders starting with an underscore)
       - name: Add .nojekyll file
         run: touch dist/front-end/.nojekyll        
+        working-directory: front-end
         
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3
