@@ -95,7 +95,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var connectionString = Environment.GetEnvironmentVariable("MYSQLCONNSTR_localdb");
 
-    options.UseMySql(connectionString, new MariaDbServerVersion(new Version(10, 4, 17)), o =>
+    options.UseMySql(connectionString, new MySqlServerVersion(new Version(5, 7, 9)), o =>
     {
         o.EnableRetryOnFailure();
     });
