@@ -28,10 +28,12 @@ public class UsuarioController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<UsuarioResponse>>> Get(int id)
     {
-        var usuario = await _usuarioService.GetUsuarioAsync(id);
+        WebResult<UsuarioResponse> usuario = await _usuarioService.GetUsuarioAsync(id);
 
         if (!usuario.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(usuario.ErrorCode), usuario);
+        }
 
         return Ok(usuario);
     }
@@ -44,10 +46,13 @@ public class UsuarioController : ControllerBase
     [AllowAnonymous]
     public async Task<ActionResult<WebResult<UsuarioResponse>>> RegisterUsuario([FromBody] RegistroRequest usuarioDto)
     {
-        var usuario = await _usuarioService.CreateUsuarioAsync(usuarioDto);
+        WebResult<UsuarioResponse> usuario = await _usuarioService.CreateUsuarioAsync(usuarioDto);
 
         if (!usuario.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(usuario.ErrorCode), usuario);
+        }
+
         return Created(nameof(Get), usuario);
     }
 
@@ -59,10 +64,13 @@ public class UsuarioController : ControllerBase
     [AllowAnonymous]
     public async Task<ActionResult<WebResult<LoginResponse>>> LoginUsuario([FromBody] LoginRequest usuarioDto)
     {
-        var usuario = await _usuarioService.LoginUsuarioAsync(usuarioDto);
+        WebResult<LoginResponse> usuario = await _usuarioService.LoginUsuarioAsync(usuarioDto);
 
         if (!usuario.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(usuario.ErrorCode), usuario);
+        }
+
         return Ok(usuario);
     }
 
@@ -70,10 +78,13 @@ public class UsuarioController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<UsuarioResponse>>> LockUsuario(int id)
     {
-        var usuario = await _usuarioService.LockUsuarioAsync(id);
+        WebResult<UsuarioResponse> usuario = await _usuarioService.LockUsuarioAsync(id);
 
         if (!usuario.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(usuario.ErrorCode), usuario);
+        }
+
         return Ok(usuario);
     }
 
@@ -81,14 +92,19 @@ public class UsuarioController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<UsuarioResponse>>> GetMe()
     {
-        var currentClaim = ((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.NameIdentifier);
+        Claim currentClaim = ((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.NameIdentifier);
         if (currentClaim == null)
+        {
             return BadRequest(WebResponse.Error<UsuarioResponse>("El token actual es inválido o contiene información errónea."));
+        }
 
-        var usuario = await _usuarioService.GetUsuarioByEmailAsync(currentClaim.Value);
+        WebResult<UsuarioResponse> usuario = await _usuarioService.GetUsuarioByEmailAsync(currentClaim.Value);
 
         if (!usuario.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(usuario.ErrorCode), usuario);
+        }
+
         return Ok(usuario);
     }
 

@@ -9,7 +9,7 @@ public static class EntityFrameworkExtensions
     public static DbCommand LoadStoredProc(
       this DbContext context, string storedProcName)
     {
-        var cmd = context.Database.GetDbConnection().CreateCommand();
+        DbCommand cmd = context.Database.GetDbConnection().CreateCommand();
         cmd.CommandText = storedProcName;
         cmd.CommandType = System.Data.CommandType.StoredProcedure;
         return cmd;
@@ -18,9 +18,12 @@ public static class EntityFrameworkExtensions
     public static DbCommand WithSqlParam(this DbCommand cmd, string paramName, object paramValue)
     {
         if (string.IsNullOrEmpty(cmd.CommandText))
+        {
             throw new InvalidOperationException(
               "Call LoadStoredProc before using this method");
-        var param = cmd.CreateParameter();
+        }
+
+        DbParameter param = cmd.CreateParameter();
         param.ParameterName = paramName;
         param.Value = paramValue;
         cmd.Parameters.Add(param);
@@ -29,10 +32,10 @@ public static class EntityFrameworkExtensions
 
     public static List<T> MapToList<T>(this DbDataReader dr)
     {
-        var objList = new List<T>();
-        var props = typeof(T).GetRuntimeProperties();
+        List<T> objList = new();
+        IEnumerable<PropertyInfo> props = typeof(T).GetRuntimeProperties();
 
-        var colMapping = dr.GetColumnSchema()
+        Dictionary<string, DbColumn> colMapping = dr.GetColumnSchema()
           .Where(x => props.Any(y => y.Name.ToLower() == x.ColumnName.ToLower()))
           .ToDictionary(key => key.ColumnName.ToLower());
 
@@ -41,9 +44,9 @@ public static class EntityFrameworkExtensions
             while (dr.Read())
             {
                 T obj = Activator.CreateInstance<T>();
-                foreach (var prop in props)
+                foreach (PropertyInfo prop in props)
                 {
-                    var val =
+                    object val =
                       dr.GetValue(colMapping[prop.Name.ToLower()].ColumnOrdinal.Value);
                     prop.SetValue(obj, val == DBNull.Value ? null : val);
                 }
@@ -58,10 +61,13 @@ public static class EntityFrameworkExtensions
         using (command)
         {
             if (command.Connection.State == System.Data.ConnectionState.Closed)
+            {
                 command.Connection.Open();
+            }
+
             try
             {
-                using (var reader = await command.ExecuteReaderAsync())
+                using (DbDataReader reader = await command.ExecuteReaderAsync())
                 {
                     return reader.MapToList<T>();
                 }

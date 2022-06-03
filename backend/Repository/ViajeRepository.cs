@@ -32,7 +32,9 @@ public class ViajeRepository : IViajeRepository
     public async Task<bool> DeleteAsync(Viaje entity)
     {
         if (entity == null)
+        {
             return false;
+        }
 
         _context.Viajes.Remove(entity);
 
@@ -84,7 +86,9 @@ public class ViajeRepository : IViajeRepository
     public async Task<bool> UpdateAsync(Viaje entity)
     {
         if (entity == null)
+        {
             return false;
+        }
 
         _context.Viajes.Update(entity);
         entity.UpdatedAt = DateTime.Now;

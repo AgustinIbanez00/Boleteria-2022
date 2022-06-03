@@ -24,11 +24,11 @@ public class ProvinciaService : IProvinciaService
     {
         try
         {
-            var provincias = await _provinciaRepository.GetAllAsync(parameters);
+            ICollection<Data.Models.Provincia> provincias = await _provinciaRepository.GetAllAsync(parameters);
 
-            var provinciasDTO = new List<ProvinciaDTO>();
+            List<ProvinciaDTO> provinciasDTO = new();
 
-            foreach (var provincia in provincias)
+            foreach (Data.Models.Provincia provincia in provincias)
             {
                 provinciasDTO.Add(_mapper.Map<ProvinciaDTO>(provincia));
             }

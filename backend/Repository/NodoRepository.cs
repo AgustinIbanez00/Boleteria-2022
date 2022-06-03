@@ -30,7 +30,9 @@ public class NodoRepository : INodoRepository
     public async Task<bool> DeleteAsync(Nodo entity)
     {
         if (entity == null)
+        {
             return false;
+        }
 
         _context.Nodos.Remove(entity);
 
@@ -52,7 +54,9 @@ public class NodoRepository : INodoRepository
     public async Task<bool> DeleteNodoAsync(Nodo nodo)
     {
         if (nodo == null)
+        {
             return false;
+        }
 
         _context.Nodos.Remove(nodo);
         return await Save();
@@ -104,7 +108,9 @@ public class NodoRepository : INodoRepository
     public async Task<bool> UpdateAsync(Nodo entity)
     {
         if (entity == null)
+        {
             return false;
+        }
 
         _context.Nodos.Update(entity);
         entity.UpdatedAt = DateTime.Now;

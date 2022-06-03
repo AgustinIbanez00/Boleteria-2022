@@ -28,10 +28,12 @@ public class DistribucionesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<ICollection<DistribucionResponse>>>> GetAll()
     {
-        var distribucions = await _distribucionservice.GetDistribucionesAsync();
+        WebResult<ICollection<DistribucionResponse>> distribucions = await _distribucionservice.GetDistribucionesAsync();
 
         if (!distribucions.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(distribucions.ErrorCode), distribucions);
+        }
 
         return Ok(distribucions);
     }
@@ -47,10 +49,12 @@ public class DistribucionesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<DistribucionResponse>>> Get(long id)
     {
-        var distribucion = await _distribucionservice.GetDistribucionAsync(id);
+        WebResult<DistribucionResponse> distribucion = await _distribucionservice.GetDistribucionAsync(id);
 
         if (!distribucion.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(distribucion.ErrorCode), distribucion);
+        }
 
         return Ok(distribucion);
     }
@@ -67,10 +71,13 @@ public class DistribucionesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<WebResult<DistribucionResponse>>> CreateDistribucion([FromBody] DistribucionRequest distribucionDto)
     {
-        var distribucion = await _distribucionservice.CreateDistribucionAsync(distribucionDto);
+        WebResult<DistribucionResponse> distribucion = await _distribucionservice.CreateDistribucionAsync(distribucionDto);
 
         if (!distribucion.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(distribucion.ErrorCode), distribucion);
+        }
+
         return Created(nameof(Get), distribucion);
     }
 
@@ -83,10 +90,13 @@ public class DistribucionesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<DistribucionResponse>>> UpdateDistribucion([FromBody] DistribucionUpdateRequest distribucionDto)
     {
-        var distribucion = await _distribucionservice.UpdateDistribucionAsync(distribucionDto);
+        WebResult<DistribucionResponse> distribucion = await _distribucionservice.UpdateDistribucionAsync(distribucionDto);
 
         if (!distribucion.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(distribucion.ErrorCode), distribucion);
+        }
+
         return Ok(distribucion);
     }
 
@@ -99,10 +109,13 @@ public class DistribucionesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<DistribucionResponse>>> DeleteDistribucion(long id)
     {
-        var distribucion = await _distribucionservice.DeleteDistribucionAsync(id);
+        WebResult<DistribucionResponse> distribucion = await _distribucionservice.DeleteDistribucionAsync(id);
 
         if (!distribucion.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(distribucion.ErrorCode), distribucion);
+        }
+
         return Ok(distribucion);
     }
 
@@ -116,10 +129,13 @@ public class DistribucionesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<DistribucionResponse>>> CreateFilas(long id, [FromBody] Planta planta)
     {
-        var distribucion = await _distribucionservice.AppendFilasAsync(id, planta);
+        WebResult<DistribucionResponse> distribucion = await _distribucionservice.AppendFilasAsync(id, planta);
 
         if (!distribucion.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(distribucion.ErrorCode), distribucion);
+        }
+
         return Ok(distribucion);
     }
 }

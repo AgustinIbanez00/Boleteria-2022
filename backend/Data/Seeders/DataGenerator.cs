@@ -8,7 +8,7 @@ public class DataGenerator
 {
     public static void Initialize(IServiceProvider serviceProvider)
     {
-        using (var context = new ApplicationDbContext(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
+        using (ApplicationDbContext context = new(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
         {
             context.Database.EnsureCreated();
             context.Database.Migrate();
@@ -16,16 +16,16 @@ public class DataGenerator
             context.Paises.AddRange(PaisSeeder.Paises);
             context.Provincias.AddRange(ProvinciaSeeder.Provincias);
 
-            var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+            IConfiguration configuration = serviceProvider.GetRequiredService<IConfiguration>();
 
-            var secretUser = configuration.GetValue<string>("SECRET_USER", "");
-            var secretPassword = configuration.GetValue<string>("SECRET_PASSWORD", "");
+            string secretUser = configuration.GetValue<string>("SECRET_USER", "");
+            string secretPassword = configuration.GetValue<string>("SECRET_PASSWORD", "");
 
             if (!string.IsNullOrEmpty(secretUser) && !string.IsNullOrEmpty(secretPassword))
             {
                 HashedPassword hashedPassword = secretPassword.Hash();
 
-                Usuario adminUser = new Usuario()
+                Usuario adminUser = new()
                 {
                     Email = secretUser,
                     Tipo = UsuarioTipo.ADMIN,

@@ -32,7 +32,9 @@ public class DistribucionRepository : IDistribucionRepository
     public async Task<bool> DeleteDistribucionAsync(Distribucion distribucion)
     {
         if (distribucion == null)
+        {
             return false;
+        }
 
         _context.Distribuciones.Remove(distribucion);
         return await Save();
@@ -55,15 +57,15 @@ public class DistribucionRepository : IDistribucionRepository
 
     public async Task<bool> RemoveAllFilas(Distribucion distribucion)
     {
-        foreach (var fila in distribucion.Filas)
+        foreach (Fila fila in distribucion.Filas)
         {
-            foreach (var celda in fila.Cells)
+            foreach (Celda celda in fila.Cells)
             {
                 await _context.Celdas.Where(c => c.FilaId == fila.Id).DeleteFromQueryAsync();
             }
         }
 
-        var rows = await _context.Filas.Where(f => f.DistribucionId == distribucion.Id).DeleteFromQueryAsync();
+        int rows = await _context.Filas.Where(f => f.DistribucionId == distribucion.Id).DeleteFromQueryAsync();
 
         return rows > 0;
     }
@@ -73,7 +75,9 @@ public class DistribucionRepository : IDistribucionRepository
     public async Task<bool> UpdateDistribucionAsync(Distribucion distribucion)
     {
         if (distribucion == null)
+        {
             return false;
+        }
 
         _context.Distribuciones.Update(distribucion);
         distribucion.UpdatedAt = DateTime.Now;

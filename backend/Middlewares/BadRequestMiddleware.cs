@@ -12,7 +12,7 @@ public static class BadRequestMiddleware
         {
             options.InvalidModelStateResponseFactory = actionContext =>
             {
-                var modelState = actionContext.ModelState;
+                Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary modelState = actionContext.ModelState;
 
                 return new OkObjectResult(new WebResult<object>
                 {

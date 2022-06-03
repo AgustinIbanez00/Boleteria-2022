@@ -31,9 +31,9 @@ public class NodoService : INodoService
         {
             PaginatedList<Nodo> nodos = await _nodoRepository.GetAllPaginatedAsync(filter);
 
-            var nodosDto = new List<NodoDTO>();
+            List<NodoDTO> nodosDto = new();
 
-            foreach (var cliente in nodos)
+            foreach (Nodo cliente in nodos)
             {
                 nodosDto.Add(_mapper.Map<NodoDTO>(cliente));
             }
@@ -51,9 +51,9 @@ public class NodoService : INodoService
         {
             PaginatedList<Nodo> nodos = await _nodoRepository.GetAllPaginatedAsync(filter);
 
-            var nodosDto = new List<NodoDTO>();
+            List<NodoDTO> nodosDto = new();
 
-            foreach (var nodo in nodos)
+            foreach (Nodo nodo in nodos)
             {
                 nodosDto.Add(_mapper.Map<NodoDTO>(nodo));
             }
@@ -70,29 +70,41 @@ public class NodoService : INodoService
     {
         try
         {
-            var nodo = _mapper.Map<Nodo>(request);
+            Nodo nodo = _mapper.Map<Nodo>(request);
 
             Parada nodoDtoOrigen = await _paradaRepository.FindAsync(request.OrigenId);
 
             if (nodoDtoOrigen != null)
+            {
                 nodo.Origen = nodoDtoOrigen;
+            }
             else
+            {
                 return KeyError<Parada, NodoDTO>(nameof(request.OrigenId), ErrorMessage.NotFound);
+            }
 
             Parada nodoDtoDestino = await _paradaRepository.FindAsync(request.DestinoId);
 
             if (nodoDtoDestino != null)
+            {
                 nodo.Destino = nodoDtoDestino;
+            }
             else
+            {
                 return KeyError<Parada, NodoDTO>(nameof(request.DestinoId), ErrorMessage.NotFound);
+            }
 
             if (nodo.Origen == nodo.Destino)
+            {
                 return Error<NodoDTO>("El nodo origen no puede ser igual al nodo destino.");
+            }
 
             if (!await _nodoRepository.CreateAsync(nodo))
+            {
                 return Error<Nodo, NodoDTO>(ErrorMessage.CouldNotCreate);
+            }
 
-            var dto = _mapper.Map<NodoDTO>(nodo);
+            NodoDTO dto = _mapper.Map<NodoDTO>(nodo);
             return Ok<Nodo, NodoDTO>(dto, SuccessMessage.Created);
         }
         catch (UniqueConstraintException)
@@ -109,12 +121,16 @@ public class NodoService : INodoService
     {
         try
         {
-            var nodo = await _nodoRepository.GetAsync(filter);
+            Nodo nodo = await _nodoRepository.GetAsync(filter);
             if (nodo == null)
+            {
                 return Error<Nodo, NodoDTO>(ErrorMessage.NotFound);
+            }
 
             if (!await _nodoRepository.DeleteAsync(nodo))
+            {
                 return Error<Nodo, NodoDTO>(ErrorMessage.CouldNotDelete);
+            }
 
             return Ok<Nodo, NodoDTO>(_mapper.Map<NodoDTO>(nodo), SuccessMessage.Deleted);
         }
@@ -133,10 +149,12 @@ public class NodoService : INodoService
     {
         try
         {
-            var nodo = await _nodoRepository.GetAsync(filter);
+            Nodo nodo = await _nodoRepository.GetAsync(filter);
 
             if (nodo == null)
+            {
                 return Error<Nodo, NodoDTO>(ErrorMessage.NotFound);
+            }
 
             return Ok(_mapper.Map<NodoDTO>(nodo));
         }
@@ -150,11 +168,11 @@ public class NodoService : INodoService
     {
         try
         {
-            var nodos = await _nodoRepository.GetAllAsync(new NodoFilter());
+            ICollection<Nodo> nodos = await _nodoRepository.GetAllAsync(new NodoFilter());
 
-            var nodosDto = new List<NodoDTO>();
+            List<NodoDTO> nodosDto = new();
 
-            foreach (var Nodo in nodos)
+            foreach (Nodo Nodo in nodos)
             {
                 nodosDto.Add(_mapper.Map<NodoDTO>(Nodo));
             }
@@ -171,21 +189,29 @@ public class NodoService : INodoService
         try
         {
             if (id == 0)
+            {
                 return Error<Nodo, NodoDTO>(ErrorMessage.InvalidId);
+            }
 
             Nodo nodo = await _nodoRepository.FindAsync(id);
 
             if (nodo == null)
+            {
                 return Error<Nodo, NodoDTO>(ErrorMessage.NotFound);
+            }
 
             if (nodo.Origen?.Id != request.OrigenId)
             {
                 Parada nodoDtoOrigen = await _paradaRepository.GetAsync(new ParadaFilter() { Id = request.OrigenId });
 
                 if (await _paradaRepository.ExistsAsync(new ParadaFilter() { Id = request.OrigenId }))
+                {
                     nodo.Origen = nodoDtoOrigen;
+                }
                 else
+                {
                     return KeyError<Nodo, NodoDTO>(nameof(request.OrigenId), ErrorMessage.InvalidId);
+                }
             }
 
             if (nodo.Destino?.Id != request.DestinoId)
@@ -193,14 +219,18 @@ public class NodoService : INodoService
                 Parada nodoDtoDestino = await _paradaRepository.GetAsync(new ParadaFilter() { Id = request.DestinoId });
 
                 if (await _paradaRepository.ExistsAsync(new ParadaFilter() { Id = request.DestinoId }))
+                {
                     nodo.Destino = nodoDtoDestino;
+                }
             }
 
             nodo.Demora = request.Demora;
             nodo.Precio = request.Precio;
 
             if (!await _nodoRepository.UpdateAsync(nodo))
+            {
                 return Error<Nodo, NodoDTO>(ErrorMessage.CouldNotUpdate);
+            }
 
             return Ok<Nodo, NodoDTO>(_mapper.Map<NodoDTO>(nodo), SuccessMessage.Modified);
         }

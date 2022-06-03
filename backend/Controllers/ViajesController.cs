@@ -29,10 +29,12 @@ public class ViajesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<ICollection<ViajeDTO>>>> GetPaginated([FromQuery] ViajeFilter filter)
     {
-        var viajes = await _viajeservice.AllPaginatedAsync(filter);
+        WebResultList<ViajeDTO> viajes = await _viajeservice.AllPaginatedAsync(filter);
 
         if (!viajes.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(viajes.ErrorCode), viajes);
+        }
 
         return Ok(viajes);
     }
@@ -45,10 +47,12 @@ public class ViajesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ICollection<ViajeDTO>>>> GetAll()
     {
-        var viajes = await _viajeservice.AllAsync(new ViajeFilter() { Estado = Estado.Activo });
+        WebResult<ICollection<ViajeDTO>> viajes = await _viajeservice.AllAsync(new ViajeFilter() { Estado = Estado.Activo });
 
         if (!viajes.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(viajes.ErrorCode), viajes);
+        }
 
         return Ok(viajes);
     }
@@ -64,10 +68,12 @@ public class ViajesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<ViajeDTO>>> Get(int id)
     {
-        var viaje = await _viajeservice.GetAsync(new ViajeFilter() { Id = id });
+        WebResult<ViajeDTO> viaje = await _viajeservice.GetAsync(new ViajeFilter() { Id = id });
 
         if (!viaje.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(viaje.ErrorCode), viaje);
+        }
 
         return Ok(viaje);
     }
@@ -84,10 +90,13 @@ public class ViajesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<WebResult<ViajeDTO>>> CreateViaje([FromBody] ViajeDTO request)
     {
-        var viaje = await _viajeservice.CreateAsync(request);
+        WebResult<ViajeDTO> viaje = await _viajeservice.CreateAsync(request);
 
         if (!viaje.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(viaje.ErrorCode), viaje);
+        }
+
         return Created(nameof(Get), viaje);
     }
 
@@ -101,10 +110,13 @@ public class ViajesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ViajeDTO>>> UpdateViaje([FromBody] ViajeDTO request, int id)
     {
-        var viaje = await _viajeservice.UpdateAsync(request, id);
+        WebResult<ViajeDTO> viaje = await _viajeservice.UpdateAsync(request, id);
 
         if (!viaje.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(viaje.ErrorCode), viaje);
+        }
+
         return Ok(viaje);
     }
 
@@ -117,10 +129,13 @@ public class ViajesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ViajeDTO>>> DeleteViaje(int id)
     {
-        var viaje = await _viajeservice.DeleteAsync(new ViajeFilter() { Id = id });
+        WebResult<ViajeDTO> viaje = await _viajeservice.DeleteAsync(new ViajeFilter() { Id = id });
 
         if (!viaje.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(viaje.ErrorCode), viaje);
+        }
+
         return Ok(viaje);
     }
 

@@ -32,7 +32,9 @@ public class ParadaRepository : IParadaRepository
     public async Task<bool> DeleteAsync(Parada entity)
     {
         if (entity == null)
+        {
             return false;
+        }
 
         _context.Paradas.Remove(entity);
 
@@ -43,7 +45,9 @@ public class ParadaRepository : IParadaRepository
     public async Task<bool> UpdateAsync(Parada entity)
     {
         if (entity == null)
+        {
             return false;
+        }
 
         _context.Paradas.Update(entity);
         entity.UpdatedAt = DateTime.Now;
@@ -57,7 +61,7 @@ public class ParadaRepository : IParadaRepository
 
     public async Task<bool> DeleteAsync(ParadaFilter filter)
     {
-        var parada = await GetAsync(filter);
+        Parada parada = await GetAsync(filter);
         return await DeleteAsync(parada);
     }
 

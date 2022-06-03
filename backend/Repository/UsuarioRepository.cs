@@ -33,7 +33,9 @@ public class UsuarioRepository : IUsuarioRepository
     {
         Usuario usuario = await GetUsuarioAsync(id);
         if (usuario == null)
+        {
             return false;
+        }
 
         usuario.LockoutEnabled = true;
 

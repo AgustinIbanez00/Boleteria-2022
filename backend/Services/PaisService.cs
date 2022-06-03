@@ -24,11 +24,11 @@ public class PaisService : IPaisService
     {
         try
         {
-            var paises = await _paisRepository.GetAllAsync(parameters);
+            ICollection<Data.Models.Pais> paises = await _paisRepository.GetAllAsync(parameters);
 
-            var paisesDTO = new List<PaisDTO>();
+            List<PaisDTO> paisesDTO = new();
 
-            foreach (var pais in paises)
+            foreach (Data.Models.Pais pais in paises)
             {
                 paisesDTO.Add(_mapper.Map<PaisDTO>(pais));
             }

@@ -30,11 +30,11 @@ public class ParadaService : IParadaService
     {
         try
         {
-            var paradas = await _paradaRepository.GetAllAsync(filter);
+            ICollection<Parada> paradas = await _paradaRepository.GetAllAsync(filter);
 
-            var paradasDto = new List<ParadaDTO>();
+            List<ParadaDTO> paradasDto = new();
 
-            foreach (var parada in paradas)
+            foreach (Parada parada in paradas)
             {
                 paradasDto.Add(_mapper.Map<ParadaDTO>(parada));
             }
@@ -53,9 +53,9 @@ public class ParadaService : IParadaService
         {
             PaginatedList<Parada> paradas = await _paradaRepository.GetAllPaginatedAsync(filter);
 
-            var paradasDto = new List<ParadaDTO>();
+            List<ParadaDTO> paradasDto = new();
 
-            foreach (var parada in paradas)
+            foreach (Parada parada in paradas)
             {
                 paradasDto.Add(_mapper.Map<ParadaDTO>(parada));
             }
@@ -72,17 +72,23 @@ public class ParadaService : IParadaService
         try
         {
             if (!await _paisRepository.ExistsAsync(new PaisFilter() { Id = request.PaisId }))
+            {
                 return KeyError<PaisDTO, ParadaDTO>(nameof(request.PaisId), ErrorMessage.NotFound);
+            }
 
             if (!await _provinciaRepository.ExistsAsync(new ProvinciaFilter() { Id = request.ProvinciaId }))
+            {
                 return KeyError<ProvinciaDTO, ParadaDTO>(nameof(request.ProvinciaId), ErrorMessage.NotFound);
+            }
 
-            var parada = _mapper.Map<Parada>(request);
+            Parada parada = _mapper.Map<Parada>(request);
 
             if (!await _paradaRepository.CreateAsync(parada))
+            {
                 return Error<Parada, ParadaDTO>(ErrorMessage.CouldNotCreate);
+            }
 
-            var dto = _mapper.Map<ParadaDTO>(parada);
+            ParadaDTO dto = _mapper.Map<ParadaDTO>(parada);
             return Ok(dto, SuccessMessage.Created);
         }
         catch (UniqueConstraintException)
@@ -99,16 +105,20 @@ public class ParadaService : IParadaService
     {
         try
         {
-            var parada = await _paradaRepository.GetAsync(filter);
+            Parada parada = await _paradaRepository.GetAsync(filter);
             if (parada == null)
+            {
                 return Error<ParadaDTO>(ErrorMessage.NotFound);
+            }
 
             if (!await _paradaRepository.DeleteAsync(parada))
+            {
                 return Error<ParadaDTO>(ErrorMessage.CouldNotDelete);
+            }
 
             return Ok(_mapper.Map<ParadaDTO>(parada), SuccessMessage.Deleted);
         }
-        catch(ReferenceConstraintException)
+        catch (ReferenceConstraintException)
         {
             return Error<ParadaDTO>(ErrorMessage.CouldNotDeleteReferenced);
         }
@@ -122,10 +132,12 @@ public class ParadaService : IParadaService
     {
         try
         {
-            var parada = await _paradaRepository.GetAsync(filter);
+            Parada parada = await _paradaRepository.GetAsync(filter);
 
             if (parada == null)
+            {
                 return Error<ParadaDTO>(ErrorMessage.NotFound);
+            }
 
             return Ok(_mapper.Map<ParadaDTO>(parada));
         }
@@ -140,30 +152,40 @@ public class ParadaService : IParadaService
         try
         {
             if (id <= 0)
+            {
                 return Error<ParadaDTO>(ErrorMessage.InvalidId);
+            }
 
             if (!await _paisRepository.ExistsAsync(new PaisFilter() { Id = request.PaisId }))
+            {
                 return KeyError<PaisDTO, ParadaDTO>(nameof(request.PaisId), ErrorMessage.NotFound);
+            }
 
             if (!await _provinciaRepository.ExistsAsync(new ProvinciaFilter() { Id = request.ProvinciaId }))
+            {
                 return KeyError<ProvinciaDTO, ParadaDTO>(nameof(request.ProvinciaId), ErrorMessage.NotFound);
+            }
 
-            var destino = await _paradaRepository.FindAsync(id);
+            Parada destino = await _paradaRepository.FindAsync(id);
 
             if (destino == null)
+            {
                 return Error<ParadaDTO>(ErrorMessage.NotFound);
+            }
 
             destino.Nombre = request.Nombre;
             destino.Estado = request.Estado;
 
-            var pais = await _paisRepository.GetAsync(new PaisFilter() { Id = request.PaisId });
-            var provincia = await _provinciaRepository.GetAsync(new ProvinciaFilter() { Id = request.ProvinciaId });
+            Pais pais = await _paisRepository.GetAsync(new PaisFilter() { Id = request.PaisId });
+            Provincia provincia = await _provinciaRepository.GetAsync(new ProvinciaFilter() { Id = request.ProvinciaId });
 
             destino.Pais = pais;
             destino.Provincia = provincia;
 
             if (!await _paradaRepository.UpdateAsync(destino))
+            {
                 return Error<ParadaDTO>(ErrorMessage.CouldNotUpdate);
+            }
 
             return Ok(_mapper.Map<ParadaDTO>(destino), SuccessMessage.Modified);
         }

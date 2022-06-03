@@ -6,9 +6,15 @@ public class GreaterThanZeroAttribute : ValidationAttribute
     public override bool IsValid(object value)
     {
         if (int.TryParse(value.ToString(), out int intParsed))
+        {
             return intParsed > 0;
+        }
+
         if (long.TryParse(value.ToString(), out long longParsed))
+        {
             return longParsed > 0;
+        }
+
         return true;
     }
 

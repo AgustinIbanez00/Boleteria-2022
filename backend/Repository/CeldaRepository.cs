@@ -17,7 +17,9 @@ public class CeldaRepository : ICeldaRepository
     public async Task<bool> UpdateCeldaAsync(Celda celda)
     {
         if (celda == null)
+        {
             return false;
+        }
 
         _context.Celdas.Update(celda);
         return await Save();

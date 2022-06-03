@@ -31,7 +31,9 @@ public class BoletoRepository : IBoletoRepository
     public async Task<bool> DeleteAsync(Boleto entity)
     {
         if (entity == null)
+        {
             return false;
+        }
 
         _context.Boletos.Remove(entity);
 
@@ -91,7 +93,9 @@ public class BoletoRepository : IBoletoRepository
     public async Task<bool> UpdateAsync(Boleto entity)
     {
         if (entity == null)
+        {
             return false;
+        }
 
         _context.Boletos.Update(entity);
         entity.UpdatedAt = DateTime.Now;

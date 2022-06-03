@@ -19,14 +19,21 @@ public class Distribucion : Auditory
     public Distribucion(int cantidad_PB)
     {
         if (cantidad_PB / 5 > 0)
+        {
             this.InicializarListaCeldas(Planta.BAJA, cantidad_PB / 5, 5);
+        }
     }
 
     public Distribucion(int cantidad_PB, int cantidad_PA)
     {
         if (cantidad_PB / 5 > 0)
+        {
             this.InicializarListaCeldas(Planta.BAJA, cantidad_PB / 5, 5);
+        }
+
         if (cantidad_PA / 5 > 0)
+        {
             this.InicializarListaCeldas(Planta.ALTA, cantidad_PA / 5, 5);
+        }
     }
 }

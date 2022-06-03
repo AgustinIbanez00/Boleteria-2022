@@ -34,17 +34,21 @@ public class UsuarioService : IUsuarioService
         try
         {
             if (await _usuarioRepository.ExistsUsuarioByEmailAsync(request.Email))
+            {
                 return KeyError<UsuarioResponse>(nameof(request.Email), $"Esa dirección de correo electrónico {request.Email} ya existe.");
+            }
 
-            var usuario = _mapper.Map<Usuario>(request);
+            Usuario usuario = _mapper.Map<Usuario>(request);
             HashedPassword hashedPassword = request.Password.Hash();
             usuario.Password = hashedPassword.Password;
             usuario.Salt = hashedPassword.Salt;
 
             if (!await _usuarioRepository.CreateUsuarioAsync(usuario))
+            {
                 return Error<Usuario, UsuarioResponse>(ErrorMessage.CouldNotCreate);
+            }
 
-            var dto = _mapper.Map<UsuarioResponse>(usuario);
+            UsuarioResponse dto = _mapper.Map<UsuarioResponse>(usuario);
             return Ok<Usuario, UsuarioResponse>(dto, SuccessMessage.Created);
         }
         catch (UniqueConstraintException)
@@ -61,12 +65,16 @@ public class UsuarioService : IUsuarioService
     {
         try
         {
-            var usuario = await _usuarioRepository.GetUsuarioAsync(id);
+            Usuario usuario = await _usuarioRepository.GetUsuarioAsync(id);
             if (usuario == null)
+            {
                 return Error<Usuario, UsuarioResponse>(ErrorMessage.NotFound);
+            }
 
             if (usuario.LockoutEnabled)
+            {
                 return Error<UsuarioResponse>("La cuenta de este usuario se encuentra bloqueada.");
+            }
 
             return await _usuarioRepository.LockUsuarioAsync(id) ? Ok<UsuarioResponse>() : Error<UsuarioResponse>("No se pudo bloquear a ese usuario.");
         }
@@ -80,10 +88,12 @@ public class UsuarioService : IUsuarioService
     {
         try
         {
-            var usuario = await _usuarioRepository.GetUsuarioAsync(id);
+            Usuario usuario = await _usuarioRepository.GetUsuarioAsync(id);
 
             if (usuario == null)
+            {
                 return Error<Usuario, UsuarioResponse>(ErrorMessage.NotFound);
+            }
 
             return Ok(_mapper.Map<UsuarioResponse>(usuario));
         }
@@ -96,10 +106,12 @@ public class UsuarioService : IUsuarioService
     {
         try
         {
-            var usuario = await _usuarioRepository.GetUsuarioByEmailAsync(email);
+            Usuario usuario = await _usuarioRepository.GetUsuarioByEmailAsync(email);
 
             if (usuario == null)
+            {
                 return Error<Usuario, UsuarioResponse>(ErrorMessage.NotFound);
+            }
 
             return Ok(_mapper.Map<UsuarioResponse>(usuario));
         }
@@ -112,10 +124,12 @@ public class UsuarioService : IUsuarioService
     {
         try
         {
-            var usuario = await _usuarioRepository.GetUsuarioByUserNameAsync(userName);
+            Usuario usuario = await _usuarioRepository.GetUsuarioByUserNameAsync(userName);
 
             if (usuario == null)
+            {
                 return Error<Usuario, UsuarioResponse>(ErrorMessage.NotFound);
+            }
 
             return Ok(_mapper.Map<UsuarioResponse>(usuario));
         }
@@ -129,11 +143,11 @@ public class UsuarioService : IUsuarioService
     {
         try
         {
-            var usuarios = await _usuarioRepository.GetUsuariosAsync();
+            ICollection<Usuario> usuarios = await _usuarioRepository.GetUsuariosAsync();
 
-            var usuariosDto = new List<UsuarioResponse>();
+            List<UsuarioResponse> usuariosDto = new();
 
-            foreach (var usuario in usuarios)
+            foreach (Usuario usuario in usuarios)
             {
                 usuariosDto.Add(_mapper.Map<UsuarioResponse>(usuario));
             }
@@ -152,29 +166,33 @@ public class UsuarioService : IUsuarioService
             Usuario usuario = await _usuarioRepository.GetUsuarioByEmailAsync(request.Email);
 
             if (usuario == null)
+            {
                 return KeyError<Usuario, LoginResponse>(nameof(request.Email), ErrorMessage.InvalidEmail);
+            }
 
             if (usuario.LockoutEnabled)
+            {
                 return Error<LoginResponse>("Esta cuenta se encuentra bloqueada.");
+            }
 
             if (HashingExtensions.CheckHash(request.Password, usuario.Password, usuario.Salt))
             {
-                var secretKey = _configuration.GetValue<string>("SecretKey");
-                var key = Encoding.ASCII.GetBytes(secretKey);
+                string secretKey = _configuration.GetValue<string>("SecretKey");
+                byte[] key = Encoding.ASCII.GetBytes(secretKey);
 
-                var claims = new ClaimsIdentity();
+                ClaimsIdentity claims = new();
                 claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, request.Email));
                 claims.AddClaim(new Claim(ClaimTypes.Role, usuario.Tipo.ToString()));
 
-                var tokenDescriptor = new SecurityTokenDescriptor
+                SecurityTokenDescriptor tokenDescriptor = new()
                 {
                     Subject = claims,
                     Expires = DateTime.UtcNow.AddDays(15),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
 
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var createdToken = tokenHandler.CreateToken(tokenDescriptor);
+                JwtSecurityTokenHandler tokenHandler = new();
+                SecurityToken createdToken = tokenHandler.CreateToken(tokenDescriptor);
 
                 string bearer_token = tokenHandler.WriteToken(createdToken);
 

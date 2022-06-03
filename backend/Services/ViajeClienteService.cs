@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using BoleteriaOnline.Core.Extensions.Response;
+﻿using BoleteriaOnline.Core.Extensions.Response;
 using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Core.ViewModels;
 using BoleteriaOnline.Core.ViewModels.Filters;
-using BoleteriaOnline.Web.Data;
 using BoleteriaOnline.Web.Data.Models;
 using BoleteriaOnline.Web.Repositories;
 using static BoleteriaOnline.Core.Utils.WebResponse;
@@ -24,9 +22,9 @@ namespace BoleteriaOnline.Web.Services
         {
             try
             {
-                var result = await _viajeClienteRepository.GetAllAsync(filter);
+                ICollection<ViajeClienteDTO> result = await _viajeClienteRepository.GetAllAsync(filter);
 
-                if(result == null)
+                if (result == null)
                 {
                     return Error<Viaje, ICollection<ViajeClienteDTO>>(ErrorMessage.EmptyList);
                 }

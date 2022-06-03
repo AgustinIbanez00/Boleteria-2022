@@ -6,7 +6,7 @@ public class BobbyUtcDateTimeConverter : JsonConverter<DateTime>
 {
     public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        using (var jsonDoc = JsonDocument.ParseValue(ref reader))
+        using (JsonDocument jsonDoc = JsonDocument.ParseValue(ref reader))
         {
             return DateTime.SpecifyKind(
                 DateTime.Parse(jsonDoc.RootElement.GetRawText().Trim('"').Trim('\'')),

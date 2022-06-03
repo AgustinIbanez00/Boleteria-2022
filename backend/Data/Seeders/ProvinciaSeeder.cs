@@ -3,7 +3,7 @@
 namespace BoleteriaOnline.Web.Data.Seeders;
 public class ProvinciaSeeder
 {
-    public static List<Provincia> Provincias => new List<Provincia>()
+    public static List<Provincia> Provincias => new()
     {
         new Provincia()
         {

@@ -26,11 +26,11 @@ public class BoletoService : IBoletoService
     {
         try
         {
-            var boletos = await _boletoRepository.GetAllAsync(filter);
+            ICollection<Boleto> boletos = await _boletoRepository.GetAllAsync(filter);
 
-            var boletosDto = new List<BoletoDTO>();
+            List<BoletoDTO> boletosDto = new();
 
-            foreach (var boleto in boletos)
+            foreach (Boleto boleto in boletos)
             {
                 boletosDto.Add(_mapper.Map<BoletoDTO>(boleto));
             }
@@ -49,9 +49,9 @@ public class BoletoService : IBoletoService
         {
             PaginatedList<Boleto> boletos = await _boletoRepository.GetAllPaginatedAsync(filter);
 
-            var boletosDto = new List<BoletoDTO>();
+            List<BoletoDTO> boletosDto = new();
 
-            foreach (var boleto in boletos)
+            foreach (Boleto boleto in boletos)
             {
                 boletosDto.Add(_mapper.Map<BoletoDTO>(boleto));
             }
@@ -69,16 +69,22 @@ public class BoletoService : IBoletoService
         try
         {
             if (request.Id <= 0)
+            {
                 return Error<BoletoDTO>(ErrorMessage.InvalidId);
+            }
 
             if (await _boletoRepository.ExistsAsync(new BoletoFilter() { Id = request.Id }))
+            {
                 return Error<BoletoDTO>(ErrorMessage.AlreadyExists);
+            }
 
-            var boleto = _mapper.Map<Boleto>(request);
+            Boleto boleto = _mapper.Map<Boleto>(request);
             if (!await _boletoRepository.CreateAsync(boleto))
+            {
                 return Error<Boleto, BoletoDTO>(ErrorMessage.CouldNotCreate);
+            }
 
-            var dto = _mapper.Map<BoletoDTO>(boleto);
+            BoletoDTO dto = _mapper.Map<BoletoDTO>(boleto);
             return Ok(dto, SuccessMessage.Created);
         }
         catch (UniqueConstraintException)
@@ -95,12 +101,16 @@ public class BoletoService : IBoletoService
     {
         try
         {
-            var boleto = await _boletoRepository.GetAsync(filter);
+            Boleto boleto = await _boletoRepository.GetAsync(filter);
             if (boleto == null)
+            {
                 return Error<BoletoDTO>(ErrorMessage.NotFound);
+            }
 
             if (!await _boletoRepository.DeleteAsync(boleto))
+            {
                 return Error<BoletoDTO>(ErrorMessage.CouldNotDelete);
+            }
 
             return Ok(_mapper.Map<BoletoDTO>(boleto), SuccessMessage.Deleted);
         }
@@ -118,10 +128,12 @@ public class BoletoService : IBoletoService
     {
         try
         {
-            var boleto = await _boletoRepository.GetAsync(filter);
+            Boleto boleto = await _boletoRepository.GetAsync(filter);
 
             if (boleto == null)
+            {
                 return Error<BoletoDTO>(ErrorMessage.NotFound);
+            }
 
             return Ok(_mapper.Map<BoletoDTO>(boleto));
         }
@@ -136,20 +148,26 @@ public class BoletoService : IBoletoService
         try
         {
             if (id <= 0)
+            {
                 return Error<BoletoDTO>(ErrorMessage.InvalidId);
+            }
 
-            var boleto = await _boletoRepository.FindAsync(id);
+            Boleto boleto = await _boletoRepository.FindAsync(id);
 
             if (boleto == null)
+            {
                 return Error<BoletoDTO>(ErrorMessage.NotFound);
+            }
             /*
-            boleto.Nombre = request.Nombre;
-            boleto.FechaNac = request.FechaNacimiento;
-            boleto.Genero = request.Genero;
-            boleto.Estado = request.Estado;
-            */
+boleto.Nombre = request.Nombre;
+boleto.FechaNac = request.FechaNacimiento;
+boleto.Genero = request.Genero;
+boleto.Estado = request.Estado;
+*/
             if (!await _boletoRepository.UpdateAsync(boleto))
+            {
                 return Error<BoletoDTO>(ErrorMessage.CouldNotUpdate);
+            }
 
             return Ok(_mapper.Map<BoletoDTO>(boleto), SuccessMessage.Modified);
         }

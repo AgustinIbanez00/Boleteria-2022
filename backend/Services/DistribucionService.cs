@@ -28,16 +28,20 @@ public class DistribucionService : IDistribucionService
     {
         try
         {
-            var distribucion = _mapper.Map<Distribucion>(distribucionDto);
+            Distribucion distribucion = _mapper.Map<Distribucion>(distribucionDto);
 
             if (distribucion.Filas.Count == 0)
+            {
                 return Error<Distribucion, DistribucionResponse>(ErrorMessage.EmptyList);
+            }
             else
             {
-                foreach (var fila in distribucion.Filas)
+                foreach (Fila fila in distribucion.Filas)
                 {
                     if (fila.Cells.Count == 0)
+                    {
                         return Error<DistribucionResponse>($"Se encontró una fila sin celdas.");
+                    }
                 }
             }
 
@@ -47,15 +51,21 @@ public class DistribucionService : IDistribucionService
             }
 
             if (distribucion.Filas.Where(f => f.Planta == Planta.BAJA).Count() >= MAX_ITEMS_PER_PLANTA)
+            {
                 return Error<DistribucionResponse>($"La cantidad de filas para la planta baja excede el límite permitido ({MAX_ITEMS_PER_PLANTA}).");
+            }
 
             if (distribucion.Filas.Where(f => f.Planta == Planta.ALTA).Count() >= MAX_ITEMS_PER_PLANTA)
+            {
                 return Error<DistribucionResponse>($"La cantidad de filas para la planta alta excede el límite permitido ({MAX_ITEMS_PER_PLANTA}).");
+            }
 
             if (!await _distribucionRepository.CreateDistribucionAsync(distribucion))
+            {
                 return Error<Distribucion, DistribucionResponse>(ErrorMessage.CouldNotCreate);
+            }
 
-            var dto = _mapper.Map<DistribucionResponse>(distribucion);
+            DistribucionResponse dto = _mapper.Map<DistribucionResponse>(distribucion);
             return Ok<Distribucion, DistribucionResponse>(dto, SuccessMessage.Created);
         }
         catch (UniqueConstraintException)
@@ -71,12 +81,16 @@ public class DistribucionService : IDistribucionService
     {
         try
         {
-            var distribucion = await _distribucionRepository.GetDistribucionAsync(id);
+            Distribucion distribucion = await _distribucionRepository.GetDistribucionAsync(id);
             if (distribucion == null)
+            {
                 return Error<Distribucion, DistribucionResponse>(ErrorMessage.NotFound);
+            }
 
             if (!await _distribucionRepository.DeleteDistribucionAsync(distribucion))
+            {
                 return Error<Distribucion, DistribucionResponse>(ErrorMessage.CouldNotDelete);
+            }
 
             return Ok<Distribucion, DistribucionResponse>(_mapper.Map<DistribucionResponse>(distribucion), SuccessMessage.Deleted);
         }
@@ -93,10 +107,12 @@ public class DistribucionService : IDistribucionService
     {
         try
         {
-            var distribucion = await _distribucionRepository.GetDistribucionAsync(id);
+            Distribucion distribucion = await _distribucionRepository.GetDistribucionAsync(id);
 
             if (distribucion == null)
+            {
                 return Error<Distribucion, DistribucionResponse>(ErrorMessage.NotFound);
+            }
 
             return Ok(_mapper.Map<DistribucionResponse>(distribucion));
         }
@@ -109,11 +125,11 @@ public class DistribucionService : IDistribucionService
     {
         try
         {
-            var distribucions = await _distribucionRepository.GetDistribucionesAsync();
+            ICollection<Distribucion> distribucions = await _distribucionRepository.GetDistribucionesAsync();
 
-            var distribucionsDto = new List<DistribucionResponse>();
+            List<DistribucionResponse> distribucionsDto = new();
 
-            foreach (var Distribucion in distribucions)
+            foreach (Distribucion Distribucion in distribucions)
             {
                 distribucionsDto.Add(_mapper.Map<DistribucionResponse>(Distribucion));
             }
@@ -130,56 +146,73 @@ public class DistribucionService : IDistribucionService
         try
         {
             if (distribucionDto.Id <= 0)
+            {
                 return Error<Distribucion, DistribucionResponse>(ErrorMessage.InvalidId);
+            }
 
-            var distribucion = await _distribucionRepository.GetDistribucionAsync(distribucionDto.Id);
+            Distribucion distribucion = await _distribucionRepository.GetDistribucionAsync(distribucionDto.Id);
 
             if (distribucion == null)
+            {
                 return Error<Distribucion, DistribucionResponse>(ErrorMessage.NotFound);
+            }
 
             if (distribucion.Filas.Where(f => f.Planta == Planta.BAJA).Count() >= MAX_ITEMS_PER_PLANTA)
+            {
                 return Error<DistribucionResponse>($"La cantidad de filas para la planta baja excede el límite permitido ({MAX_ITEMS_PER_PLANTA}).");
+            }
 
             if (distribucion.Filas.Where(f => f.Planta == Planta.ALTA).Count() >= MAX_ITEMS_PER_PLANTA)
+            {
                 return Error<DistribucionResponse>($"La cantidad de filas para la planta alta excede el límite permitido ({MAX_ITEMS_PER_PLANTA}).");
+            }
 
-            foreach (var fila in distribucionDto.Filas)
+            foreach (FilaUpdateRequest fila in distribucionDto.Filas)
             {
                 if (distribucion.Filas.Any(f => f.DistribucionId == distribucionDto.Id && f.Id == fila.Id))
                 {
-                    foreach (var celda in fila.Cells)
+                    foreach (CeldaUpdateRequest celda in fila.Cells)
                     {
                         if (distribucion.Filas.Any(f => f.DistribucionId == distribucionDto.Id && f.Id == fila.Id && f.Cells.Any(c => c.Id == celda.Id)))
                         {
-                            var filaDistri = distribucion.Filas
+                            Fila filaDistri = distribucion.Filas
                                 .FirstOrDefault(f => f.Id == fila.Id);
 
                             if (filaDistri != null)
                             {
-                                var celdaDistri = filaDistri.Cells.FirstOrDefault(c => c.Id == celda.Id);
+                                Celda celdaDistri = filaDistri.Cells.FirstOrDefault(c => c.Id == celda.Id);
 
                                 celdaDistri.Value = celda.Value;
                             }
                         }
                         else
+                        {
                             return Error<DistribucionResponse>("No se encontró la celda.");
+                        }
                     }
                 }
                 else
+                {
                     return Error<DistribucionResponse>("No se encontró la fila.");
-
+                }
             }
 
             distribucion.Filas = _mapper.Map<List<Fila>>(distribucionDto.Filas);
 
             if (distribucion.Nota != distribucionDto.Nota)
+            {
                 distribucion.Nota = distribucionDto.Nota;
+            }
 
             if (distribucion.UnPiso != distribucionDto.UnPiso)
+            {
                 distribucion.UnPiso = distribucionDto.UnPiso;
+            }
 
             if (!await _distribucionRepository.UpdateDistribucionAsync(distribucion))
+            {
                 return Error<Distribucion, DistribucionResponse>(ErrorMessage.CouldNotUpdate);
+            }
 
             return Ok<Distribucion, DistribucionResponse>(_mapper.Map<DistribucionResponse>(distribucion), SuccessMessage.Modified);
         }
@@ -198,17 +231,23 @@ public class DistribucionService : IDistribucionService
         try
         {
             if (id <= 0)
+            {
                 return Error<Distribucion, DistribucionResponse>(ErrorMessage.InvalidId);
+            }
 
-            var distribucion = await _distribucionRepository.GetDistribucionAsync(id);
+            Distribucion distribucion = await _distribucionRepository.GetDistribucionAsync(id);
 
             if (distribucion == null)
+            {
                 return Error<Distribucion, DistribucionResponse>(ErrorMessage.NotFound);
+            }
 
             distribucion.AddRowCells(planta, 1);
 
             if (!await _distribucionRepository.UpdateDistribucionAsync(distribucion))
+            {
                 return Error<Distribucion, DistribucionResponse>(ErrorMessage.CouldNotUpdate);
+            }
 
             return Ok<Distribucion, DistribucionResponse>(_mapper.Map<DistribucionResponse>(distribucion), SuccessMessage.Modified);
         }

@@ -29,10 +29,12 @@ public class ClientesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<ICollection<ClienteDTO>>>> GetPaginated([FromQuery] ClienteFilter filter)
     {
-        var clientes = await _clienteservice.AllPaginatedAsync(filter);
+        WebResultList<ClienteDTO> clientes = await _clienteservice.AllPaginatedAsync(filter);
 
         if (!clientes.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(clientes.ErrorCode), clientes);
+        }
 
         return Ok(clientes);
     }
@@ -45,10 +47,12 @@ public class ClientesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ICollection<ClienteDTO>>>> GetAll()
     {
-        var clientes = await _clienteservice.AllAsync(new ClienteFilter() { Estado = Estado.Activo });
+        WebResult<ICollection<ClienteDTO>> clientes = await _clienteservice.AllAsync(new ClienteFilter() { Estado = Estado.Activo });
 
         if (!clientes.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(clientes.ErrorCode), clientes);
+        }
 
         return Ok(clientes);
     }
@@ -64,10 +68,12 @@ public class ClientesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<ClienteDTO>>> Get(long id)
     {
-        var cliente = await _clienteservice.GetAsync(new ClienteFilter() { Dni = id });
+        WebResult<ClienteDTO> cliente = await _clienteservice.GetAsync(new ClienteFilter() { Dni = id });
 
         if (!cliente.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(cliente.ErrorCode), cliente);
+        }
 
         return Ok(cliente);
     }
@@ -84,10 +90,13 @@ public class ClientesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<WebResult<ClienteDTO>>> CreateCliente([FromBody] ClienteDTO clienteDto)
     {
-        var cliente = await _clienteservice.CreateAsync(clienteDto);
+        WebResult<ClienteDTO> cliente = await _clienteservice.CreateAsync(clienteDto);
 
         if (!cliente.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(cliente.ErrorCode), cliente);
+        }
+
         return Created(nameof(Get), cliente);
     }
 
@@ -101,10 +110,13 @@ public class ClientesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ClienteDTO>>> UpdateCliente([FromBody] ClienteDTO clienteDto, long id)
     {
-        var cliente = await _clienteservice.UpdateAsync(clienteDto, id);
+        WebResult<ClienteDTO> cliente = await _clienteservice.UpdateAsync(clienteDto, id);
 
         if (!cliente.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(cliente.ErrorCode), cliente);
+        }
+
         return Ok(cliente);
     }
 
@@ -117,10 +129,13 @@ public class ClientesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ClienteDTO>>> DeleteCliente(long id)
     {
-        var cliente = await _clienteservice.DeleteAsync(new ClienteFilter() { Dni = id });
+        WebResult<ClienteDTO> cliente = await _clienteservice.DeleteAsync(new ClienteFilter() { Dni = id });
 
         if (!cliente.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(cliente.ErrorCode), cliente);
+        }
+
         return Ok(cliente);
     }
 }

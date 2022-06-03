@@ -30,10 +30,12 @@ public class PaisesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<ICollection<PaisDTO>>>> GetAll([FromQuery] PaisFilter parameters)
     {
-        var paises = await _paisService.AllAsync(parameters);
+        WebResult<List<PaisDTO>> paises = await _paisService.AllAsync(parameters);
 
         if (!paises.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(paises.ErrorCode), paises);
+        }
 
         return Ok(paises);
     }
@@ -48,10 +50,12 @@ public class PaisesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<ICollection<PaisDTO>>>> GetProvincias(int id)
     {
-        var provincias = await _provinciaService.AllAsync(new ProvinciaFilter() { PaisId = id });
+        WebResult<List<ProvinciaDTO>> provincias = await _provinciaService.AllAsync(new ProvinciaFilter() { PaisId = id });
 
         if (!provincias.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(provincias.ErrorCode), provincias);
+        }
 
         return Ok(provincias);
     }

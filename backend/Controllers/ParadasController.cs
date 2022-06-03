@@ -29,12 +29,16 @@ public class ParadasController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResultList<ParadaDTO>>> GetPaginated([FromQuery] ParadaFilter filter)
     {
-        var paradas = await _paradaService.AllPaginatedAsync(filter);
+        WebResultList<ParadaDTO> paradas = await _paradaService.AllPaginatedAsync(filter);
 
         if (!paradas.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(paradas.ErrorCode), paradas);
+        }
         else
+        {
             Response.Headers.Add("cantidadTotalRegistros", paradas.Result.Capacity.ToString());
+        }
 
         return Ok(paradas);
     }
@@ -47,10 +51,12 @@ public class ParadasController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ICollection<ParadaDTO>>>> GetAll()
     {
-        var paradas = await _paradaService.AllAsync(new ParadaFilter() { Estado = Estado.Activo });
+        WebResult<ICollection<ParadaDTO>> paradas = await _paradaService.AllAsync(new ParadaFilter() { Estado = Estado.Activo });
 
         if (!paradas.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(paradas.ErrorCode), paradas);
+        }
 
         return Ok(paradas);
     }
@@ -66,10 +72,12 @@ public class ParadasController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<ParadaDTO>>> Get(int id)
     {
-        var parada = await _paradaService.GetAsync(new ParadaFilter() { Id = id });
+        WebResult<ParadaDTO> parada = await _paradaService.GetAsync(new ParadaFilter() { Id = id });
 
         if (!parada.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(parada.ErrorCode), parada);
+        }
 
         return Ok(parada);
     }
@@ -86,10 +94,13 @@ public class ParadasController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<WebResult<ParadaDTO>>> CreateParada([FromBody] ParadaDTO paradaDto)
     {
-        var parada = await _paradaService.CreateAsync(paradaDto);
+        WebResult<ParadaDTO> parada = await _paradaService.CreateAsync(paradaDto);
 
         if (!parada.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(parada.ErrorCode), parada);
+        }
+
         return Created(nameof(Get), parada);
     }
 
@@ -103,10 +114,13 @@ public class ParadasController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ParadaDTO>>> UpdateParada([FromBody] ParadaDTO paradaDto, int id)
     {
-        var parada = await _paradaService.UpdateAsync(paradaDto, id);
+        WebResult<ParadaDTO> parada = await _paradaService.UpdateAsync(paradaDto, id);
 
         if (!parada.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(parada.ErrorCode), parada);
+        }
+
         return Ok(parada);
     }
 
@@ -119,10 +133,13 @@ public class ParadasController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ParadaDTO>>> DeleteParada(int id)
     {
-        var parada = await _paradaService.DeleteAsync(new ParadaFilter() { Id = id });
+        WebResult<ParadaDTO> parada = await _paradaService.DeleteAsync(new ParadaFilter() { Id = id });
 
         if (!parada.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(parada.ErrorCode), parada);
+        }
+
         return Ok(parada);
     }
 

@@ -31,11 +31,11 @@ public class ViajeService : IViajeService
     {
         try
         {
-            var viajes = await _viajeRepository.GetAllAsync(filter);
+            ICollection<Viaje> viajes = await _viajeRepository.GetAllAsync(filter);
 
-            var viajesDto = new List<ViajeDTO>();
+            List<ViajeDTO> viajesDto = new();
 
-            foreach (var viaje in viajes)
+            foreach (Viaje viaje in viajes)
             {
                 viajesDto.Add(_mapper.Map<ViajeDTO>(viaje));
             }
@@ -54,9 +54,9 @@ public class ViajeService : IViajeService
         {
             PaginatedList<Viaje> viajes = await _viajeRepository.GetAllPaginatedAsync(filter);
 
-            var viajesDto = new List<ViajeDTO>();
+            List<ViajeDTO> viajesDto = new();
 
-            foreach (var viaje in viajes)
+            foreach (Viaje viaje in viajes)
             {
                 viajesDto.Add(_mapper.Map<ViajeDTO>(viaje));
             }
@@ -74,34 +74,46 @@ public class ViajeService : IViajeService
         try
         {
             if (request.Horarios.Count == 0)
+            {
                 return Error<Horario, ViajeDTO>(ErrorMessage.EmptyList);
+            }
 
-            foreach (var horario in request.Horarios)
+            foreach (HorarioDTO horario in request.Horarios)
             {
                 horario.Id = 0;
                 if (!await _distribucionRepository.ExistsDistribucionAsync(horario.DistribucionId))
+                {
                     return Error<Distribucion, ViajeDTO>(ErrorMessage.NotFound);
+                }
             }
 
-            foreach (var conexion in request.Conexiones)
+            foreach (NodoDTO conexion in request.Conexiones)
             {
                 conexion.Id = 0;
                 if (!await _viajeRepository.ExistsAsync(new ViajeFilter() { Id = conexion.ViajeId }))
+                {
                     return Error<ViajeDTO, ViajeDTO>(ErrorMessage.NotFound);
+                }
 
                 if (!await _paradaRepository.ExistsAsync(new ParadaFilter() { Id = conexion.OrigenId }))
+                {
                     return Error<ParadaDTO, ViajeDTO>(ErrorMessage.NotFound);
+                }
 
                 if (!await _paradaRepository.ExistsAsync(new ParadaFilter() { Id = conexion.DestinoId }))
+                {
                     return Error<ParadaDTO, ViajeDTO>(ErrorMessage.NotFound);
+                }
             }
 
             Viaje viaje = _mapper.Map<Viaje>(request);
 
             if (!await _viajeRepository.CreateAsync(viaje))
+            {
                 return Error<Viaje, ViajeDTO>(ErrorMessage.CouldNotCreate);
+            }
 
-            var dto = _mapper.Map<ViajeDTO>(viaje);
+            ViajeDTO dto = _mapper.Map<ViajeDTO>(viaje);
             return Ok<Viaje, ViajeDTO>(dto, SuccessMessage.Created);
         }
         catch (UniqueConstraintException)
@@ -118,12 +130,16 @@ public class ViajeService : IViajeService
     {
         try
         {
-            var viaje = await _viajeRepository.GetAsync(filter);
+            Viaje viaje = await _viajeRepository.GetAsync(filter);
             if (viaje == null)
+            {
                 return Error<Viaje, ViajeDTO>(ErrorMessage.NotFound);
+            }
 
             if (!await _viajeRepository.DeleteAsync(viaje))
+            {
                 return Error<Viaje, ViajeDTO>(ErrorMessage.CouldNotDelete);
+            }
 
             return Ok<Viaje, ViajeDTO>(_mapper.Map<ViajeDTO>(viaje), SuccessMessage.Deleted);
         }
@@ -141,10 +157,12 @@ public class ViajeService : IViajeService
     {
         try
         {
-            var viaje = await _viajeRepository.GetAsync(filter);
+            Viaje viaje = await _viajeRepository.GetAsync(filter);
 
             if (viaje == null)
+            {
                 return Error<ViajeDTO>(ErrorMessage.NotFound);
+            }
 
             return Ok(_mapper.Map<ViajeDTO>(viaje));
         }
@@ -159,25 +177,31 @@ public class ViajeService : IViajeService
         try
         {
             if (id <= 0)
+            {
                 return Error<Viaje, ViajeDTO>(ErrorMessage.InvalidId);
+            }
 
-            var viaje = await _viajeRepository.GetAsync(new ViajeFilter() { Id = id });
+            Viaje viaje = await _viajeRepository.GetAsync(new ViajeFilter() { Id = id });
 
             if (viaje == null)
+            {
                 return Error<Viaje, ViajeDTO>(ErrorMessage.NotFound);
+            }
 
             viaje.Nombre = request.Nombre;
             viaje.Estado = request.Estado;
 
             await _nodoRepository.DeleteAsync(new NodoFilter() { ViajeId = id });
 
-            foreach (var nodo in request.Conexiones)
+            foreach (NodoDTO nodo in request.Conexiones)
             {
                 viaje.Nodos.Add(_mapper.Map<Nodo>(nodo));
             }
 
             if (!await _viajeRepository.UpdateAsync(viaje))
+            {
                 return Error<Viaje, ViajeDTO>(ErrorMessage.CouldNotUpdate);
+            }
 
             return Ok<Viaje, ViajeDTO>(_mapper.Map<ViajeDTO>(viaje), SuccessMessage.Modified);
         }

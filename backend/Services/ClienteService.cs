@@ -26,11 +26,11 @@ public class ClienteService : IClienteService
     {
         try
         {
-            var clientes = await _clienteRepository.GetAllAsync(filter);
+            ICollection<Cliente> clientes = await _clienteRepository.GetAllAsync(filter);
 
-            var clientesDto = new List<ClienteDTO>();
+            List<ClienteDTO> clientesDto = new();
 
-            foreach (var cliente in clientes)
+            foreach (Cliente cliente in clientes)
             {
                 clientesDto.Add(_mapper.Map<ClienteDTO>(cliente));
             }
@@ -49,9 +49,9 @@ public class ClienteService : IClienteService
         {
             PaginatedList<Cliente> clientes = await _clienteRepository.GetAllPaginatedAsync(filter);
 
-            var clientesDto = new List<ClienteDTO>();
+            List<ClienteDTO> clientesDto = new();
 
-            foreach (var cliente in clientes)
+            foreach (Cliente cliente in clientes)
             {
                 clientesDto.Add(_mapper.Map<ClienteDTO>(cliente));
             }
@@ -69,16 +69,22 @@ public class ClienteService : IClienteService
         try
         {
             if (request.Dni <= 0)
+            {
                 return Error<ClienteDTO>(ErrorMessage.InvalidId);
+            }
 
             if (await _clienteRepository.ExistsAsync(new ClienteFilter() { Dni = request.Dni }))
+            {
                 return Error<ClienteDTO>(ErrorMessage.AlreadyExists);
+            }
 
-            var cliente = _mapper.Map<Cliente>(request);
+            Cliente cliente = _mapper.Map<Cliente>(request);
             if (!await _clienteRepository.CreateAsync(cliente))
+            {
                 return Error<Cliente, ClienteDTO>(ErrorMessage.CouldNotCreate);
+            }
 
-            var dto = _mapper.Map<ClienteDTO>(cliente);
+            ClienteDTO dto = _mapper.Map<ClienteDTO>(cliente);
             return Ok(dto, SuccessMessage.Created);
         }
         catch (UniqueConstraintException)
@@ -95,12 +101,16 @@ public class ClienteService : IClienteService
     {
         try
         {
-            var cliente = await _clienteRepository.GetAsync(filter);
+            Cliente cliente = await _clienteRepository.GetAsync(filter);
             if (cliente == null)
+            {
                 return Error<ClienteDTO>(ErrorMessage.NotFound);
+            }
 
             if (!await _clienteRepository.DeleteAsync(cliente))
+            {
                 return Error<ClienteDTO>(ErrorMessage.CouldNotDelete);
+            }
 
             return Ok(_mapper.Map<ClienteDTO>(cliente), SuccessMessage.Deleted);
         }
@@ -118,10 +128,12 @@ public class ClienteService : IClienteService
     {
         try
         {
-            var cliente = await _clienteRepository.GetAsync(filter);
+            Cliente cliente = await _clienteRepository.GetAsync(filter);
 
             if (cliente == null)
+            {
                 return Error<ClienteDTO>(ErrorMessage.NotFound);
+            }
 
             return Ok(_mapper.Map<ClienteDTO>(cliente));
         }
@@ -136,26 +148,34 @@ public class ClienteService : IClienteService
         try
         {
             if (id <= 0)
+            {
                 return Error<ClienteDTO>(ErrorMessage.InvalidId);
+            }
 
-            var cliente = await _clienteRepository.FindAsync(id);
+            Cliente cliente = await _clienteRepository.FindAsync(id);
 
             if (cliente == null)
+            {
                 return Error<ClienteDTO>(ErrorMessage.NotFound);
+            }
 
             cliente.Nombre = request.Nombre;
 
             DateTime fechaNac;
 
             if (!DateTime.TryParse(request.FechaNacimiento, out fechaNac))
+            {
                 return KeyError<ClienteDTO>(nameof(request.FechaNacimiento), "El formato de fecha es inválido.");
+            }
 
             cliente.FechaNac = Convert.ToDateTime(request.FechaNacimiento);
             cliente.Genero = request.Genero;
             cliente.Estado = request.Estado;
 
             if (!await _clienteRepository.UpdateAsync(cliente))
+            {
                 return Error<ClienteDTO>(ErrorMessage.CouldNotUpdate);
+            }
 
             return Ok(_mapper.Map<ClienteDTO>(cliente), SuccessMessage.Modified);
         }

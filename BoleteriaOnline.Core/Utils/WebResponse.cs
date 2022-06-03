@@ -190,7 +190,7 @@ public static class WebResponse
 
     private static ResponseOptions Options<TEntity>()
     {
-        var options = new ResponseOptions()
+        ResponseOptions options = new()
         {
             Entity = typeof(TEntity).GetAttributeValue<HumanDescriptionAttribute, string>(c => c.Name),
             Gender = typeof(TEntity).GetAttributeValue<HumanDescriptionAttribute, GrammaticalGender>(c => c.Gender)

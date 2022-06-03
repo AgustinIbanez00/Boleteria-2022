@@ -6,7 +6,7 @@ public class ClienteSeeder
 {
     public static List<Cliente> Seed(int cant)
     {
-        var list = new List<Cliente>();
+        List<Cliente> list = new();
 
         for (int i = 0; i < cant; i++)
         {
@@ -17,7 +17,7 @@ public class ClienteSeeder
                     Genero = Faker.Enum.Random<Gender>(),
                     FechaNac = Faker.Identification.DateOfBirth(),
                     Estado = Faker.Boolean.Random() ? Estado.Activo : Estado.Baja,
-                    Nombre = $"{Faker.Name.First()} {Faker.Name.Last()}"  ,
+                    Nombre = $"{Faker.Name.First()} {Faker.Name.Last()}",
                 });
         }
         return list;

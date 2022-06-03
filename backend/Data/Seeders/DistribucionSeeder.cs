@@ -7,21 +7,21 @@ public class DistribucionSeeder
 {
     public static List<Distribucion> Seed(int cant)
     {
-        var list = new List<Distribucion>();
+        List<Distribucion> list = new();
 
         for (int i = 0; i < cant; i++)
         {
-            var unPiso = Faker.Boolean.Random();
+            bool unPiso = Faker.Boolean.Random();
 
-            var maxRows = unPiso ? Faker.RandomNumber.Next(5, 10) : Faker.RandomNumber.Next(5, 25);
+            int maxRows = unPiso ? Faker.RandomNumber.Next(5, 10) : Faker.RandomNumber.Next(5, 25);
 
-            var rows = new List<Fila>();
+            List<Fila> rows = new();
 
-            var spacing = Faker.RandomNumber.Next(1, 3);
+            int spacing = Faker.RandomNumber.Next(1, 3);
 
             for (int rowIndex = 0; rowIndex < maxRows; rowIndex++)
             {
-                var fila = new Fila() { Cells = new List<Celda>()};
+                Fila fila = new() { Cells = new List<Celda>() };
                 fila.Planta = Faker.Enum.Random<Planta>();
 
                 DistribucionEspacio tipoButaca = spacing switch

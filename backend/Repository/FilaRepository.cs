@@ -19,7 +19,9 @@ public class FilaRepository : IFilaRepository
     public async Task<bool> UpdateFilaAsync(Fila fila)
     {
         if (fila == null)
+        {
             return false;
+        }
 
         _context.Filas.Update(fila);
         return await Save();

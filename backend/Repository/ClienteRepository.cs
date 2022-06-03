@@ -31,7 +31,9 @@ public class ClienteRepository : IClienteRepository
     public async Task<bool> DeleteAsync(Cliente entity)
     {
         if (entity == null)
+        {
             return false;
+        }
 
         _context.Clientes.Remove(entity);
 
@@ -84,7 +86,9 @@ public class ClienteRepository : IClienteRepository
     public async Task<bool> UpdateAsync(Cliente entity)
     {
         if (entity == null)
+        {
             return false;
+        }
 
         _context.Clientes.Update(entity);
         entity.UpdatedAt = DateTime.Now;

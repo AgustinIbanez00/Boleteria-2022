@@ -4,7 +4,7 @@ namespace BoleteriaOnline.Web.Data.Seeders;
 
 public class PaisSeeder
 {
-    public static List<Pais> Paises => new List<Pais>()
+    public static List<Pais> Paises => new()
     {
         new Pais()
         {

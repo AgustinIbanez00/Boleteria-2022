@@ -27,10 +27,12 @@ public class BoletosController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ICollection<BoletoDTO>>>> GetPaginated([FromQuery] BoletoFilter filter)
     {
-        var boletos = await _boletoservice.AllPaginatedAsync(filter);
+        WebResultList<BoletoDTO> boletos = await _boletoservice.AllPaginatedAsync(filter);
 
         if (!boletos.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(boletos.ErrorCode), boletos);
+        }
 
         return Ok(boletos);
     }
@@ -44,10 +46,12 @@ public class BoletosController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<ICollection<BoletoDTO>>>> GetAll([FromQuery] BoletoFilter filter)
     {
-        var boletos = await _boletoservice.AllAsync(filter);
+        WebResult<ICollection<BoletoDTO>> boletos = await _boletoservice.AllAsync(filter);
 
         if (!boletos.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(boletos.ErrorCode), boletos);
+        }
 
         return Ok(boletos);
     }
@@ -63,10 +67,12 @@ public class BoletosController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<WebResult<BoletoDTO>>> Get(int id)
     {
-        var boleto = await _boletoservice.GetAsync(new BoletoFilter() { Id = id });
+        WebResult<BoletoDTO> boleto = await _boletoservice.GetAsync(new BoletoFilter() { Id = id });
 
         if (!boleto.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(boleto.ErrorCode), boleto);
+        }
 
         return Ok(boleto);
     }
@@ -83,10 +89,13 @@ public class BoletosController : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<ActionResult<WebResult<BoletoDTO>>> CreateBoleto([FromBody] BoletoDTO boletoDto)
     {
-        var boleto = await _boletoservice.CreateAsync(boletoDto);
+        WebResult<BoletoDTO> boleto = await _boletoservice.CreateAsync(boletoDto);
 
         if (!boleto.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(boleto.ErrorCode), boleto);
+        }
+
         return Created(nameof(Get), boleto);
     }
 
@@ -100,10 +109,13 @@ public class BoletosController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<BoletoDTO>>> UpdateBoleto([FromBody] BoletoDTO boletoDto, int id)
     {
-        var boleto = await _boletoservice.UpdateAsync(boletoDto, id);
+        WebResult<BoletoDTO> boleto = await _boletoservice.UpdateAsync(boletoDto, id);
 
         if (!boleto.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(boleto.ErrorCode), boleto);
+        }
+
         return Ok(boleto);
     }
 
@@ -116,10 +128,13 @@ public class BoletosController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<WebResult<BoletoDTO>>> DeleteBoleto(int id)
     {
-        var boleto = await _boletoservice.DeleteAsync(new BoletoFilter() { Id = id });
+        WebResult<BoletoDTO> boleto = await _boletoservice.DeleteAsync(new BoletoFilter() { Id = id });
 
         if (!boleto.Success)
+        {
             return StatusCode(ResponseHelper.GetHttpError(boleto.ErrorCode), boleto);
+        }
+
         return Ok(boleto);
     }
 
