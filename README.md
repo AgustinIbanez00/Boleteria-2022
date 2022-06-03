@@ -7,7 +7,7 @@ Es una sistema web de código abierto basado en la compra online de pasajes para
 ## Aplicación Frontend:
 - Angular.
 
-Demo: https://red-tree-004dac310.1.azurestaticapps.net/
+Demo: https://agustinibanez00.github.io/Boleteria-2022/
 
 Directorio en el repositorio: /front-end
 
