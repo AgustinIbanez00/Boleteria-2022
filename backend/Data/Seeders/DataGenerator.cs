@@ -13,10 +13,15 @@ public class DataGenerator
             context.Database.EnsureCreated();
             context.Database.Migrate();
 
-            context.Paises.AddRange(PaisSeeder.Paises);
-            context.Provincias.AddRange(ProvinciaSeeder.Provincias);
+            context.SaveChanges();
 
             IConfiguration configuration = serviceProvider.GetRequiredService<IConfiguration>();
+
+            context.Clientes.AddRange(ClienteSeeder.Seed(50));
+            context.Paradas.AddRange(ParadasSeeder.Seed(100));
+            context.Distribuciones.AddRange(DistribucionSeeder.Seed(5));
+
+            context.SaveChanges();
 
             string secretUser = configuration.GetValue<string>("SECRET_USER", "");
             string secretPassword = configuration.GetValue<string>("SECRET_PASSWORD", "");
@@ -36,10 +41,6 @@ public class DataGenerator
                 };
                 context.Usuarios.Add(adminUser);
             }
-
-            context.Clientes.AddRange(ClienteSeeder.Seed(50));
-            context.Paradas.AddRange(ParadasSeeder.Seed(100));
-            context.Distribuciones.AddRange(DistribucionSeeder.Seed(5));
 
             context.SaveChanges();
         }

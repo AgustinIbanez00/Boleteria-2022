@@ -93,7 +93,10 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    var connectionString = Environment.GetEnvironmentVariable("MYSQLCONNSTR_localdb");
+
+    //var connectionString = Environment.GetEnvironmentVariable("MYSQLCONNSTR_localdb");
+
+    var connectionString = builder.Configuration["DbConnection"];
 
     options.UseMySql(connectionString, new MySqlServerVersion(new Version(5, 7, 9)), o =>
     {
