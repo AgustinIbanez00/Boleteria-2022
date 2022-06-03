@@ -4,13 +4,14 @@ using System.Text;
 using BoleteriaOnline.Core.Services;
 using BoleteriaOnline.Core.Utils;
 using BoleteriaOnline.Web.Data;
+using BoleteriaOnline.Web.Data.Seeders;
 using BoleteriaOnline.Web.Filters;
 using BoleteriaOnline.Web.Localization;
 using BoleteriaOnline.Web.Middlewares;
 using BoleteriaOnline.Web.Repositories;
 using BoleteriaOnline.Web.Repository;
 using BoleteriaOnline.Web.Services;
-using EntityFramework.Exceptions.SqlServer;
+using EntityFramework.Exceptions.MySQL.Pomelo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -29,8 +30,6 @@ string[] supportedCultures = new string[] { "es-ES", "en-US" };
 // Add services to the container.
 
 builder.Services.AddEndpointsApiExplorer();
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
    .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -94,14 +93,12 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(connectionString);
-    /*
-    options.UseSqlServer(connectionString, new MariaDbServerVersion(new Version(10, 4, 17)), o =>
+    var connectionString = Environment.GetEnvironmentVariable("MYSQLCONNSTR_localdb");
+
+    options.UseMySql(connectionString, new MariaDbServerVersion(new Version(10, 4, 17)), o =>
     {
         o.EnableRetryOnFailure();
     });
-    */
-    options.LogTo(Console.WriteLine, LogLevel.Information);
     options.EnableSensitiveDataLogging();
     options.EnableDetailedErrors();
     options.UseExceptionProcessor();
@@ -146,9 +143,20 @@ builder.Services.AddResponseCompression(opts =>
         new[] { "application/octet-stream" });
 });
 
+
 var app = builder.Build();
 
 app.UseResponseCompression();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ApplicationDbContext>();
+
+    DataGenerator.Initialize(services);
+}
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -180,10 +188,14 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
+//Console.WriteLine(JsonSerializer.Serialize(ClienteSeeder.Seed(50), new JsonSerializerOptions() { WriteIndented = true }));
+
+
 app.UseOpenApi();
 app.UseSwaggerUi3(options =>
 {
     options.DocumentTitle = "Boletaria Online";
 });
+
 
 app.Run();

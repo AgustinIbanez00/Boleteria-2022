@@ -5,7 +5,6 @@ using BoleteriaOnline.Web.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoleteriaOnline.Web.Repository;
-
 public class DistribucionRepository : IDistribucionRepository
 {
     private readonly ApplicationDbContext _context;

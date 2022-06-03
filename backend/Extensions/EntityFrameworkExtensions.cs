@@ -66,7 +66,7 @@ public static class EntityFrameworkExtensions
                     return reader.MapToList<T>();
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw;
             }

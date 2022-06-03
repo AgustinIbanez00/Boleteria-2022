@@ -5,7 +5,6 @@ using BoleteriaOnline.Web.Extensions;
 using BoleteriaOnline.Web.Repositories;
 
 namespace BoleteriaOnline.Web.Repository;
-
 public class ViajeClienteRepository : IViajeClienteRepository
 {
     private readonly ApplicationDbContext _context;

@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
 using BoleteriaOnline.Core.Data.Enums;
+using BoleteriaOnline.Core.ViewModels.Filters;
 using BoleteriaOnline.Core.ViewModels.Pagging;
 using BoleteriaOnline.Web.Data;
-using BoleteriaOnline.Web.Data.Filters;
 using BoleteriaOnline.Web.Data.Models;
 using BoleteriaOnline.Web.Extensions;
 using BoleteriaOnline.Web.Repositories;
@@ -90,5 +90,4 @@ public class ClienteRepository : IClienteRepository
         entity.UpdatedAt = DateTime.Now;
         return await Save();
     }
-
 }

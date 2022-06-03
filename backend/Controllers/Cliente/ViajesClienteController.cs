@@ -5,7 +5,7 @@ using BoleteriaOnline.Core.ViewModels.Filters;
 using BoleteriaOnline.Web.Extensions.Response;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BoleteriaOnline.Web.Controllers;
+namespace BoleteriaOnline.Web.Controllers.Cliente;
 
 [Route("api/[controller]")]
 [ApiController]

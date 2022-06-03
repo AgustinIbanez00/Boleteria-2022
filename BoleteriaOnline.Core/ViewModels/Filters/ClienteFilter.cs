@@ -2,7 +2,7 @@
 using BoleteriaOnline.Core.Data.Enums;
 using BoleteriaOnline.Core.ViewModels.Pagging;
 
-namespace BoleteriaOnline.Web.Data.Filters;
+namespace BoleteriaOnline.Core.ViewModels.Filters;
 public class ClienteFilter : PaginationFilter
 {
     public long? Dni { get; set; }

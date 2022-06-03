@@ -1,5 +1,5 @@
 ﻿using BoleteriaOnline.Core.ViewModels;
-using BoleteriaOnline.Web.Data.Filters;
+using BoleteriaOnline.Core.ViewModels.Filters;
 
 namespace BoleteriaOnline.Core.Services;
 public interface IClienteService : IGenericService<long, ClienteDTO, ClienteFilter>
