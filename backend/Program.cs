@@ -11,9 +11,7 @@ using BoleteriaOnline.Web.Middlewares;
 using BoleteriaOnline.Web.Repositories;
 using BoleteriaOnline.Web.Repository;
 using BoleteriaOnline.Web.Services;
-using EntityFramework.Exceptions.MySQL.Pomelo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -30,10 +28,6 @@ string[] supportedCultures = new string[] { "es-ES", "en-US" };
 // Add services to the container.
 
 builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-   .AddEntityFrameworkStores<ApplicationDbContext>()
-   .AddDefaultTokenProviders();
 
 var key = Encoding.ASCII.GetBytes(builder.Configuration.GetValue<string>("SecretKey"));
 
@@ -95,13 +89,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var connectionString = Environment.GetEnvironmentVariable("MYSQLCONNSTR_localdb");
 
-    options.UseMySql(connectionString, new MySqlServerVersion(new Version(5, 7, 9)), o =>
-    {
-        o.EnableRetryOnFailure();
-    });
+    options.UseInMemoryDatabase("Boleteria");
     options.EnableSensitiveDataLogging();
     options.EnableDetailedErrors();
-    options.UseExceptionProcessor();
     options.UseSnakeCaseNamingConvention();
 });
 builder.Services.Configure<RequestLocalizationOptions>(ops =>
@@ -148,14 +138,13 @@ var app = builder.Build();
 
 app.UseResponseCompression();
 
-/*
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ApplicationDbContext>();
 
     DataGenerator.Initialize(services);
-}*/
+}
 
 
 if (app.Environment.IsDevelopment())

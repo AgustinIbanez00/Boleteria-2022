@@ -11,7 +11,10 @@ public class DataGenerator
         using (ApplicationDbContext context = new(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>()))
         {
             context.Database.EnsureCreated();
-            context.Database.Migrate();
+            if (context.Database.IsRelational())
+            {
+                context.Database.Migrate();
+            }
 
             context.SaveChanges();
 
@@ -23,8 +26,8 @@ public class DataGenerator
 
             context.SaveChanges();
 
-            string secretUser = configuration.GetValue<string>("SECRET_USER", "");
-            string secretPassword = configuration.GetValue<string>("SECRET_PASSWORD", "");
+            string secretUser = configuration.GetValue("SECRET_USER", string.Empty);
+            string secretPassword = configuration.GetValue("SECRET_PASSWORD", string.Empty);
 
             if (!string.IsNullOrEmpty(secretUser) && !string.IsNullOrEmpty(secretPassword))
             {

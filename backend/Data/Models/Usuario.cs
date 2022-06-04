@@ -1,16 +1,16 @@
 ﻿using BoleteriaOnline.Core.Data.Enums;
-using Microsoft.AspNetCore.Identity;
 
 namespace BoleteriaOnline.Web.Data.Models;
 
-
-
-public class Usuario : IdentityUser<long>
+public class Usuario
 {
+    public long Id { get; set; }
+    public string Email { get; set; }
     [MaxLength(25)]
-    public string Username { get; set; }
+    public string UserName { get; set; }
     [MaxLength(150)]
     public string Password { get; set; }
+    public bool IsBan { get; set; }
     public string Salt { get; set; }
     public DateTime BirthDate { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.Now;

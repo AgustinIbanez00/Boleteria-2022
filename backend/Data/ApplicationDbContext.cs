@@ -1,10 +1,9 @@
 ﻿using BoleteriaOnline.Web.Data.Models;
 using BoleteriaOnline.Web.Data.Seeders;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoleteriaOnline.Web.Data;
-public class ApplicationDbContext : IdentityDbContext
+public class ApplicationDbContext : DbContext
 {
     public virtual DbSet<Nodo> Nodos { get; set; }
     public virtual DbSet<Boleto> Boletos { get; set; }

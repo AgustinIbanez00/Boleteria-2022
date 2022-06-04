@@ -37,7 +37,7 @@ public class UsuarioRepository : IUsuarioRepository
             return false;
         }
 
-        usuario.LockoutEnabled = true;
+        usuario.IsBan = true;
 
         return await Save();
     }

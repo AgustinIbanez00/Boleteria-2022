@@ -71,7 +71,7 @@ public class UsuarioService : IUsuarioService
                 return Error<Usuario, UsuarioResponse>(ErrorMessage.NotFound);
             }
 
-            if (usuario.LockoutEnabled)
+            if (usuario.IsBan)
             {
                 return Error<UsuarioResponse>("La cuenta de este usuario se encuentra bloqueada.");
             }
@@ -170,7 +170,7 @@ public class UsuarioService : IUsuarioService
                 return KeyError<Usuario, LoginResponse>(nameof(request.Email), ErrorMessage.InvalidEmail);
             }
 
-            if (usuario.LockoutEnabled)
+            if (usuario.IsBan)
             {
                 return Error<LoginResponse>("Esta cuenta se encuentra bloqueada.");
             }
