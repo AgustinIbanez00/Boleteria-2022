@@ -10,7 +10,7 @@ export class EstadosCeldas {
   ESPACIO_ESCALERA: number = 8
 }
 
-var estadosCeldas: EstadosCeldas = new EstadosCeldas();
+const estadosCeldas: EstadosCeldas = new EstadosCeldas();
 export class DistribucionDTO {
   id: number = -1;
   filas: fila[] = []

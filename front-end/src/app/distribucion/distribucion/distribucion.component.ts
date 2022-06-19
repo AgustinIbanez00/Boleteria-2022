@@ -37,7 +37,7 @@ export class DistribucionComponent implements OnInit {
 
 
   validacionesFormulario(nombre: string) {
-    var campo = this.form.get(nombre);
+    const campo = this.form.get(nombre);
     if (campo.hasError('required')) {
       return 'Campo requerido';
     }
@@ -48,8 +48,8 @@ export class DistribucionComponent implements OnInit {
   }
 
   crearFila(tipo: number) {
-    var celdas: cell[] = []
-    for (var x = 0; x < 5; x++) {
+    const celdas: cell[] = []
+    for (let x = 0; x < 5; x++) {
       if (x != 2) {
         celdas.push({ value: tipo == 6 ? this.estadosCeldas.ESPACIO_BUTACA_SEMICAMA : this.estadosCeldas.ESPACIO_BUTACA, isSelected: false })
       }
@@ -57,7 +57,7 @@ export class DistribucionComponent implements OnInit {
         celdas.push({ value: this.estadosCeldas.ESPACIO_PASILLO, isSelected: false })
       }
     }
-    var fila: fila = { planta: this.pisoSelecctionado, cells: celdas }
+    const fila: fila = { planta: this.pisoSelecctionado, cells: celdas }
     if (this.pisoSelecctionado == 0) {
       this.piso0.push(fila);
     }
@@ -75,7 +75,7 @@ export class DistribucionComponent implements OnInit {
   }
 
   seleccionarCelda(celda: number, filaSeleccionada: number) {
-    var filaSel: fila;
+    let filaSel: fila;
     if (!this.quitarFila) {
       if (this.pisoSelecctionado == 0) {
         this.piso0[filaSeleccionada].cells[celda].isSelected = !this.piso0[filaSeleccionada].cells[celda].isSelected

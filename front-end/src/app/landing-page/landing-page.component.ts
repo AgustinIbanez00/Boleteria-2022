@@ -69,16 +69,16 @@ export class LandingPageComponent implements OnInit {
       );
   }
   opcionSelectedOrigen(event: MatAutocompleteSelectedEvent) {
-    var origen = this.paradas.find((item) => item.descripcion === event.option.value)
+    const origen = this.paradas.find((item) => item.descripcion === event.option.value)
     this.form.get('OrigenId').setValue(origen.id)
   }
   opcionSelectedDestino(event: MatAutocompleteSelectedEvent) {
-    var origen = this.paradas.find((item) => item.descripcion === event.option.value)
+    const origen = this.paradas.find((item) => item.descripcion === event.option.value)
     this.form.get('DestinoId').setValue(origen.id)
   }
 
   verViaje(idViaje: number) {
-    var dialogRef = this.dialog.open(ComprarBoletoComponent, {
+    const dialogRef = this.dialog.open(ComprarBoletoComponent, {
       width: '600px',
       data: idViaje,
     });

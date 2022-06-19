@@ -36,7 +36,7 @@ export class RegistroComponent implements OnInit {
   }
 
   validacionesRegistro(nombre: string) {
-    var campo = this.form.get(nombre);
+    const campo = this.form.get(nombre);
     if (campo.hasError('required')) {
       return 'Campo requerido';
     } else if (campo.hasError('email')) {

@@ -74,7 +74,7 @@ export class IndiceParadasComponent implements OnInit {
   }
 
   openDialog(id: number) {
-    var dialogRef;
+    let dialogRef;
     if (id === null) {
       dialogRef = this.dialog.open(CrearParadasComponent, {
         width: '800px',
@@ -86,7 +86,7 @@ export class IndiceParadasComponent implements OnInit {
         },
       });
     } else {
-      var parada = this.paradas.find((it) => it.id === id);
+      const parada = this.paradas.find((it) => it.id === id);
       console.log(parada);
       dialogRef = this.dialog.open(CrearParadasComponent, {
         width: '800px',
@@ -221,7 +221,7 @@ export class IndiceParadasComponent implements OnInit {
     );
   }
   openDialogEliminar(paradasDTO: paradasDTO) {
-    var dialogRef = this.dialog.open(ConfirmComponent, {
+    const dialogRef = this.dialog.open(ConfirmComponent, {
       width: '300px',
       data: {
         mensaje: '¿Desea eliminar permanentemente este registro?',

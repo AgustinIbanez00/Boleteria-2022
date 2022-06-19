@@ -179,7 +179,7 @@ export class IndiceViajesComponent implements OnInit {
     );
   }
   openDialogEliminar(viajaeDTO: viajeDTO) {
-    var dialogRef = this.dialog.open(ConfirmComponent, {
+    const dialogRef = this.dialog.open(ConfirmComponent, {
       width: '300px',
       data: {
         mensaje: '¿Desea eliminar permanentemente este registro?',

@@ -239,7 +239,7 @@
     }
 }
 .mat-form-field-appearance-fill .mat-form-field-infix{
-    padding:.25em 0 .75em 0
+    padding:.25em 0 .75em
 }
 .mat-form-field-appearance-fill .mat-form-field-label{
     top:1.09375em;
@@ -254,7 +254,7 @@
     width:133.3333433333%
 }
 .mat-form-field-appearance-outline .mat-form-field-infix{
-    padding:1em 0 1em 0
+    padding:1em 0
 }
 .mat-form-field-appearance-outline .mat-form-field-label{
     top:1.84375em;
@@ -1863,7 +1863,7 @@ mat-row,mat-header-row,mat-footer-row,th.mat-header-cell,td.mat-cell,td.mat-foot
     height:72px
 }
 .mat-stepper-label-position-bottom .mat-horizontal-stepper-header,.mat-vertical-stepper-header{
-    padding:24px 24px
+    padding:24px
 }
 .mat-stepper-vertical-line::before{
     top:-16px;

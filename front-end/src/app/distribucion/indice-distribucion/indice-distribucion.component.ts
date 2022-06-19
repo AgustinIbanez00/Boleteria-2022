@@ -60,7 +60,7 @@ export class IndiceDistribucionComponent implements OnInit {
   borrarRegistro(id: number) {}
 
   openDialogDetalle(id: number) {
-    var dialogRef = this.dialog.open(DetalleDistribucionComponent, {
+    const dialogRef = this.dialog.open(DetalleDistribucionComponent, {
       width: '600px',
       data: id,
     });
@@ -69,7 +69,7 @@ export class IndiceDistribucionComponent implements OnInit {
   // elimninar
 
   openDialogEliminar(distribucionDTO: distribucionDTO) {
-    var dialogRef = this.dialog.open(ConfirmComponent, {
+    const dialogRef = this.dialog.open(ConfirmComponent, {
       width: '300px',
       data: {
         mensaje: '¿Desea eliminar permanentemente este registro?',

@@ -119,7 +119,7 @@ export class CrearClienteComponent implements OnInit {
   }
 
   validacionesCliente(nombre: string) {
-    var campo = this.form.get(nombre);
+    const campo = this.form.get(nombre);
     if (campo.hasError('required')) {
       return 'Campo ' + nombre + ' requerido';
     }
@@ -134,7 +134,7 @@ export class CrearClienteComponent implements OnInit {
   }
 
   validacionesRegistro(nombre: string) {
-    var campo = this.form.get(nombre);
+    const campo = this.form.get(nombre);
     if (campo.hasError('required')) {
       return 'Campo requerido';
     } else if (campo.hasError('email')) {

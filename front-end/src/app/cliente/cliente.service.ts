@@ -41,7 +41,7 @@ export class ClienteService {
   }
 
   public crear(clienteDTO: clienteDTO): Observable<HttpResponse<webResult>> {
-    var valor = {
+    const valor = {
       ...clienteDTO,
     };
 

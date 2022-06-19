@@ -51,7 +51,7 @@ export class SeguridadService {
     if (!token) {
       return '';
     }
-    var dataToken = JSON.parse(atob(token.split('.')[1]));
+    const dataToken = JSON.parse(atob(token.split('.')[1]));
     return dataToken[campo];
   }
 }

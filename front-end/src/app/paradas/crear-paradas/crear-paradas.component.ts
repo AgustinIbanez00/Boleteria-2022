@@ -115,7 +115,7 @@ export class CrearParadasComponent implements OnInit {
   }
 
   validacionesParadas(nombre: string) {
-    var campo = this.form.get(nombre);
+    const campo = this.form.get(nombre);
     if (campo.hasError('required')) {
       return 'Campo ' + nombre + ' requerido';
     }
