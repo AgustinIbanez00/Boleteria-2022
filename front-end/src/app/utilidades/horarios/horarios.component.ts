@@ -30,7 +30,7 @@ export class HorariosComponent implements OnInit {
   }
 
   obtenerDias() {
-    let a = Object.keys(EnumDiasSemana)
+    const a = Object.keys(EnumDiasSemana)
       .map((key) => EnumDiasSemana[key])
       .filter((value) => typeof value === 'string') as string[];
 
@@ -48,10 +48,10 @@ export class HorariosComponent implements OnInit {
   }
 
   guardarDia(dia_id: number) {
-    var dia_existente = this.listDias.find((id) => id == dia_id);
+    const dia_existente = this.listDias.find((id) => id == dia_id);
 
     if (dia_existente !== undefined) {
-      var indice = this.listDias.indexOf(dia_id);
+      const indice = this.listDias.indexOf(dia_id);
       this.listDias.splice(indice, 1);
     } else {
       this.listDias.push(dia_id);

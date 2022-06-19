@@ -107,7 +107,7 @@ export class StepperViajesComponent implements OnInit {
   }
 
   public validacionesD(propiedad: string) {
-    var campo = this.viajeDistribucionForm.get(propiedad);
+    const campo = this.viajeDistribucionForm.get(propiedad);
 
     if (campo.hasError('required')) {
       return 'Campo ' + propiedad + ' requerido';
@@ -119,7 +119,7 @@ export class StepperViajesComponent implements OnInit {
   }
 
   public validacionesHorarios(propiedad: string) {
-    var campo = this.viajeHorarioForm.get(propiedad);
+    const campo = this.viajeHorarioForm.get(propiedad);
 
     if (campo.hasError('required')) {
       return 'Campo ' + propiedad + ' requerido';
@@ -138,7 +138,7 @@ export class StepperViajesComponent implements OnInit {
   }
 
   obtenerDescripcionDias(dias: EnumDiasSemana[]) {
-    let valoresDiasSemana = Object.keys(EnumDiasSemana)
+    const valoresDiasSemana = Object.keys(EnumDiasSemana)
       .map((key) => EnumDiasSemana[key])
       .filter((value) => typeof value === 'string') as string[];
 
@@ -165,7 +165,7 @@ export class StepperViajesComponent implements OnInit {
 
   obtenerDistribucion(distribucion_id: number) {
     if (this.distribuciones) {
-      var distribucion = this.distribuciones.find(
+      const distribucion = this.distribuciones.find(
         (it) => it.id === distribucion_id
       );
       // console.log(distribucion);
@@ -268,12 +268,12 @@ export class StepperViajesComponent implements OnInit {
 
   agregarConexion(conexion: conexionDTO, verConexionModal: boolean) {
     console.log('conecnnnnnnn', conexion);
-    var con = conexion;
+    const con = conexion;
     console.log('lista conexiones ahora', this.listConexiones.length);
     if (this.listConexiones.length == 0) {
       conexion.destino_id = con.origen_id;
     } else {
-      let ultimaConexion = this.listConexiones[this.listConexiones.length - 1];
+      const ultimaConexion = this.listConexiones[this.listConexiones.length - 1];
       conexion.origen_id = ultimaConexion.destino_id;
     }
     console.log('origen = destino', conexion);
@@ -331,7 +331,7 @@ export class StepperViajesComponent implements OnInit {
 
   buscarParaPorId(id: number) {
     if (this.paradas) {
-      var parada = this.paradas.find((it) => it.id === id);
+      const parada = this.paradas.find((it) => it.id === id);
       return parada.nombre;
     }
   }

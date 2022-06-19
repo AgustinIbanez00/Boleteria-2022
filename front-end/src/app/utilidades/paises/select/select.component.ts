@@ -67,7 +67,7 @@ export class SelectComponent implements OnInit {
     if (this.validaciones != undefined) {
       this.validaciones(campo);
     } else {
-      var propiedad = this.form.get(campo);
+      const propiedad = this.form.get(campo);
 
       if (propiedad.hasError('required')) {
         return 'Campo requerido';

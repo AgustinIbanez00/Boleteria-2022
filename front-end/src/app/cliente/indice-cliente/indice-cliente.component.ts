@@ -95,7 +95,7 @@ export class IndiceClienteComponent implements OnInit {
   }
 
   openDialogCliente(id: number) {
-    var dialogRef;
+    let dialogRef;
     if (id === null) {
       dialogRef = this.dialog.open(CrearClienteComponent, {
         width: '600px',
@@ -108,7 +108,7 @@ export class IndiceClienteComponent implements OnInit {
         },
       });
     } else {
-      var cliente = this.clientes.find((it) => it.id === id);
+      const cliente = this.clientes.find((it) => it.id === id);
 
       dialogRef = this.dialog.open(CrearClienteComponent, {
         width: '600px',
@@ -250,7 +250,7 @@ export class IndiceClienteComponent implements OnInit {
   }
 
   openDialogEliminar(clienteDTO: clienteDTO) {
-    var dialogRef = this.dialog.open(ConfirmComponent, {
+    const dialogRef = this.dialog.open(ConfirmComponent, {
       width: '300px',
       data: {
         mensaje: '¿Desea eliminar permanentemente este registro?',
